@@ -219,3 +219,13 @@ __marimo__/
 
 # Claude
 .claude/
+
+# Outputs
+data/aiact.candidates.jsonl
+data/aiact.chunks.jsonl
+data/aiact.smoke.jsonl
+data/aiact.screened.jsonl
+data/gdpr.candidates.jsonl
+data/gdpr.chunks.jsonl
+data/gdpr.smoke.jsonl
+data/gdpr.screened.jsonl

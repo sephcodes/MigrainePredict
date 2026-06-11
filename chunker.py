@@ -1,6 +1,12 @@
 """
-Chunk EUR-Lex XHTML manifestations of the AI Act and GDPR into
-article/recital-level records suitable for deontic extraction.
+Chunk EUR-Lex XHTML manifestations of the AI Act and GDPR into paragraph-level
+records suitable for screening and deontic extraction.
+
+Each output record is a single regulatory paragraph (a numbered paragraph, an
+enumerated sub-item, or a recital body) annotated with its provenance: source
+regulation, regulatory unit (article/recital/annex/...), heading, and a
+`parent_text` field carrying the concatenated lead-in clauses above it so the
+operative subject is not lost when sub-items are screened in isolation.
 
 Usage:
     python chunker.py                       # processes both files in data/
@@ -12,7 +18,7 @@ from __future__ import annotations
 import json
 import re
 import sys
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Iterator, Literal
 
@@ -20,8 +26,6 @@ from bs4 import BeautifulSoup, Tag
 
 UnitType = Literal["recital", "article", "citation", "annex", "final_provision"]
 
-# Maps filename stem -> regulation metadata. Stem matching keeps the CLI
-# robust to relative/absolute paths without a brittle substring check.
 SOURCES: dict[str, dict[str, str]] = {
     "gdpr": {
         "celex": "32016R0679",
@@ -33,8 +37,8 @@ SOURCES: dict[str, dict[str, str]] = {
     },
 }
 
-# ELI markup conventions on EUR-Lex: each leaf regulatory unit lives in a
-# div.eli-subdivision whose id encodes the unit type and number.
+# ELI markup conventions on EUR-Lex: each regulatory unit lives in a div whose
+# id encodes the unit type and number.
 _ID_PATTERNS: dict[UnitType, re.Pattern[str]] = {
     "recital":         re.compile(r"^rct_(\d+)$"),
     "article":         re.compile(r"^art_(\d+)$"),
@@ -47,18 +51,19 @@ DEFAULT_PATHS = [Path("data/gdpr.html"), Path("data/aiact.html")]
 
 
 @dataclass
-class Chunk:
+class Paragraph:
     source: str            # "gdpr" | "aiact"
     celex: str
     eli: str
     unit_type: UnitType
-    unit_id: str           # e.g. "art_32"
-    unit_number: str       # e.g. "32"
+    unit_id: str           # e.g. "art_5" — the enclosing regulatory unit
+    unit_number: str       # e.g. "5"
     chapter: str | None    # e.g. "IV"
     section: str | None    # e.g. "2"
-    heading: str | None    # e.g. "Security of processing"
-    text: str              # paragraphs joined by blank lines
-    paragraphs: list[str] = field(default_factory=list)
+    heading: str | None    # e.g. "Principles relating to processing of personal data"
+    paragraph_index: int   # 0-based index within the unit (document order)
+    text: str              # the paragraph text, e.g. "(a) processed lawfully, fairly..."
+    parent_text: str | None  # concatenated lead-in chain, or None if top-level
 
 
 def _classify(div: Tag) -> tuple[UnitType, str] | None:
@@ -67,76 +72,6 @@ def _classify(div: Tag) -> tuple[UnitType, str] | None:
         m = pattern.match(div_id if isinstance(div_id, str) else "")
         if m:
             return unit_type, m.group(1)
-    return None
-
-
-def _paragraphs(div: Tag) -> list[str]:
-    out: list[str] = []
-    for p in div.find_all("p", class_="oj-normal"):
-        text = " ".join(p.get_text(" ", strip=True).split())
-        # Skip lone enumeration markers like "(1)" that EUR-Lex emits in
-        # their own <p> alongside the paragraph body.
-        if text and not re.fullmatch(r"\(\d+\)", text):
-            out.append(text)
-    return out
-
-
-def _walk_annex_table(table: Tag) -> list[str]:
-    """Each row pairs a marker cell with a content cell; emit `<marker> <body>`,
-    then recurse into nested tables so sub-items appear as their own paragraphs."""
-    out: list[str] = []
-    tbody = table.find("tbody", recursive=False) or table
-    for tr in tbody.find_all("tr", recursive=False):
-        tds = tr.find_all("td", recursive=False)
-        if len(tds) < 2:
-            continue
-        marker = " ".join(tds[0].get_text(" ", strip=True).split())
-        body_parts: list[str] = []
-        for el in tds[1].children:
-            if not isinstance(el, Tag):
-                continue
-            if el.name == "p" and "oj-normal" in (el.get("class") or []):
-                t = " ".join(el.get_text(" ", strip=True).split())
-                if t:
-                    body_parts.append(t)
-        body = " ".join(body_parts)
-        if marker and body:
-            out.append(f"{marker} {body}")
-        elif body:
-            out.append(body)
-        for nested in tds[1].find_all("table", recursive=False):
-            out.extend(_walk_annex_table(nested))
-    return out
-
-
-def _annex_paragraphs(div: Tag) -> list[str]:
-    """Annexes use mixed EUR-Lex layouts: oj-normal lead-ins, nested tables for
-    list items (Annex III), and inline-paragraph divs (Annex VI). Walk direct
-    children so each item appears once in document order."""
-    out: list[str] = []
-    for child in div.children:
-        if not isinstance(child, Tag):
-            continue
-        classes = child.get("class") or []
-        if child.name == "p" and "oj-normal" in classes:
-            text = " ".join(child.get_text(" ", strip=True).split())
-            if text:
-                out.append(text)
-        elif child.name == "table":
-            out.extend(_walk_annex_table(child))
-        elif child.name == "div" and "oj-enumeration-spacing" in classes:
-            text = " ".join(child.get_text(" ", strip=True).split())
-            if text:
-                out.append(text)
-    return out
-
-
-def _annex_heading(div: Tag) -> str | None:
-    """ANNEX containers carry an "ANNEX <N>" label followed by the title in a
-    second oj-doc-ti paragraph; return the title."""
-    titles = [p for p in div.find_all("p", class_="oj-doc-ti", recursive=False)]
-    if len(titles) >= 2:
-        return " ".join(titles[1].get_text(" ", strip=True).split())
     return None
 
 
@@ -161,16 +96,90 @@ def _heading(div: Tag) -> str | None:
     return None
 
 
-def chunk_xhtml(html: str, source: str, celex: str, eli: str) -> Iterator[Chunk]:
-    """Yield one Chunk per leaf regulatory unit found in the document."""
+def _annex_heading(div: Tag) -> str | None:
+    """ANNEX containers carry an "ANNEX <N>" label then the title in a second
+    oj-doc-ti paragraph; return the title."""
+    titles = [p for p in div.find_all("p", class_="oj-doc-ti", recursive=False)]
+    if len(titles) >= 2:
+        return " ".join(titles[1].get_text(" ", strip=True).split())
+    return None
+
+
+def _walk_table_rows(table: Tag, chain: list[str]) -> Iterator[tuple[str, list[str]]]:
+    """Yield (row_text, chain) for each row's marker+body merge. Recurse into
+    nested tables in the body cell with the row text appended to the chain so
+    sub-sub-items carry their immediate enclosing item as additional context."""
+    tbody = table.find("tbody", recursive=False) or table
+    for tr in tbody.find_all("tr", recursive=False):
+        tds = tr.find_all("td", recursive=False)
+        if len(tds) < 2:
+            continue
+        marker = " ".join(tds[0].get_text(" ", strip=True).split())
+        body_parts: list[str] = []
+        for el in tds[1].children:
+            if isinstance(el, Tag) and el.name == "p" and "oj-normal" in (el.get("class") or []):
+                t = " ".join(el.get_text(" ", strip=True).split())
+                if t:
+                    body_parts.append(t)
+        body = " ".join(body_parts)
+        if marker and body:
+            row_text = f"{marker} {body}"
+        elif body:
+            row_text = body
+        elif marker:
+            row_text = marker
+        else:
+            row_text = ""
+        if row_text:
+            yield row_text, chain
+            for nested in tds[1].find_all("table", recursive=False):
+                yield from _walk_table_rows(nested, chain + [row_text])
+
+
+def _walk_paragraphs(node: Tag, chain: list[str]) -> Iterator[tuple[str, list[str]]]:
+    """Walk a unit (or a paragraph-wrapper div), yielding (text, chain) for each
+    terminal paragraph found. `chain` is the list of ancestor lead-in texts.
+
+    A `<p class="oj-normal">` ending with ":" becomes the lead-in for the next
+    sibling `<table>` (its rows inherit this lead-in as immediate parent).
+    Classless wrapper divs (EUR-Lex's per-paragraph grouping like
+    <div id="005.001">) are descended without changing the chain."""
+    most_recent_leadin: str | None = None
+    for child in node.children:
+        if not isinstance(child, Tag):
+            continue
+        classes = child.get("class") or []
+        if "eli-title" in classes:
+            continue
+        if child.name == "p" and "oj-normal" in classes:
+            text = " ".join(child.get_text(" ", strip=True).split())
+            # Skip EUR-Lex's lone enumeration markers like "(1)" emitted in
+            # their own <p> alongside the recital body.
+            if text and not re.fullmatch(r"\(\d+\)", text):
+                yield text, list(chain)
+                most_recent_leadin = text if text.endswith(":") else None
+        elif child.name == "div" and "oj-enumeration-spacing" in classes:
+            text = " ".join(child.get_text(" ", strip=True).split())
+            if text:
+                yield text, list(chain)
+                most_recent_leadin = None
+        elif child.name == "table":
+            sub_chain = chain + ([most_recent_leadin] if most_recent_leadin else [])
+            yield from _walk_table_rows(child, sub_chain)
+        elif child.name == "div":
+            yield from _walk_paragraphs(child, chain)
+
+
+def chunk_xhtml(html: str, source: str, celex: str, eli: str) -> Iterator[Paragraph]:
+    """Yield one Paragraph per regulatory paragraph found in the document."""
     soup = BeautifulSoup(html, "html.parser")
     for nav in soup.find_all("nav"):
         nav.decompose()
     for toc in soup.find_all(id="TOC"):
         toc.decompose()
 
-    # Annexes use class="eli-container" instead of eli-subdivision; include
-    # both so _classify's id-pattern filter does the actual selection.
+    # Annexes use class="eli-container" instead of "eli-subdivision"; include
+    # both and let _classify's id-pattern filter do the actual selection.
     candidates = soup.find_all(
         "div", class_=lambda c: bool(c) and ("eli-subdivision" in c or "eli-container" in c)
     )
@@ -179,27 +188,26 @@ def chunk_xhtml(html: str, source: str, celex: str, eli: str) -> Iterator[Chunk]
         if classification is None:
             continue
         unit_type, unit_number = classification
-        if unit_type == "annex":
-            paragraphs = _annex_paragraphs(div)
-            heading = _annex_heading(div)
-        else:
-            paragraphs = _paragraphs(div)
-            heading = _heading(div)
-        if not paragraphs:
-            continue
-        yield Chunk(
-            source=source,
-            celex=celex,
-            eli=eli,
-            unit_type=unit_type,
-            unit_id=str(div.get("id") or ""),
-            unit_number=unit_number,
-            chapter=_enclosing(div, "cpt"),
-            section=_enclosing(div, "sct"),
-            heading=heading,
-            text="\n\n".join(paragraphs),
-            paragraphs=paragraphs,
-        )
+        heading = _annex_heading(div) if unit_type == "annex" else _heading(div)
+        chapter = _enclosing(div, "cpt")
+        section = _enclosing(div, "sct")
+        unit_id = str(div.get("id") or "")
+
+        for index, (text, ancestor_chain) in enumerate(_walk_paragraphs(div, [])):
+            yield Paragraph(
+                source=source,
+                celex=celex,
+                eli=eli,
+                unit_type=unit_type,
+                unit_id=unit_id,
+                unit_number=unit_number,
+                chapter=chapter,
+                section=section,
+                heading=heading,
+                paragraph_index=index,
+                text=text,
+                parent_text="\n".join(ancestor_chain) if ancestor_chain else None,
+            )
 
 
 def _source_for(path: Path) -> tuple[str, dict[str, str]]:
@@ -214,18 +222,21 @@ def _source_for(path: Path) -> tuple[str, dict[str, str]]:
 
 def process(path: Path) -> Path:
     key, meta = _source_for(path)
-    chunks = list(chunk_xhtml(path.read_text(encoding="utf-8"), key, meta["celex"], meta["eli"]))
+    paragraphs = list(chunk_xhtml(path.read_text(encoding="utf-8"), key, meta["celex"], meta["eli"]))
 
     out_path = path.parent / f"{path.stem}.chunks.jsonl"
     with out_path.open("w", encoding="utf-8") as f:
-        for c in chunks:
-            f.write(json.dumps(asdict(c), ensure_ascii=False) + "\n")
+        for p in paragraphs:
+            f.write(json.dumps(asdict(p), ensure_ascii=False) + "\n")
 
     by_type: dict[str, int] = {}
-    for c in chunks:
-        by_type[c.unit_type] = by_type.get(c.unit_type, 0) + 1
+    units: dict[tuple[str, str], int] = {}
+    for p in paragraphs:
+        by_type[p.unit_type] = by_type.get(p.unit_type, 0) + 1
+        units[(p.unit_type, p.unit_id)] = 1
+    unit_count = len(units)
     summary = ", ".join(f"{t}={n}" for t, n in sorted(by_type.items()))
-    print(f"{path.name}: {len(chunks)} chunks ({summary}) -> {out_path}")
+    print(f"{path.name}: {len(paragraphs)} paragraphs across {unit_count} units ({summary}) -> {out_path}")
     return out_path
 
 
