@@ -68,11 +68,14 @@ def norm_text(s):
     s = s.replace("\u2019", "'").replace("\u2018", "'")
     s = s.replace("\u201c", '"').replace("\u201d", '"')
     s = " ".join(s.split()).strip().strip(".;,").lower()
-    # Strip a leading determiner so "an AI system" == "AI system" and
-    # "the processing of personal data" == "processing of personal data".
-    # Both sides are normalised symmetrically, so this only tolerates
-    # determiner drift; it never masks a substantive difference.
-    s = re.sub(r"^(?:a|an|the)\s+", "", s)
+    # Strip a leading determiner so "an AI system" == "AI system",
+    # "the processing of personal data" == "processing of personal data", and
+    # "that AI system" == "AI system". The articles (a/an/the) and the
+    # demonstratives (this/that/these/those) are the same determiner class —
+    # they don't change the scoped entity. Both sides are normalised
+    # symmetrically, so this only tolerates determiner drift; it never masks a
+    # substantive difference.
+    s = re.sub(r"^(?:a|an|the|this|that|these|those)\s+", "", s)
     return s
 
 def get(path, obj):
