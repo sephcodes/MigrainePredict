@@ -226,8 +226,12 @@ data/aiact.chunks.jsonl
 data/aiact.smoke.jsonl
 data/aiact.screened.jsonl
 data/aiact.postscreened.jsonl
+data/aiact.smoke_curated.postscreened.jsonl
+data/aiact.smoke_curated.extracted.jsonl
 data/gdpr.candidates.jsonl
 data/gdpr.chunks.jsonl
 data/gdpr.smoke.jsonl
 data/gdpr.screened.jsonl
 data/gdpr.postscreened.jsonl
+data/gdpr.smoke_curated.postscreened.jsonl
+data/gdpr.smoke_curated.extracted.jsonl

@@ -434,8 +434,14 @@ RE_ANNEX = re.compile(
 )
 
 RE_PARAGRAPH = re.compile(r"\b[Pp]aragraphs?\s+(\d+)")
+# Match a point lead-in and any chained additional letters (", (X)", " and (X)",
+# " or (X)"). Without the chain group, "points (a) and (b)" emits only pt_a and
+# downstream extractors can't reach pt_b. The third group captures the whole
+# trailer so we can re-scan it for letters.
 RE_POINT = re.compile(
-    r"\b[Pp]oints?\s+(\([a-z]\))(\((?:" + _ROMAN_ALT + r")\))?"
+    r"\b[Pp]oints?\s+"
+    r"(\([a-z]\))(\((?:" + _ROMAN_ALT + r")\))?"
+    r"((?:\s*(?:,|and|or)\s*\([a-z]\))*)"
 )
 RE_REGULATION_BARE = re.compile(
     r"\bRegulation\s+\((?:EU|EC|EEC)\)(?:\s+No)?\s+(\d+/\d+)"
@@ -591,12 +597,16 @@ def extract_cross_references(
         resolved = iri_by_pos_here.get((current_unit_id, idx)) if idx is not None else None
         emit(raw, "paragraph", resolved, m.span())
 
-    # Internal "point (X)" — relative to current article.
+    # Internal "point (X)" — relative to current article. The trailer group
+    # captures chained additional letters ("(a) and (b)", "(a), (b) and (c)");
+    # each chained letter gets emitted as its own point reference so
+    # downstream extractors see every cited sub-item.
     for m in RE_POINT.finditer(text):
         if is_consumed(m.span()):
             continue
         point_marker = m.group(1)
         sub_marker = m.group(2)
+        trailer = m.group(3) or ""
         raw = m.group(0)
         markers = [point_marker]
         if sub_marker:
@@ -606,6 +616,30 @@ def extract_cross_references(
             idx = find_paragraph_by_markers(target_pos, current_unit_id, markers)
         resolved = iri_by_pos_here.get((current_unit_id, idx)) if idx is not None else None
         emit(raw, "point", resolved, m.span())
+
+        for letter in re.findall(r"\(([a-z])\)", trailer):
+            chained_marker = f"({letter})"
+            chained_raw = f"point {chained_marker}"
+            if chained_raw in seen_raw:
+                continue
+            chained_idx = (
+                find_paragraph_by_markers(target_pos, current_unit_id, [chained_marker])
+                if target_pos is not None else None
+            )
+            chained_resolved = (
+                iri_by_pos_here.get((current_unit_id, chained_idx))
+                if chained_idx is not None else None
+            )
+            # Bypass the is_consumed check — the chained marker shares the
+            # parent match's span, which is already in consumed_spans from the
+            # primary emit. seen_raw still dedups on the canonical raw.
+            seen_raw.add(chained_raw)
+            refs.append({
+                "raw": chained_raw,
+                "kind": "point",
+                "resolved_iri": chained_resolved,
+                "text": _resolve_text(chained_resolved, source, iri_to_rec_by_source),
+            })
 
     # Bare regulation cites — skip spans already consumed by Article/Annex refs.
     for m in RE_REGULATION_BARE.finditer(text):
@@ -648,6 +682,19 @@ def enrich(rec: dict, by_corpus_pos: dict[str, dict],
 
     parent = parent_chain(rec.get("parent_text"), unit_id, text_idx,
                           iri_by_pos, own_iri, iri_to_rec)
+    # Enrich each parent entry with resolved cross-references found in the
+    # ancestor's own text. This exposes parent-rule IRIs (e.g. "Paragraph 1
+    # shall not apply" in an Art 9(2) chapeau resolves to gdpr:art_9/par_1)
+    # for the downstream extractor's exemption-references rule.
+    if parent:
+        for entry in parent:
+            ent_refs = extract_cross_references(
+                entry["text"], source, unit_id, by_corpus_pos,
+                iri_by_pos_by_source, iri_to_rec_by_source,
+            )
+            entry["references"] = [
+                r["resolved_iri"] for r in ent_refs if r.get("resolved_iri")
+            ]
     new_heading = _clean_heading(rec.get("heading"))
 
     # Preserve input field order, but clean `heading` and replace `parent_text`
