@@ -685,6 +685,22 @@ A phrase joined by "as well as" / "and" follows the same test — it joins
 `applies_to` only if it names another entity, and `condition` if it describes
 a manner, means, or restriction.
 
+## Manner / means are never part of applies_to
+
+A phrase describing HOW or BY WHAT MEANS the activity is performed —
+"by automated means", "to manual processing", "through X", "using Y" — is a
+manner phrase and ALWAYS goes in condition, even when introduced by "as well
+as" or "and". The "as well as Y" completeness rule applies only when Y NAMES a
+further entity (a noun the regulation scopes, e.g. "cover pages"), not when Y
+describes a means of acting on the entity already named.
+
+Test: can Y stand alone as a thing the regulation scopes (a noun)? -> applies_to.
+Does Y answer "how / by what means"? -> condition.
+
+Example: "processing of personal data by automated means, as well as to manual
+processing" -> applies_to = "processing of personal data";
+condition = "by automated means, as well as to manual processing, if ...".
+
 ## List-Introducer Conditions — Reference ALL Listed Sub-Items
 
 When the condition is a connective forward-referencing a list ("both of the
