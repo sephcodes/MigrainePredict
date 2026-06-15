@@ -235,3 +235,5 @@ data/gdpr.screened.jsonl
 data/gdpr.postscreened.jsonl
 data/gdpr.smoke_curated.postscreened.jsonl
 data/gdpr.smoke_curated.extracted.jsonl
+data/min_5run
+data/min_5run_applyfix

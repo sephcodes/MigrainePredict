@@ -665,6 +665,26 @@ pointing to which scope clause to extract.
   of natural persons ("natural persons", "children", "legal persons").
 - **TEMPORAL** — trigger is a date / transition period.
 
+## applies_to Completeness and Boundary
+
+`applies_to` is the COMPLETE noun phrase naming the scoped entity. Capture all
+of it, including any coordinated continuation that names MORE of the same
+entity — "X, as well as Y", "X and Y", "X or Y" where Y is another thing being
+scoped. Do NOT stop at an internal comma and drop the coordinated tail (e.g.
+from "documents, as well as their cover pages" do not keep only "documents").
+
+`condition` is the separate material that QUALIFIES or RESTRICTS the scope —
+not part of the entity name. It includes manner / means phrases ("by automated
+means", "through ..."), conditionals ("if ...", "where ...", "provided that
+..."), and relative clauses ("which ...", "that ..."). These belong in
+`condition`, never appended to `applies_to`.
+
+Split test: text that NAMES the scoped thing → `applies_to` (including
+coordinated names); text that says WHEN / HOW / WHICH it applies → `condition`.
+A phrase joined by "as well as" / "and" follows the same test — it joins
+`applies_to` only if it names another entity, and `condition` if it describes
+a manner, means, or restriction.
+
 ## List-Introducer Conditions — Reference ALL Listed Sub-Items
 
 When the condition is a connective forward-referencing a list ("both of the
