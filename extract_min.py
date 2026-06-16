@@ -946,6 +946,28 @@ def _profile_dimensions_matched(statement_class: str, stmt: dict) -> list[str]:
     return [dim for dim, kws in PROFILE_KEYWORDS.items() if any(kw in blob for kw in kws)]
 
 
+def _is_legislator_subject(stmt: dict) -> bool:
+    """True when a DEONTIC statement's subject is a legal INSTRUMENT
+    ("Union or Member State law", "Member State law", "national law") rather
+    than a duty-bearing actor. These arise when a derogation's safeguards tail
+    ("based on Union or Member State law which shall be proportionate…") is
+    mis-extracted as standalone obligations addressed to the law itself — the
+    content is already captured in the parent permission's `condition`, so the
+    record is a spurious duplicate.
+
+    Matches only subjects whose head noun is "law"; "Member States" (a genuine
+    duty-bearer in our subject convention) is NOT matched. Requires EVERY
+    subject value to be a legal instrument, so a real actor anywhere in the
+    subject list keeps the record."""
+    subs = stmt.get("subject") or []
+    vals = [(sv.get("value") or "").strip().lower()
+            for sv in subs if isinstance(sv, dict)]
+    vals = [v for v in vals if v]
+    if not vals:
+        return False
+    return all(v.endswith(" law") or v == "law" for v in vals)
+
+
 def _apply_hc_gate(result: dict) -> dict:
     """Rule-based override of an LLM-emitted applies_to_healthcare=True:
       1. APPLICABILITY EXCLUDES polarity → False (carve-out, not in-scope).
@@ -1029,6 +1051,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     errored = False
     na_rationales: list[str] = []          # collected, merged into one NA at the end
     na_unknown_error: str | None = None
+    n_legislator_dropped = 0               # spurious legal-instrument-subject deontics
     for cand in classification.candidates:
         cls = cand.statement_class
         if cls == StatementClass.DEONTIC and is_recital:
@@ -1072,6 +1095,14 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
         if stmt_dict.get("source_article") != iri:
             stmt_dict["source_article"] = iri
 
+        # Legislator-subject guard: drop deontic statements whose subject is a
+        # legal instrument (not a duty-bearer). These are derogation safeguards
+        # tails mis-read as obligations addressed to "Union or Member State
+        # law"; the content already lives in the parent permission's condition.
+        if cls == StatementClass.DEONTIC and _is_legislator_subject(stmt_dict):
+            n_legislator_dropped += 1
+            continue
+
         result = {
             "statement_class": cls.value,
             "statement": stmt_dict,
@@ -1087,6 +1118,9 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
         seen = set()
         unique = [r for r in na_rationales if not (r in seen or seen.add(r))]
         results.append(_na_stub(rec, " | ".join(unique), error=na_unknown_error))
+
+    if n_legislator_dropped:
+        print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
     return rec, results, errored
 

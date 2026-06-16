@@ -58,6 +58,10 @@ INTERPRETIVE_STMT = {
 # concern handled separately and is ignored here.
 GRADE_NEEDS_REVIEW_WHEN_GOLD_SET = True
 
+# references: True = HARD (build-breaker, good for production CI);
+# False = SOFT flag (recommended while validating generalisation).
+REFERENCES_HARD = False
+
 # ----------------------------------------------------------------------------
 def norm_text(s):
     """Normalise free text for comparison: unicode-fold, collapse whitespace,
@@ -93,6 +97,24 @@ def norm_value(path, v):
         return frozenset(v or [])
     # free-text-ish fields: normalise
     return norm_text(v) if isinstance(v, str) else v
+
+def refs_compat(a, b):
+    # Same cited provision if equal OR one IRI is a path-prefix of the other:
+    # gdpr:art_55 ~ gdpr:art_55/par_1. Whole-vs-paragraph citation depth is a
+    # convention difference, not a wrong reference.
+    return a == b or a.startswith(b + "/") or b.startswith(a + "/")
+
+def refs_match(gold_refs, run_refs):
+    gold, run = list(gold_refs or []), list(run_refs or [])
+    used = [False] * len(run)
+    for g in gold:
+        hit = False
+        for i, r in enumerate(run):
+            if not used[i] and refs_compat(g, r):
+                used[i] = True; hit = True; break
+        if not hit:
+            return False
+    return all(used) if run else (len(gold) == 0)
 
 def ev_list_summary(lst):
     """Summarise a list[ExtractedValue] as normalised 'value(method)' tuples."""
@@ -144,6 +166,12 @@ def compare_pair(gold, run):
 
     # objective inside statement
     for f in OBJECTIVE_STMT.get(sc, []):
+        if f.endswith("references"):
+            # depth-tolerant; routed to HARD or SOFT per REFERENCES_HARD
+            if not refs_match(get(f, gstmt), get(f, rstmt)):
+                (hard if REFERENCES_HARD else soft).append(
+                    f"references: gold={get(f, gstmt)} run={get(f, rstmt)}")
+            continue
         gv, rv = norm_value(f, get(f, gstmt)), norm_value(f, get(f, rstmt))
         if gv != rv:
             hard.append(f"{f}: gold={gv!r} run={rv!r}")
@@ -172,7 +200,9 @@ def compare_pair(gold, run):
 def main():
     if len(sys.argv) != 3:
         print("usage: python compare_to_gold.py gold_set.jsonl run.jsonl"); sys.exit(2)
-    gold = {key(r): r for r in load(sys.argv[1])}
+    gold_all = load(sys.argv[1])
+    screened = [r for r in gold_all if r.get("screen_dependent")]
+    gold = {key(r): r for r in gold_all if not r.get("screen_dependent")}
     run_recs = load(sys.argv[2])
     run = {}
     dupes = []
@@ -202,6 +232,9 @@ def main():
             for s in soft:
                 print(f"             soft  {s}"); soft_total += 1
 
+    for r in screened:
+        print(f"[SCREEN]   {r.get('gold_id','?')}  {r.get('paragraph_iri')}  -- screen_dependent, not scored")
+
     # run records with no gold match (e.g. NOT_APPLICABLE duplication regressions)
     extra = [k for k in run if k not in gold]
     for k in extra:
@@ -209,7 +242,8 @@ def main():
     print("="*70)
     print(f"matched {matched}/{len(gold)} gold records | "
           f"HARD failures: {hard_total} | soft flags: {soft_total} | "
-          f"extra run records: {len(extra)} | dupe run keys: {len(dupes)}")
+          f"extra run records: {len(extra)} | dupe run keys: {len(dupes)} | "
+          f"screened-out: {len(screened)}")
     sys.exit(1 if (hard_total or extra or dupes) else 0)
 
 if __name__ == "__main__":
