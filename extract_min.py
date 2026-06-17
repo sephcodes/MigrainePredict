@@ -474,6 +474,20 @@ e.g., "shall implement and maintain appropriate measures" (two predicates,
 one shared object → one candidate, predicate is multi-valued in stage 2).
 Independent pairs MUST be split.
 
+## Data-Subject Rights → One Candidate (the controller's duty)
+
+This rule applies ONLY to the explicit data-subject RIGHTS in Articles 12–22,
+phrased "the data subject shall have the right to / not to X". It does NOT
+apply to lawful-basis or consent provisions (e.g. Art 6(1), Art 9(2)) — those
+mention the data subject's consent but are ordinary controller PERMISSIONs;
+classify and extract them normally, and never drop or merge them.
+
+For an actual Art 12–22 right: it is ONE deontic statement, extracted at stage
+2 as the correlative CONTROLLER duty. Emit EXACTLY ONE DEONTIC candidate for
+it, anchored on the right. Do NOT additionally emit a separate "the data
+subject may / has the right" candidate — the right and the controller's duty
+are the same statement modelled once, not two.
+
 ## No Inference from Silence
 
 Do not project a statement that is not supported by the paragraph or its
@@ -530,6 +544,29 @@ and maintain"), or multiple targets. Emit one ExtractedValue per distinct
 value. If a single statement would require fundamentally different predicates
 acting on fundamentally different targets, that is two statements; the
 classifier should have split them, so do not produce a merged extraction here.
+
+## Data-Subject Rights Are Extracted as the Controller's Duty
+
+This applies ONLY to the explicit Article 12–22 rights ("the data subject
+shall have the right to / not to X"), NOT to lawful-basis or consent
+provisions (Art 6(1), Art 9(2)) — extract those normally as controller
+PERMISSIONs. For an actual Art 12–22 right, extract it as the correlative duty
+of the CONTROLLER — never as a statement held by the data subject.
+
+- **subject** = "the controller" (method CONTEXT; the controller is the
+  implied duty-bearer, not named in the right's wording).
+- **beneficiary** = "the data subject".
+- **modality** follows what the controller must DO:
+    - controller must PROVIDE / CARRY OUT / ENABLE something (access,
+      rectification, erasure, portability, restriction) → **OBLIGATION**.
+    - controller must REFRAIN FROM / CEASE something (Art 22 solely-automated
+      decisions; ceasing processing after an Art 21 objection) → **PROHIBITION**.
+- **predicate / object** describe the controller's action on the data.
+
+Do NOT output a statement whose subject is "the data subject" — the data
+subject is the beneficiary, never the duty-bearer. (Exceptions to these duties
+— e.g. Art 17(3) carve-outs to the erasure obligation — follow the
+exemption-modality rule below: an exception to an OBLIGATION → DISPENSATION.)
 
 ## Modality of Exemptions — Invert the Parent Rule
 
