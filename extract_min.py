@@ -88,6 +88,19 @@ PROFILE_KEYWORDS = {
     ],
 }
 
+# MigrainePredict's OPERATIVE basis for special-category processing — the only
+# Art 9(2) derogations MP actually relies on (consent + medical). Sourced from
+# MP's stated compliance posture, NOT synthesised here. Used by the gate's
+# operative-basis layer: an Art 9(2) derogation OUTSIDE this set touches the
+# special-category keyword but is not MP-relevant (e.g. research 9(2)(j)), so
+# hc is set False and the record is flagged for review. MP's high-risk basis is
+# the AI Act Art 6(1) medical-device route, so Annex III high-risk USE-areas
+# (standalone biometrics etc.) are likewise not MP's operative basis.
+MIGRAINEPREDICT_PROFILE = {
+    "special_category_bases": {"gdpr:art_9/par_2/pt_a", "gdpr:art_9/par_2/pt_h"}, # explicit consent and preventive/occupational medicine, health care
+    "excluded_scope_prefixes": ("aiact:anx_III/par_",)
+}
+
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -968,14 +981,50 @@ def _is_legislator_subject(stmt: dict) -> bool:
     return all(v.endswith(" law") or v == "law" for v in vals)
 
 
-def _apply_hc_gate(result: dict) -> dict:
-    """Rule-based override of an LLM-emitted applies_to_healthcare=True:
+def _apply_hc_gate(result, profile=MIGRAINEPREDICT_PROFILE) -> dict:
+    """Rule-based gate on applies_to_healthcare.
+
+    Operative-basis layer (fires regardless of the LLM's hc value, because a
+    special-category/biometric provision must not be ASSERTED hc=True on
+    keyword presence alone):
+      0a. Art 9(2) derogation outside MP's operative basis (not 9(2)(a)/(h))
+          → hc=False + needs_review=True.
+      0b. Annex III high-risk USE-area (anx_III/par_N, not the chapeau p_0)
+          → hc=False + needs_review=True (MP is high-risk via Art 6(1)
+          medical-device, not via an Annex III area).
+
+    Keyword layer (only when the LLM emitted hc=True):
       1. APPLICABILITY EXCLUDES polarity → False (carve-out, not in-scope).
       2. APPLICABILITY applies_to = legal persons → False.
       3. No profile dimension matched → False.
     Each override sets needs_review=True + an audit field. False stays False."""
     stmt = result.get("statement")
-    if not stmt or "applies_to_healthcare" not in stmt or not stmt["applies_to_healthcare"]:
+    if not stmt or "applies_to_healthcare" not in stmt:
+        return result
+
+    src = stmt.get("source_article") or ""
+
+    # 0a. Special-category derogation outside MP's operative basis.
+    if src.startswith("gdpr:art_9/par_2/pt_") and src not in profile["special_category_bases"]:
+        stmt["applies_to_healthcare"] = False
+        result["needs_review"] = True
+        result["profile_gate_override"] = (
+            "hc=False: Art 9(2) derogation outside the system's operative "
+            "special-category basis — keyword present, not the basis; flagged for review"
+        )
+        return result
+
+    # 0b. Annex III high-risk USE-area (not the classification chapeau p_0).
+    if any(src.startswith(p) for p in profile["excluded_scope_prefixes"]):
+        stmt["applies_to_healthcare"] = False
+        result["needs_review"] = True
+        result["profile_gate_override"] = (
+            "hc=False: scope outside the system's operative high-risk basis "
+            "— keyword present, not the basis; flagged for review"
+        )
+        return result
+
+    if not stmt["applies_to_healthcare"]:
         return result
     cls = result["statement_class"]
 
