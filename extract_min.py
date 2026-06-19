@@ -1113,6 +1113,91 @@ def _na_stub(rec: dict, rationale: str, *, error: str | None = None) -> dict:
     return out
 
 
+def _assign_statement_ids(iri: str, results: list[dict]) -> None:
+    """Give every emitted record a stable, unique `statement_id` of the form
+    '<paragraph_iri>#s<N>' — the node identity each statement needs for the KG
+    and for intra-paragraph references (Phase B). N is assigned by a CANONICAL
+    SORT of the paragraph's non-NA statements (class → discriminator →
+    normalized content), so the id is deterministic within a run regardless of
+    the LLM's emission order. Output list order is left untouched (emission
+    order); only the id reflects canonical position. The single NA stub, if
+    any, gets '#na'."""
+    def sort_key(r: dict):
+        sc = r["statement_class"]
+        st = r.get("statement") or {}
+        if sc == "DEONTIC":
+            preds = " ".join((ev.get("value") or "") for ev in (st.get("predicate") or [])
+                             if isinstance(ev, dict))
+            objs = " ".join((ev.get("value") or "") for ev in (st.get("object") or [])
+                            if isinstance(ev, dict))
+            return (sc, st.get("modality") or "", preds.lower(), objs.lower())
+        if sc == "DEFINITIONAL":
+            return (sc, (st.get("term") or "").lower(), "", "")
+        if sc == "APPLICABILITY":
+            at = (st.get("applies_to") or {}).get("value") or ""
+            return (sc, st.get("scope_type") or "", st.get("polarity") or "", at.lower())
+        return (sc, "", "", "")
+
+    statements = sorted((r for r in results if r["statement_class"] != "NOT_APPLICABLE"),
+                        key=sort_key)
+    for n, r in enumerate(statements, 1):
+        r["statement_id"] = f"{iri}#s{n}"
+    for r in results:
+        if r["statement_class"] == "NOT_APPLICABLE":
+            r["statement_id"] = f"{iri}#na"
+
+
+def _link_intra_paragraph_parents(results: list[dict]) -> None:
+    """Phase B2: link each PERMISSION/DISPENSATION carve-out to the parent rule
+    it excepts WITHIN the same paragraph, by adding the sibling's statement_id
+    to its `references`. A PERMISSION excepts a PROHIBITION; a DISPENSATION
+    excepts an OBLIGATION (the same modality correlation the exemption-modality
+    rule uses). Only intra-paragraph parents are handled here — a cross-paragraph
+    parent is already added by the prompt's exemption-references rule, and the
+    modality correlation means a permission with no PROHIBITION sibling (e.g.
+    Art 12(1)'s 'may provide orally') is never falsely linked. The added link
+    carries `intra_paragraph_inferred` so it is distinguishable from
+    LLM-emitted references and reviewable. Must run AFTER statement ids."""
+    correlate = {"PERMISSION": "PROHIBITION", "DISPENSATION": "OBLIGATION"}
+
+    def content_tokens(r: dict) -> set:
+        st = r.get("statement") or {}
+        parts = []
+        for fld in ("object", "predicate"):
+            for ev in (st.get(fld) or []):
+                if isinstance(ev, dict):
+                    parts.append(ev.get("value") or "")
+        c = st.get("condition")
+        if isinstance(c, dict):
+            parts.append(c.get("value") or "")
+        return set(" ".join(parts).lower().split())
+
+    for r in results:
+        st = r.get("statement") or {}
+        parent_mod = correlate.get(st.get("modality"))
+        if not parent_mod:
+            continue
+        candidates = [c for c in results if c is not r
+                      and (c.get("statement") or {}).get("modality") == parent_mod]
+        if not candidates:
+            continue  # parent is cross-paragraph (handled by exemption-references)
+        if len(candidates) == 1:
+            parent = candidates[0]
+        else:
+            rt = content_tokens(r)
+            parent = max(candidates, key=lambda c: len(rt & content_tokens(c)))
+        pid = parent.get("statement_id")
+        if not pid:
+            continue
+        refs = st.get("references")
+        if not isinstance(refs, list):
+            refs = []
+            st["references"] = refs
+        if pid not in refs:
+            refs.append(pid)
+            r["intra_paragraph_inferred"] = True
+
+
 def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     """Run the full two-stage pipeline on one paragraph. Returns (rec,
     list-of-result-records, errored). DEONTIC candidates on recitals are
@@ -1208,6 +1293,8 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     if n_legislator_dropped:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
+    _assign_statement_ids(iri, results)
+    _link_intra_paragraph_parents(results)
     return rec, results, errored
 
 

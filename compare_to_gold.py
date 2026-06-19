@@ -152,7 +152,13 @@ def key(rec):
     return (rec.get("paragraph_iri"), discriminator(rec))
 
 # ----------------------------------------------------------------------------
-def compare_pair(gold, run):
+def compare_pair(gold, run, sid_map=None):
+    """sid_map: run statement_id -> gold statement_id, from the global
+    alignment. Used to translate intra-paragraph (statement-level) references
+    so a run carve-out pointing at run-`#s2` grades against a gold carve-out
+    pointing at gold-`#s1` when those siblings content-match. Paragraph-level
+    IRI references are not in the map and pass through unchanged."""
+    sid_map = sid_map or {}
     hard, soft = [], []
     sc = gold.get("statement_class")
 
@@ -167,10 +173,15 @@ def compare_pair(gold, run):
     # objective inside statement
     for f in OBJECTIVE_STMT.get(sc, []):
         if f.endswith("references"):
-            # depth-tolerant; routed to HARD or SOFT per REFERENCES_HARD
-            if not refs_match(get(f, gstmt), get(f, rstmt)):
+            # Translate run statement-level refs (e.g. '...#s2') to their gold
+            # counterpart via the alignment, so intra-paragraph parent links
+            # grade by content, not by per-run id string. Paragraph IRIs are
+            # untouched. Then depth-tolerant set match; HARD or SOFT per config.
+            grefs = get(f, gstmt)
+            rrefs = [sid_map.get(x, x) for x in (get(f, rstmt) or [])]
+            if not refs_match(grefs, rrefs):
                 (hard if REFERENCES_HARD else soft).append(
-                    f"references: gold={get(f, gstmt)} run={get(f, rstmt)}")
+                    f"references: gold={grefs} run={rrefs}")
             continue
         gv, rv = norm_value(f, get(f, gstmt)), norm_value(f, get(f, rstmt))
         if gv != rv:
@@ -197,54 +208,137 @@ def compare_pair(gold, run):
     return hard, soft
 
 # ----------------------------------------------------------------------------
+# Within-group alignment (Phase A): multiple statements can share the same
+# (paragraph_iri, discriminator) key — e.g. Art 16's rectification + completion
+# obligations, both (art_16/par_1, DEO, OBLIGATION). The old dict keyed by that
+# tuple silently dropped all but the last. We now keep a LIST per key and
+# content-best-match gold↔run within each group, so the harness can hold and
+# grade multiple statements per key. For the common 1-gold-1-run group this is
+# identical to the old behaviour (the single pair always matches).
+
+def _match_tokens(rec):
+    """Distinguishing-content token set used to pair same-key statements.
+    Anchor is the strongest 'which part of the paragraph' signal; the rest are
+    the class's content fields (the discriminator fields are already equal
+    within a group, so they don't help separate)."""
+    sc = rec.get("statement_class")
+    st = rec.get("statement") or {}
+    parts = [rec.get("anchor") or ""]
+    if sc == "DEONTIC":
+        for fld in ("predicate", "object", "subject"):
+            for ev in (st.get(fld) or []):
+                if isinstance(ev, dict):
+                    parts.append(ev.get("value") or "")
+        c = st.get("condition")
+        if isinstance(c, dict):
+            parts.append(c.get("value") or "")
+    elif sc == "DEFINITIONAL":
+        d = st.get("definition")
+        if isinstance(d, dict):
+            parts.append(d.get("value") or "")
+    elif sc == "APPLICABILITY":
+        for fld in ("applies_to", "condition"):
+            v = st.get(fld)
+            if isinstance(v, dict):
+                parts.append(v.get("value") or "")
+    elif sc == "NOT_APPLICABLE":
+        parts.append((st.get("text") or "")[:120])
+    blob = norm_text(" ".join(p for p in parts if p)) or ""
+    return set(blob.split())
+
+def _score_pair(g, r):
+    gt, rt = _match_tokens(g), _match_tokens(r)
+    if not gt and not rt:
+        return 1.0
+    if not gt or not rt:
+        return 0.0
+    return len(gt & rt) / len(gt | rt)
+
+def match_group(gold_list, run_list):
+    """Greedy content best-match within a (iri, discriminator) group.
+    Returns (pairs, missing_gold, extra_run)."""
+    cand = sorted(
+        ((_score_pair(g, r), gi, ri)
+         for gi, g in enumerate(gold_list)
+         for ri, r in enumerate(run_list)),
+        key=lambda x: -x[0],
+    )
+    used_g, used_r, pairs = set(), set(), []
+    for _, gi, ri in cand:
+        if gi in used_g or ri in used_r:
+            continue
+        used_g.add(gi); used_r.add(ri)
+        pairs.append((gold_list[gi], run_list[ri]))
+    missing = [g for i, g in enumerate(gold_list) if i not in used_g]
+    extra = [r for i, r in enumerate(run_list) if i not in used_r]
+    return pairs, missing, extra
+
+# ----------------------------------------------------------------------------
 def main():
     if len(sys.argv) != 3:
         print("usage: python compare_to_gold.py gold_set.jsonl run.jsonl"); sys.exit(2)
     gold_all = load(sys.argv[1])
     screened = [r for r in gold_all if r.get("screen_dependent")]
-    gold = {key(r): r for r in gold_all if not r.get("screen_dependent")}
+    gold_recs = [r for r in gold_all if not r.get("screen_dependent")]
     run_recs = load(sys.argv[2])
-    run = {}
-    dupes = []
-    for r in run_recs:
-        k = key(r)
-        if k in run: dupes.append(k)
-        run[k] = r
 
+    # Group both sides into lists keyed by (paragraph_iri, discriminator),
+    # preserving gold file order for stable output.
+    from collections import OrderedDict, defaultdict
+    gold_groups = OrderedDict()
+    for r in gold_recs:
+        gold_groups.setdefault(key(r), []).append(r)
+    run_groups = defaultdict(list)
+    for r in run_recs:
+        run_groups[key(r)].append(r)
+
+    ordered_keys = list(gold_groups.keys()) + [k for k in run_groups if k not in gold_groups]
+
+    # Pass 1: match every group; build the global run->gold statement_id map
+    # from all matched pairs (needed before grading so intra-paragraph
+    # references can be translated).
+    group_results, sid_map = {}, {}
+    for k in ordered_keys:
+        pairs, missing, extra = match_group(gold_groups.get(k, []), run_groups.get(k, []))
+        group_results[k] = (pairs, missing, extra)
+        for g, r in pairs:
+            if r.get("statement_id") and g.get("statement_id"):
+                sid_map[r["statement_id"]] = g["statement_id"]
+
+    # Pass 2: grade and report (gold file order preserved).
     matched, hard_total, soft_total = 0, 0, 0
+    extra_recs = []
     print("="*70)
-    for k, g in gold.items():
-        gid = g.get("gold_id", "?")
-        iri = k[0]
-        if k not in run:
-            print(f"[MISSING]  {gid}  {iri}  {k[1]}  -- no matching run record")
+    for k in ordered_keys:
+        pairs, missing, extra = group_results[k]
+        for g, r in pairs:
+            matched += 1
+            gid, iri = g.get("gold_id", "?"), k[0]
+            hard, soft = compare_pair(g, r, sid_map)
+            if not hard and not soft:
+                print(f"[PASS]     {gid}  {iri}")
+            else:
+                print(f"[{'FAIL' if hard else 'flag'}]     {gid}  {iri}")
+                for h in hard:
+                    print(f"             HARD  {h}"); hard_total += 1
+                for s in soft:
+                    print(f"             soft  {s}"); soft_total += 1
+        for g in missing:
+            print(f"[MISSING]  {g.get('gold_id','?')}  {k[0]}  {k[1]}  -- no matching run record")
             hard_total += 1
-            continue
-        matched += 1
-        hard, soft = compare_pair(g, run[k])
-        if not hard and not soft:
-            print(f"[PASS]     {gid}  {iri}")
-        else:
-            tag = "FAIL" if hard else "flag"
-            print(f"[{tag}]     {gid}  {iri}")
-            for h in hard:
-                print(f"             HARD  {h}"); hard_total += 1
-            for s in soft:
-                print(f"             soft  {s}"); soft_total += 1
+        extra_recs.extend(extra)
 
     for r in screened:
         print(f"[SCREEN]   {r.get('gold_id','?')}  {r.get('paragraph_iri')}  -- screen_dependent, not scored")
 
-    # run records with no gold match (e.g. NOT_APPLICABLE duplication regressions)
-    extra = [k for k in run if k not in gold]
-    for k in extra:
-        print(f"[EXTRA]    {k[0]}  {k[1]}  -- run produced a record with no gold match")
+    for r in extra_recs:
+        print(f"[EXTRA]    {r.get('paragraph_iri')}  {key(r)[1]}  -- run produced a record with no gold match")
     print("="*70)
-    print(f"matched {matched}/{len(gold)} gold records | "
+    print(f"matched {matched}/{len(gold_recs)} gold records | "
           f"HARD failures: {hard_total} | soft flags: {soft_total} | "
-          f"extra run records: {len(extra)} | dupe run keys: {len(dupes)} | "
+          f"extra run records: {len(extra_recs)} | dupe run keys: 0 | "
           f"screened-out: {len(screened)}")
-    sys.exit(1 if (hard_total or extra or dupes) else 0)
+    sys.exit(1 if (hard_total or extra_recs) else 0)
 
 if __name__ == "__main__":
     main()
