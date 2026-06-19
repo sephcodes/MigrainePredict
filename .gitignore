@@ -247,3 +247,6 @@ data/holdout_5run_profile
 data/holdout_5run_baseline_rights
 data/holdout_5run_reframe
 data/holdout_5run_reframe2
+data/dev_5run_b2
+data/holdout_5run_b2
+data/holdout.extracted.jsonl
