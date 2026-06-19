@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout, as_completed
@@ -1113,6 +1114,94 @@ def _na_stub(rec: dict, rationale: str, *, error: str | None = None) -> dict:
     return out
 
 
+# Canonical duty-bearer vocabulary (plain roles, matching the gold). The LLM
+# picks WHICH role; this pass only snaps the surface form to one canonical
+# string and fixes the method, so the 'who-must-act' field is stable run-to-run
+# for Phase-2 queries. Ontology-IRI mapping (dpv:DataController etc.) is a
+# later stage. Order: more specific keywords first.
+_ROLE_KEYWORDS = [
+    ("data subject", "the data subject"),
+    ("supervisory authorit", "supervisory authorities"),
+    ("member state", "Member States"),
+    ("controller", "the controller"),
+    ("processor", "the processor"),
+    ("provider", "the provider"),
+    ("deployer", "the deployer"),
+]
+# Core data-processing actors that are regulation-specific (used for the
+# vocabulary mismatch check). Member States / authorities are cross-cutting and
+# never flag.
+_GDPR_CORE_ROLES = {"the controller", "the processor", "the data subject"}
+_AIACT_CORE_ROLES = {"the provider", "the deployer"}
+_DEFAULT_DUTY_BEARER = {"gdpr": "the controller", "aiact": "the provider"}
+
+
+def _canonical_role(value: str) -> tuple[str | None, str | None]:
+    """Map a subject surface form to (canonical_role, matched_keyword), or
+    (None, None) when it doesn't map to exactly one role (multi-role or
+    unknown values are left untouched so we never corrupt them)."""
+    v = (value or "").lower()
+    hits = [(canon, kw) for kw, canon in _ROLE_KEYWORDS if kw in v]
+    # de-dupe by canonical form (e.g. one keyword) — distinct canon forms means
+    # the value names more than one role; leave it alone.
+    distinct = {c for c, _ in hits}
+    if len(distinct) == 1:
+        return hits[0]
+    return None, None
+
+
+def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
+    """Deterministic subject-canonicalization (Item 1). For each DEONTIC
+    statement: snap subject values to the canonical role vocabulary; recompute
+    method as STATED iff the role word is named in the paragraph (else CONTEXT);
+    supply the regulation's default duty-bearer when the subject is implicit
+    (passive obligation-of-being); and flag a wrong-regulation actor for review.
+    Subject is interpretive (soft-graded), so this only stabilises the field and
+    cannot change a HARD outcome."""
+    source = rec.get("source", "")
+    text_lc = (rec.get("text") or "").lower()
+    default = _DEFAULT_DUTY_BEARER.get(source)
+
+    for r in results:
+        if r["statement_class"] != "DEONTIC":
+            continue
+        st = r.get("statement")
+        if not st:
+            continue
+
+        subj = st.get("subject") or []
+        for ev in subj:
+            canon, _ = _canonical_role(ev.get("value"))
+            if canon:
+                ev["value"] = canon  # value-only canonicalisation; method left as the LLM's
+
+        # Passive obligation-of-being / non-actor subject: when NO subject names
+        # a duty-bearer role at all (empty, or a passive grammatical subject
+        # such as "personal data" or "enterprise employing fewer than 250
+        # persons"), the implied duty-bearer is the regulation default (CONTEXT).
+        # A subject containing any role word — including multi-role "controllers
+        # and processors" — is left as-is. Flagged for audit.
+        def _has_role_word(ev: dict) -> bool:
+            v = (ev.get("value") or "").lower()
+            return any(kw in v for kw, _ in _ROLE_KEYWORDS)
+        if default and not any(_has_role_word(ev) for ev in subj):
+            st["subject"] = [{"value": default, "method": "CONTEXT"}]
+            r["subject_inferred_duty_bearer"] = True
+
+        # Regulation-vocabulary check (core actors only).
+        vals = {ev.get("value") for ev in (st.get("subject") or []) if ev.get("value")}
+        wrong = None
+        if source == "gdpr" and (vals & _AIACT_CORE_ROLES):
+            wrong = vals & _AIACT_CORE_ROLES
+        elif source == "aiact" and (vals & _GDPR_CORE_ROLES):
+            wrong = vals & _GDPR_CORE_ROLES
+        if wrong:
+            r["needs_review"] = True
+            r["subject_vocabulary_mismatch"] = (
+                f"{source} statement with wrong-regulation actor(s) {sorted(wrong)}"
+            )
+
+
 def _assign_statement_ids(iri: str, results: list[dict]) -> None:
     """Give every emitted record a stable, unique `statement_id` of the form
     '<paragraph_iri>#s<N>' — the node identity each statement needs for the KG
@@ -1293,6 +1382,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     if n_legislator_dropped:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
+    _canonicalize_subjects(rec, results)
     _assign_statement_ids(iri, results)
     _link_intra_paragraph_parents(results)
     return rec, results, errored
