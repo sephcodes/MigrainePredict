@@ -1136,6 +1136,63 @@ _AIACT_CORE_ROLES = {"the provider", "the deployer"}
 _DEFAULT_DUTY_BEARER = {"gdpr": "the controller", "aiact": "the provider"}
 
 
+# Value-type markers for routing a dropped PERMISSION grammatical subject:
+# a data/patient noun is the OBJECT ("special categories ... may be processed"),
+# a scope entity is the exemption CONDITION ("[obligations] shall not apply to
+# an enterprise ...").
+_DATA_NOUN_MARKERS = ("data", "information", "categor", "decision", "record", "content")
+_SCOPE_ENTITY_MARKERS = ("enterprise", "organisation", "organization", "body",
+                         "establishment", "established", "employing", "undertaking",
+                         "micro", "medium-sized")
+
+
+def _preserve_target_slot(modality: str, value: str) -> str | None:
+    """Which slot a dropped grammatical-subject value belongs in, given the
+    modality. DISPENSATION -> condition (exemption scope). OBLIGATION/PROHIBITION
+    -> object (passive patient). PERMISSION is ambiguous so it is routed by
+    value-type: scope entity -> condition, data/patient noun -> object,
+    otherwise not moved (we don't guess)."""
+    if modality == "DISPENSATION":
+        return "condition"
+    if modality in ("OBLIGATION", "PROHIBITION"):
+        return "object"
+    if modality == "PERMISSION":
+        v = (value or "").lower()
+        if any(m in v for m in _SCOPE_ENTITY_MARKERS):
+            return "condition"
+        if any(m in v for m in _DATA_NOUN_MARKERS):
+            return "object"
+    return None
+
+
+def _preserve_dropped_subject(st: dict, modality: str, dropped: list[str]) -> None:
+    """Re-home a dropped non-role grammatical subject into object or condition
+    (per _preserve_target_slot) so compliance-relevant content isn't lost when
+    the duty-bearer substitution fires. De-dups against the target slot; for a
+    condition, prepends the scope and keeps the existing tail."""
+    def _present(needle: str, hay: str) -> bool:
+        n, h = (needle or "").lower().strip(), (hay or "").lower()
+        return bool(n) and (n in h or h in n)
+
+    for val in dropped:
+        if not val:
+            continue
+        slot = _preserve_target_slot(modality, val)
+        if slot == "object":
+            objs = st.get("object") or []
+            if not any(_present(val, ev.get("value")) for ev in objs):
+                objs.append({"value": val, "method": "STATED"})
+                st["object"] = objs
+        elif slot == "condition":
+            cond = st.get("condition")
+            existing = cond.get("value") if isinstance(cond, dict) else None
+            if not existing:
+                st["condition"] = {"value": val, "method": "STATED"}
+            elif not _present(val, existing):
+                st["condition"] = {"value": f"{val} {existing}", "method": "STATED"}
+        # slot is None -> ambiguous PERMISSION value; leave it out rather than guess.
+
+
 def _canonical_role(value: str) -> tuple[str | None, str | None]:
     """Map a subject surface form to (canonical_role, matched_keyword), or
     (None, None) when it doesn't map to exactly one role (multi-role or
@@ -1185,8 +1242,10 @@ def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
             v = (ev.get("value") or "").lower()
             return any(kw in v for kw, _ in _ROLE_KEYWORDS)
         if default and not any(_has_role_word(ev) for ev in subj):
+            dropped = [ev.get("value") for ev in subj if ev.get("value")]
             st["subject"] = [{"value": default, "method": "CONTEXT"}]
             r["subject_inferred_duty_bearer"] = True
+            _preserve_dropped_subject(st, st.get("modality"), dropped)
 
         # Regulation-vocabulary check (core actors only).
         vals = {ev.get("value") for ev in (st.get("subject") or []) if ev.get("value")}
