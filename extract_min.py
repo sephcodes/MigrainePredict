@@ -1346,6 +1346,67 @@ def _link_intra_paragraph_parents(results: list[dict]) -> None:
             r["intra_paragraph_inferred"] = True
 
 
+def _statement_span_text(result: dict) -> str:
+    """The text a statement actually covers — its anchor plus content fields —
+    used to test whether a citation surface lies within the statement."""
+    parts = [result.get("anchor") or ""]
+    st = result.get("statement") or {}
+    sc = result.get("statement_class")
+
+    def _ev(v):
+        if isinstance(v, dict) and isinstance(v.get("value"), str):
+            parts.append(v["value"])
+        elif isinstance(v, list):
+            for e in v:
+                _ev(e)
+
+    if sc == "DEONTIC":
+        for f in ("predicate", "object", "subject", "condition", "beneficiary"):
+            _ev(st.get(f))
+    elif sc == "APPLICABILITY":
+        for f in ("applies_to", "condition"):
+            _ev(st.get(f))
+    elif sc == "DEFINITIONAL":
+        if isinstance(st.get("term"), str):
+            parts.append(st["term"])
+        _ev(st.get("definition"))
+    return " ".join(p for p in parts if p).lower()
+
+
+def _flag_smeared_references(rec: dict, results: list[dict]) -> None:
+    """Issue #3 (HITL disposition). A paragraph's resolved cross-references are
+    attached to every statement extracted from it. When a statement carries
+    references but NONE of the citation SURFACES that produced them appear in
+    its own span, the references were smeared onto a sibling that cites nothing
+    — flag for review (don't drop; finer attribution is interpretive).
+
+    Keyed on the citation surface, not the resolved IRI: a range-expanded member
+    (art_16 from "Articles 15 to 22") or anaphora ("paragraphs 1 and 2") rides
+    with the surface that produced it, so it isn't spuriously flagged for not
+    naming its own article number. Intra-paragraph statement_id references carry
+    no surface and so never trigger the flag."""
+    iri_surfaces: dict[str, set] = {}
+    for cr in rec.get("cross_references") or []:
+        iri, surf = cr.get("resolved_iri"), cr.get("citation_surface")
+        if iri and surf:
+            iri_surfaces.setdefault(iri, set()).add(surf.lower())
+    if not iri_surfaces:
+        return
+    for r in results:
+        st = r.get("statement")
+        if not st:
+            continue
+        surfaces = set()
+        for ref in (st.get("references") or []):
+            surfaces |= iri_surfaces.get(ref, set())
+        if not surfaces:
+            continue
+        span = _statement_span_text(r)
+        if not any(s in span for s in surfaces):
+            r["needs_review"] = True
+            r["references_unattributed"] = True
+
+
 def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     """Run the full two-stage pipeline on one paragraph. Returns (rec,
     list-of-result-records, errored). DEONTIC candidates on recitals are
@@ -1444,6 +1505,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     _canonicalize_subjects(rec, results)
     _assign_statement_ids(iri, results)
     _link_intra_paragraph_parents(results)
+    _flag_smeared_references(rec, results)
     return rec, results, errored
 
 

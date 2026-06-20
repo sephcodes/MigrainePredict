@@ -235,6 +235,7 @@ data/gdpr.screened.jsonl
 data/gdpr.postscreened.jsonl
 data/gdpr.smoke_curated.postscreened.jsonl
 data/gdpr.smoke_curated.extracted.jsonl
+data/holdout.extracted.jsonl
 data/min_5run
 data/min_5run_applyfix
 data/min_5run_segtype
@@ -249,4 +250,7 @@ data/holdout_5run_reframe
 data/holdout_5run_reframe2
 data/dev_5run_b2
 data/holdout_5run_b2
-data/holdout.extracted.jsonl
+data/dev_5run_canon
+data/holdout_5run_canon
+data/holdout_5run_xref
+data/holdout_5run_xref2

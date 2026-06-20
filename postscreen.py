@@ -425,7 +425,8 @@ def _resolve_with_fallback(by_pos: dict, unit_id: str,
 RE_ARTICLE = re.compile(
     r"\bArticles?\s+"
     r"(\d+)(\(\d+\))?(\([a-z]\))?(\((?:" + _ROMAN_ALT + r")\))?"
-    r"(?:\s+of\s+(" + _REGULATION_GROUP + r"))?"
+    r"((?:\s*(?:,|and|or|to)\s*\d+)*)"            # g5: chained/range article numbers
+    r"(?:\s+of\s+(" + _REGULATION_GROUP + r"))?"  # g6: of Regulation
 )
 
 RE_ANNEX = re.compile(
@@ -433,7 +434,10 @@ RE_ANNEX = re.compile(
     r"(?:\s+of\s+(" + _REGULATION_GROUP + r"))?"
 )
 
-RE_PARAGRAPH = re.compile(r"\b[Pp]aragraphs?\s+(\d+)")
+RE_PARAGRAPH = re.compile(
+    r"\b[Pp]aragraphs?\s+(\d+)"
+    r"((?:\s*(?:,|and|or|to)\s*\d+)*)"   # g2: chained/range paragraph numbers
+)
 # Match a point lead-in and any chained additional letters (", (X)", " and (X)",
 # " or (X)"). Without the chain group, "points (a) and (b)" emits only pt_a and
 # downstream extractors can't reach pt_b. The third group captures the whole
@@ -442,6 +446,7 @@ RE_POINT = re.compile(
     r"\b[Pp]oints?\s+"
     r"(\([a-z]\))(\((?:" + _ROMAN_ALT + r")\))?"
     r"((?:\s*(?:,|and|or)\s*\([a-z]\))*)"
+    r"(?:\s+of\s+Article\s+(\d+)(\(\d+\))?)?"   # g4: of-Article number, g5: of-Article paragraph
 )
 RE_REGULATION_BARE = re.compile(
     r"\bRegulation\s+\((?:EU|EC|EEC)\)(?:\s+No)?\s+(\d+/\d+)"
@@ -503,7 +508,7 @@ def extract_cross_references(
         return any(cs <= s and e <= ce for cs, ce in consumed_spans)
 
     def emit(raw: str, kind: str, resolved_iri: str | None,
-             span: tuple[int, int]) -> None:
+             span: tuple[int, int], surface: str | None = None) -> None:
         if raw in seen_raw or is_consumed(span):
             return
         seen_raw.add(raw)
@@ -511,6 +516,11 @@ def extract_cross_references(
             "raw": raw,
             "kind": kind,
             "resolved_iri": resolved_iri,
+            # The original citation string this IRI came from. For chained/range
+            # members (art_16 from "15 to 22") it is the PARENT surface, so the
+            # downstream attribution check keys on the text actually present in
+            # the regulation, not a synthesised "Article 16".
+            "citation_surface": surface if surface is not None else raw,
             "text": _resolve_text(resolved_iri, source, iri_to_rec_by_source),
         })
         consumed_spans.append(span)
@@ -522,7 +532,7 @@ def extract_cross_references(
         p_num = m.group(2)[1:-1] if m.group(2) else None
         point = m.group(3)[1:-1] if m.group(3) else None
         sub   = m.group(4)[1:-1] if m.group(4) else None
-        reg_cite = m.group(5)
+        reg_cite = m.group(6)
 
         target_source = source
         if reg_cite:
@@ -551,14 +561,36 @@ def extract_cross_references(
             # record because every paragraph has a path beyond the unit.
             first_iri = iri_by_pos_by_source.get(target_source, {}).get((target_unit, 0))
             emit(raw, "article", first_iri, m.span())
-            continue
-
-        para_idx = _resolve_with_fallback(target_pos, target_unit, markers)
-        if para_idx is None:
-            emit(raw, "article", None, m.span())
         else:
-            resolved = iri_by_pos_by_source[target_source].get((target_unit, para_idx))
-            emit(raw, "article", resolved, m.span())
+            para_idx = _resolve_with_fallback(target_pos, target_unit, markers)
+            if para_idx is None:
+                emit(raw, "article", None, m.span())
+            else:
+                resolved = iri_by_pos_by_source[target_source].get((target_unit, para_idx))
+                emit(raw, "article", resolved, m.span())
+
+        # Chained / range article numbers (issue #1): "Articles 13 and 14",
+        # "Articles 15 to 22 and 34". Each additional number is a bare article
+        # reference (first paragraph IRI). Append directly — the chained numbers
+        # share the match span (already consumed), so emit()'s is_consumed check
+        # would drop them; seen_raw still dedups.
+        prev = int(article_num)
+        for conn, num_s in re.findall(r"(,|and|or|to)\s*(\d+)", m.group(5) or ""):
+            num = int(num_s)
+            nums = range(prev + 1, num + 1) if conn == "to" else [num]
+            for n in nums:
+                ch_raw = f"Article {n}"
+                if ch_raw in seen_raw:
+                    continue
+                ch_unit = f"art_{n}"
+                ch_iri = (iri_by_pos_by_source.get(target_source, {}).get((ch_unit, 0))
+                          if (target_pos is not None and unit_exists(target_pos, ch_unit))
+                          else None)
+                seen_raw.add(ch_raw)
+                refs.append({"raw": ch_raw, "kind": "article", "resolved_iri": ch_iri,
+                             "citation_surface": raw,  # parent surface, e.g. "Articles 15 to 22 and 34"
+                             "text": _resolve_text(ch_iri, source, iri_to_rec_by_source)})
+            prev = num
 
     # Annex references.
     for m in RE_ANNEX.finditer(text):
@@ -591,11 +623,32 @@ def extract_cross_references(
             continue
         para_num = m.group(1)
         raw = m.group(0)
-        idx = None
-        if target_pos is not None:
-            idx = _resolve_with_fallback(target_pos, current_unit_id, [f"{para_num}."])
-        resolved = iri_by_pos_here.get((current_unit_id, idx)) if idx is not None else None
-        emit(raw, "paragraph", resolved, m.span())
+
+        def _resolve_par(n: str):
+            i = (_resolve_with_fallback(target_pos, current_unit_id, [f"{n}."])
+                 if target_pos is not None else None)
+            return iri_by_pos_here.get((current_unit_id, i)) if i is not None else None
+
+        emit(raw, "paragraph", _resolve_par(para_num), m.span())
+
+        # Chained / range paragraph numbers (issue: "paragraphs 1 and 2",
+        # "paragraphs 1 to 3"). Each rides on the parent surface so the
+        # attribution check keys on the text actually present ("paragraphs 1
+        # and 2"). Append directly — chained numbers share the consumed span.
+        prev = int(para_num)
+        for conn, num_s in re.findall(r"(,|and|or|to)\s*(\d+)", m.group(2) or ""):
+            num = int(num_s)
+            nums = range(prev + 1, num + 1) if conn == "to" else [num]
+            for n in nums:
+                ch_raw = f"paragraph {n}"
+                if ch_raw in seen_raw:
+                    continue
+                seen_raw.add(ch_raw)
+                ch_iri = _resolve_par(str(n))
+                refs.append({"raw": ch_raw, "kind": "paragraph", "resolved_iri": ch_iri,
+                             "citation_surface": raw,  # parent surface, e.g. "Paragraphs 1 and 2"
+                             "text": _resolve_text(ch_iri, source, iri_to_rec_by_source)})
+            prev = num
 
     # Internal "point (X)" — relative to current article. The trailer group
     # captures chained additional letters ("(a) and (b)", "(a), (b) and (c)");
@@ -607,37 +660,44 @@ def extract_cross_references(
         point_marker = m.group(1)
         sub_marker = m.group(2)
         trailer = m.group(3) or ""
+        of_art = m.group(4)           # "point (e) of Article 6(1)" -> "6"
+        of_par = m.group(5)           # -> "(1)"
         raw = m.group(0)
-        markers = [point_marker]
-        if sub_marker:
-            markers.append(sub_marker)
-        idx = None
-        if target_pos is not None:
-            idx = find_paragraph_by_markers(target_pos, current_unit_id, markers)
-        resolved = iri_by_pos_here.get((current_unit_id, idx)) if idx is not None else None
-        emit(raw, "point", resolved, m.span())
+
+        # Issue #2: "point (X) of Article N" resolves the point against the
+        # CITED article (with its paragraph), not the current one. A plain
+        # "point (X)" stays relative to the current article (unchanged).
+        if of_art and target_pos is not None and unit_exists(target_pos, f"art_{of_art}"):
+            pt_unit = f"art_{of_art}"
+            base = [f"{of_par[1:-1]}."] if of_par else []
+            raw_suffix = f" of Article {of_art}"
+            def _resolve_point(mk):
+                i = _resolve_with_fallback(target_pos, pt_unit, base + mk)
+                return iri_by_pos_here.get((pt_unit, i)) if i is not None else None
+        else:
+            raw_suffix = ""
+            def _resolve_point(mk):
+                i = (find_paragraph_by_markers(target_pos, current_unit_id, mk)
+                     if target_pos is not None else None)
+                return iri_by_pos_here.get((current_unit_id, i)) if i is not None else None
+
+        markers = [point_marker] + ([sub_marker] if sub_marker else [])
+        emit(raw, "point", _resolve_point(markers), m.span())
 
         for letter in re.findall(r"\(([a-z])\)", trailer):
             chained_marker = f"({letter})"
-            chained_raw = f"point {chained_marker}"
+            chained_raw = f"point {chained_marker}{raw_suffix}"
             if chained_raw in seen_raw:
                 continue
-            chained_idx = (
-                find_paragraph_by_markers(target_pos, current_unit_id, [chained_marker])
-                if target_pos is not None else None
-            )
-            chained_resolved = (
-                iri_by_pos_here.get((current_unit_id, chained_idx))
-                if chained_idx is not None else None
-            )
             # Bypass the is_consumed check — the chained marker shares the
-            # parent match's span, which is already in consumed_spans from the
-            # primary emit. seen_raw still dedups on the canonical raw.
+            # parent match's span, already consumed by the primary emit.
             seen_raw.add(chained_raw)
+            chained_resolved = _resolve_point([chained_marker])
             refs.append({
                 "raw": chained_raw,
                 "kind": "point",
                 "resolved_iri": chained_resolved,
+                "citation_surface": raw,  # parent surface, e.g. "point (e) or (f) of Article 6(1)"
                 "text": _resolve_text(chained_resolved, source, iri_to_rec_by_source),
             })
 
@@ -659,6 +719,15 @@ def extract_cross_references(
         if is_consumed(m.span()):
             continue
         emit(m.group(0), m.group(1).lower(), None, m.span())
+
+    # Drop a bare-article ref that a point ref from the same citation makes
+    # redundant (e.g. art_6/par_1 alongside art_6/par_1/pt_e from "point (e) of
+    # Article 6(1)" — the specific point is what was cited, not the paragraph).
+    point_iris = {r["resolved_iri"] for r in refs
+                  if r["kind"] == "point" and r.get("resolved_iri")}
+    refs = [r for r in refs if not (
+        r["kind"] == "article" and r.get("resolved_iri")
+        and any(p.startswith(r["resolved_iri"] + "/") for p in point_iris))]
 
     return refs
 
