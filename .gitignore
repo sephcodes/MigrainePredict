@@ -254,3 +254,6 @@ data/dev_5run_canon
 data/holdout_5run_canon
 data/holdout_5run_xref
 data/holdout_5run_xref2
+data/dev_5run_xsplit
+data/holdout_5run_xsplit
+run_xsplit_eval.sh

@@ -1261,6 +1261,134 @@ def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
             )
 
 
+# Exception-split detection (over-extraction). The LLM sometimes emits a
+# norm-with-exception TWICE: the primary norm plus a mirror sibling of the
+# OPPOSITE polarity whose condition is just the carve-out clause already
+# embedded in the primary (e.g. Art 33(1) OBLIGATION "notify ... unless
+# unlikely to result in a risk" + a DISPENSATION "notify ... when unlikely to
+# result in a risk"; Art 9(2)(a) PERMISSION "may process ... except where MS
+# law forbids" + a PROHIBITION restating that exception). The sibling is the
+# same regulatory fact re-encoded — a redundant KG node that corrupts the
+# obligation count. A genuine carve-out (Art 5(1)(b)'s further-processing
+# PERMISSION) is NOT a mirror: it introduces new affirmative scope and points
+# elsewhere, so it is spared.
+_EXCEPTION_CUES = (
+    "unless", "except", "save where", "save that", "provided that",
+    "shall not apply", "does not apply", "do not apply", "may not be lifted",
+)
+_PRED_STOP = {
+    "may", "shall", "must", "can", "could", "will", "would", "should", "be",
+    "been", "being", "to", "the", "a", "an", "of", "in", "that", "which", "by",
+    "or", "and", "is", "are", "for", "as", "with", "on", "at", "not",
+}
+
+
+def _stem(w: str) -> str:
+    for suf in ("ing", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) - len(suf) >= 3:
+            return w[: -len(suf)]
+    return w
+
+
+def _content_tokens(stmt: dict, field: str) -> set:
+    """Stemmed, modal/stopword-stripped token set for a list-valued field
+    (predicate/object) so 'may process' and 'process', 'further processed' and
+    'further process' collapse to the same set."""
+    raw = " ".join(ev.get("value") or "" for ev in (stmt.get(field) or [])
+                   if isinstance(ev, dict))
+    return {_stem(t) for t in re.findall(r"[a-z]+", raw.lower()) if t not in _PRED_STOP}
+
+
+def _cond_text(stmt: dict) -> str:
+    c = stmt.get("condition")
+    if isinstance(c, dict):
+        return c.get("value") or ""
+    return c if isinstance(c, str) else ""
+
+
+def _cond_tokens(stmt: dict) -> set:
+    return {_stem(t) for t in re.findall(r"[a-z]+", _cond_text(stmt).lower())}
+
+
+def _real_refs(stmt: dict) -> set:
+    """Cross-paragraph IRI references only (intra-paragraph '#sN' links carry no
+    surface and aren't assigned yet at merge time)."""
+    return {r for r in (stmt.get("references") or [])
+            if isinstance(r, str) and "#" not in r}
+
+
+def _contained(small: set, big: set, thresh: float) -> bool:
+    return bool(small) and len(small & big) / len(small) >= thresh
+
+
+def _merge_exception_splits(rec: dict, results: list[dict]) -> None:
+    """Suppress redundant exception-split siblings. Must run BEFORE statement-id
+    assignment so ids reflect the de-duplicated set, and after subject
+    canonicalisation so the mirror's subject is already normalised.
+
+    For each statement S of an 'exception' modality (DISPENSATION/PROHIBITION),
+    find the best-matching primary P of the correlated modality
+    (OBLIGATION/PERMISSION) by predicate+object overlap, then:
+      Case A (DROP) — S's predicate AND object are contained in P's, and S's
+        non-empty condition is contained in P's: S merely restates P's own
+        exception, adds nothing → drop S, tag P 'merged_exception_split'.
+      Case B (FLAG) — pred+object mirror but no clean condition subset, S's
+        condition is a bare carve-out clause, and the pair shares all
+        cross-references: ambiguous → flag both for review, drop nothing.
+    Anything else (S introduces new affirmative scope, or a distinct outbound
+    reference) is spared untouched — this is what protects Art 5(1)(b)."""
+    correlate = {"DISPENSATION": "OBLIGATION", "PROHIBITION": "PERMISSION"}
+    drops: list[int] = []
+    flagged: set[int] = set()
+
+    for si, s in enumerate(results):
+        st = s.get("statement") or {}
+        primary_mod = correlate.get(st.get("modality"))
+        if not primary_mod:
+            continue
+        s_pred, s_obj = _content_tokens(st, "predicate"), _content_tokens(st, "object")
+        if not s_pred or not s_obj:
+            continue
+        # best primary by predicate+object token overlap
+        cands = [(pi, p) for pi, p in enumerate(results)
+                 if p is not s and (p.get("statement") or {}).get("modality") == primary_mod]
+        if not cands:
+            continue
+        def overlap(p):
+            pst = p.get("statement") or {}
+            return (len(s_pred & _content_tokens(pst, "predicate"))
+                    + len(s_obj & _content_tokens(pst, "object")))
+        pi, p = max(cands, key=lambda c: overlap(c[1]))
+        pst = p.get("statement") or {}
+        # require the mirror: same action on the same target
+        if not (_contained(s_pred, _content_tokens(pst, "predicate"), 0.6)
+                and _contained(s_obj, _content_tokens(pst, "object"), 0.6)):
+            continue
+
+        s_cond, p_cond = _cond_tokens(st), _cond_tokens(pst)
+        # Case A: S's condition is P's own exception, restated → redundant.
+        if s_cond and _contained(s_cond, p_cond, 0.8):
+            p["merged_exception_split"] = {
+                "dropped_modality": st.get("modality"),
+                "dropped_condition": _cond_text(st),
+            }
+            drops.append(si)
+            continue
+        # Case B: carve-out-cue mirror, no subset, no distinct outbound ref →
+        # can't confidently merge; surface for review rather than drop.
+        s_text = _cond_text(st).lower()
+        if (any(cue in s_text for cue in _EXCEPTION_CUES)
+                and _real_refs(st) == _real_refs(pst)):
+            for idx in (si, pi):
+                results[idx]["needs_review"] = True
+                results[idx]["exception_split_ambiguous"] = True
+                flagged.add(idx)
+
+    if drops:
+        for idx in sorted(drops, reverse=True):
+            results.pop(idx)
+
+
 def _assign_statement_ids(iri: str, results: list[dict]) -> None:
     """Give every emitted record a stable, unique `statement_id` of the form
     '<paragraph_iri>#s<N>' — the node identity each statement needs for the KG
@@ -1503,6 +1631,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
     _canonicalize_subjects(rec, results)
+    _merge_exception_splits(rec, results)
     _assign_statement_ids(iri, results)
     _link_intra_paragraph_parents(results)
     _flag_smeared_references(rec, results)
