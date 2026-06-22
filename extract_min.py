@@ -1261,6 +1261,44 @@ def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
             )
 
 
+# Recital applicability guard (over-extraction). Recitals occasionally yield
+# spurious APPLICABILITY whose `applies_to` is the regulation's own machinery
+# rather than a regulated entity (rct_10: "the application of the rules of this
+# Regulation", "its rules", "a margin of manoeuvre", "Member State law") — an
+# incoherent scope, since a regulation's scope is never its own rules. The
+# self-referential markers are structurally invalid and DROPPED; the
+# recital-specific markers are more rct_10-tuned, so those are routed to HITL
+# (needs_review) rather than dropped — pulling them out of the trusted set
+# without asserting the strings are universally invalid. Scoped to recitals so
+# operative articles are never touched; legitimate scope recitals (rct_14/15:
+# "natural persons", "the processing of personal data") name a concrete entity
+# and trip nothing.
+_RECITAL_APP_DROP = ("this regulation", "its rules", "application of the rules")
+_RECITAL_APP_FLAG = ("margin of manoeuvre", "member state law")
+
+
+def _guard_recital_applicability(rec: dict, results: list[dict]) -> None:
+    """Drop structurally-invalid self-referential APPLICABILITY on recitals;
+    flag the recital-specific (overfit) matches for review instead. No-op on
+    non-recital paragraphs. Must run BEFORE statement-id assignment."""
+    if rec.get("unit_type") != "recital":
+        return
+    drops: list[int] = []
+    for i, r in enumerate(results):
+        if r.get("statement_class") != StatementClass.APPLICABILITY.value:
+            continue
+        st = r.get("statement") or {}
+        at = st.get("applies_to")
+        at = ((at.get("value") if isinstance(at, dict) else at) or "").lower()
+        if any(m in at for m in _RECITAL_APP_DROP):
+            drops.append(i)
+        elif any(m in at for m in _RECITAL_APP_FLAG):
+            r["needs_review"] = True
+            r["recital_scope_unverified"] = True
+    for i in sorted(drops, reverse=True):
+        results.pop(i)
+
+
 # Exception-split detection (over-extraction). The LLM sometimes emits a
 # norm-with-exception TWICE: the primary norm plus a mirror sibling of the
 # OPPOSITE polarity whose condition is just the carve-out clause already
@@ -1631,6 +1669,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
     _canonicalize_subjects(rec, results)
+    _guard_recital_applicability(rec, results)
     _merge_exception_splits(rec, results)
     _assign_statement_ids(iri, results)
     _link_intra_paragraph_parents(results)
