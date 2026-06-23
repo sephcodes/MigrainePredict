@@ -1644,6 +1644,78 @@ def _flag_truncated_spans(rec: dict, results: list[dict]) -> None:
             r["span_coverage_truncated"] = " ".join(best)
 
 
+# Enumeration-ground gate (class only). A sub-point ('.../pt_X') under a parent
+# whose lead-in INTRODUCES CONDITIONS ("... where one of the following grounds
+# applies:", "... shall not apply to the extent that processing is necessary:")
+# is one of the parent norm's enumerated condition-arms — it must stay DEONTIC
+# like its siblings, not drift to APPLICABILITY/DEFINITIONAL when its own text
+# reads scope-ish in isolation (Art 17(1)(c) did exactly this). We coerce CLASS
+# ONLY (route to the deontic extractor); modality/predicate/object/condition/
+# cardinality stay with stage-2, which already emits them correctly — so pt_b's
+# multiple statements and par_3's mixed predicates are preserved, and a
+# sub-point legitimately needing a different modality than its siblings is left
+# to the LLM (HITL is the backstop).
+#
+# The discriminator is the lead-in's SEMANTIC TYPE, not "colon + list". Only
+# CONDITION-introducers gate. CONTENT/object/definition introducers ("Personal
+# data shall be:", "shall implement the following measures:", "means:") are
+# EXCLUDED — their sub-points are distinct norms/objects (Art 5(1)'s six
+# principles are the canary), and gating them would collapse distinct norms. A
+# sub-point under an UNRECOGNISED conditional enumeration is NOT gated but is
+# flagged for review, so the whitelist grows deliberately rather than silently
+# mis-gating (the merge over-drop lesson: never collapse nodes invisibly).
+_COND_LEADIN = [re.compile(p, re.I) for p in (
+    r"where\s+(any|one)\s+of\s+the\s+following",
+    r"if\s+(any|one)\s+of\s+the\s+following",
+    r"at\s+least\s+one\s+of\s+the\s+following\s+applies",
+    r"only\s+if\b.{0,40}\bone\s+of\s+the\s+following",
+    r"to\s+the\s+extent\s+that\b.{0,40}\bnecessary",
+    r"shall\s+not\s+apply\s+(where|if|to\s+the\s+extent)",
+    r"applies\s+only\s+(where|when|if)",
+    r"(any|one)\s+of\s+the\s+following\s+(cases|situations|circumstances)",
+    r"on\s+the\s+basis\s+of\s+(any|one)\s+of\s+the\s+following",
+    r"provided\s+that\s+(any|one)\s+of\s+the\s+following",
+    r"unless\s+(any|one)\s+of\s+the\s+following\s+applies",
+)]
+_CONTENT_LEADIN = [re.compile(p, re.I) for p in (
+    r"shall\s+be\s*:",
+    r"the\s+following\s+(measures|safeguards|information|elements|details|data|categories)",
+    r"shall\s+(implement|contain|include|comprise|provide|ensure|consist\s+of)\s+the\s+following",
+    r"\bmeans\s*:",
+)]
+_COND_SUBORD = re.compile(
+    r"\b(where|if|unless|provided that|to the extent that|on the basis of)\b", re.I)
+
+
+def _immediate_parent_text(rec: dict) -> str | None:
+    """Text of the immediate (longest-prefix) parent of a '.../pt_X' sub-point,
+    or None when the record is not a sub-point / has no parent in its chain."""
+    iri = rec.get("iri") or ""
+    if not re.search(r"/pt_[0-9a-z]+$", iri):
+        return None
+    cands = [p for p in (rec.get("parent") or [])
+             if isinstance(p, dict) and iri.startswith((p.get("iri") or "") + "/")]
+    if not cands:
+        return None
+    return max(cands, key=lambda p: len(p.get("iri") or "")).get("text") or ""
+
+
+def _enumeration_gate(rec: dict) -> str:
+    """'gate' = whitelisted condition-introducer (coerce non-DEONTIC children to
+    DEONTIC); 'flag' = unrecognised conditional enumeration (review, don't
+    gate); '' = not gated."""
+    ptext = _immediate_parent_text(rec)
+    if ptext is None:
+        return ""
+    if any(p.search(ptext) for p in _CONTENT_LEADIN):
+        return ""
+    if any(p.search(ptext) for p in _COND_LEADIN):
+        return "gate"
+    if _COND_SUBORD.search(ptext) and ptext.rstrip().endswith(":"):
+        return "flag"
+    return ""
+
+
 def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     """Run the full two-stage pipeline on one paragraph. Returns (rec,
     list-of-result-records, errored). DEONTIC candidates on recitals are
@@ -1669,8 +1741,16 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     na_rationales: list[str] = []          # collected, merged into one NA at the end
     na_unknown_error: str | None = None
     n_legislator_dropped = 0               # spurious legal-instrument-subject deontics
+    enum_gate = _enumeration_gate(rec)     # condition-ground sub-point handling
     for cand in classification.candidates:
         cls = cand.statement_class
+        # Enumeration-ground gate: a condition-arm sub-point that drifted out of
+        # DEONTIC is re-routed to the deontic extractor (class only).
+        coerced_from = None
+        if (enum_gate == "gate"
+                and cls not in (StatementClass.DEONTIC, StatementClass.NOT_APPLICABLE)):
+            coerced_from = cls.value
+            cls = StatementClass.DEONTIC
         if cls == StatementClass.DEONTIC and is_recital:
             na_rationales.append(f"DEONTIC suppressed on recital — {cand.rationale}")
             continue
@@ -1728,6 +1808,11 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
             "classification_rationale": cand.rationale,
             "anchor": cand.anchor,
         }
+        if coerced_from is not None:
+            result["class_coerced_to_deontic"] = coerced_from
+        if enum_gate == "flag":
+            result["needs_review"] = True
+            result["unrecognized_enumeration_leadin"] = True
         results.append(_apply_hc_gate(result))
 
     # Collapse all NA candidates into exactly one NA record for the paragraph.
