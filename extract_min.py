@@ -1573,6 +1573,77 @@ def _flag_smeared_references(rec: dict, results: list[dict]) -> None:
             r["references_unattributed"] = True
 
 
+# Span-coverage truncation detector (DEONTIC only). The extractor sometimes
+# captures a leading prefix of an operative clause and drops the trailing
+# remainder (H07 drops "or similarly significantly affects him or her"; H20
+# drops the "unless the controller demonstrates compelling legitimate grounds
+# which override ..." override). These grade as soft but leave a structurally
+# incomplete clause the Phase-2 layer shouldn't trust. We can't repair a
+# truncation deterministically (the dropped text is only knowable by
+# re-extracting), so we DETECT it: flag the paragraph to HITL when a long
+# CONTIGUOUS run of source content-tokens is left uncovered by the union of
+# extracted slot text.
+#
+# Scoped to DEONTIC: only there do subject+predicate+object+condition genuinely
+# span the operative sentence. APPLICABILITY/DEFINITIONAL don't store the
+# chapeau ("An AI system shall be considered high-risk where ...") or the
+# definiendum as slots, so full-source coverage would count the chapeau as
+# uncovered even on a perfect extraction. The casualty is the applicability
+# truncation class (e.g. G09's territorial-scope "regardless ..." tail) — an
+# accepted trade, pattern-checkable separately if it matters. Contiguity (not
+# aggregate coverage) and N>=4 keep rights-reframing — which only drops
+# scattered role words — from flooding the queue; a short-but-critical drop
+# (H20's "where the data subject objects") sits below the floor by design and
+# is left to gold + annotation, not chased by lowering N.
+_COV_STOP = {
+    "a", "an", "the", "this", "that", "these", "those", "of", "to", "in", "on",
+    "at", "by", "for", "and", "or", "as", "with", "is", "are", "be", "been",
+    "being", "shall", "must", "may", "should", "will", "can", "not", "no",
+    "which", "who", "whom", "whose", "his", "her", "him", "their", "them",
+    "they", "it", "its", "he", "she", "such", "any", "all", "where", "when",
+    "whether", "from", "into", "out", "up", "down", "than", "then", "so",
+}
+_SPAN_N = 4   # flag when >= N consecutive content-tokens are uncovered
+
+
+def _cov_tokens(text: str) -> list[str]:
+    return [_stem(t) for t in re.findall(r"[a-z]+", (text or "").lower())
+            if t not in _COV_STOP]
+
+
+def _flag_truncated_spans(rec: dict, results: list[dict]) -> None:
+    """Flag a paragraph's DEONTIC statements for review when the source has a
+    contiguous run of >= _SPAN_N content-tokens uncovered by the union of their
+    slot text (a dropped operative clause / truncation). Pure HITL flag — no
+    drop, no grading change. No-op when no DEONTIC statement is present."""
+    deontic = [r for r in results
+               if r.get("statement_class") == StatementClass.DEONTIC.value
+               and r.get("statement")]
+    if not deontic:
+        return
+    covered = set()
+    for r in deontic:
+        covered |= set(_cov_tokens(_statement_span_text(r)))
+    source = re.sub(r"^\s*\d+\.\s*", "", rec.get("text") or "")
+
+    # longest contiguous run of uncovered content-tokens (and its text)
+    best: list[str] = []
+    cur: list[str] = []
+    for raw in re.findall(r"[a-z]+", source.lower()):
+        if raw in _COV_STOP:
+            continue
+        if _stem(raw) in covered:
+            cur = []
+        else:
+            cur.append(raw)
+            if len(cur) > len(best):
+                best = cur[:]
+    if len(best) >= _SPAN_N:
+        for r in deontic:
+            r["needs_review"] = True
+            r["span_coverage_truncated"] = " ".join(best)
+
+
 def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     """Run the full two-stage pipeline on one paragraph. Returns (rec,
     list-of-result-records, errored). DEONTIC candidates on recitals are
@@ -1674,6 +1745,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     _assign_statement_ids(iri, results)
     _link_intra_paragraph_parents(results)
     _flag_smeared_references(rec, results)
+    _flag_truncated_spans(rec, results)
     return rec, results, errored
 
 
