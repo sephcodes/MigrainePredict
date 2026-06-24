@@ -259,3 +259,5 @@ data/holdout_5run_xsplit
 run_xsplit_eval.sh
 data/art17_probe.postscreened.jsonl
 data/art17_probe.extracted.jsonl
+data/dev_5run_prednorm
+data/holdout_5run_prednorm

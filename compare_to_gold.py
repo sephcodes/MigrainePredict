@@ -30,6 +30,8 @@ can sit in a pre-commit hook or CI step.
 """
 import json, re, sys, unicodedata
 
+from predicate_norm import normalise_predicate
+
 # ----------------------------------------------------------------------------
 # Field configuration
 # ----------------------------------------------------------------------------
@@ -122,6 +124,22 @@ def ev_list_summary(lst):
         return lst
     return [(norm_text(e.get("value")), e.get("method")) for e in lst]
 
+def ev_list_summary_predicate(lst, modality):
+    """Like ev_list_summary but normalises the predicate VERB FORM first (strip
+    deontic scaffolding + lemmatise the exposed verb) so gold and run align on
+    verb form. Rule 3: the SAME normalisation is applied to both sides, so it
+    can only tolerate scaffolding/voice drift, never mask a substantive
+    difference (idempotent on the already-normalised run output)."""
+    if not isinstance(lst, list):
+        return lst
+    out = []
+    for e in lst:
+        v = e.get("value")
+        if isinstance(v, str):
+            v, _ = normalise_predicate(v, modality)
+        out.append((norm_text(v), e.get("method")))
+    return out
+
 # ----------------------------------------------------------------------------
 def load(path):
     out = []
@@ -189,7 +207,10 @@ def compare_pair(gold, run, sid_map=None):
 
     # interpretive inside statement
     for f in INTERPRETIVE_STMT.get(sc, []):
-        if f in ("subject", "predicate", "object"):
+        if f == "predicate":
+            gv = ev_list_summary_predicate(gstmt.get(f), gstmt.get("modality"))
+            rv = ev_list_summary_predicate(rstmt.get(f), rstmt.get("modality"))
+        elif f in ("subject", "object"):
             gv, rv = ev_list_summary(gstmt.get(f)), ev_list_summary(rstmt.get(f))
         elif f in ("condition", "beneficiary"):
             g_, r_ = gstmt.get(f), rstmt.get(f)

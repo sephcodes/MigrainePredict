@@ -45,6 +45,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from tqdm import tqdm
 
+from predicate_norm import normalise_predicate
+
 DEFAULT_PATHS = [
     Path("data/gdpr.postscreened.jsonl"),
     Path("data/aiact.postscreened.jsonl"),
@@ -1207,6 +1209,29 @@ def _canonical_role(value: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+def _normalise_predicates(rec: dict, results: list[dict]) -> None:
+    """Rewrite each DEONTIC statement's predicate value(s) to normalised form
+    (strip leading deontic scaffolding, lemmatise the exposed verb) so the KG
+    holds a uniform verb form. A predicate whose negation contradicts its
+    modality (a negation on OBLIGATION/PERMISSION) is left untouched and the
+    record flagged for review. Must run BEFORE statement-id assignment, since
+    the canonical sort keys on the predicate."""
+    for r in results:
+        if r.get("statement_class") != StatementClass.DEONTIC.value:
+            continue
+        st = r.get("statement") or {}
+        modality = st.get("modality")
+        for ev in (st.get("predicate") or []):
+            if not isinstance(ev, dict) or not isinstance(ev.get("value"), str):
+                continue
+            norm, contradiction = normalise_predicate(ev["value"], modality)
+            if contradiction:
+                r["needs_review"] = True
+                r["predicate_negation_contradiction"] = ev["value"]
+            else:
+                ev["value"] = norm
+
+
 def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
     """Deterministic subject-canonicalization (Item 1). For each DEONTIC
     statement: snap subject values to the canonical role vocabulary; recompute
@@ -1824,6 +1849,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     if n_legislator_dropped:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
+    _normalise_predicates(rec, results)
     _canonicalize_subjects(rec, results)
     _guard_recital_applicability(rec, results)
     _merge_exception_splits(rec, results)
