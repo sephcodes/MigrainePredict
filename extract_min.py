@@ -1209,6 +1209,48 @@ def _canonical_role(value: str) -> tuple[str | None, str | None]:
     return None, None
 
 
+# Annex III area applies_to fix. An Annex III AREA paragraph (aiact:anx_III/
+# par_N, N>=1) scopes a specific high-risk area named in its own leading text
+# (Biometrics, Critical infrastructure, ...). The extractor sometimes infers the
+# generic chapeau noun ('AI systems', method=CONTEXT) instead — which carries no
+# discriminating scope, since every Annex III area is about AI systems. We
+# override only the inferred-and-generic case with the area name derived from
+# the paragraph text. The CONTEXT guard ensures a grounded STATED value is never
+# overwritten; the delimiter (first of ', in so far as' or ':', never a bare
+# comma) yields the correct name for all eight areas, including the two whose
+# heading contains an internal comma (Employment...; Migration...).
+_ANNEX_GENERIC_SCOPE = {
+    "ai system", "ai systems", "an ai system", "the ai system", "the ai systems",
+    "high-risk ai system", "high-risk ai systems",
+}
+
+
+def _fix_annex_area_applies_to(rec: dict, results: list[dict]) -> None:
+    """Override a generic, inferred (CONTEXT) 'AI systems' applies_to on an
+    Annex III area paragraph with the area name from its leading text (STATED).
+    No-op elsewhere. Must run BEFORE statement-id assignment (the APP canonical
+    sort keys on applies_to)."""
+    m = re.match(r"aiact:anx_III/par_(\d+)$", rec.get("iri") or "")
+    if not m or m.group(1) == "0":
+        return
+    text = rec.get("text") or ""
+    mm = re.match(r"\s*\d+\.\s*(.+)", text, re.S)
+    area = re.split(r",\s*in so far as|:", mm.group(1) if mm else text, 1)[0]
+    area = area.strip().rstrip(",").strip()
+    if not area:
+        return
+    for r in results:
+        if r.get("statement_class") != StatementClass.APPLICABILITY.value:
+            continue
+        at = (r.get("statement") or {}).get("applies_to")
+        if (isinstance(at, dict)
+                and (at.get("value") or "").strip().lower() in _ANNEX_GENERIC_SCOPE
+                and at.get("method") == "CONTEXT"):
+            at["value"] = area
+            at["method"] = "STATED"
+            r["annex_area_applies_to_fixed"] = True
+
+
 def _normalise_predicates(rec: dict, results: list[dict]) -> None:
     """Rewrite each DEONTIC statement's predicate value(s) to normalised form
     (strip leading deontic scaffolding, lemmatise the exposed verb) so the KG
@@ -1850,6 +1892,7 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
         print(f"  dropped {n_legislator_dropped} legislator-subject deontic record(s) at {iri}")
 
     _normalise_predicates(rec, results)
+    _fix_annex_area_applies_to(rec, results)
     _canonicalize_subjects(rec, results)
     _guard_recital_applicability(rec, results)
     _merge_exception_splits(rec, results)
