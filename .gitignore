@@ -261,3 +261,5 @@ data/art17_probe.postscreened.jsonl
 data/art17_probe.extracted.jsonl
 data/dev_5run_prednorm
 data/holdout_5run_prednorm
+data/holdout_5run_newgold
+run_holdout_eval.sh
