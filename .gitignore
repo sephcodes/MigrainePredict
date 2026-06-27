@@ -268,3 +268,5 @@ data/holdout_5run_redundant_neg
 test_predicate_guards.py
 data/dev_5run_deontic_pred_subjmap
 data/holdout_5run_redundant_neg_subjmap
+data/dev_5run_deontic_pred_subjmap_modmap
+data/holdout_5run_redundant_neg_subjmap_modmap

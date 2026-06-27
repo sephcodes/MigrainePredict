@@ -1,0 +1,11 @@
+{
+  "prefixes": {
+    "echenim": "PLACEHOLDER__set_echenim_relation_namespace_uri"
+  },
+  "modality_relations": {
+    "OBLIGATION": "echenim:hasObligation",
+    "PERMISSION": "echenim:hasPermission",
+    "PROHIBITION": "echenim:hasProhibition",
+    "DISPENSATION": "echenim:hasDispensation"
+  }
+}
