@@ -1,0 +1,26 @@
+{
+  "prefixes": {
+    "dpv": "https://w3id.org/dpv#",
+    "airo": "https://w3id.org/airo#"
+  },
+  "roles": [
+    {
+      "iri": "dpv:DataController",
+      "vocab": "DPV",
+      "regulation": "gdpr",
+      "aliases": ["the controller", "controller", "data controller"]
+    },
+    {
+      "iri": "dpv:DataProcessor",
+      "vocab": "DPV",
+      "regulation": "gdpr",
+      "aliases": ["the processor", "processor", "data processor"]
+    },
+    {
+      "iri": "airo:AIProvider",
+      "vocab": "AIRO",
+      "regulation": "aiact",
+      "aliases": ["the provider", "provider"]
+    }
+  ]
+}

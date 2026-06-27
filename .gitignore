@@ -266,3 +266,5 @@ run_holdout_eval.sh
 data/dev_5run_deontic_pred
 data/holdout_5run_redundant_neg
 test_predicate_guards.py
+data/dev_5run_deontic_pred_subjmap
+data/holdout_5run_redundant_neg_subjmap
