@@ -53,6 +53,8 @@ def run_postpasses(rec, results):
     em._link_intra_paragraph_parents(results)
     em._flag_smeared_references(rec, results)
     em._flag_truncated_spans(rec, results)
+    em._flag_deontic_operator_predicate(rec, results)
+    em._flag_redundant_negation(rec, results)
     return results
 
 

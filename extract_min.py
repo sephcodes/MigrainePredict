@@ -1711,6 +1711,81 @@ def _flag_truncated_spans(rec: dict, results: list[dict]) -> None:
             r["span_coverage_truncated"] = " ".join(best)
 
 
+# Predicate-malformation HITL guards. The predicate must be the ACTION; the
+# deontic force lives in the `modality` field. Two static defects double-count
+# that force and would invert a reasoner's reading; both are FLAG-only (HITL),
+# never a drop, and run after _normalise_predicates so they see the lemmatised
+# head.
+
+# Guard A — deontic OPERATOR captured as the predicate (e.g. Art 9(1): modality
+# PROHIBITION + predicate "prohibit" reads as "prohibit the processing", i.e.
+# processing is allowed). The lemmatised head is the modality, not an action.
+_DEONTIC_OPERATORS = {"prohibit", "require", "permit", "allow", "oblige"}
+# Closed action-nominal list (no suffix heuristic): GDPR Art 4(2) processing
+# operations + the recurring deontic action nouns. Membership of the OBJECT head
+# is what separates the broken case ("prohibit" + "processing of …") from a
+# legitimately object-only predicate ("require" + "the processor").
+_ACTION_NOMINALS = {
+    "processing", "profiling", "collection", "recording", "organisation",
+    "organization", "structuring", "storage", "adaptation", "alteration",
+    "retrieval", "consultation", "use", "disclosure", "transmission",
+    "dissemination", "transfer", "alignment", "combination", "restriction",
+    "erasure", "destruction", "access", "retention", "disposal", "monitoring",
+    "communication", "notification", "provision",
+}
+_LEADING_DET = {"the", "a", "an", "this", "that", "these", "those", "its", "such"}
+
+
+def _head_word(s: str) -> str:
+    """First content word of a field value, past a leading determiner."""
+    toks = re.findall(r"[a-z]+", (s or "").lower())
+    if toks and toks[0] in _LEADING_DET and len(toks) > 1:
+        return toks[1]
+    return toks[0] if toks else ""
+
+
+def _flag_deontic_operator_predicate(rec: dict, results: list[dict]) -> None:
+    """FLAG: predicate head is a deontic OPERATOR (the modality's verb, not an
+    action) AND the object head is an action-nominal — the action sits in the
+    object, so the operator-as-predicate double-counts the modality."""
+    for r in results:
+        if r.get("statement_class") != StatementClass.DEONTIC.value:
+            continue
+        st = r.get("statement") or {}
+        preds = st.get("predicate") or []
+        if not preds or _head_word(preds[0].get("value")) not in _DEONTIC_OPERATORS:
+            continue
+        if any(_head_word(o.get("value")) in _ACTION_NOMINALS
+               for o in (st.get("object") or [])):
+            r["needs_review"] = True
+            r["predicate_is_deontic_operator"] = True
+
+
+# Guard B — a truth-conditional modifier fused into the predicate on a record
+# whose modality ALREADY carries deontic negativity (Art 21(1): PROHIBITION +
+# "no longer process" reads as a double negative = processing allowed).
+_REDUNDANT_NEG_WORDS = {"not", "never"}
+
+
+def _flag_redundant_negation(rec: dict, results: list[dict]) -> None:
+    """FLAG: predicate carries a negation/restriction adverbial (no longer / not
+    / never) while modality is PROHIBITION, so
+    the adverbial double-counts the deontic negativity the modality encodes."""
+    for r in results:
+        if r.get("statement_class") != StatementClass.DEONTIC.value:
+            continue
+        st = r.get("statement") or {}
+        if st.get("modality") != "PROHIBITION":
+            continue
+        for ev in (st.get("predicate") or []):
+            v = (ev.get("value") or "").lower()
+            toks = set(re.findall(r"[a-z]+", v))
+            if "no longer" in v or (toks & _REDUNDANT_NEG_WORDS):
+                r["needs_review"] = True
+                r["predicate_redundant_negation"] = True
+                break
+
+
 # Enumeration-ground gate (class only). A sub-point ('.../pt_X') under a parent
 # whose lead-in INTRODUCES CONDITIONS ("... where one of the following grounds
 # applies:", "... shall not apply to the extent that processing is necessary:")
@@ -1900,6 +1975,8 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     _link_intra_paragraph_parents(results)
     _flag_smeared_references(rec, results)
     _flag_truncated_spans(rec, results)
+    _flag_deontic_operator_predicate(rec, results)
+    _flag_redundant_negation(rec, results)
     return rec, results, errored
 
 
