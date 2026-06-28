@@ -1,11 +1,11 @@
 {
   "prefixes": {
-    "echenim": "PLACEHOLDER__set_echenim_relation_namespace_uri"
+    "mp": "PLACEHOLDER__set_migrainepredict_schema_namespace_uri"
   },
   "modality_relations": {
-    "OBLIGATION": "echenim:hasObligation",
-    "PERMISSION": "echenim:hasPermission",
-    "PROHIBITION": "echenim:hasProhibition",
-    "DISPENSATION": "echenim:hasDispensation"
+    "OBLIGATION": "mp:hasObligation",
+    "PERMISSION": "mp:hasPermission",
+    "PROHIBITION": "mp:hasProhibition",
+    "DISPENSATION": "mp:hasDispensation"
   }
 }
