@@ -1,11 +1,12 @@
 {
-  "_doc": "Adjudication worksheet. For each value set 'status' to one of: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator). Auto status='mapped' rows are exact lexical hits (spot-check them). '_candidates' are matcher suggestions only (lexical + embedding); they are never authoritative -- move chosen IRIs into 'iri'.",
+  "_doc": "Adjudication worksheet. For each value set 'status' to: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator). DEFAULTS: status='mapped' = exact lexical hit (spot-check); status='review' = a genuine lexical concept mention was found (pick IRI(s) from _candidates); status='literal' = predicate/condition with no lexical concept mention (residue by default -- promote to 'mapped'/'flag' only if a real concept is present). IMPORTANT: '_candidates' marked method='embed' are WEAK hints only -- BGE returns a 'nearest' term over the closed vocab even when the right answer is none, so an embed score is NOT evidence of mappability; rely on lexical hits. 'lexical_hit' flags whether any concept token matched.",
   "predicate": {
     "gdpr": [
       {
         "value": "process",
         "count": 21,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Processing"
         ],
@@ -21,7 +22,8 @@
       {
         "value": "implement",
         "count": 14,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -47,7 +49,8 @@
       {
         "value": "provide",
         "count": 10,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -74,6 +77,7 @@
         "value": "further process",
         "count": 8,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Processing"
         ],
@@ -90,6 +94,7 @@
         "value": "erase",
         "count": 6,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Erase"
         ],
@@ -106,6 +111,7 @@
         "value": "process lawfully, fairly and in a transparent manner",
         "count": 5,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Processing"
         ],
@@ -122,6 +128,7 @@
         "value": "collect",
         "count": 5,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Collect"
         ],
@@ -137,7 +144,8 @@
       {
         "value": "prohibit",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -163,7 +171,8 @@
       {
         "value": "take appropriate measures to provide",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -189,7 +198,8 @@
       {
         "value": "provide orally",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -215,7 +225,8 @@
       {
         "value": "notify",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -241,7 +252,8 @@
       {
         "value": "accompany by",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -267,7 +279,8 @@
       {
         "value": "carry out",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -293,7 +306,8 @@
       {
         "value": "rectify",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -319,7 +333,8 @@
       {
         "value": "complete",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -346,6 +361,7 @@
         "value": "no longer process",
         "count": 5,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Processing"
         ],
@@ -361,7 +377,8 @@
       {
         "value": "ensure the ability to restore",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -387,7 +404,8 @@
       {
         "value": "communicate",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -414,6 +432,7 @@
         "value": "use",
         "count": 5,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Use"
         ],
@@ -429,7 +448,8 @@
       {
         "value": "maintain",
         "count": 4,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -455,7 +475,8 @@
       {
         "value": "address",
         "count": 4,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -481,7 +502,8 @@
       {
         "value": "subject",
         "count": 3,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -507,7 +529,8 @@
       {
         "value": "ensure",
         "count": 3,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -533,7 +556,8 @@
       {
         "value": "take reasonable steps, including technical measures, to inform",
         "count": 3,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -559,7 +583,8 @@
       {
         "value": "not be considered to be incompatible with the initial purposes",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -586,6 +611,7 @@
         "value": "erase without undue delay",
         "count": 2,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Erase"
         ],
@@ -601,7 +627,8 @@
       {
         "value": "comply with",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -627,7 +654,8 @@
       {
         "value": "make",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -653,7 +681,8 @@
       {
         "value": "implement appropriate technical and organisational measures to ensure",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -680,6 +709,7 @@
         "value": "use a single assessment to address",
         "count": 1,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Use"
         ],
@@ -695,7 +725,8 @@
       {
         "value": "exempt from",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -721,7 +752,8 @@
       {
         "value": "regularly test",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -748,6 +780,7 @@
         "value": "assess",
         "count": 1,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:Assess"
         ],
@@ -763,7 +796,8 @@
       {
         "value": "evaluate",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -792,6 +826,7 @@
         "value": "design and develop",
         "count": 5,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       },
@@ -799,6 +834,7 @@
         "value": "establish",
         "count": 4,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       },
@@ -806,6 +842,7 @@
         "value": "implement",
         "count": 4,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       },
@@ -813,6 +850,7 @@
         "value": "document",
         "count": 4,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       },
@@ -820,6 +858,7 @@
         "value": "maintain",
         "count": 4,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       },
@@ -827,6 +866,7 @@
         "value": "establish, implemented, documented and maintained",
         "count": 1,
         "status": "no_target",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": []
       }
@@ -838,13 +878,14 @@
         "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
         "count": 12,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "pd:Communication",
             "label": "Communication",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.372
           },
           {
             "iri": "dpv:ROPA",
@@ -857,12 +898,6 @@
             "label": "Data Processing Record",
             "method": "embed",
             "score": 0.705
-          },
-          {
-            "iri": "dpv:InformationAudit",
-            "label": "Information Audit",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -870,6 +905,7 @@
         "value": "personal data",
         "count": 10,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:PersonalData"
         ],
@@ -886,25 +922,14 @@
         "value": "special categories of personal data",
         "count": 9,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "dpv:PersonalData",
-            "label": "Personal Data",
-            "method": "lexical",
-            "score": 1.0
-          },
-          {
             "iri": "dpv:SpecialCategoryPersonalData",
             "label": "Special Category Personal Data",
-            "method": "embed",
-            "score": 0.961
+            "method": "lexical",
+            "score": 20.218
           },
           {
             "iri": "dpv:IdentifyingPersonalData",
@@ -924,19 +949,14 @@
         "value": "the personal data breach",
         "count": 9,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:DataBreachRecord",
@@ -962,6 +982,7 @@
         "value": "Personal data",
         "count": 8,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:PersonalData"
         ],
@@ -978,6 +999,7 @@
         "value": "the information",
         "count": 7,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1004,37 +1026,38 @@
         "value": "processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "dpv:PersonalData",
-            "label": "Personal Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:IdentifyingPersonalData",
             "label": "Identifying Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 13.342
+          },
+          {
+            "iri": "pd:Genetic",
+            "label": "Genetic",
+            "method": "lexical",
+            "score": 6.47
           },
           {
             "iri": "pd:Biometric",
             "label": "Biometric",
             "method": "lexical",
-            "score": 1.0
+            "score": 6.065
           },
           {
-            "iri": "pd:Identifying",
-            "label": "Identifying",
+            "iri": "pd:Sexual",
+            "label": "Sexual",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.777
+          },
+          {
+            "iri": "pd:Health",
+            "label": "Health",
+            "method": "lexical",
+            "score": 4.966
           }
         ]
       },
@@ -1042,19 +1065,14 @@
         "value": "his or her personal data",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:IdentifyingPersonalData",
@@ -1067,12 +1085,6 @@
             "label": "Inferred Personal Data",
             "method": "embed",
             "score": 0.848
-          },
-          {
-            "iri": "dpv:CollectedPersonalData",
-            "label": "Collected Personal Data",
-            "method": "lexical",
-            "score": 0.667
           }
         ]
       },
@@ -1080,6 +1092,7 @@
         "value": "reasons for the delay",
         "count": 5,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1106,37 +1119,38 @@
         "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
-            "iri": "dpv:Data",
-            "label": "Data",
+            "iri": "dpv:ImpactAssessment",
+            "label": "Impact Assessment",
             "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "dpv:Impact",
-            "label": "Impact",
-            "method": "lexical",
-            "score": 1.0
+            "score": 8.98
           },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
-            "iri": "dpv:ImpactAssessment",
-            "label": "Impact Assessment",
-            "method": "lexical",
-            "score": 1.0
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.801
           },
           {
-            "iri": "dpv:Assessment",
-            "label": "Assessment",
-            "method": "lexical",
-            "score": 1.0
+            "iri": "dpv:PIA",
+            "label": "Privacy Impact Assessment (PIA)",
+            "method": "embed",
+            "score": 0.795
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.781
           }
         ]
       },
@@ -1144,8 +1158,15 @@
         "value": "a set of similar processing operations that present similar high risks",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Risk",
+            "label": "Risk",
+            "method": "lexical",
+            "score": 5.217
+          },
           {
             "iri": "dpv:ROPA",
             "label": "Records of Processing Activities",
@@ -1170,19 +1191,14 @@
         "value": "inaccurate personal data concerning him or her",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:AnonymisedData",
@@ -1208,19 +1224,14 @@
         "value": "incomplete personal data",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:ProvidedPersonalData",
@@ -1233,12 +1244,6 @@
             "label": "Derived Personal Data",
             "method": "embed",
             "score": 0.801
-          },
-          {
-            "iri": "dpv:CollectedPersonalData",
-            "label": "Collected Personal Data",
-            "method": "lexical",
-            "score": 0.667
           }
         ]
       },
@@ -1246,19 +1251,14 @@
         "value": "personal data concerning him or her",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:IdentifyingPersonalData",
@@ -1271,12 +1271,6 @@
             "label": "Sensitive Personal Data",
             "method": "embed",
             "score": 0.837
-          },
-          {
-            "iri": "dpv:CollectedPersonalData",
-            "label": "Collected Personal Data",
-            "method": "lexical",
-            "score": 0.667
           }
         ]
       },
@@ -1284,31 +1278,26 @@
         "value": "appropriate technical and organisational measures to ensure a level of security appropriate to the risk",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 16.836
+          },
           {
             "iri": "dpv:RiskLevel",
             "label": "Risk Level",
             "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "dpv:Risk",
-            "label": "Risk",
-            "method": "lexical",
-            "score": 1.0
+            "score": 11.282
           },
           {
             "iri": "dpv:SecurityAssessment",
             "label": "Security Assessment",
             "method": "embed",
             "score": 0.791
-          },
-          {
-            "iri": "dpv:TechnicalOrganisationalMeasure",
-            "label": "Technical and Organisational Measure",
-            "method": "embed",
-            "score": 0.784
           },
           {
             "iri": "dpv:SecurityAudit",
@@ -1322,37 +1311,38 @@
         "value": "the pseudonymisation and encryption of personal data",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Pseudonymisation",
-            "label": "Pseudonymisation",
-            "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
+          },
+          {
+            "iri": "dpv:Pseudonymisation",
+            "label": "Pseudonymisation",
+            "method": "lexical",
+            "score": 5.217
           },
           {
             "iri": "dpv:Encryption",
             "label": "Encryption",
             "method": "lexical",
-            "score": 1.0
+            "score": 4.966
           },
           {
             "iri": "dpv:PseudonymisedData",
             "label": "Pseudonymised Data",
             "method": "embed",
             "score": 0.902
+          },
+          {
+            "iri": "dpv:FullyRandomisedPseudonymisation",
+            "label": "Fully Randomised Pseudonymisation",
+            "method": "embed",
+            "score": 0.895
           }
         ]
       },
@@ -1360,19 +1350,14 @@
         "value": "the availability and access to personal data",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:SensitivePersonalData",
@@ -1398,13 +1383,14 @@
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
             "label": "Technical and Organisational Measure",
             "method": "lexical",
-            "score": 0.75
+            "score": 16.836
           },
           {
             "iri": "dpv:TrustedComputing",
@@ -1423,12 +1409,6 @@
             "label": "Secure Processing Environment",
             "method": "embed",
             "score": 0.724
-          },
-          {
-            "iri": "dpv:TechnicalStandard",
-            "label": "Technical Standard",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1436,13 +1416,14 @@
         "value": "a record of processing activities",
         "count": 4,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ROPA",
             "label": "Records of Processing Activities",
-            "method": "embed",
-            "score": 0.964
+            "method": "lexical",
+            "score": 16.096
           },
           {
             "iri": "dpv:DataProcessingRecord",
@@ -1455,18 +1436,6 @@
             "label": "Records of Activities",
             "method": "embed",
             "score": 0.861
-          },
-          {
-            "iri": "dpv:ConsentRecord",
-            "label": "Consent Record",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "pd:LoanRecord",
-            "label": "Loan Record",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1474,8 +1443,15 @@
         "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 4,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 16.836
+          },
           {
             "iri": "dpv:SecurityAssessment",
             "label": "Security Assessment",
@@ -1483,28 +1459,10 @@
             "score": 0.783
           },
           {
-            "iri": "dpv:TechnicalOrganisationalMeasure",
-            "label": "Technical and Organisational Measure",
-            "method": "embed",
-            "score": 0.782
-          },
-          {
             "iri": "dpv:OrganisationalMeasure",
             "label": "Organisational Measure",
             "method": "embed",
             "score": 0.745
-          },
-          {
-            "iri": "dpv:TechnicalStandard",
-            "label": "Technical Standard",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:ROPA",
-            "label": "Records of Processing Activities",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1512,6 +1470,7 @@
         "value": "those personal data",
         "count": 4,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:PersonalData"
         ],
@@ -1528,19 +1487,14 @@
         "value": "personal data for specified, explicit and legitimate purposes",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:SensitivePersonalData",
@@ -1566,19 +1520,14 @@
         "value": "personal data referred to in paragraph 1",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:ProvidedPersonalData",
@@ -1591,12 +1540,6 @@
             "label": "Collected Personal Data",
             "method": "embed",
             "score": 0.818
-          },
-          {
-            "iri": "dpv:InferredPersonalData",
-            "label": "Inferred Personal Data",
-            "method": "lexical",
-            "score": 0.667
           }
         ]
       },
@@ -1604,13 +1547,14 @@
         "value": "the data subject to a decision based solely on automated processing",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Data",
             "label": "Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 2.887
           },
           {
             "iri": "dpv:DataProcessingPolicy",
@@ -1629,12 +1573,6 @@
             "label": "Data Suitability Assessment",
             "method": "embed",
             "score": 0.751
-          },
-          {
-            "iri": "dpv:SyntheticData",
-            "label": "Synthetic Data",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1642,6 +1580,7 @@
         "value": "the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
         "count": 3,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1661,12 +1600,6 @@
             "label": "Trusted Computing",
             "method": "embed",
             "score": 0.801
-          },
-          {
-            "iri": "dpv:ROPA",
-            "label": "Records of Processing Activities",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1674,19 +1607,14 @@
         "value": "controllers which are processing the personal data",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:PersonalDataAudit",
@@ -1712,6 +1640,7 @@
         "value": "the personal data",
         "count": 3,
         "status": "mapped",
+        "lexical_hit": true,
         "iri": [
           "dpv:PersonalData"
         ],
@@ -1728,13 +1657,14 @@
         "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
         "count": 2,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "pd:Historical",
             "label": "Historical",
             "method": "lexical",
-            "score": 1.0
+            "score": 6.47
           },
           {
             "iri": "dpv:ROPA",
@@ -1753,12 +1683,6 @@
             "label": "Observed Data",
             "method": "embed",
             "score": 0.725
-          },
-          {
-            "iri": "pd:PublicLife",
-            "label": "Public Life",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1766,6 +1690,7 @@
         "value": "the provisions of paragraphs 1 and 2",
         "count": 2,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1792,19 +1717,14 @@
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
         "count": 2,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:IdentifyingPersonalData",
@@ -1830,6 +1750,7 @@
         "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
         "count": 2,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1849,12 +1770,6 @@
             "label": "Inferred Personal Data",
             "method": "embed",
             "score": 0.608
-          },
-          {
-            "iri": "pd:DeviceBased",
-            "label": "Device Based",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1862,6 +1777,7 @@
         "value": "the ability to ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
         "count": 2,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1881,12 +1797,6 @@
             "label": "Trusted Computing",
             "method": "embed",
             "score": 0.75
-          },
-          {
-            "iri": "dpv:ROPA",
-            "label": "Records of Processing Activities",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1894,13 +1804,14 @@
         "value": "the supervisory authority competent in accordance with Article 55",
         "count": 2,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Authority",
             "label": "Authority",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.217
           },
           {
             "iri": "dpv:SupraNationalAuthority",
@@ -1919,12 +1830,6 @@
             "label": "Consultation with Authority",
             "method": "embed",
             "score": 0.704
-          },
-          {
-            "iri": "dpv:RegionalAuthority",
-            "label": "Regional Authority",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -1932,6 +1837,7 @@
         "value": "for specified, explicit and legitimate purposes",
         "count": 1,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1958,6 +1864,7 @@
         "value": "in a manner that is incompatible with those purposes",
         "count": 1,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -1984,25 +1891,20 @@
         "value": "the personal data breach to the supervisory authority competent in accordance with Article 55",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:Data",
-            "label": "Data",
-            "method": "lexical",
-            "score": 1.0
-          },
           {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
-            "score": 1.0
+            "score": 7.277
           },
           {
             "iri": "dpv:Authority",
             "label": "Authority",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.217
           },
           {
             "iri": "dpv:DataProtectionAuthority",
@@ -2015,6 +1917,12 @@
             "label": "Personal Data Audit",
             "method": "embed",
             "score": 0.746
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.733
           }
         ]
       },
@@ -2022,6 +1930,7 @@
         "value": "The information",
         "count": 1,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2048,6 +1957,7 @@
         "value": "the obligations referred to in paragraphs 1 and 2",
         "count": 1,
         "status": "review",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2074,13 +1984,14 @@
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
             "label": "Technical and Organisational Measure",
-            "method": "embed",
-            "score": 0.813
+            "method": "lexical",
+            "score": 16.836
           },
           {
             "iri": "dpv:SecureProcessingEnvironment",
@@ -2093,18 +2004,6 @@
             "label": "Security Audit",
             "method": "embed",
             "score": 0.79
-          },
-          {
-            "iri": "dpv:TechnicalStandard",
-            "label": "Technical Standard",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:ROPA",
-            "label": "Records of Processing Activities",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       }
@@ -2114,19 +2013,14 @@
         "value": "A risk management system",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "airo:Risk",
             "label": "Risk",
             "method": "lexical",
-            "score": 1.0
-          },
-          {
-            "iri": "airo:RiskControl",
-            "label": "Risk Control",
-            "method": "embed",
-            "score": 0.805
+            "score": 4.311
           },
           {
             "iri": "airo:RiskConcept",
@@ -2135,16 +2029,16 @@
             "score": 0.805
           },
           {
+            "iri": "airo:RiskControl",
+            "label": "Risk Control",
+            "method": "embed",
+            "score": 0.805
+          },
+          {
             "iri": "airo:RiskSource",
             "label": "Risk Source",
             "method": "embed",
             "score": 0.777
-          },
-          {
-            "iri": "airo:AISystem",
-            "label": "AI System",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -2152,13 +2046,14 @@
         "value": "High-risk AI systems",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "airo:AISystem",
             "label": "AI System",
-            "method": "embed",
-            "score": 0.842
+            "method": "lexical",
+            "score": 7.121
           },
           {
             "iri": "airo:AIModel",
@@ -2171,18 +2066,6 @@
             "label": "General Purpose AI Model",
             "method": "embed",
             "score": 0.799
-          },
-          {
-            "iri": "airo:AISubject",
-            "label": "AI Subject",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "airo:AIUser",
-            "label": "AI User",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -2190,13 +2073,14 @@
         "value": "high-risk AI systems",
         "count": 2,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "airo:AISystem",
             "label": "AI System",
-            "method": "embed",
-            "score": 0.842
+            "method": "lexical",
+            "score": 7.121
           },
           {
             "iri": "airo:AIModel",
@@ -2209,18 +2093,6 @@
             "label": "General Purpose AI Model",
             "method": "embed",
             "score": 0.799
-          },
-          {
-            "iri": "airo:AISubject",
-            "label": "AI Subject",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "airo:AIUser",
-            "label": "AI User",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       }
@@ -2232,8 +2104,15 @@
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
         "count": 15,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:VitalInterestOfNaturalPerson",
             "label": "Vital Interest of Natural Person",
@@ -2251,12 +2130,6 @@
             "label": "Protection of Intellectual Property Rights",
             "method": "embed",
             "score": 0.625
-          },
-          {
-            "iri": "dpv:AccountManagement",
-            "label": "Account Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -2264,13 +2137,20 @@
         "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Consent",
             "label": "Consent",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.248
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:LegitimateInterestOfDataSubject",
@@ -2289,19 +2169,14 @@
             "label": "Vital Interest of Data Subject",
             "method": "embed",
             "score": 0.729
-          },
-          {
-            "iri": "dpv:SellProductsToDataSubject",
-            "label": "Sell Products to Data Subject",
-            "method": "lexical",
-            "score": 0.6
           }
         ]
       },
       {
         "value": "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2327,7 +2202,8 @@
       {
         "value": "When requested by the data subject, provided that the identity of the data subject is proven by other means",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2347,33 +2223,16 @@
             "label": "Sell Products to Data Subject",
             "method": "embed",
             "score": 0.713
-          },
-          {
-            "iri": "dpv:IdentityVerification",
-            "label": "Identity Verification",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "an enterprise or an organisation employing fewer than 250 persons unless the processing it carries out is likely to result in a risk to the rights and freedoms of data subjects, the processing is not occasional, or the processing includes special categories of data as referred to in Article 9(1) or personal data relating to criminal convictions and offences referred to in Article 10",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
-          {
-            "iri": "dpv:OrganisationRiskManagement",
-            "label": "Organisation Risk Management",
-            "method": "lexical",
-            "score": 0.667
-          },
           {
             "iri": "dpv:DataTransferLegalBasis",
             "label": "Data Transfer Legal Basis",
@@ -2391,19 +2250,14 @@
             "label": "Sell Data to Third Parties",
             "method": "embed",
             "score": 0.619
-          },
-          {
-            "iri": "dpv:OrganisationGovernance",
-            "label": "Organisation Governance",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "Where the notification to the supervisory authority is not made within 72 hours",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2430,8 +2284,15 @@
         "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:ProtectionOfIPR",
             "label": "Protection of Intellectual Property Rights",
@@ -2449,19 +2310,14 @@
             "label": "Rights Fulfilment",
             "method": "embed",
             "score": 0.622
-          },
-          {
-            "iri": "dpv:AccountManagement",
-            "label": "Account Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "without undue delay",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2488,13 +2344,14 @@
         "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Purpose",
             "label": "Purpose",
-            "method": "embed",
-            "score": 0.647
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:FulfilmentOfObligation",
@@ -2507,19 +2364,14 @@
             "label": "Commercial Purpose",
             "method": "embed",
             "score": 0.627
-          },
-          {
-            "iri": "dpv:AccountManagement",
-            "label": "Account Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "to the extent that processing is necessary",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2545,7 +2397,8 @@
       {
         "value": "in a timely manner in the event of a physical or technical incident",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2571,7 +2424,8 @@
       {
         "value": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2591,19 +2445,14 @@
             "label": "Rights Fulfilment",
             "method": "embed",
             "score": 0.667
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "where and insofar as the data subject already has the information",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2623,19 +2472,14 @@
             "label": "Sell Products to Data Subject",
             "method": "embed",
             "score": 0.729
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "Where processing is to be carried out on behalf of a controller",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2662,8 +2506,15 @@
         "value": "in a manner that is incompatible with those purposes",
         "count": 4,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:NonCommercialPurpose",
             "label": "Non-commercial Purpose",
@@ -2688,13 +2539,14 @@
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
         "count": 4,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Consent",
             "label": "Consent",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.248
           },
           {
             "iri": "dpv:DataTransferLegalBasis",
@@ -2713,12 +2565,6 @@
             "label": "Vital Interest of Data Subject",
             "method": "embed",
             "score": 0.614
-          },
-          {
-            "iri": "dpv:SellProductsToDataSubject",
-            "label": "Sell Products to Data Subject",
-            "method": "lexical",
-            "score": 0.6
           }
         ]
       },
@@ -2726,19 +2572,26 @@
         "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
         "count": 4,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
             "label": "Scientific Research",
             "method": "lexical",
-            "score": 1.0
+            "score": 9.398
           },
           {
-            "iri": "dpv:ProtectionOfPublicSecurity",
-            "label": "Protection of Public Security",
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
             "method": "lexical",
-            "score": 0.75
+            "score": 7.74
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:VitalInterestOfDataSubject",
@@ -2751,12 +2604,6 @@
             "label": "Legitimate Interest of Data Subject",
             "method": "embed",
             "score": 0.716
-          },
-          {
-            "iri": "dpv:DataTransferLegalBasis",
-            "label": "Data Transfer Legal Basis",
-            "method": "embed",
-            "score": 0.687
           }
         ]
       },
@@ -2764,37 +2611,38 @@
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:ServiceProvision",
+            "label": "Service Provision",
+            "method": "lexical",
+            "score": 7.858
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 6.025
+          },
           {
             "iri": "dpv:Contract",
             "label": "Contract",
             "method": "lexical",
-            "score": 1.0
+            "score": 4.555
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:PersonnelMonitoring",
             "label": "Personnel Monitoring",
             "method": "embed",
             "score": 0.647
-          },
-          {
-            "iri": "dpv:PersonnelWorkloadManagement",
-            "label": "Personnel Workload Management",
-            "method": "embed",
-            "score": 0.639
-          },
-          {
-            "iri": "dpv:ServiceProvision",
-            "label": "Service Provision",
-            "method": "embed",
-            "score": 0.635
-          },
-          {
-            "iri": "dpv:CommunicationManagement",
-            "label": "Communication Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -2802,13 +2650,20 @@
         "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
             "label": "Scientific Research",
             "method": "lexical",
-            "score": 1.0
+            "score": 9.398
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:PublicInterest",
@@ -2823,12 +2678,6 @@
             "score": 0.672
           },
           {
-            "iri": "dpv:ResearchAndDevelopment",
-            "label": "Research and Development",
-            "method": "lexical",
-            "score": 0.667
-          },
-          {
             "iri": "dpv:VitalInterestOfDataSubject",
             "label": "Vital Interest of Data Subject",
             "method": "embed",
@@ -2840,8 +2689,15 @@
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
         "count": 3,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:VitalInterestOfNaturalPerson",
             "label": "Vital Interest of Natural Person",
@@ -2859,25 +2715,14 @@
             "label": "Rights Fulfilment",
             "method": "embed",
             "score": 0.608
-          },
-          {
-            "iri": "dpv:EnforceSecurity",
-            "label": "Enforce Security",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:AccountManagement",
-            "label": "Account Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
         "count": 3,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2897,19 +2742,14 @@
             "label": "Legitimate Interest of Data Subject",
             "method": "embed",
             "score": 0.63
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "without undue delay where one of the following grounds applies",
         "count": 3,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2935,7 +2775,8 @@
       {
         "value": "in accordance with Article 89(1)",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2961,7 +2802,8 @@
       {
         "value": "in writing, or by other means, including, where appropriate, by electronic means",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -2987,7 +2829,8 @@
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3007,25 +2850,14 @@
             "label": "Legitimate Interest of Data Subject",
             "method": "embed",
             "score": 0.603
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:OfficialAuthorityOfController",
-            "label": "Official Authority of Controller",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "where one of the following grounds applies",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3051,7 +2883,8 @@
       {
         "value": "on grounds relating to his or her particular situation, at any time",
         "count": 2,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3078,8 +2911,15 @@
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
         "count": 2,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:VitalInterestOfNaturalPerson",
             "label": "Vital Interest of Natural Person",
@@ -3097,18 +2937,6 @@
             "label": "Protection of National Security",
             "method": "embed",
             "score": 0.609
-          },
-          {
-            "iri": "dpv:EnforceSecurity",
-            "label": "Enforce Security",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "dpv:AccountManagement",
-            "label": "Account Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -3116,8 +2944,15 @@
         "value": "for specified, explicit and legitimate purposes",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
+          },
           {
             "iri": "dpv:LegitimateInterestOfDataSubject",
             "label": "Legitimate Interest of Data Subject",
@@ -3142,37 +2977,38 @@
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:ServiceProvision",
+            "label": "Service Provision",
+            "method": "lexical",
+            "score": 7.858
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 6.025
+          },
           {
             "iri": "dpv:Contract",
             "label": "Contract",
             "method": "lexical",
-            "score": 1.0
+            "score": 4.555
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:PersonnelMonitoring",
             "label": "Personnel Monitoring",
             "method": "embed",
             "score": 0.684
-          },
-          {
-            "iri": "dpv:PersonnelPerformanceMonitoring",
-            "label": "Personnel Performance Monitoring",
-            "method": "embed",
-            "score": 0.675
-          },
-          {
-            "iri": "dpv:FulfilmentOfObligation",
-            "label": "Fulfilment of Obligation",
-            "method": "lexical",
-            "score": 0.667
-          },
-          {
-            "iri": "dpv:PersonnelWorkloadManagement",
-            "label": "Personnel Workload Management",
-            "method": "embed",
-            "score": 0.659
           }
         ]
       },
@@ -3180,44 +3016,46 @@
         "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:ServiceProvision",
+            "label": "Service Provision",
+            "method": "lexical",
+            "score": 7.858
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 6.025
+          },
           {
             "iri": "dpv:Contract",
             "label": "Contract",
             "method": "lexical",
-            "score": 1.0
+            "score": 4.555
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:LegalObligation",
             "label": "Legal Obligation",
             "method": "embed",
             "score": 0.63
-          },
-          {
-            "iri": "dpv:Purpose",
-            "label": "Purpose",
-            "method": "embed",
-            "score": 0.619
-          },
-          {
-            "iri": "dpv:LegalBasis",
-            "label": "Legal Basis",
-            "method": "embed",
-            "score": 0.616
-          },
-          {
-            "iri": "dpv:CommunicationManagement",
-            "label": "Communication Management",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
       {
         "value": "on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3237,12 +3075,6 @@
             "label": "Rights Fulfilment",
             "method": "embed",
             "score": 0.638
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -3250,13 +3082,20 @@
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Consent",
             "label": "Consent",
             "method": "lexical",
-            "score": 1.0
+            "score": 5.248
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:LegitimateInterestOfDataSubject",
@@ -3275,19 +3114,14 @@
             "label": "Vital Interest of Data Subject",
             "method": "embed",
             "score": 0.714
-          },
-          {
-            "iri": "dpv:SellProductsToDataSubject",
-            "label": "Sell Products to Data Subject",
-            "method": "lexical",
-            "score": 0.6
           }
         ]
       },
       {
         "value": "Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3307,18 +3141,6 @@
             "label": "Legal Compliance",
             "method": "embed",
             "score": 0.635
-          },
-          {
-            "iri": "dpv:SellProductsToDataSubject",
-            "label": "Sell Products to Data Subject",
-            "method": "lexical",
-            "score": 0.6
-          },
-          {
-            "iri": "dpv:DataAltruism",
-            "label": "Data Altruism",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       },
@@ -3326,19 +3148,26 @@
         "value": "it is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
         "count": 1,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
             "label": "Scientific Research",
             "method": "lexical",
-            "score": 1.0
+            "score": 9.398
           },
           {
-            "iri": "dpv:ProtectionOfPublicSecurity",
-            "label": "Protection of Public Security",
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
             "method": "lexical",
-            "score": 0.75
+            "score": 7.74
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "lexical",
+            "score": 4.555
           },
           {
             "iri": "dpv:VitalInterestOfDataSubject",
@@ -3351,38 +3180,21 @@
             "label": "Legitimate Interest of Data Subject",
             "method": "embed",
             "score": 0.727
-          },
-          {
-            "iri": "dpv:ProtectionOfIPR",
-            "label": "Protection of Intellectual Property Rights",
-            "method": "embed",
-            "score": 0.69
           }
         ]
       },
       {
         "value": "when the data subject has objected, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:LegitimateInterestOfDataSubject",
             "label": "Legitimate Interest of Data Subject",
-            "method": "lexical",
-            "score": 0.8
-          },
-          {
-            "iri": "dpv:LegitimateInterestOfController",
-            "label": "Legitimate Interest of Controller",
-            "method": "lexical",
-            "score": 0.75
-          },
-          {
-            "iri": "dpv:OptimisationForController",
-            "label": "Optimisation for Controller",
-            "method": "lexical",
-            "score": 0.667
+            "method": "embed",
+            "score": 0.691
           },
           {
             "iri": "dpv:LegalBasis",
@@ -3401,32 +3213,21 @@
       {
         "value": "the data subject objects, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
         "count": 1,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
             "iri": "dpv:LegitimateInterestOfDataSubject",
             "label": "Legitimate Interest of Data Subject",
-            "method": "lexical",
-            "score": 0.8
-          },
-          {
-            "iri": "dpv:LegitimateInterestOfController",
-            "label": "Legitimate Interest of Controller",
-            "method": "lexical",
-            "score": 0.75
+            "method": "embed",
+            "score": 0.705
           },
           {
             "iri": "dpv:LegalBasis",
             "label": "Legal Basis",
             "method": "embed",
             "score": 0.686
-          },
-          {
-            "iri": "dpv:OptimisationForController",
-            "label": "Optimisation for Controller",
-            "method": "lexical",
-            "score": 0.667
           },
           {
             "iri": "dpv:DataTransferLegalBasis",
@@ -3441,7 +3242,8 @@
       {
         "value": "in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use",
         "count": 5,
-        "status": "review",
+        "status": "literal",
+        "lexical_hit": false,
         "iri": [],
         "_candidates": [
           {
@@ -3468,13 +3270,14 @@
         "value": "in relation to high-risk AI systems",
         "count": 5,
         "status": "review",
+        "lexical_hit": true,
         "iri": [],
         "_candidates": [
           {
             "iri": "airo:AISystem",
             "label": "AI System",
-            "method": "embed",
-            "score": 0.821
+            "method": "lexical",
+            "score": 9.305
           },
           {
             "iri": "airo:AIModel",
@@ -3487,18 +3290,6 @@
             "label": "AI Capability",
             "method": "embed",
             "score": 0.787
-          },
-          {
-            "iri": "airo:AISubject",
-            "label": "AI Subject",
-            "method": "lexical",
-            "score": 0.5
-          },
-          {
-            "iri": "airo:AIUser",
-            "label": "AI User",
-            "method": "lexical",
-            "score": 0.5
           }
         ]
       }

@@ -1,21 +1,30 @@
 """Step 1 of content (predicate/object/condition) mapping: the MATCHER.
 
 For each distinct (slot, regulation, value) in the extractions, matched only
-against its routed vocabulary (mapping/slot_routing.json over terms.json):
+against its routed vocabulary (mapping/slot_routing.json over terms.json).
 
-  - lexical EXACT/lemma hit  -> auto-mapped (status="mapped", iri prefilled)
-  - otherwise                -> status="review" with SUGGESTIONS from
-        (a) lexical label-token overlap and (b) BGE embedding cosine (top-k),
-        never auto-accepted -- you adjudicate.
-  - slot with no routed vocab (predicate.aiact) -> status="no_target".
+Matching signals:
+  - EXACT: whole normalised phrase equals a label (object/condition), or any
+    verb-lemma token equals a single-token processing label (predicate)
+    -> status="mapped", iri prefilled (spot-check).
+  - LEXICAL (genuine concept mention): a vocab label whose NOUN-LEMMATISED tokens
+    are fully contained in the value's tokens. Scored by summed IDF over the
+    routed label corpus (so generic high-frequency tokens like "data"/"risk"
+    score low), and SUBSUMED labels are dropped (Data removed when PersonalData
+    also matches -> prefer the most specific). -> status="review".
+  - EMBEDDING (BGE cosine top-k): a NON-AUTHORITATIVE hint only. Over a closed,
+    homogeneous vocabulary the nearest term is always ~0.65-0.80 even when the
+    answer is "none", so an embedding score is NOT a mappability signal and never
+    sets a non-literal default. Kept under _candidates for the adjudicator.
 
-Predicate is matched on its lemmatised token set (reusing predicate_norm), so
-"erase"/"further process"/"no longer process" all reach dpv:Erase / dpv:Process*.
-Object/condition exact match is on the whole normalised phrase (rare); the real
-work for those is the suggestion+adjudication path.
+Default disposition when there is NO lexical hit:
+  - predicate / condition -> "literal" (residue: compliance verbs, qualifiers).
+  - object                -> "review" (objects are what the duty acts on; an
+    adjudicator should look, with lexical_hit=false flagged).
+  - slot with no routed vocab (predicate.aiact) -> "no_target".
 
-Writes the adjudication worksheet mapping/content_map.json. It does NOT mutate
-records and computes no coverage -- that comes after you adjudicate.
+Writes the adjudication worksheet mapping/content_map.json. No record mutation,
+no coverage -- that comes after you adjudicate.
 
 Usage:
   python build_content_candidates.py data/dev_5run_deontic_pred data/holdout_5run_redundant_neg
@@ -23,6 +32,7 @@ Usage:
 import argparse
 import glob
 import json
+import math
 import os
 import sys
 from collections import Counter, defaultdict
@@ -36,30 +46,46 @@ ROUTING = os.path.join(HERE, "mapping", "slot_routing.json")
 OUT = os.path.join(HERE, "mapping", "content_map.json")
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 TOPK = 3
-OVERLAP_MIN = 0.5
 
-EDIT_DOC = ("Adjudication worksheet. For each value set 'status' to one of: "
+try:
+    from nltk.corpus import stopwords
+    STOP = set(stopwords.words("english"))
+except Exception:
+    STOP = {"the", "a", "an", "of", "and", "or", "to", "for", "in", "on", "with",
+            "by", "his", "her", "its", "their", "which", "that", "such", "as"}
+
+EDIT_DOC = ("Adjudication worksheet. For each value set 'status' to: "
             "'mapped' (fill 'iri' with one or more vocab IRIs), "
             "'flag' (mappable content but no vocab home -> coverage MISS / HITL), "
             "'literal' (qualifier/residue, excluded from the coverage denominator). "
-            "Auto status='mapped' rows are exact lexical hits (spot-check them). "
-            "'_candidates' are matcher suggestions only (lexical + embedding); "
-            "they are never authoritative -- move chosen IRIs into 'iri'.")
+            "DEFAULTS: status='mapped' = exact lexical hit (spot-check); "
+            "status='review' = a genuine lexical concept mention was found "
+            "(pick IRI(s) from _candidates); status='literal' = predicate/condition "
+            "with no lexical concept mention (residue by default -- promote to "
+            "'mapped'/'flag' only if a real concept is present). "
+            "IMPORTANT: '_candidates' marked method='embed' are WEAK hints only -- "
+            "BGE returns a 'nearest' term over the closed vocab even when the right "
+            "answer is none, so an embed score is NOT evidence of mappability; rely "
+            "on lexical hits. 'lexical_hit' flags whether any concept token matched.")
 
 
 def vlem(tok):
     return _LEM.lemmatize(tok, "v")
 
 
+def lemtoks(s):
+    """noun-lemmatised, stopword-stripped token set of a normalised string."""
+    return {_LEM.lemmatize(t) for t in norm_text(s or "").split() if t not in STOP}
+
+
 def load_targets():
     terms = json.load(open(TERMS))
     routing = json.load(open(ROUTING))
-    targets = {}  # (slot, reg) -> {curie: label}
+    targets = {}
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
-            sel_list = routing[slot][reg]
             picked = {}
-            for sel in sel_list:
+            for sel in routing[slot][reg]:
                 voc = terms[sel["vocab"]]
                 if sel["by"] == "all":
                     picked.update({c: r["label"] for c, r in voc.items()})
@@ -74,7 +100,6 @@ def load_targets():
 
 
 def collect_values(paths):
-    """-> {(slot, reg): Counter(value)}; predicate values are lemmatised heads."""
     files = []
     for p in paths:
         files += sorted(glob.glob(os.path.join(p, "*.extracted.jsonl"))) if os.path.isdir(p) else [p]
@@ -105,31 +130,24 @@ def collect_values(paths):
     return vals
 
 
-def build_label_indexes(label_map):
-    """exact lookups: predicate by lemma token, object/condition by full norm phrase."""
-    by_lemma = defaultdict(list)   # lemma -> [curie]   (single-token labels)
-    by_phrase = {}                 # norm(label) -> curie
-    tokens = {}                    # curie -> (set(label tokens), norm label)
-    for c, lab in label_map.items():
-        n = norm_text(lab or "")
-        by_phrase.setdefault(n, c)
-        toks = n.split()
-        tokens[c] = (set(toks), n)
-        if len(toks) == 1:
-            by_lemma[vlem(toks[0])].append(c)
-    return by_lemma, by_phrase, tokens
+def build_idf(label_map):
+    docs = {c: lemtoks(lab) for c, lab in label_map.items()}
+    N = len(docs)
+    df = Counter()
+    for toks in docs.values():
+        for t in toks:
+            df[t] += 1
+    idf = {t: math.log((N + 1) / (df_t + 1)) + 1 for t, df_t in df.items()}
+    return docs, idf
 
 
-def lexical_candidates(value_norm, tokens):
-    vt = set(value_norm.split())
-    out = []
-    for c, (ltoks, _n) in tokens.items():
-        if not ltoks:
-            continue
-        ov = len(ltoks & vt) / len(ltoks)
-        if ltoks <= vt or ov >= OVERLAP_MIN:
-            out.append((c, round(ov, 3)))
-    return sorted(out, key=lambda x: -x[1])
+def lexical_candidates(value_lemmas, label_lemmas, idf):
+    """labels fully contained in the value, IDF-scored, subsumed labels dropped."""
+    hits = [(c, lt, sum(idf.get(t, 1.0) for t in lt))
+            for c, lt in label_lemmas.items() if lt and lt <= value_lemmas]
+    keep = [(c, round(sc, 3)) for c, lt, sc in hits
+            if not any(c2 != c and lt < lt2 for c2, lt2, _ in hits)]  # drop strict subsets
+    return sorted(keep, key=lambda x: -x[1])
 
 
 def main():
@@ -140,7 +158,6 @@ def main():
     targets = load_targets()
     values = collect_values(args.paths)
 
-    # embedding model + per-(slot,reg) label embedding cache (lazy)
     from sentence_transformers import SentenceTransformer
     import numpy as np
     model = SentenceTransformer(MODEL_NAME)
@@ -155,48 +172,64 @@ def main():
         for reg in ("gdpr", "aiact"):
             label_map = targets[(slot, reg)]
             vcounter = values.get((slot, reg), Counter())
-            rows = []
-            counts = Counter()
-            if not label_map:  # no routed vocab -> structural gap
+            rows, counts = [], Counter()
+
+            if not label_map:  # structural gap
                 for v, n in vcounter.most_common():
-                    rows.append({"value": v, "count": n, "status": "no_target", "iri": [], "_candidates": []})
+                    rows.append({"value": v, "count": n, "status": "no_target",
+                                 "lexical_hit": False, "iri": [], "_candidates": []})
                     counts["no_target"] += 1
                 worksheet[slot][reg] = rows
                 summary.append((slot, reg, len(rows), dict(counts)))
                 continue
 
-            by_lemma, by_phrase, tokens = build_label_indexes(label_map)
+            label_lemmas, idf = build_idf(label_map)
+            by_phrase = {}
+            by_vlemma = defaultdict(list)
+            for c, lab in label_map.items():
+                by_phrase.setdefault(norm_text(lab or ""), c)
+                lt = label_lemmas[c]
+                if len(lt) == 1:
+                    by_vlemma[vlem(next(iter(lt)))].append(c)
             curies = list(label_map)
-            lab_emb = embed([label_map[c] for c in curies]) if curies else None
+            lab_emb = embed([label_map[c] for c in curies])
 
             for v, n in vcounter.most_common():
                 vn = norm_text(v)
-                # exact: phrase equality, or (predicate) any token-lemma == single-token label lemma
-                exact = []
-                if vn in by_phrase:
-                    exact = [by_phrase[vn]]
+                vlemmas = lemtoks(v)
+                # exact
+                exact = [by_phrase[vn]] if vn in by_phrase else []
                 if slot == "predicate":
-                    vlemmas = {vlem(t) for t in vn.split()}
-                    exact = list(dict.fromkeys(exact + [c for lem in vlemmas for c in by_lemma.get(lem, [])]))
+                    vverb = {vlem(t) for t in vn.split()}
+                    exact = list(dict.fromkeys(exact + [c for lem in vverb for c in by_vlemma.get(lem, [])]))
                 if exact:
-                    rows.append({"value": v, "count": n, "status": "mapped", "iri": exact,
+                    rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                                 "iri": exact,
                                  "_candidates": [{"iri": c, "label": label_map[c], "method": "exact", "score": 1.0} for c in exact]})
                     counts["mapped"] += 1
                     continue
-                # suggestions: lexical overlap + embedding top-k
-                cand = {}
-                for c, ov in lexical_candidates(vn, tokens):
-                    cand[c] = {"iri": c, "label": label_map[c], "method": "lexical", "score": ov}
-                if lab_emb is not None:
-                    sims = embed([v])[0] @ lab_emb.T
-                    for i in np.argsort(-sims)[:TOPK]:
-                        c = curies[int(i)]
-                        s = round(float(sims[int(i)]), 3)
-                        if c not in cand or s > cand[c]["score"]:
-                            cand[c] = {"iri": c, "label": label_map[c], "method": "embed", "score": s}
-                clist = sorted(cand.values(), key=lambda x: -x["score"])[:5]
-                rows.append({"value": v, "count": n, "status": "review", "iri": [], "_candidates": clist})
-                counts["review"] += 1
+                # lexical concept mentions
+                lex = lexical_candidates(vlemmas, label_lemmas, idf)
+                cand = [{"iri": c, "label": label_map[c], "method": "lexical", "score": sc} for c, sc in lex]
+                # embedding hints (non-authoritative), excluding already-listed
+                have = {c["iri"] for c in cand}
+                sims = embed([v])[0] @ lab_emb.T
+                for i in np.argsort(-sims)[:TOPK]:
+                    c = curies[int(i)]
+                    if c not in have:
+                        cand.append({"iri": c, "label": label_map[c], "method": "embed",
+                                     "score": round(float(sims[int(i)]), 3)})
+                cand = cand[:5]
+                if lex:
+                    status = "review"
+                elif slot in ("predicate", "condition"):
+                    status = "literal"
+                else:
+                    status = "review"  # object with no lexical hit -> adjudicate
+                rows.append({"value": v, "count": n, "status": status,
+                             "lexical_hit": bool(lex), "iri": [], "_candidates": cand})
+                counts[status] += 1
+
             worksheet[slot][reg] = rows
             summary.append((slot, reg, len(rows), dict(counts)))
 
