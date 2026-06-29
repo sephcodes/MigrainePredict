@@ -1,5 +1,7 @@
 {
   "_doc": "Slot x regulation -> vocabulary target selectors for the content (predicate/object/condition) coverage pass. Each selector picks terms from terms.json: by 'scheme' (dpv/pd), by 'root' (airo/vair subClassOf root), or 'all' (whole vocab file). An empty target list means no routed vocabulary -> every value reported as a structural gap (no_target).",
+  "_exclude_abstract": ["dpv:Purpose", "dpv:Data", "dpv:Risk", "dpv:Authority"],
+  "_exclude_doc": "Abstract top-of-scheme root concepts removed from ALL match targets: matching a bare category word (purpose/processing/data/risk/authority) to its root class is never a content hit; real mentions hit the specific subclasses. Stops 'purpose' over-promoting purpose-limitation qualifier clauses, etc.",
   "predicate": {
     "gdpr": [
       {"vocab": "dpv", "by": "scheme", "values": ["dpv:processing-classes"]}

@@ -1,0 +1,8 @@
+{
+  "_doc": "Hand-curated predicate-verb -> DPV processing-operation aliases for GDPR predicates whose surface verb does NOT lexically equal the DPV label but which ARE genuine processing operations. Checked AFTER exact DPV-label match and BEFORE the literal default, so it rescues true processing verbs from false-literal without reopening the embedding question (same deterministic-lexicon move as subject_lexicon.json). Keyed by verb lemma, matched against the predicate value's verb-lemma tokens. A value may map to multiple IRIs. Edit freely; trim the multi-IRI ones to your adjudicated choice.",
+  "aliases": {
+    "communicate": ["dpv:Disclose", "dpv:Transmit"],
+    "provide": ["dpv:MakeAvailable"],
+    "evaluate": ["dpv:Assess"]
+  }
+}

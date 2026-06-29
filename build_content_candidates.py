@@ -43,6 +43,7 @@ from predicate_norm import normalise_predicate, _LEM
 HERE = os.path.dirname(__file__)
 TERMS = os.path.join(HERE, "mapping", "vocab", "terms.json")
 ROUTING = os.path.join(HERE, "mapping", "slot_routing.json")
+SYNONYMS = os.path.join(HERE, "mapping", "predicate_synonyms.json")
 OUT = os.path.join(HERE, "mapping", "content_map.json")
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 TOPK = 3
@@ -81,6 +82,7 @@ def lemtoks(s):
 def load_targets():
     terms = json.load(open(TERMS))
     routing = json.load(open(ROUTING))
+    exclude = set(routing.get("_exclude_abstract", []))  # abstract roots: never content hits
     targets = {}
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
@@ -95,8 +97,16 @@ def load_targets():
                 elif sel["by"] == "root":
                     want = set(sel["values"])
                     picked.update({c: r["label"] for c, r in voc.items() if r.get("root") in want})
+            for c in exclude:
+                picked.pop(c, None)
             targets[(slot, reg)] = picked
     return targets
+
+
+def load_synonyms():
+    """verb-lemma -> [IRI]; hand-curated processing-op aliases (predicate.gdpr)."""
+    raw = json.load(open(SYNONYMS)).get("aliases", {})
+    return {vlem(k): v for k, v in raw.items()}
 
 
 def collect_values(paths):
@@ -156,6 +166,7 @@ def main():
     args = ap.parse_args()
 
     targets = load_targets()
+    synonyms = load_synonyms()
     values = collect_values(args.paths)
 
     from sentence_transformers import SentenceTransformer
@@ -208,6 +219,20 @@ def main():
                                  "_candidates": [{"iri": c, "label": label_map[c], "method": "exact", "score": 1.0} for c in exact]})
                     counts["mapped"] += 1
                     continue
+                # hand-curated synonym aliases (predicate.gdpr): rescue true processing
+                # verbs whose surface form != DPV label, before the literal default
+                if slot == "predicate":
+                    syn = []
+                    for t in {vlem(t) for t in vn.split()}:
+                        for c in synonyms.get(t, []):
+                            if c in label_map and c not in syn:
+                                syn.append(c)
+                    if syn:
+                        rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                                     "iri": syn,
+                                     "_candidates": [{"iri": c, "label": label_map[c], "method": "synonym", "score": 1.0} for c in syn]})
+                        counts["mapped"] += 1
+                        continue
                 # lexical concept mentions
                 lex = lexical_candidates(vlemmas, label_lemmas, idf)
                 cand = [{"iri": c, "label": label_map[c], "method": "lexical", "score": sc} for c, sc in lex]
