@@ -1,11 +1,13 @@
-"""Step (apply): map the DEONTIC modality enum to Echenim's deontic relation.
+"""Step (apply): map the DEONTIC modality enum to its deontic relation IRI
+(the four-relation scheme is Echenim's; the IRIs are minted under the project's
+own `mp:` namespace, see mapping/modality_map.json).
 
 1:1 enum -> relation IRI, deterministic, no LLM. The map lives in
 mapping/modality_map.json. This pass CHAINS on the subject-mapping output
 (*.subject_mapped.jsonl) so the mapped record accumulates both enrichments.
 
 Field shape mirrors the subject field: the modality field becomes an object
-  "modality": {"value": "<ENUM>", "iri": "echenim:has..."}
+  "modality": {"value": "<ENUM>", "iri": "mp:has..."}
 i.e. the original enum string moves to modality.value and the relation IRI is
 added as modality.iri. A modality not present in the map -> needs_review=True +
 a review_flags marker (flag, not force-fit; schema-drift safety).

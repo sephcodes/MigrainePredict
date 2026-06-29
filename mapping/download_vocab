@@ -1,0 +1,4 @@
+curl -s -L -o mapping/vocab/dpv.ttl  "https://w3c-cg.github.io/dpv/2.3/dpv/dpv.ttl" && \
+curl -s -L -o mapping/vocab/pd.ttl   "https://w3c-cg.github.io/dpv/2.3/pd/pd.ttl" && \
+curl -s -L -o mapping/vocab/airo.ttl "https://delaramglp.github.io/airo/airo.ttl" && \
+curl -s -L -o mapping/vocab/vair.ttl "https://delaramglp.github.io/vair/vair.ttl" && \

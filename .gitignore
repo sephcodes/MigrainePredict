@@ -270,3 +270,4 @@ data/dev_5run_deontic_pred_subjmap
 data/holdout_5run_redundant_neg_subjmap
 data/dev_5run_deontic_pred_subjmap_modmap
 data/holdout_5run_redundant_neg_subjmap_modmap
+.DS_Store

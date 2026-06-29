@@ -1,0 +1,3507 @@
+{
+  "_doc": "Adjudication worksheet. For each value set 'status' to one of: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator). Auto status='mapped' rows are exact lexical hits (spot-check them). '_candidates' are matcher suggestions only (lexical + embedding); they are never authoritative -- move chosen IRIs into 'iri'.",
+  "predicate": {
+    "gdpr": [
+      {
+        "value": "process",
+        "count": 21,
+        "status": "mapped",
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "implement",
+        "count": 14,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.766
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:Derive",
+            "label": "Derive",
+            "method": "embed",
+            "score": 0.725
+          }
+        ]
+      },
+      {
+        "value": "provide",
+        "count": 10,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.816
+          },
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.771
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.756
+          }
+        ]
+      },
+      {
+        "value": "further process",
+        "count": 8,
+        "status": "mapped",
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "erase",
+        "count": 6,
+        "status": "mapped",
+        "iri": [
+          "dpv:Erase"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Erase",
+            "label": "Erase",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "process lawfully, fairly and in a transparent manner",
+        "count": 5,
+        "status": "mapped",
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "collect",
+        "count": 5,
+        "status": "mapped",
+        "iri": [
+          "dpv:Collect"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Collect",
+            "label": "Collect",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "prohibit",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.869
+          },
+          {
+            "iri": "dpv:Remove",
+            "label": "Remove",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:Filter",
+            "label": "Filter",
+            "method": "embed",
+            "score": 0.691
+          }
+        ]
+      },
+      {
+        "value": "take appropriate measures to provide",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.692
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.688
+          }
+        ]
+      },
+      {
+        "value": "provide orally",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.717
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.7
+          }
+        ]
+      },
+      {
+        "value": "notify",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Observe",
+            "label": "Observe",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:Anonymise",
+            "label": "Anonymise",
+            "method": "embed",
+            "score": 0.682
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.678
+          }
+        ]
+      },
+      {
+        "value": "accompany by",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.725
+          }
+        ]
+      },
+      {
+        "value": "carry out",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:Organise",
+            "label": "Organise",
+            "method": "embed",
+            "score": 0.696
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.68
+          }
+        ]
+      },
+      {
+        "value": "rectify",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Transform",
+            "label": "Transform",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:Modify",
+            "label": "Modify",
+            "method": "embed",
+            "score": 0.713
+          }
+        ]
+      },
+      {
+        "value": "complete",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Combine",
+            "label": "Combine",
+            "method": "embed",
+            "score": 0.77
+          },
+          {
+            "iri": "dpv:Acquire",
+            "label": "Acquire",
+            "method": "embed",
+            "score": 0.719
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.712
+          }
+        ]
+      },
+      {
+        "value": "no longer process",
+        "count": 5,
+        "status": "mapped",
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "ensure the ability to restore",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.657
+          }
+        ]
+      },
+      {
+        "value": "communicate",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Transmit",
+            "label": "Transmit",
+            "method": "embed",
+            "score": 0.774
+          },
+          {
+            "iri": "dpv:Transfer",
+            "label": "Transfer",
+            "method": "embed",
+            "score": 0.728
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.725
+          }
+        ]
+      },
+      {
+        "value": "use",
+        "count": 5,
+        "status": "mapped",
+        "iri": [
+          "dpv:Use"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "maintain",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.67
+          }
+        ]
+      },
+      {
+        "value": "address",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.692
+          },
+          {
+            "iri": "dpv:Format",
+            "label": "Format",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "dpv:Store",
+            "label": "Store",
+            "method": "embed",
+            "score": 0.678
+          }
+        ]
+      },
+      {
+        "value": "subject",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Record",
+            "label": "Record",
+            "method": "embed",
+            "score": 0.729
+          },
+          {
+            "iri": "dpv:Format",
+            "label": "Format",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "dpv:Query",
+            "label": "Query",
+            "method": "embed",
+            "score": 0.698
+          }
+        ]
+      },
+      {
+        "value": "ensure",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:Copy",
+            "label": "Copy",
+            "method": "embed",
+            "score": 0.694
+          }
+        ]
+      },
+      {
+        "value": "take reasonable steps, including technical measures, to inform",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:DiscloseByTransmission",
+            "label": "Disclose by Transmission",
+            "method": "embed",
+            "score": 0.666
+          },
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.646
+          },
+          {
+            "iri": "dpv:TrackingByThirdParty",
+            "label": "Tracking by Third Party",
+            "method": "embed",
+            "score": 0.644
+          }
+        ]
+      },
+      {
+        "value": "not be considered to be incompatible with the initial purposes",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.717
+          },
+          {
+            "iri": "dpv:Disseminate",
+            "label": "Disseminate",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.653
+          }
+        ]
+      },
+      {
+        "value": "erase without undue delay",
+        "count": 2,
+        "status": "mapped",
+        "iri": [
+          "dpv:Erase"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Erase",
+            "label": "Erase",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "comply with",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.738
+          },
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.702
+          }
+        ]
+      },
+      {
+        "value": "make",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.81
+          },
+          {
+            "iri": "dpv:Generate",
+            "label": "Generate",
+            "method": "embed",
+            "score": 0.736
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.713
+          }
+        ]
+      },
+      {
+        "value": "implement appropriate technical and organisational measures to ensure",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Organise",
+            "label": "Organise",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "dpv:Disseminate",
+            "label": "Disseminate",
+            "method": "embed",
+            "score": 0.627
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.622
+          }
+        ]
+      },
+      {
+        "value": "use a single assessment to address",
+        "count": 1,
+        "status": "mapped",
+        "iri": [
+          "dpv:Use"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "exempt from",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Remove",
+            "label": "Remove",
+            "method": "embed",
+            "score": 0.624
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.611
+          }
+        ]
+      },
+      {
+        "value": "regularly test",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Observe",
+            "label": "Observe",
+            "method": "embed",
+            "score": 0.701
+          },
+          {
+            "iri": "dpv:Monitor",
+            "label": "Monitor",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.661
+          }
+        ]
+      },
+      {
+        "value": "assess",
+        "count": 1,
+        "status": "mapped",
+        "iri": [
+          "dpv:Assess"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "evaluate",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.888
+          },
+          {
+            "iri": "dpv:Analyse",
+            "label": "Analyse",
+            "method": "embed",
+            "score": 0.746
+          },
+          {
+            "iri": "dpv:Derive",
+            "label": "Derive",
+            "method": "embed",
+            "score": 0.723
+          }
+        ]
+      }
+    ],
+    "aiact": [
+      {
+        "value": "design and develop",
+        "count": 5,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "establish",
+        "count": 4,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "implement",
+        "count": 4,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "document",
+        "count": 4,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "maintain",
+        "count": 4,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "establish, implemented, documented and maintained",
+        "count": 1,
+        "status": "no_target",
+        "iri": [],
+        "_candidates": []
+      }
+    ]
+  },
+  "object": {
+    "gdpr": [
+      {
+        "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
+        "count": 12,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "pd:Communication",
+            "label": "Communication",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "embed",
+            "score": 0.751
+          },
+          {
+            "iri": "dpv:DataProcessingRecord",
+            "label": "Data Processing Record",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:InformationAudit",
+            "label": "Information Audit",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "personal data",
+        "count": 10,
+        "status": "mapped",
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "special categories of personal data",
+        "count": 9,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:SpecialCategoryPersonalData",
+            "label": "Special Category Personal Data",
+            "method": "embed",
+            "score": 0.961
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.818
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.816
+          }
+        ]
+      },
+      {
+        "value": "the personal data breach",
+        "count": 9,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.829
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.821
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.797
+          }
+        ]
+      },
+      {
+        "value": "Personal data",
+        "count": 8,
+        "status": "mapped",
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "the information",
+        "count": 7,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "embed",
+            "score": 0.736
+          },
+          {
+            "iri": "dpv:ProvidedData",
+            "label": "Provided Data",
+            "method": "embed",
+            "score": 0.721
+          },
+          {
+            "iri": "dpv:InformationAudit",
+            "label": "Information Audit",
+            "method": "embed",
+            "score": 0.715
+          }
+        ]
+      },
+      {
+        "value": "processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "pd:Biometric",
+            "label": "Biometric",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "pd:Identifying",
+            "label": "Identifying",
+            "method": "lexical",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "his or her personal data",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.851
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.848
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "lexical",
+            "score": 0.667
+          }
+        ]
+      },
+      {
+        "value": "reasons for the delay",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ConsequenceOfFailure",
+            "label": "Consequence of Failure",
+            "method": "embed",
+            "score": 0.656
+          },
+          {
+            "iri": "dpv:ConsequenceAsSideEffect",
+            "label": "Consequence as Side-Effect",
+            "method": "embed",
+            "score": 0.623
+          },
+          {
+            "iri": "dpv:Notification",
+            "label": "Notification",
+            "method": "embed",
+            "score": 0.62
+          }
+        ]
+      },
+      {
+        "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Impact",
+            "label": "Impact",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ImpactAssessment",
+            "label": "Impact Assessment",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Assessment",
+            "label": "Assessment",
+            "method": "lexical",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "a set of similar processing operations that present similar high risks",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.735
+          },
+          {
+            "iri": "dpv:DataSanitisationTechnique",
+            "label": "Data Sanitisation Technique",
+            "method": "embed",
+            "score": 0.732
+          }
+        ]
+      },
+      {
+        "value": "inaccurate personal data concerning him or her",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:AnonymisedData",
+            "label": "Anonymised Data",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.787
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.784
+          }
+        ]
+      },
+      {
+        "value": "incomplete personal data",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.819
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "lexical",
+            "score": 0.667
+          }
+        ]
+      },
+      {
+        "value": "personal data concerning him or her",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.844
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.837
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "lexical",
+            "score": 0.667
+          }
+        ]
+      },
+      {
+        "value": "appropriate technical and organisational measures to ensure a level of security appropriate to the risk",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:RiskLevel",
+            "label": "Risk Level",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Risk",
+            "label": "Risk",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:SecurityAssessment",
+            "label": "Security Assessment",
+            "method": "embed",
+            "score": 0.791
+          },
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "embed",
+            "score": 0.784
+          },
+          {
+            "iri": "dpv:SecurityAudit",
+            "label": "Security Audit",
+            "method": "embed",
+            "score": 0.775
+          }
+        ]
+      },
+      {
+        "value": "the pseudonymisation and encryption of personal data",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Pseudonymisation",
+            "label": "Pseudonymisation",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Encryption",
+            "label": "Encryption",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PseudonymisedData",
+            "label": "Pseudonymised Data",
+            "method": "embed",
+            "score": 0.902
+          }
+        ]
+      },
+      {
+        "value": "the availability and access to personal data",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.83
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.819
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.817
+          }
+        ]
+      },
+      {
+        "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:TrustedExecutionEnvironment",
+            "label": "Trusted Execution Environment",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.724
+          },
+          {
+            "iri": "dpv:TechnicalStandard",
+            "label": "Technical Standard",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "a record of processing activities",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "embed",
+            "score": 0.964
+          },
+          {
+            "iri": "dpv:DataProcessingRecord",
+            "label": "Data Processing Record",
+            "method": "embed",
+            "score": 0.884
+          },
+          {
+            "iri": "dpv:RecordsOfActivities",
+            "label": "Records of Activities",
+            "method": "embed",
+            "score": 0.861
+          },
+          {
+            "iri": "dpv:ConsentRecord",
+            "label": "Consent Record",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "pd:LoanRecord",
+            "label": "Loan Record",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:SecurityAssessment",
+            "label": "Security Assessment",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "embed",
+            "score": 0.782
+          },
+          {
+            "iri": "dpv:OrganisationalMeasure",
+            "label": "Organisational Measure",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:TechnicalStandard",
+            "label": "Technical Standard",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "those personal data",
+        "count": 4,
+        "status": "mapped",
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "personal data for specified, explicit and legitimate purposes",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.875
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.846
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.836
+          }
+        ]
+      },
+      {
+        "value": "personal data referred to in paragraph 1",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.848
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.818
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "lexical",
+            "score": 0.667
+          }
+        ]
+      },
+      {
+        "value": "the data subject to a decision based solely on automated processing",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:DataProcessingPolicy",
+            "label": "Data Processing Policy",
+            "method": "embed",
+            "score": 0.772
+          },
+          {
+            "iri": "dpv:DataProcessingRecord",
+            "label": "Data Processing Record",
+            "method": "embed",
+            "score": 0.762
+          },
+          {
+            "iri": "dpv:DataSuitabilityAssessment",
+            "label": "Data Suitability Assessment",
+            "method": "embed",
+            "score": 0.751
+          },
+          {
+            "iri": "dpv:SyntheticData",
+            "label": "Synthetic Data",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.86
+          },
+          {
+            "iri": "dpv:DistributedSystemSecurity",
+            "label": "Distributed System Security",
+            "method": "embed",
+            "score": 0.804
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "controllers which are processing the personal data",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.771
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.751
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.747
+          }
+        ]
+      },
+      {
+        "value": "the personal data",
+        "count": 3,
+        "status": "mapped",
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "pd:Historical",
+            "label": "Historical",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:CollectedData",
+            "label": "Collected Data",
+            "method": "embed",
+            "score": 0.736
+          },
+          {
+            "iri": "dpv:ObservedData",
+            "label": "Observed Data",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "pd:PublicLife",
+            "label": "Public Life",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the provisions of paragraphs 1 and 2",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:GuidelinesPrinciple",
+            "label": "Guidelines Principle",
+            "method": "embed",
+            "score": 0.7
+          },
+          {
+            "iri": "dpv:LegalMeasure",
+            "label": "Legal Measure",
+            "method": "embed",
+            "score": 0.682
+          },
+          {
+            "iri": "dpv:StandardsConformance",
+            "label": "Standards Conformance",
+            "method": "embed",
+            "score": 0.668
+          }
+        ]
+      },
+      {
+        "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.73
+          }
+        ]
+      },
+      {
+        "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalMeasure",
+            "label": "Legal Measure",
+            "method": "embed",
+            "score": 0.646
+          },
+          {
+            "iri": "dpv:ConsequenceAsSideEffect",
+            "label": "Consequence as Side-Effect",
+            "method": "embed",
+            "score": 0.631
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.608
+          },
+          {
+            "iri": "pd:DeviceBased",
+            "label": "Device Based",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the ability to ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "dpv:FileSystemSecurity",
+            "label": "File System Security",
+            "method": "embed",
+            "score": 0.752
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the supervisory authority competent in accordance with Article 55",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Authority",
+            "label": "Authority",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:SupraNationalAuthority",
+            "label": "Supranational Authority",
+            "method": "embed",
+            "score": 0.71
+          },
+          {
+            "iri": "dpv:NationalAuthority",
+            "label": "National Authority",
+            "method": "embed",
+            "score": 0.71
+          },
+          {
+            "iri": "dpv:ConsultationWithAuthority",
+            "label": "Consultation with Authority",
+            "method": "embed",
+            "score": 0.704
+          },
+          {
+            "iri": "dpv:RegionalAuthority",
+            "label": "Regional Authority",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "for specified, explicit and legitimate purposes",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:AcceptableUsePolicy",
+            "label": "Acceptable Use Policy",
+            "method": "embed",
+            "score": 0.756
+          },
+          {
+            "iri": "dpv:StandardsConformance",
+            "label": "Standards Conformance",
+            "method": "embed",
+            "score": 0.744
+          },
+          {
+            "iri": "dpv:Standard",
+            "label": "Standard",
+            "method": "embed",
+            "score": 0.73
+          }
+        ]
+      },
+      {
+        "value": "in a manner that is incompatible with those purposes",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ConsequenceAsSideEffect",
+            "label": "Consequence as Side-Effect",
+            "method": "embed",
+            "score": 0.685
+          },
+          {
+            "iri": "dpv:AcceptableUsePolicy",
+            "label": "Acceptable Use Policy",
+            "method": "embed",
+            "score": 0.675
+          },
+          {
+            "iri": "pd:Proclivity",
+            "label": "Proclivity",
+            "method": "embed",
+            "score": 0.659
+          }
+        ]
+      },
+      {
+        "value": "the personal data breach to the supervisory authority competent in accordance with Article 55",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Authority",
+            "label": "Authority",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "embed",
+            "score": 0.753
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.746
+          }
+        ]
+      },
+      {
+        "value": "The information",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Data",
+            "label": "Data",
+            "method": "embed",
+            "score": 0.736
+          },
+          {
+            "iri": "dpv:ProvidedData",
+            "label": "Provided Data",
+            "method": "embed",
+            "score": 0.721
+          },
+          {
+            "iri": "dpv:InformationAudit",
+            "label": "Information Audit",
+            "method": "embed",
+            "score": 0.715
+          }
+        ]
+      },
+      {
+        "value": "the obligations referred to in paragraphs 1 and 2",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalMeasure",
+            "label": "Legal Measure",
+            "method": "embed",
+            "score": 0.708
+          },
+          {
+            "iri": "dpv:GuidelinesPrinciple",
+            "label": "Guidelines Principle",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:ConsentReceipt",
+            "label": "Consent Receipt",
+            "method": "embed",
+            "score": 0.689
+          }
+        ]
+      },
+      {
+        "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "embed",
+            "score": 0.813
+          },
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.794
+          },
+          {
+            "iri": "dpv:SecurityAudit",
+            "label": "Security Audit",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:TechnicalStandard",
+            "label": "Technical Standard",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      }
+    ],
+    "aiact": [
+      {
+        "value": "A risk management system",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "airo:Risk",
+            "label": "Risk",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "airo:RiskControl",
+            "label": "Risk Control",
+            "method": "embed",
+            "score": 0.805
+          },
+          {
+            "iri": "airo:RiskConcept",
+            "label": "Risk Concept",
+            "method": "embed",
+            "score": 0.805
+          },
+          {
+            "iri": "airo:RiskSource",
+            "label": "Risk Source",
+            "method": "embed",
+            "score": 0.777
+          },
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "High-risk AI systems",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "embed",
+            "score": 0.842
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "airo:AISubject",
+            "label": "AI Subject",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "airo:AIUser",
+            "label": "AI User",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "high-risk AI systems",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "embed",
+            "score": 0.842
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "airo:AISubject",
+            "label": "AI Subject",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "airo:AIUser",
+            "label": "AI User",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "condition": {
+    "gdpr": [
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
+        "count": 15,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.633
+          },
+          {
+            "iri": "dpv:ProtectionOfIPR",
+            "label": "Protection of Intellectual Property Rights",
+            "method": "embed",
+            "score": 0.625
+          },
+          {
+            "iri": "dpv:AccountManagement",
+            "label": "Account Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Consent",
+            "label": "Consent",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.756
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.729
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "lexical",
+            "score": 0.6
+          }
+        ]
+      },
+      {
+        "value": "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.604
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.586
+          },
+          {
+            "iri": "dpv:Personalisation",
+            "label": "Personalisation",
+            "method": "embed",
+            "score": 0.579
+          }
+        ]
+      },
+      {
+        "value": "When requested by the data subject, provided that the identity of the data subject is proven by other means",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.764
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "embed",
+            "score": 0.713
+          },
+          {
+            "iri": "dpv:IdentityVerification",
+            "label": "Identity Verification",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "an enterprise or an organisation employing fewer than 250 persons unless the processing it carries out is likely to result in a risk to the rights and freedoms of data subjects, the processing is not occasional, or the processing includes special categories of data as referred to in Article 9(1) or personal data relating to criminal convictions and offences referred to in Article 10",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:OrganisationRiskManagement",
+            "label": "Organisation Risk Management",
+            "method": "lexical",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.639
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "embed",
+            "score": 0.62
+          },
+          {
+            "iri": "dpv:SellDataToThirdParties",
+            "label": "Sell Data to Third Parties",
+            "method": "embed",
+            "score": 0.619
+          },
+          {
+            "iri": "dpv:OrganisationGovernance",
+            "label": "Organisation Governance",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "Where the notification to the supervisory authority is not made within 72 hours",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:OfficialAuthorityOfController",
+            "label": "Official Authority of Controller",
+            "method": "embed",
+            "score": 0.649
+          },
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.609
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.589
+          }
+        ]
+      },
+      {
+        "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ProtectionOfIPR",
+            "label": "Protection of Intellectual Property Rights",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.624
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.622
+          },
+          {
+            "iri": "dpv:AccountManagement",
+            "label": "Account Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "without undue delay",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:IncreaseServiceRobustness",
+            "label": "Increase Service Robustness",
+            "method": "embed",
+            "score": 0.699
+          },
+          {
+            "iri": "dpv:OptimiseUserInterface",
+            "label": "Optimise User Interface",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:Verification",
+            "label": "Verification",
+            "method": "embed",
+            "score": 0.667
+          }
+        ]
+      },
+      {
+        "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "embed",
+            "score": 0.647
+          },
+          {
+            "iri": "dpv:FulfilmentOfObligation",
+            "label": "Fulfilment of Obligation",
+            "method": "embed",
+            "score": 0.644
+          },
+          {
+            "iri": "dpv:CommercialPurpose",
+            "label": "Commercial Purpose",
+            "method": "embed",
+            "score": 0.627
+          },
+          {
+            "iri": "dpv:AccountManagement",
+            "label": "Account Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "to the extent that processing is necessary",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "dpv:FulfilmentOfObligation",
+            "label": "Fulfilment of Obligation",
+            "method": "embed",
+            "score": 0.674
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.672
+          }
+        ]
+      },
+      {
+        "value": "in a timely manner in the event of a physical or technical incident",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:PersonnelPerformanceMonitoring",
+            "label": "Personnel Performance Monitoring",
+            "method": "embed",
+            "score": 0.665
+          },
+          {
+            "iri": "dpv:PersonnelBehaviourMonitoring",
+            "label": "Personnel Behaviour Monitoring",
+            "method": "embed",
+            "score": 0.665
+          }
+        ]
+      },
+      {
+        "value": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ProtectionOfIPR",
+            "label": "Protection of Intellectual Property Rights",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.669
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "where and insofar as the data subject already has the information",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.791
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.789
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "embed",
+            "score": 0.729
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "Where processing is to be carried out on behalf of a controller",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:OfficialAuthorityOfController",
+            "label": "Official Authority of Controller",
+            "method": "embed",
+            "score": 0.831
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfController",
+            "label": "Legitimate Interest of Controller",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "dpv:OptimisationForController",
+            "label": "Optimisation for Controller",
+            "method": "embed",
+            "score": 0.692
+          }
+        ]
+      },
+      {
+        "value": "in a manner that is incompatible with those purposes",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:NonCommercialPurpose",
+            "label": "Non-commercial Purpose",
+            "method": "embed",
+            "score": 0.676
+          },
+          {
+            "iri": "dpv:LegalObligation",
+            "label": "Legal Obligation",
+            "method": "embed",
+            "score": 0.64
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.638
+          }
+        ]
+      },
+      {
+        "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Consent",
+            "label": "Consent",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.651
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.645
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.614
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "lexical",
+            "score": 0.6
+          }
+        ]
+      },
+      {
+        "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "count": 4,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "lexical",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.716
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.687
+          }
+        ]
+      },
+      {
+        "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Contract",
+            "label": "Contract",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.647
+          },
+          {
+            "iri": "dpv:PersonnelWorkloadManagement",
+            "label": "Personnel Workload Management",
+            "method": "embed",
+            "score": 0.639
+          },
+          {
+            "iri": "dpv:ServiceProvision",
+            "label": "Service Provision",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "dpv:CommunicationManagement",
+            "label": "Communication Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
+            "method": "embed",
+            "score": 0.673
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.672
+          },
+          {
+            "iri": "dpv:ResearchAndDevelopment",
+            "label": "Research and Development",
+            "method": "lexical",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.666
+          }
+        ]
+      },
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.642
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.632
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.608
+          },
+          {
+            "iri": "dpv:EnforceSecurity",
+            "label": "Enforce Security",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:AccountManagement",
+            "label": "Account Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.63
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.63
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "without undue delay where one of the following grounds applies",
+        "count": 3,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:IncreaseServiceRobustness",
+            "label": "Increase Service Robustness",
+            "method": "embed",
+            "score": 0.66
+          },
+          {
+            "iri": "dpv:EnforceAccessControl",
+            "label": "Enforce Access Control",
+            "method": "embed",
+            "score": 0.657
+          },
+          {
+            "iri": "dpv:SearchFunctionalities",
+            "label": "Search Functionalities",
+            "method": "embed",
+            "score": 0.653
+          }
+        ]
+      },
+      {
+        "value": "in accordance with Article 89(1)",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalCompliance",
+            "label": "Legal Compliance",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.683
+          },
+          {
+            "iri": "dpv:LegalObligation",
+            "label": "Legal Obligation",
+            "method": "embed",
+            "score": 0.679
+          }
+        ]
+      },
+      {
+        "value": "in writing, or by other means, including, where appropriate, by electronic means",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "dpv:ProvidePersonalisedRecommendations",
+            "label": "Provide Personalised Recommendations",
+            "method": "embed",
+            "score": 0.618
+          },
+          {
+            "iri": "dpv:NonCommercialPurpose",
+            "label": "Non-commercial Purpose",
+            "method": "embed",
+            "score": 0.615
+          }
+        ]
+      },
+      {
+        "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.63
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.624
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.603
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:OfficialAuthorityOfController",
+            "label": "Official Authority of Controller",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "where one of the following grounds applies",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.69
+          },
+          {
+            "iri": "dpv:NonCommercialPurpose",
+            "label": "Non-commercial Purpose",
+            "method": "embed",
+            "score": 0.651
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "embed",
+            "score": 0.643
+          }
+        ]
+      },
+      {
+        "value": "on grounds relating to his or her particular situation, at any time",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.659
+          },
+          {
+            "iri": "dpv:FulfilmentOfObligation",
+            "label": "Fulfilment of Obligation",
+            "method": "embed",
+            "score": 0.658
+          }
+        ]
+      },
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
+        "count": 2,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.64
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.636
+          },
+          {
+            "iri": "dpv:ProtectionOfNationalSecurity",
+            "label": "Protection of National Security",
+            "method": "embed",
+            "score": 0.609
+          },
+          {
+            "iri": "dpv:EnforceSecurity",
+            "label": "Enforce Security",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "dpv:AccountManagement",
+            "label": "Account Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "for specified, explicit and legitimate purposes",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.754
+          },
+          {
+            "iri": "dpv:LegitimateInterest",
+            "label": "Legitimate Interest",
+            "method": "embed",
+            "score": 0.752
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.734
+          }
+        ]
+      },
+      {
+        "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Contract",
+            "label": "Contract",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "dpv:PersonnelPerformanceMonitoring",
+            "label": "Personnel Performance Monitoring",
+            "method": "embed",
+            "score": 0.675
+          },
+          {
+            "iri": "dpv:FulfilmentOfObligation",
+            "label": "Fulfilment of Obligation",
+            "method": "lexical",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:PersonnelWorkloadManagement",
+            "label": "Personnel Workload Management",
+            "method": "embed",
+            "score": 0.659
+          }
+        ]
+      },
+      {
+        "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Contract",
+            "label": "Contract",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:LegalObligation",
+            "label": "Legal Obligation",
+            "method": "embed",
+            "score": 0.63
+          },
+          {
+            "iri": "dpv:Purpose",
+            "label": "Purpose",
+            "method": "embed",
+            "score": 0.619
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.616
+          },
+          {
+            "iri": "dpv:CommunicationManagement",
+            "label": "Communication Management",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.64
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.638
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Consent",
+            "label": "Consent",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.753
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.728
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "lexical",
+            "score": 0.6
+          }
+        ]
+      },
+      {
+        "value": "Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.638
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.636
+          },
+          {
+            "iri": "dpv:LegalCompliance",
+            "label": "Legal Compliance",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "dpv:SellProductsToDataSubject",
+            "label": "Sell Products to Data Subject",
+            "method": "lexical",
+            "score": 0.6
+          },
+          {
+            "iri": "dpv:DataAltruism",
+            "label": "Data Altruism",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "value": "it is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "lexical",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.737
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:ProtectionOfIPR",
+            "label": "Protection of Intellectual Property Rights",
+            "method": "embed",
+            "score": 0.69
+          }
+        ]
+      },
+      {
+        "value": "when the data subject has objected, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "lexical",
+            "score": 0.8
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfController",
+            "label": "Legitimate Interest of Controller",
+            "method": "lexical",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:OptimisationForController",
+            "label": "Optimisation for Controller",
+            "method": "lexical",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.666
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.645
+          }
+        ]
+      },
+      {
+        "value": "the data subject objects, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "count": 1,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "lexical",
+            "score": 0.8
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfController",
+            "label": "Legitimate Interest of Controller",
+            "method": "lexical",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "dpv:OptimisationForController",
+            "label": "Optimisation for Controller",
+            "method": "lexical",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:DataTransferLegalBasis",
+            "label": "Data Transfer Legal Basis",
+            "method": "embed",
+            "score": 0.655
+          }
+        ]
+      }
+    ],
+    "aiact": [
+      {
+        "value": "in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "vair:HumanOversightMeasure",
+            "label": "Human Oversight Measure",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "airo:HumanInvolvement",
+            "label": "Human Involvement",
+            "method": "embed",
+            "score": 0.641
+          },
+          {
+            "iri": "vair:AdministrationOfDemocraticProcesses",
+            "label": "Administration Of Democratic Processes",
+            "method": "embed",
+            "score": 0.632
+          }
+        ]
+      },
+      {
+        "value": "in relation to high-risk AI systems",
+        "count": 5,
+        "status": "review",
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "embed",
+            "score": 0.821
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.788
+          },
+          {
+            "iri": "airo:AICapability",
+            "label": "AI Capability",
+            "method": "embed",
+            "score": 0.787
+          },
+          {
+            "iri": "airo:AISubject",
+            "label": "AI Subject",
+            "method": "lexical",
+            "score": 0.5
+          },
+          {
+            "iri": "airo:AIUser",
+            "label": "AI User",
+            "method": "lexical",
+            "score": 0.5
+          }
+        ]
+      }
+    ]
+  }
+}
