@@ -44,6 +44,7 @@ HERE = os.path.dirname(__file__)
 TERMS = os.path.join(HERE, "mapping", "vocab", "terms.json")
 ROUTING = os.path.join(HERE, "mapping", "slot_routing.json")
 SYNONYMS = os.path.join(HERE, "mapping", "predicate_synonyms.json")
+OBJECT_ALIASES = os.path.join(HERE, "mapping", "object_aliases.json")
 OUT = os.path.join(HERE, "mapping", "content_map.json")
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 TOPK = 3
@@ -54,6 +55,13 @@ try:
 except Exception:
     STOP = {"the", "a", "an", "of", "and", "or", "to", "for", "in", "on", "with",
             "by", "his", "her", "its", "their", "which", "that", "such", "as"}
+
+# A processing verb auto-maps only when it is the predicate HEAD -- i.e. it is not
+# governing a separate noun object. The cheap deterministic test: the token right
+# after the matched verb is not a determiner/possessive (so "use a single assessment"
+# is governed -> review; "erase without undue delay" / "...to provide" are head -> map).
+DETERMINERS = {"a", "an", "the", "this", "that", "these", "those", "each", "every",
+               "any", "all", "no", "one", "its", "his", "her", "their", "our", "your", "my"}
 
 EDIT_DOC = ("Adjudication worksheet. For each value set 'status' to: "
             "'mapped' (fill 'iri' with one or more vocab IRIs), "
@@ -107,6 +115,22 @@ def load_synonyms():
     """verb-lemma -> [IRI]; hand-curated processing-op aliases (predicate.gdpr)."""
     raw = json.load(open(SYNONYMS)).get("aliases", {})
     return {vlem(k): v for k, v in raw.items()}
+
+
+def load_object_aliases():
+    """surface-phrase -> [IRI]; hand-curated object aliases (surface != vocab label)."""
+    return json.load(open(OBJECT_ALIASES)).get("aliases", {})
+
+
+def object_alias_hits(value_lemmas, aliases, label_map, label_lemmas, idf):
+    """alias phrases contained in the value -> (curie, IDF-score), treated as lexical."""
+    out = []
+    for phrase, iris in aliases.items():
+        if lemtoks(phrase) <= value_lemmas:
+            for c in iris:
+                if c in label_map:
+                    out.append((c, round(sum(idf.get(t, 1.0) for t in label_lemmas.get(c, set())), 3)))
+    return out
 
 
 def collect_values(paths):
@@ -167,6 +191,8 @@ def main():
 
     targets = load_targets()
     synonyms = load_synonyms()
+    obj_aliases = load_object_aliases()
+    idf_floor = json.load(open(ROUTING)).get("_idf_floor", 3.0)
     values = collect_values(args.paths)
 
     from sentence_transformers import SentenceTransformer
@@ -208,35 +234,51 @@ def main():
             for v, n in vcounter.most_common():
                 vn = norm_text(v)
                 vlemmas = lemtoks(v)
-                # exact
+                ptoks = vn.split()
+
+                # head verb lemmas (predicate): a verb token NOT immediately
+                # governing a determiner-led noun object
+                head_lemmas = set()
+                if slot == "predicate":
+                    for i, t in enumerate(ptoks):
+                        nxt = ptoks[i + 1] if i + 1 < len(ptoks) else None
+                        if nxt is None or nxt not in DETERMINERS:
+                            head_lemmas.add(vlem(t))
+
+                # exact: whole-phrase label equality; (predicate) head verb == single-token label
                 exact = [by_phrase[vn]] if vn in by_phrase else []
                 if slot == "predicate":
-                    vverb = {vlem(t) for t in vn.split()}
-                    exact = list(dict.fromkeys(exact + [c for lem in vverb for c in by_vlemma.get(lem, [])]))
+                    exact = list(dict.fromkeys(exact + [c for lem in head_lemmas for c in by_vlemma.get(lem, [])]))
                 if exact:
                     rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
                                  "iri": exact,
                                  "_candidates": [{"iri": c, "label": label_map[c], "method": "exact", "score": 1.0} for c in exact]})
                     counts["mapped"] += 1
                     continue
-                # hand-curated synonym aliases (predicate.gdpr): rescue true processing
-                # verbs whose surface form != DPV label, before the literal default
+                # hand-curated synonym aliases (predicate.gdpr), head-gated
                 if slot == "predicate":
-                    syn = []
-                    for t in {vlem(t) for t in vn.split()}:
-                        for c in synonyms.get(t, []):
-                            if c in label_map and c not in syn:
-                                syn.append(c)
+                    syn = [c for lem in head_lemmas for c in synonyms.get(lem, []) if c in label_map]
+                    syn = list(dict.fromkeys(syn))
                     if syn:
                         rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
                                      "iri": syn,
                                      "_candidates": [{"iri": c, "label": label_map[c], "method": "synonym", "score": 1.0} for c in syn]})
                         counts["mapped"] += 1
                         continue
-                # lexical concept mentions
+                # lexical concept mentions (IDF-scored, subsumed); objects also pull
+                # hand-curated surface aliases (treated as lexical hits)
                 lex = lexical_candidates(vlemmas, label_lemmas, idf)
-                cand = [{"iri": c, "label": label_map[c], "method": "lexical", "score": sc} for c, sc in lex]
-                # embedding hints (non-authoritative), excluding already-listed
+                alias_set = set()
+                if slot == "object":
+                    have = {c for c, _ in lex}
+                    for c, sc in object_alias_hits(vlemmas, obj_aliases, label_map, label_lemmas, idf):
+                        if c not in have:
+                            lex.append((c, sc))
+                            have.add(c)
+                            alias_set.add(c)
+                    lex.sort(key=lambda x: -x[1])
+                cand = [{"iri": c, "label": label_map[c],
+                         "method": "alias" if c in alias_set else "lexical", "score": sc} for c, sc in lex]
                 have = {c["iri"] for c in cand}
                 sims = embed([v])[0] @ lab_emb.T
                 for i in np.argsort(-sims)[:TOPK]:
@@ -244,13 +286,21 @@ def main():
                     if c not in have:
                         cand.append({"iri": c, "label": label_map[c], "method": "embed",
                                      "score": round(float(sims[int(i)]), 3)})
-                cand = cand[:5]
-                if lex:
-                    status = "review"
-                elif slot in ("predicate", "condition"):
-                    status = "literal"
+                cand = cand[:6]
+
+                # disposition
+                if slot == "object":
+                    strong = [c for c, sc in lex if sc >= idf_floor]
+                    if len(strong) == 1:
+                        rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                                     "iri": strong, "_candidates": cand})
+                        counts["mapped"] += 1
+                        continue
+                    status = "review"      # 0 hits, or >=2 disjoint concepts -> adjudicate
+                elif lex:
+                    status = "review"      # predicate/condition: genuine concept mention
                 else:
-                    status = "review"  # object with no lexical hit -> adjudicate
+                    status = "literal"     # predicate/condition, no lexical hit -> residue
                 rows.append({"value": v, "count": n, "status": status,
                              "lexical_hit": bool(lex), "iri": [], "_candidates": cand})
                 counts[status] += 1

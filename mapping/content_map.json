@@ -675,17 +675,33 @@
       {
         "value": "use a single assessment to address",
         "count": 1,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:Use"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:Use",
             "label": "Use",
-            "method": "exact",
-            "score": 1.0
+            "method": "lexical",
+            "score": 4.35
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.809
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.652
+          },
+          {
+            "iri": "dpv:Analyse",
+            "label": "Analyse",
+            "method": "embed",
+            "score": 0.648
           }
         ]
       },
@@ -834,9 +850,11 @@
       {
         "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
         "count": 12,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "pd:Communication"
+        ],
         "_candidates": [
           {
             "iri": "pd:Communication",
@@ -878,9 +896,11 @@
       {
         "value": "special categories of personal data",
         "count": 9,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:SpecialCategoryPersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:SpecialCategoryPersonalData",
@@ -905,9 +925,11 @@
       {
         "value": "the personal data breach",
         "count": 9,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1015,15 +1037,23 @@
             "label": "Health",
             "method": "lexical",
             "score": 4.96
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.715
           }
         ]
       },
       {
         "value": "his or her personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1141,9 +1171,11 @@
       {
         "value": "inaccurate personal data concerning him or her",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1174,9 +1206,11 @@
       {
         "value": "incomplete personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1201,9 +1235,11 @@
       {
         "value": "personal data concerning him or her",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1294,15 +1330,23 @@
             "label": "Fully Randomised Pseudonymisation",
             "method": "embed",
             "score": 0.895
+          },
+          {
+            "iri": "dpv:DeterministicPseudonymisation",
+            "label": "Deterministic Pseudonymisation",
+            "method": "embed",
+            "score": 0.893
           }
         ]
       },
       {
         "value": "the availability and access to personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1333,9 +1377,11 @@
       {
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1366,9 +1412,11 @@
       {
         "value": "a record of processing activities",
         "count": 4,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ROPA"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ROPA",
@@ -1393,9 +1441,11 @@
       {
         "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 4,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1437,9 +1487,11 @@
       {
         "value": "personal data for specified, explicit and legitimate purposes",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1470,9 +1522,11 @@
       {
         "value": "personal data referred to in paragraph 1",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1551,9 +1605,11 @@
       {
         "value": "controllers which are processing the personal data",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1601,9 +1657,11 @@
       {
         "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "pd:Historical"
+        ],
         "_candidates": [
           {
             "iri": "pd:Historical",
@@ -1661,9 +1719,11 @@
       {
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1748,10 +1808,18 @@
       {
         "value": "the supervisory authority competent in accordance with Article 55",
         "count": 2,
-        "status": "review",
-        "lexical_hit": false,
-        "iri": [],
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:DataProtectionAuthority"
+        ],
         "_candidates": [
+          {
+            "iri": "dpv:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "alias",
+            "score": 14.03
+          },
           {
             "iri": "dpv:SupraNationalAuthority",
             "label": "Supranational Authority",
@@ -1834,16 +1902,16 @@
         "iri": [],
         "_candidates": [
           {
+            "iri": "dpv:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "alias",
+            "score": 14.03
+          },
+          {
             "iri": "dpv:PersonalData",
             "label": "Personal Data",
             "method": "lexical",
             "score": 7.279
-          },
-          {
-            "iri": "dpv:DataProtectionAuthority",
-            "label": "Data Protection Authority",
-            "method": "embed",
-            "score": 0.753
           },
           {
             "iri": "dpv:PersonalDataAudit",
@@ -1916,9 +1984,11 @@
       {
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1945,9 +2015,11 @@
       {
         "value": "A risk management system",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "airo:Risk"
+        ],
         "_candidates": [
           {
             "iri": "airo:Risk",
@@ -1978,9 +2050,11 @@
       {
         "value": "High-risk AI systems",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "airo:AISystem"
+        ],
         "_candidates": [
           {
             "iri": "airo:AISystem",
@@ -2005,9 +2079,11 @@
       {
         "value": "high-risk AI systems",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "airo:AISystem"
+        ],
         "_candidates": [
           {
             "iri": "airo:AISystem",
@@ -2894,6 +2970,12 @@
             "label": "Personnel Performance Monitoring",
             "method": "embed",
             "score": 0.675
+          },
+          {
+            "iri": "dpv:PersonnelWorkloadManagement",
+            "label": "Personnel Workload Management",
+            "method": "embed",
+            "score": 0.659
           }
         ]
       },
@@ -2933,6 +3015,12 @@
             "label": "Legal Basis",
             "method": "embed",
             "score": 0.616
+          },
+          {
+            "iri": "dpv:LegalCompliance",
+            "label": "Legal Compliance",
+            "method": "embed",
+            "score": 0.607
           }
         ]
       },
