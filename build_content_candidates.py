@@ -63,6 +63,14 @@ except Exception:
 DETERMINERS = {"a", "an", "the", "this", "that", "these", "those", "each", "every",
                "any", "all", "no", "one", "its", "his", "her", "their", "our", "your", "my"}
 
+# For the object head test: the NP head is the last content noun before the first
+# preposition/complementiser, so "of"/"to"-complements ("...of personal data",
+# "...to personal data") don't masquerade as the head. A single auto-detected
+# lexical hit only auto-maps if it covers this head; otherwise -> review.
+PREP_MARKERS = {"of", "to", "for", "in", "on", "with", "concerning", "about",
+                "under", "from", "against", "regarding", "referred", "relating",
+                "based", "by"}
+
 EDIT_DOC = ("Adjudication worksheet. For each value set 'status' to: "
             "'mapped' (fill 'iri' with one or more vocab IRIs), "
             "'flag' (mappable content but no vocab home -> coverage MISS / HITL), "
@@ -85,6 +93,18 @@ def vlem(tok):
 def lemtoks(s):
     """noun-lemmatised, stopword-stripped token set of a normalised string."""
     return {_LEM.lemmatize(t) for t in norm_text(s or "").split() if t not in STOP}
+
+
+def head_token(value):
+    """NP head: last content (non-stop) lemma before the first preposition marker."""
+    toks = norm_text(value or "").split()
+    cut = len(toks)
+    for i, t in enumerate(toks):
+        if t in PREP_MARKERS:
+            cut = i
+            break
+    zone = [t for t in toks[:cut] if t not in STOP] or [t for t in toks if t not in STOP]
+    return _LEM.lemmatize(zone[-1]) if zone else None
 
 
 def load_targets():
@@ -292,11 +312,18 @@ def main():
                 if slot == "object":
                     strong = [c for c, sc in lex if sc >= idf_floor]
                     if len(strong) == 1:
-                        rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
-                                     "iri": strong, "_candidates": cand})
-                        counts["mapped"] += 1
-                        continue
-                    status = "review"      # 0 hits, or >=2 disjoint concepts -> adjudicate
+                        c0 = strong[0]
+                        head = head_token(v)
+                        # auto-map only if the hit covers the NP head; aliases are
+                        # hand-curated and authoritative so they bypass the head test
+                        covered = c0 in alias_set or (head is not None and head in label_lemmas.get(c0, set()))
+                        if covered:
+                            rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                                         "iri": [c0], "_candidates": cand})
+                            counts["mapped"] += 1
+                            continue
+                        # matched only a modifier, head noun unmapped -> surface the gap
+                    status = "review"      # 0/modifier-only hits, or >=2 disjoint concepts
                 elif lex:
                     status = "review"      # predicate/condition: genuine concept mention
                 else:

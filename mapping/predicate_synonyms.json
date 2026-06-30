@@ -3,6 +3,7 @@
   "aliases": {
     "communicate": ["dpv:Disclose", "dpv:Transmit"],
     "provide": ["dpv:MakeAvailable"],
-    "evaluate": ["dpv:Assess"]
+    "evaluate": ["dpv:Assess"],
+    "rectify": ["dpv:Modify"]
   }
 }

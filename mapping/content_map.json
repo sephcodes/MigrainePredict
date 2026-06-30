@@ -850,11 +850,9 @@
       {
         "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
         "count": 12,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "pd:Communication"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "pd:Communication",
@@ -925,11 +923,9 @@
       {
         "value": "the personal data breach",
         "count": 9,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:PersonalData"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1342,11 +1338,9 @@
       {
         "value": "the availability and access to personal data",
         "count": 5,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:PersonalData"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1377,11 +1371,9 @@
       {
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
         "count": 5,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:TechnicalOrganisationalMeasure"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1441,11 +1433,9 @@
       {
         "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 4,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:TechnicalOrganisationalMeasure"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1657,11 +1647,9 @@
       {
         "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
         "count": 2,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "pd:Historical"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "pd:Historical",
@@ -1719,11 +1707,9 @@
       {
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
         "count": 2,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:PersonalData"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1984,11 +1970,9 @@
       {
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 1,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:TechnicalOrganisationalMeasure"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -2015,11 +1999,9 @@
       {
         "value": "A risk management system",
         "count": 5,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "airo:Risk"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "airo:Risk",
