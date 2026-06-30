@@ -655,7 +655,7 @@
       {
         "value": "use a single assessment to address",
         "count": 1,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": true,
         "iri": [],
         "_candidates": [
@@ -963,7 +963,7 @@
       {
         "value": "the information",
         "count": 7,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -1139,7 +1139,7 @@
       {
         "value": "a set of similar processing operations that present similar high risks",
         "count": 5,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -1262,8 +1262,7 @@
         "status": "mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:TechnicalOrganisationalMeasure",
-          "dpv:RiskLevel"
+          "dpv:TechnicalOrganisationalMeasure"
         ],
         "_candidates": [
           {
@@ -1672,7 +1671,8 @@
         "status": "mapped",
         "lexical_hit": true,
         "iri": [
-          "pd:Historical"
+          "dpv:ScientificResearch",
+          "dpv:PublicInterest"
         ],
         "_candidates": [
           {
@@ -1704,7 +1704,7 @@
       {
         "value": "the provisions of paragraphs 1 and 2",
         "count": 2,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -1766,7 +1766,7 @@
       {
         "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
         "count": 2,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -1945,7 +1945,7 @@
       {
         "value": "The information",
         "count": 1,
-        "status": "review",
+        "status": "literal",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -2127,9 +2127,12 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
         "count": 15,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2160,9 +2163,11 @@
       {
         "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ConsentGiven"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ConsentGiven",
@@ -2268,9 +2273,11 @@
       {
         "value": "Where the notification to the supervisory authority is not made within 72 hours",
         "count": 5,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:UntilTimeDuration"
+        ],
         "_candidates": [
           {
             "iri": "dpv:OfficialAuthorityExercisePending",
@@ -2295,9 +2302,12 @@
       {
         "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2328,9 +2338,11 @@
       {
         "value": "without undue delay",
         "count": 5,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:IndeterminateDuration"
+        ],
         "_candidates": [
           {
             "iri": "dpv:IndeterminateDuration",
@@ -2355,9 +2367,11 @@
       {
         "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
         "count": 5,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingCondition",
@@ -2382,9 +2396,11 @@
       {
         "value": "to the extent that processing is necessary",
         "count": 5,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingCondition",
@@ -2463,9 +2479,11 @@
       {
         "value": "where and insofar as the data subject already has the information",
         "count": 5,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:DataSubjectInformed"
+        ],
         "_candidates": [
           {
             "iri": "dpv:DataSubjectDataSource",
@@ -2544,9 +2562,11 @@
       {
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
         "count": 4,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ConsentGiven"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ConsentGiven",
@@ -2583,9 +2603,14 @@
       {
         "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
         "count": 4,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ScientificResearch",
+          "dpv:PublicInterest",
+          "dpv:VitalInterestOfDataSubject",
+          "dpv:LegitimateInterestOfDataSubject"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
@@ -2628,9 +2653,13 @@
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PreventativeCareManagement",
+          "dpv:PersonnelMonitoring",
+          "dpv:MedicalConditionDiagnosis"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingCondition",
@@ -2673,9 +2702,12 @@
       {
         "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PublicInterest",
+          "dpv:ScientificResearch"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
@@ -2706,9 +2738,12 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
         "count": 3,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2739,9 +2774,12 @@
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
         "count": 3,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:UntilTimeDuration",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ConsentStatusValidForProcessing",
@@ -2766,9 +2804,11 @@
       {
         "value": "without undue delay where one of the following grounds applies",
         "count": 3,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:IndeterminateDuration"
+        ],
         "_candidates": [
           {
             "iri": "dpv:IndeterminateDuration",
@@ -2820,9 +2860,11 @@
       {
         "value": "in writing, or by other means, including, where appropriate, by electronic means",
         "count": 2,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:Format"
+        ],
         "_candidates": [
           {
             "iri": "dpv:HumanInvolvementForInput",
@@ -2847,9 +2889,12 @@
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
         "count": 2,
-        "status": "literal",
+        "status": "mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:UntilTimeDuration",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ConsentStatusValidForProcessing",
@@ -2928,9 +2973,12 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ProcessingContext",
+          "dpv:VitalInterestOfNaturalPerson"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2988,9 +3036,13 @@
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PreventativeCareManagement",
+          "dpv:PersonnelMonitoring",
+          "dpv:MedicalConditionDiagnosis"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ServiceProvision",
@@ -3033,9 +3085,13 @@
       {
         "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PreventativeCareManagement",
+          "dpv:PersonnelMonitoring",
+          "dpv:MedicalConditionDiagnosis"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ServiceProvision",
@@ -3105,9 +3161,11 @@
       {
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ConsentGiven"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ConsentGiven",
@@ -3171,9 +3229,14 @@
       {
         "value": "it is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ScientificResearch",
+          "dpv:PublicInterest",
+          "dpv:VitalInterestOfDataSubject",
+          "dpv:LegitimateInterestOfDataSubject"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ScientificResearch",
@@ -3272,9 +3335,13 @@
       {
         "value": "in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "vair:NaturalPerson",
+          "vair:HumanOversightMeasure",
+          "airo:HumanInvolvement"
+        ],
         "_candidates": [
           {
             "iri": "vair:NaturalPerson",
@@ -3305,9 +3372,11 @@
       {
         "value": "in relation to high-risk AI systems",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "airo:AISystem"
+        ],
         "_candidates": [
           {
             "iri": "airo:AISystem",
