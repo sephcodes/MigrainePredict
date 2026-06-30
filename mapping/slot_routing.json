@@ -1,36 +1,37 @@
 {
-  "_doc": "Slot x regulation -> vocabulary target selectors for the content (predicate/object/condition) coverage pass. Each selector picks terms from terms.json: by 'scheme' (dpv/pd), by 'root' (airo/vair subClassOf root), or 'all' (whole vocab file). An empty target list means no routed vocabulary -> every value reported as a structural gap (no_target).",
+  "_doc": "COMPREHENSIVE routing, assigned ONCE from the full DPV scheme list and AIRO/VAIR root list (not from failures). Every DPV class scheme is assigned to the slot whose content-kind it holds: PREDICATE = processing operations; OBJECT = anything a duty acts on (data, measures, notices, entities/roles, rights, risk, contracts); CONDITION = preconditions/triggers (legal bases, consent, purposes, context, scale, jurisdiction, statuses). Two schemes are deliberately excluded as non-content and documented below. Because the routing is now complete by construction, a value that fails to map is a GENUINE vocabulary gap (the finding), not an un-routed scheme.",
+  "_excluded_schemes": {
+    "dpv:rules-classes": "deontic meta-layer (Obligation/Prohibition/Recommendation) = the modality slot, not content",
+    "dpv:process-classes": "abstract process types (Process/Service) redundant with processing-classes; would only double-emit"
+  },
   "_exclude_abstract": ["dpv:Purpose", "dpv:Data", "dpv:Risk", "dpv:Authority"],
-  "_exclude_doc": "Abstract top-of-scheme root concepts removed from ALL match targets: matching a bare category word (purpose/data/risk/authority) to its root class is never a content hit; real mentions hit the specific subclasses. Stops 'purpose' over-promoting purpose-limitation qualifier clauses, etc.",
   "_idf_floor": 3.0,
-  "_idf_floor_doc": "Minimum IDF-summed lexical score for an OBJECT lexical hit to be auto-emitted as a mapped IRI (multi-concept objects map by rule). Hits below the floor, or objects with no lexical hit, fall to review.",
   "predicate": {
-    "gdpr": [
-      {"vocab": "dpv", "by": "scheme", "values": ["dpv:processing-classes"]}
-    ],
+    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": ["dpv:processing-classes"]}],
     "aiact": []
   },
   "object": {
-    "gdpr": [
-      {"vocab": "dpv", "by": "scheme", "values": [
-        "dpv:personal-data-classes", "dpv:TOM-classes", "dpv:technical-measures-classes",
-        "dpv:organisational-measures-classes", "dpv:entities-authority-classes", "dpv:risk-classes"]},
-      {"vocab": "pd", "by": "all"}
-    ],
-    "aiact": [
-      {"vocab": "airo", "by": "all"},
-      {"vocab": "vair", "by": "root", "values": [
-        "airo:AISystem", "airo:AICapability", "airo:AIComponent", "airo:RiskControl"]}
-    ]
+    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": [
+                "dpv:personal-data-classes",
+                "dpv:TOM-classes", "dpv:technical-measures-classes",
+                "dpv:organisational-measures-classes", "dpv:physical-measures-classes",
+                "dpv:legal-measures-classes", "dpv:notice-classes",
+                "dpv:entities-classes", "dpv:entities-authority-classes",
+                "dpv:entities-legalrole-classes", "dpv:entities-organisation-classes",
+                "dpv:entities-datasubject-classes",
+                "dpv:rights-classes", "dpv:risk-classes",
+                "dpv:contract-types-classes", "dpv:contract-clause-classes"]},
+              {"vocab": "pd", "by": "all"}],
+    "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
   },
   "condition": {
-    "gdpr": [
-      {"vocab": "dpv", "by": "scheme", "values": ["dpv:legal-basis-classes", "dpv:purposes-classes"]}
-    ],
-    "aiact": [
-      {"vocab": "airo", "by": "all"},
-      {"vocab": "vair", "by": "root", "values": [
-        "airo:Purpose", "airo:Domain", "airo:RiskSource", "airo:RiskControl", "airo:HumanInvolvement"]}
-    ]
+    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": [
+                "dpv:legal-basis-classes", "dpv:legal-basis-status-classes",
+                "dpv:consent-types-classes", "dpv:consent-status-classes", "dpv:consent-controls-classes",
+                "dpv:purposes-classes",
+                "dpv:context-classes", "dpv:processing-context-classes", "dpv:processing-scale-classes",
+                "dpv:jurisdiction-classes", "dpv:status-classes",
+                "dpv:contract-status-classes", "dpv:contract-control-classes"]}],
+    "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
   }
 }

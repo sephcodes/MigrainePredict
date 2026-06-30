@@ -1,6 +1,7 @@
 {
   "_doc": "Hand-curated OBJECT surface-phrase -> vocab IRI aliases, for object concepts whose regulatory surface form does not lexically equal the vocab label (e.g. GDPR 'supervisory authority' = dpv:DataProtectionAuthority). Matched by lemmatised phrase-token containment and treated as a lexical hit (counts toward the disjoint-multi-hit review rule). Same deterministic-lexicon move as predicate_synonyms.json / subject_lexicon.json. Edit freely.",
   "aliases": {
-    "supervisory authority": ["dpv:DataProtectionAuthority"]
+    "supervisory authority": ["dpv:DataProtectionAuthority"],
+    "processors": ["dpv:DataProcessor"]
   }
 }

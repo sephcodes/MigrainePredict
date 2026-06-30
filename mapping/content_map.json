@@ -276,27 +276,17 @@
       {
         "value": "rectify",
         "count": 5,
-        "status": "literal",
-        "lexical_hit": false,
-        "iri": [],
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Modify"
+        ],
         "_candidates": [
-          {
-            "iri": "dpv:Reformat",
-            "label": "Reformat",
-            "method": "embed",
-            "score": 0.726
-          },
-          {
-            "iri": "dpv:Transform",
-            "label": "Transform",
-            "method": "embed",
-            "score": 0.725
-          },
           {
             "iri": "dpv:Modify",
             "label": "Modify",
-            "method": "embed",
-            "score": 0.713
+            "method": "synonym",
+            "score": 1.0
           }
         ]
       },
@@ -850,9 +840,11 @@
       {
         "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
         "count": 12,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "pd:Communication"
+        ],
         "_candidates": [
           {
             "iri": "pd:Communication",
@@ -923,9 +915,11 @@
       {
         "value": "the personal data breach",
         "count": 9,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1000,9 +994,15 @@
       {
         "value": "processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:IdentifyingPersonalData",
+          "pd:Genetic",
+          "pd:Biometric",
+          "pd:Sexual",
+          "pd:Health"
+        ],
         "_candidates": [
           {
             "iri": "dpv:IdentifyingPersonalData",
@@ -1101,9 +1101,12 @@
       {
         "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:ImpactAssessment",
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:ImpactAssessment",
@@ -1260,9 +1263,12 @@
       {
         "value": "appropriate technical and organisational measures to ensure a level of security appropriate to the risk",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure",
+          "dpv:RiskLevel"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1293,9 +1299,13 @@
       {
         "value": "the pseudonymisation and encryption of personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData",
+          "dpv:Pseudonymisation",
+          "dpv:Encryption"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1338,9 +1348,11 @@
       {
         "value": "the availability and access to personal data",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1371,9 +1383,11 @@
       {
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1433,9 +1447,11 @@
       {
         "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 4,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1647,9 +1663,11 @@
       {
         "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "pd:Historical"
+        ],
         "_candidates": [
           {
             "iri": "pd:Historical",
@@ -1707,9 +1725,11 @@
       {
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
         "count": 2,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:PersonalData",
@@ -1883,9 +1903,12 @@
       {
         "value": "the personal data breach to the supervisory authority competent in accordance with Article 55",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:DataProtectionAuthority",
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
             "iri": "dpv:DataProtectionAuthority",
@@ -1970,9 +1993,11 @@
       {
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
         "count": 1,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
         "_candidates": [
           {
             "iri": "dpv:TechnicalOrganisationalMeasure",
@@ -1999,9 +2024,11 @@
       {
         "value": "A risk management system",
         "count": 5,
-        "status": "review",
+        "status": "mapped",
         "lexical_hit": true,
-        "iri": [],
+        "iri": [
+          "airo:Risk"
+        ],
         "_candidates": [
           {
             "iri": "airo:Risk",
