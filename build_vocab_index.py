@@ -1,4 +1,4 @@
-"""Parse the downloaded DPV / PD / AIRO / VAIR turtle files into a complete,
+"""Parse the downloaded DPV / PD / AIRO / VAIR / EU-GDPR / Sector-Health / Justifications turtle files into a complete,
 organised term index (mapping/vocab/terms.json), so the predicate/object/
 condition coverage pass matches against the FULL published vocabularies.
 
@@ -11,7 +11,7 @@ object/datatype/annotation properties. Per concept we capture label, scheme,
 types, parents, and a `root` (topmost ancestor via subClassOf/broader).
 
 Grouping:
-  - DPV / PD: by skos:inScheme.
+  - DPV / PD / EU-GDPR / Sector-Health / Justifications: by skos:inScheme.
   - AIRO / VAIR: by `root`, since VAIR's inScheme is a single vair: scheme for
     the whole vocabulary; the purpose/domain/risk-source/control partition is
     carried by the subClassOf root (e.g. vair:LawEnforcement -> airo:Domain,
@@ -40,13 +40,16 @@ from rdflib.namespace import SKOS
 from rdflib.term import URIRef
 
 VOCAB_DIR = os.path.join(os.path.dirname(__file__), "mapping", "vocab")
-FILES = ["dpv", "pd", "airo", "vair"]
+FILES = ["dpv", "pd", "airo", "vair", "eu-gdpr", "sector-health", "justifications"]
 
 CLASS_TYPES = {RDFS.Class, OWL.Class, SKOS.Concept}
 PROP_TYPES = {OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty, RDF.Property}
 
 # longest namespace first so pd/ matches before dpv/
 NS = [
+    ("eu-gdpr", "https://w3id.org/dpv/legal/eu/gdpr#"),
+    ("sector-health", "https://w3id.org/dpv/sector/health#"),
+    ("justifications", "https://w3id.org/dpv/justifications#"),
     ("pd", "https://w3id.org/dpv/pd#"),
     ("dpv", "https://w3id.org/dpv#"),
     ("airo", "https://w3id.org/airo#"),
@@ -123,7 +126,7 @@ def main():
 
     # restrict each file to its OWN namespace (drops cross-ns import stubs and
     # owl-tooling-namespace artifacts), and add a derived label where missing
-    own = {"dpv": "dpv:", "pd": "pd:", "airo": "airo:", "vair": "vair:"}
+    own = {"dpv": "dpv:", "pd": "pd:", "airo": "airo:", "vair": "vair:", "eu-gdpr": "eu-gdpr:", "sector-health": "sector-health:", "justifications": "justifications:"}
     for f in FILES:
         kept = {}
         for c, r in index[f].items():

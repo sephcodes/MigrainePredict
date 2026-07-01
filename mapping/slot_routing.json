@@ -11,27 +11,75 @@
     "aiact": []
   },
   "object": {
-    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": [
-                "dpv:personal-data-classes",
-                "dpv:TOM-classes", "dpv:technical-measures-classes",
-                "dpv:organisational-measures-classes", "dpv:physical-measures-classes",
-                "dpv:legal-measures-classes", "dpv:notice-classes",
-                "dpv:entities-classes", "dpv:entities-authority-classes",
-                "dpv:entities-legalrole-classes", "dpv:entities-organisation-classes",
-                "dpv:entities-datasubject-classes",
-                "dpv:rights-classes", "dpv:risk-classes",
-                "dpv:contract-types-classes", "dpv:contract-clause-classes"]},
-              {"vocab": "pd", "by": "all"}],
+    "gdpr": [
+      {"vocab": "dpv", "by": "scheme", "values": [
+          "dpv:personal-data-classes",
+          "dpv:TOM-classes",
+          "dpv:technical-measures-classes",
+          "dpv:organisational-measures-classes",
+          "dpv:physical-measures-classes",
+          "dpv:legal-measures-classes",
+          "dpv:notice-classes",
+          "dpv:entities-classes",
+          "dpv:entities-authority-classes",
+          "dpv:entities-legalrole-classes",
+          "dpv:entities-organisation-classes",
+          "dpv:entities-datasubject-classes",
+          "dpv:rights-classes",
+          "dpv:risk-classes",
+          "dpv:contract-types-classes",
+          "dpv:contract-clause-classes"
+        ]},
+      {"vocab": "pd", "by": "all"},
+      {"vocab": "eu-gdpr", "by": "scheme", "values": [
+          "eu-gdpr:data-breach-classes",
+          "eu-gdpr:dpia-classes",
+          "eu-gdpr:rights-classes",
+          "eu-gdpr:entities-classes"
+        ]},
+      {"vocab": "sector-health", "by": "scheme", "values": [
+          "sector-health:data-classes",
+          "sector-health:entities-classes",
+          "sector-health:technology-classes"
+        ]}
+    ],
     "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
   },
   "condition": {
-    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": [
-                "dpv:legal-basis-classes", "dpv:legal-basis-status-classes",
-                "dpv:consent-types-classes", "dpv:consent-status-classes", "dpv:consent-controls-classes",
-                "dpv:purposes-classes",
-                "dpv:context-classes", "dpv:processing-context-classes", "dpv:processing-scale-classes",
-                "dpv:jurisdiction-classes", "dpv:status-classes",
-                "dpv:contract-status-classes", "dpv:contract-control-classes"]}],
+    "gdpr":  [
+      {"vocab": "dpv", "by": "scheme", "values": [
+          "dpv:legal-basis-classes",
+          "dpv:legal-basis-status-classes",
+          "dpv:consent-types-classes",
+          "dpv:consent-status-classes",
+          "dpv:consent-controls-classes",
+          "dpv:purposes-classes",
+          "dpv:context-classes",
+          "dpv:processing-context-classes",
+          "dpv:processing-scale-classes",
+          "dpv:jurisdiction-classes",
+          "dpv:status-classes",
+          "dpv:contract-status-classes",
+          "dpv:contract-control-classes"
+        ]},
+      {"vocab": "eu-gdpr", "by": "scheme", "values": [
+          "eu-gdpr:legal-basis-classes",
+          "eu-gdpr:legal-basis-special-classes",
+          "eu-gdpr:legal-basis-data-transfer-classes",
+          "eu-gdpr:purpose-compatibility-classes",
+          "eu-gdpr:rights-justifications-classes",
+          "eu-gdpr:principles-classes",
+          "eu-gdpr:proportionality-classes",
+          "eu-gdpr:compliance-classes",
+          "eu-gdpr:data-transfers-classes",
+          "eu-gdpr:rights-impacts-classes"
+        ]},
+      {"vocab": "sector-health", "by": "scheme", "values": [
+          "sector-health:purposes-classes",
+          "sector-health:status-classes"
+        ]},
+      {"vocab": "justifications", "by": "all"}
+    ],
     "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
   }
 }
