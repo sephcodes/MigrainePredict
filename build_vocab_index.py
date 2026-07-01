@@ -130,44 +130,52 @@ def main():
             kept[c] = r
         index[f] = kept
 
-    # ---- routing targets (slot x regulation -> vocabulary), with live counts ----
-    dsch = Counter(r["scheme"] for r in index["dpv"].values() if r["scheme"])
-    vroot = Counter(r["root"] for r in index["vair"].values())
-    pd_n, airo_n = len(index["pd"]), len(index["airo"])
-
-    def d(s):
-        return dsch.get(f"dpv:{s}", 0)
-
-    def vr(s):
-        return vroot.get(f"airo:{s}", 0)
-
-    print("=== ROUTING TARGETS (term counts) ===")
-    print(f"predicate.gdpr  -> dpv:processing-classes ({d('processing-classes')})")
-    print("predicate.aiact -> (no verb taxonomy in AIRO/VAIR; structural gap, ~0)")
-    print(f"object.gdpr     -> personal-data ({d('personal-data-classes')}) + PD ({pd_n}) "
-          f"+ TOM ({d('TOM-classes')}) + technical-measures ({d('technical-measures-classes')}) "
-          f"+ organisational-measures ({d('organisational-measures-classes')}) "
-          f"+ entities-authority ({d('entities-authority-classes')}) + risk ({d('risk-classes')})")
-    print(f"object.aiact    -> AIRO classes ({airo_n}) + VAIR roots "
-          f"AISystem ({vr('AISystem')}) AICapability ({vr('AICapability')}) "
-          f"AIComponent ({vr('AIComponent')}) RiskControl ({vr('RiskControl')})")
-    print(f"condition.gdpr  -> legal-basis ({d('legal-basis-classes')}) + purposes ({d('purposes-classes')})")
-    print(f"condition.aiact -> VAIR roots Purpose ({vr('Purpose')}) Domain ({vr('Domain')}) "
-          f"RiskSource ({vr('RiskSource')}) RiskControl ({vr('RiskControl')}) "
-          f"HumanInvolvement ({vr('HumanInvolvement')}) + AIRO ({airo_n})")
-
+    # ---- routing targets (slot x regulation), read from slot_routing.json so
+    # this report can never drift from the routing the matcher actually uses ----
+    ROUTING = os.path.join(os.path.dirname(__file__), "mapping", "slot_routing.json")
+    print("=== ROUTING TARGETS (from slot_routing.json, live term counts) ===")
+    try:
+        routing = json.load(open(ROUTING))
+    except FileNotFoundError:
+        print(f"  (slot_routing.json not found at {ROUTING}; skipping)")
+        routing = None
+ 
+    def sel_parts(sel):
+        """(count, human-readable label) for one routing selector."""
+        voc = index.get(sel["vocab"], {})
+        if sel["by"] == "all":
+            return len(voc), f"{sel['vocab']} (all, {len(voc)})"
+        key = "scheme" if sel["by"] == "scheme" else "root"
+        counts = Counter(r.get(key) for r in voc.values())
+        total = sum(counts.get(v, 0) for v in sel["values"])
+        body = " ".join(f"{v.split(':')[-1]} ({counts.get(v, 0)})" for v in sel["values"])
+        return total, f"{sel['vocab']}: {body}"
+ 
+    if routing is not None:
+        for slot in ("predicate", "object", "condition"):
+            for reg in ("gdpr", "aiact"):
+                sels = routing.get(slot, {}).get(reg, [])
+                if not sels:
+                    print(f"{slot}.{reg:5s} -> (none routed; structural gap)")
+                    continue
+                resolved = [sel_parts(s) for s in sels]
+                total = sum(c for c, _ in resolved)
+                print(f"{slot}.{reg:5s} -> [{total} terms]")
+                for _, lbl in resolved:
+                    print(f"                     {lbl}")
+ 
     # label coverage sanity
     print("\n=== label coverage ===")
     for f in FILES:
         tot = len(index[f])
         nl = sum(1 for r in index[f].values() if not r["label"])
         print(f"  {f:5s} {tot} concepts, {nl} missing label")
-
+ 
     out = os.path.join(VOCAB_DIR, "terms.json")
     with open(out, "w") as fh:
         json.dump(index, fh, indent=2, ensure_ascii=False)
     print(f"\nwrote {out}  (" + ", ".join(f"{k}={len(v)}" for k, v in index.items()) + ")")
-
-
+ 
+ 
 if __name__ == "__main__":
     main()
