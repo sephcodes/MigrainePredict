@@ -1,4 +1,5 @@
-"""Parse the downloaded DPV / PD / AIRO / VAIR / EU-GDPR / Sector-Health / Justifications turtle files into a complete,
+"""Parse the downloaded DP (core + eu-gdpr, sector-health, justifications
+extensions) / PD / AIRO / VAIR turtle files into a complete,
 organised term index (mapping/vocab/terms.json), so the predicate/object/
 condition coverage pass matches against the FULL published vocabularies.
 
@@ -11,22 +12,13 @@ object/datatype/annotation properties. Per concept we capture label, scheme,
 types, parents, and a `root` (topmost ancestor via subClassOf/broader).
 
 Grouping:
-  - DPV / PD / EU-GDPR / Sector-Health / Justifications: by skos:inScheme.
+  - DPV / PD: by skos:inScheme.
   - AIRO / VAIR: by `root`, since VAIR's inScheme is a single vair: scheme for
     the whole vocabulary; the purpose/domain/risk-source/control partition is
     carried by the subClassOf root (e.g. vair:LawEnforcement -> airo:Domain,
     vair:Intervention -> airo:RiskControl).
 
-The report at the end prints the agreed slot x regulation routing targets:
-  predicate.gdpr  -> dpv:processing-classes
-  object.gdpr     -> personal-data + PD + TOM + technical-measures
-                     + organisational-measures + entities-authority + risk
-  object.aiact    -> AIRO classes + VAIR roots AISystem/AICapability/
-                     AIComponent/RiskControl
-  condition.gdpr  -> legal-basis + purposes
-  condition.aiact -> VAIR roots Purpose/Domain/RiskSource/RiskControl/
-                     HumanInvolvement + AIRO
-  (predicate.aiact has no verb taxonomy -> reported as a structural gap)
+The report at the end prints the agreed slot x regulation routing targets in slout_routing.json
 
 Usage: python build_vocab_index.py   (reads mapping/vocab/*.ttl)
 """
