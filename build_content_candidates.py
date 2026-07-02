@@ -66,7 +66,13 @@ DETERMINERS = {"a", "an", "the", "this", "that", "these", "those", "each", "ever
 EDIT_DOC = ("Adjudication worksheet. For each value set 'status' to: "
             "'mapped' (fill 'iri' with one or more vocab IRIs), "
             "'flag' (mappable content but no vocab home -> coverage MISS / HITL), "
-            "'literal' (qualifier/residue, excluded from the coverage denominator). "
+            "'literal' (qualifier/residue, excluded from the coverage denominator), "
+            "'manually_mapped' / 'manually_literal' / 'manually_flag' (LOCKED human "
+            "decisions: any status prefixed 'manually_' is PRESERVED verbatim on every "
+            "re-run -- the matcher never overwrites its status/iri. Use manually_mapped "
+            "(fill iri) for a mapping you want kept, manually_literal for residue you've "
+            "decided stays literal, manually_flag for a confirmed gap. Plain "
+            "mapped/review/literal/flag are matcher output and WILL regenerate). "
             "DEFAULTS: status='mapped' = exact lexical hit (spot-check); "
             "status='review' = a genuine lexical concept mention was found "
             "(pick IRI(s) from _candidates); status='literal' = predicate/condition "
@@ -182,6 +188,42 @@ def lexical_candidates(value_lemmas, label_lemmas, idf):
     keep = [(c, round(sc, 3)) for c, lt, sc in hits
             if not any(c2 != c and lt < lt2 for c2, lt2, _ in hits)]  # drop strict subsets
     return sorted(keep, key=lambda x: -x[1])
+
+
+def preserve_manual(worksheet, prior_path):
+    """Carry forward every row the user marked status='manually_mapped' in the
+    previous content_map.json, so re-running never clobbers hand adjudications.
+    For a preserved value still produced this run: lock status + iri to the prior
+    manual values (fresh _candidates are kept, as an informative refresh). For a
+    manual value no longer produced this run: re-append the prior row verbatim so
+    nothing is silently lost. Returns the number of manual rows carried forward."""
+    if not os.path.exists(prior_path):
+        return 0
+    try:
+        prior = json.load(open(prior_path))
+    except (json.JSONDecodeError, OSError):
+        return 0
+    manual = {}
+    for slot in ("predicate", "object", "condition"):
+        for reg in ("gdpr", "aiact"):
+            for r in prior.get(slot, {}).get(reg, []):
+                if str(r.get("status", "")).startswith("manually_"):
+                    manual[(slot, reg, r["value"])] = r
+    if not manual:
+        return 0
+    applied = set()
+    for slot in ("predicate", "object", "condition"):
+        for reg in ("gdpr", "aiact"):
+            for row in worksheet.get(slot, {}).get(reg, []):
+                key = (slot, reg, row["value"])
+                if key in manual:
+                    row["status"] = manual[key]["status"]   # carry the exact locked status
+                    row["iri"] = manual[key].get("iri", [])
+                    applied.add(key)
+    for (slot, reg, val), r in manual.items():
+        if (slot, reg, val) not in applied:  # orphan: value not extracted this run
+            worksheet.setdefault(slot, {}).setdefault(reg, []).append(r)
+    return len(manual)
 
 
 def main():
@@ -312,11 +354,18 @@ def main():
             worksheet[slot][reg] = rows
             summary.append((slot, reg, len(rows), dict(counts)))
 
+    # preserve hand adjudications (status='manually_mapped') from the prior run,
+    # read from OUT BEFORE we overwrite it
+    n_manual = preserve_manual(worksheet, OUT)
+
     json.dump(worksheet, open(OUT, "w"), indent=2, ensure_ascii=False)
-    print(f"wrote {OUT}\n")
+    print(f"wrote {OUT}  (preserved {n_manual} manually_mapped row(s))\n")
+    # recompute the summary from the merged worksheet so counts include manually_mapped
     print(f"{'slot':10s} {'reg':6s} {'distinct':8s}  disposition")
-    for slot, reg, tot, c in summary:
-        print(f"{slot:10s} {reg:6s} {tot:8d}  {c}")
+    for slot in ("predicate", "object", "condition"):
+        for reg in ("gdpr", "aiact"):
+            rows = worksheet[slot][reg]
+            print(f"{slot:10s} {reg:6s} {len(rows):8d}  {dict(Counter(r['status'] for r in rows))}")
 
 
 if __name__ == "__main__":

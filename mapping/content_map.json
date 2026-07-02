@@ -1,5 +1,5 @@
 {
-  "_doc": "Adjudication worksheet. For each value set 'status' to: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator). DEFAULTS: status='mapped' = exact lexical hit (spot-check); status='review' = a genuine lexical concept mention was found (pick IRI(s) from _candidates); status='literal' = predicate/condition with no lexical concept mention (residue by default -- promote to 'mapped'/'flag' only if a real concept is present). IMPORTANT: '_candidates' marked method='embed' are WEAK hints only -- BGE returns a 'nearest' term over the closed vocab even when the right answer is none, so an embed score is NOT evidence of mappability; rely on lexical hits. 'lexical_hit' flags whether any concept token matched.",
+  "_doc": "Adjudication worksheet. For each value set 'status' to: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator), 'manually_mapped' / 'manually_literal' / 'manually_flag' (LOCKED human decisions: any status prefixed 'manually_' is PRESERVED verbatim on every re-run -- the matcher never overwrites its status/iri. Use manually_mapped (fill iri) for a mapping you want kept, manually_literal for residue you've decided stays literal, manually_flag for a confirmed gap. Plain mapped/review/literal/flag are matcher output and WILL regenerate). DEFAULTS: status='mapped' = exact lexical hit (spot-check); status='review' = a genuine lexical concept mention was found (pick IRI(s) from _candidates); status='literal' = predicate/condition with no lexical concept mention (residue by default -- promote to 'mapped'/'flag' only if a real concept is present). IMPORTANT: '_candidates' marked method='embed' are WEAK hints only -- BGE returns a 'nearest' term over the closed vocab even when the right answer is none, so an embed score is NOT evidence of mappability; rely on lexical hits. 'lexical_hit' flags whether any concept token matched.",
   "predicate": {
     "gdpr": [
       {
@@ -266,17 +266,27 @@
       {
         "value": "rectify",
         "count": 5,
-        "status": "mapped",
-        "lexical_hit": true,
-        "iri": [
-          "dpv:Modify"
-        ],
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Transform",
+            "label": "Transform",
+            "method": "embed",
+            "score": 0.725
+          },
           {
             "iri": "dpv:Modify",
             "label": "Modify",
-            "method": "synonym",
-            "score": 1.0
+            "method": "embed",
+            "score": 0.713
           }
         ]
       },
@@ -2041,12 +2051,18 @@
       {
         "value": "A risk management system",
         "count": 5,
-        "status": "manually_mapped",
+        "status": "mapped",
         "lexical_hit": true,
         "iri": [
           "airo:RiskControl"
         ],
         "_candidates": [
+          {
+            "iri": "airo:RiskControl",
+            "label": "Risk Control",
+            "method": "alias",
+            "score": 9.393
+          },
           {
             "iri": "airo:Risk",
             "label": "Risk",
@@ -2056,12 +2072,6 @@
           {
             "iri": "airo:RiskConcept",
             "label": "Risk Concept",
-            "method": "embed",
-            "score": 0.805
-          },
-          {
-            "iri": "airo:RiskControl",
-            "label": "Risk Control",
             "method": "embed",
             "score": 0.805
           },
