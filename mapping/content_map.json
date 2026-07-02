@@ -721,7 +721,7 @@
         "value": "use a single assessment to address",
         "source_article": "gdpr:art_35",
         "count": 1,
-        "status": "review",
+        "status": "manually_literal",
         "lexical_hit": true,
         "iri": [],
         "_candidates": [
