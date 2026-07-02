@@ -4,7 +4,7 @@
     "dpv:rules-classes": "deontic meta-layer (Obligation/Prohibition/Recommendation) = the modality slot, not content",
     "dpv:process-classes": "abstract process types (Process/Service) redundant with processing-classes; would only double-emit"
   },
-  "_exclude_abstract": ["dpv:Purpose", "dpv:Data", "dpv:Risk", "dpv:Authority"],
+  "_exclude_abstract": ["dpv:Purpose", "dpv:Data", "dpv:Risk", "dpv:Authority", "airo:Risk"],
   "_idf_floor": 3.0,
   "predicate": {
     "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": ["dpv:processing-classes"]}],

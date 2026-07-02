@@ -193,12 +193,14 @@ def lexical_candidates(value_lemmas, label_lemmas, idf):
 
 
 def preserve_manual(worksheet, prior_path):
-    """Carry forward every row the user marked status='manually_mapped' in the
+    """Carry forward every row the user locked with a 'manually_*' status in the
     previous content_map.json, so re-running never clobbers hand adjudications.
-    For a preserved value still produced this run: lock status + iri to the prior
-    manual values (fresh _candidates are kept, as an informative refresh). For a
-    manual value no longer produced this run: re-append the prior row verbatim so
-    nothing is silently lost. Returns the number of manual rows carried forward."""
+    Matching is tolerant: a lock that carries a source_article applies only to the
+    same (value, article) row (so the SAME value locked to DIFFERENT IRIs under
+    different articles stays distinct); a lock with no article applies at the value
+    level, across every article-row of that value (legacy / context-free locks).
+    A locked value/article no longer produced this run is re-appended verbatim so
+    nothing is silently lost. Returns the number of locked rows carried forward."""
     if not os.path.exists(prior_path):
         return 0
     try:
@@ -209,21 +211,30 @@ def preserve_manual(worksheet, prior_path):
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
             for r in prior.get(slot, {}).get(reg, []):
-                if str(r.get("status", "")).startswith("manually_"):
-                    manual[(slot, reg, r["value"])] = r
+                if not str(r.get("status", "")).startswith("manually_"):
+                    continue
+                art = r.get("source_article")
+                # article-specific lock if it carries one, else value-level (legacy/context-free)
+                key = (slot, reg, r["value"], art) if art else (slot, reg, r["value"], None)
+                manual[key] = r
     if not manual:
         return 0
     applied = set()
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
             for row in worksheet.get(slot, {}).get(reg, []):
-                key = (slot, reg, row["value"])
+                art = row.get("source_article")
+                # prefer an article-specific lock; fall back to a value-level lock
+                key = (slot, reg, row["value"], art)
+                if key not in manual:
+                    key = (slot, reg, row["value"], None)
                 if key in manual:
                     row["status"] = manual[key]["status"]   # carry the exact locked status
                     row["iri"] = manual[key].get("iri", [])
                     applied.add(key)
-    for (slot, reg, val), r in manual.items():
-        if (slot, reg, val) not in applied:  # orphan: value not extracted this run
+    for key, r in manual.items():
+        if key not in applied:  # orphan: value/article not produced this run -> keep it
+            slot, reg = key[0], key[1]
             worksheet.setdefault(slot, {}).setdefault(reg, []).append(r)
     return len(manual)
 
