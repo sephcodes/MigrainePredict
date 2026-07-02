@@ -1770,9 +1770,11 @@
       {
         "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
         "count": 2,
-        "status": "manually_literal",
+        "status": "manually_mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:AutomatedDecisionMaking"
+        ],
         "_candidates": [
           {
             "iri": "dpv:LegalMeasure",
@@ -2139,7 +2141,8 @@
         "status": "manually_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ProcessingContext"
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -2254,11 +2257,9 @@
       {
         "value": "an enterprise or an organisation employing fewer than 250 persons unless the processing it carries out is likely to result in a risk to the rights and freedoms of data subjects, the processing is not occasional, or the processing includes special categories of data as referred to in Article 9(1) or personal data relating to criminal convictions and offences referred to in Article 10",
         "count": 5,
-        "status": "manually_mapped",
+        "status": "manually_flag",
         "lexical_hit": false,
-        "iri": [
-          "eu-gdpr:GDPRRightsImpact"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "eu-gdpr:A18-Impact",
@@ -2756,7 +2757,8 @@
         "status": "manually_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ProcessingContext"
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -2791,7 +2793,7 @@
         "status": "manually_mapped",
         "lexical_hit": false,
         "iri": [
-          "justifications:RightsFreedomsImpactUnlikely"
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -2901,7 +2903,7 @@
         "status": "manually_mapped",
         "lexical_hit": false,
         "iri": [
-          "justifications:RightsFreedomsImpactUnlikely"
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -2984,7 +2986,8 @@
         "status": "manually_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ProcessingContext"
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -3317,9 +3320,11 @@
       {
         "value": "the data subject objects, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
         "count": 1,
-        "status": "literal",
+        "status": "manually_mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:ObjectingToProcess"
+        ],
         "_candidates": [
           {
             "iri": "eu-gdpr:GDPRLawfulness",
