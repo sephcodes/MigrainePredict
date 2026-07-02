@@ -2294,7 +2294,7 @@
       {
         "value": "Where the notification to the supervisory authority is not made within 72 hours",
         "count": 5,
-        "status": "literal",
+        "status": "manually_flag",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
