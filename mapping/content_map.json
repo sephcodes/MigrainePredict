@@ -2260,13 +2260,7 @@
             "iri": "airo:RiskControl",
             "label": "Risk Control",
             "method": "alias",
-            "score": 9.393
-          },
-          {
-            "iri": "airo:Risk",
-            "label": "Risk",
-            "method": "lexical",
-            "score": 4.127
+            "score": 9.43
           },
           {
             "iri": "airo:RiskConcept",
@@ -2296,7 +2290,7 @@
             "iri": "airo:AISystem",
             "label": "AI System",
             "method": "lexical",
-            "score": 8.968
+            "score": 8.964
           },
           {
             "iri": "airo:AIModel",
@@ -2326,7 +2320,7 @@
             "iri": "airo:AISystem",
             "label": "AI System",
             "method": "lexical",
-            "score": 8.968
+            "score": 8.964
           },
           {
             "iri": "airo:AIModel",
@@ -3611,7 +3605,7 @@
             "iri": "vair:NaturalPerson",
             "label": "Natural Person",
             "method": "lexical",
-            "score": 11.696
+            "score": 11.692
           },
           {
             "iri": "vair:HumanOversightMeasure",
@@ -3645,7 +3639,7 @@
             "iri": "airo:AISystem",
             "label": "AI System",
             "method": "lexical",
-            "score": 8.968
+            "score": 8.964
           },
           {
             "iri": "airo:AIModel",
