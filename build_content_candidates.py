@@ -211,7 +211,10 @@ def preserve_manual(worksheet, prior_path):
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
             for r in prior.get(slot, {}).get(reg, []):
-                if not str(r.get("status", "")).startswith("manually_"):
+                _st = str(r.get("status", ""))
+                # preserve locked human decisions (manually_*) AND un-audited adjudicator
+                # output (llm_suggested_*, escalated) so a matcher re-run can't wipe them
+                if not (_st.startswith("manually_") or _st.startswith("llm_suggested_") or _st == "escalated"):
                     continue
                 art = r.get("source_article")
                 # article-specific lock if it carries one, else value-level (legacy/context-free)
@@ -372,7 +375,7 @@ def main():
     n_manual = preserve_manual(worksheet, OUT)
 
     json.dump(worksheet, open(OUT, "w"), indent=2, ensure_ascii=False)
-    print(f"wrote {OUT}  (preserved {n_manual} manually_mapped row(s))\n")
+    print(f"wrote {OUT}  (preserved {n_manual} locked/adjudicated row(s))\n")
     # recompute the summary from the merged worksheet so counts include manually_mapped
     print(f"{'slot':10s} {'reg':6s} {'distinct':8s}  disposition")
     for slot in ("predicate", "object", "condition"):
