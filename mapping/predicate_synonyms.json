@@ -4,7 +4,9 @@
     "communicate": ["dpv:Disclose", "dpv:Transmit"],
     "provide": ["dpv:MakeAvailable"],
     "evaluate": ["dpv:Assess"],
-    "rectify": ["dpv:Modify"],
-    "inform": ["dpv:Disclose"]
+    "rectify": ["dpv:CorrectingProcess"],
+    "inform": ["dpv:Disclose"],
+    "notify": ["dpv:Disclose"],
+    "regularly test": ["dpv:Assess"]
   }
 }
