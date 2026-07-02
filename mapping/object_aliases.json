@@ -5,7 +5,7 @@
     "processors": ["dpv:DataProcessor"],
     "reasons for delay": ["dpv:DelayJustification"],
     "reasons for the delay": ["dpv:DelayJustification"],
-    "risk management system": ["dpv:RiskControl"],
+    "risk management system": ["dpv:RiskControl", "airo:RiskControl"],
     "scientific or historical research": ["dpv:ScientificResearch", "dpv:PublicInterest"]
   }
 }

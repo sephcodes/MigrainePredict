@@ -195,27 +195,17 @@
       {
         "value": "notify",
         "count": 5,
-        "status": "literal",
-        "lexical_hit": false,
-        "iri": [],
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Disclose"
+        ],
         "_candidates": [
-          {
-            "iri": "dpv:Observe",
-            "label": "Observe",
-            "method": "embed",
-            "score": 0.727
-          },
-          {
-            "iri": "dpv:Anonymise",
-            "label": "Anonymise",
-            "method": "embed",
-            "score": 0.682
-          },
           {
             "iri": "dpv:Disclose",
             "label": "Disclose",
-            "method": "embed",
-            "score": 0.678
+            "method": "synonym",
+            "score": 1.0
           }
         ]
       },
@@ -276,17 +266,27 @@
       {
         "value": "rectify",
         "count": 5,
-        "status": "mapped",
-        "lexical_hit": true,
-        "iri": [
-          "dpv:Modify"
-        ],
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
         "_candidates": [
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Transform",
+            "label": "Transform",
+            "method": "embed",
+            "score": 0.725
+          },
           {
             "iri": "dpv:Modify",
             "label": "Modify",
-            "method": "synonym",
-            "score": 1.0
+            "method": "embed",
+            "score": 0.713
           }
         ]
       },
@@ -1598,11 +1598,9 @@
       {
         "value": "the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
         "count": 3,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": false,
-        "iri": [
-          "dpv:SecureProcessingEnvironment"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:SecureProcessingEnvironment",
@@ -1806,9 +1804,7 @@
         "count": 2,
         "status": "review",
         "lexical_hit": false,
-        "iri": [
-          "dpv:SecureProcessingEnvironment"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:SecureProcessingEnvironment",
@@ -1986,7 +1982,7 @@
       {
         "value": "the obligations referred to in paragraphs 1 and 2",
         "count": 1,
-        "status": "literal",
+        "status": "review",
         "lexical_hit": false,
         "iri": [],
         "_candidates": [
@@ -2047,7 +2043,7 @@
         "status": "mapped",
         "lexical_hit": true,
         "iri": [
-          "airo:RiskControl"
+          "airo:Risk"
         ],
         "_candidates": [
           {
@@ -2141,11 +2137,9 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
         "count": 15,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2311,11 +2305,9 @@
       {
         "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
         "count": 5,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2373,11 +2365,9 @@
       {
         "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
         "count": 5,
-        "status": "mapped",
+        "status": "literal",
         "lexical_hit": false,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "eu-gdpr:SupplementaryMeasure",
@@ -2402,11 +2392,9 @@
       {
         "value": "to the extent that processing is necessary",
         "count": 5,
-        "status": "mapped",
+        "status": "literal",
         "lexical_hit": false,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ProcessingCondition",
@@ -2539,11 +2527,9 @@
       {
         "value": "in a manner that is incompatible with those purposes",
         "count": 4,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "eu-gdpr:PurposeIncompatible"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "eu-gdpr:PurposeIncompatible",
@@ -2658,14 +2644,9 @@
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
         "count": 3,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "sector-health:SocialServicesProvision",
-          "dpv:PreventativeCareManagement",
-          "dpv:PersonnelMonitoring",
-          "dpv:MedicalConditionDiagnosis"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "sector-health:SocialServicesProvision",
@@ -2741,11 +2722,9 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
         "count": 3,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -2965,11 +2944,9 @@
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
         "count": 2,
-        "status": "mapped",
+        "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "dpv:ProcessingContext"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "dpv:ProcessingContext",
@@ -3029,12 +3006,7 @@
         "count": 1,
         "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "sector-health:SocialServicesProvision",
-          "dpv:PreventativeCareManagement",
-          "dpv:PersonnelMonitoring",
-          "dpv:MedicalConditionDiagnosis"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "sector-health:SocialServicesProvision",
@@ -3079,12 +3051,7 @@
         "count": 1,
         "status": "review",
         "lexical_hit": true,
-        "iri": [
-          "sector-health:SocialServicesProvision",
-          "dpv:PreventativeCareManagement",
-          "dpv:PersonnelMonitoring",
-          "dpv:MedicalConditionDiagnosis"
-        ],
+        "iri": [],
         "_candidates": [
           {
             "iri": "sector-health:SocialServicesProvision",
