@@ -155,18 +155,20 @@ def collect_values(paths):
             if r.get("statement_class") != "DEONTIC":
                 continue
             st = r["statement"]
-            reg = (st.get("source_article") or "").split(":")[0]
+            src = st.get("source_article") or ""
+            reg = src.split(":")[0]
+            art = src.split("/")[0]   # article root, e.g. gdpr:art_12 (merge key for load-back)
             mod = st.get("modality")
             for p in (st.get("predicate") or []):
                 v, _ = normalise_predicate(p.get("value") or "", mod)
                 if v:
-                    vals[("predicate", reg)][v] += 1
+                    vals[("predicate", reg)][(v, art)] += 1
             for o in (st.get("object") or []):
                 if o.get("value"):
-                    vals[("object", reg)][o["value"]] += 1
+                    vals[("object", reg)][(o["value"], art)] += 1
             cond = st.get("condition")
             if isinstance(cond, dict) and cond.get("value"):
-                vals[("condition", reg)][cond["value"]] += 1
+                vals[("condition", reg)][(cond["value"], art)] += 1
     return vals
 
 
@@ -254,8 +256,8 @@ def main():
             rows, counts = [], Counter()
 
             if not label_map:  # structural gap
-                for v, n in vcounter.most_common():
-                    rows.append({"value": v, "count": n, "status": "no_target",
+                for (v, art), n in vcounter.most_common():
+                    rows.append({"value": v, "source_article": art, "count": n, "status": "no_target",
                                  "lexical_hit": False, "iri": [], "_candidates": []})
                     counts["no_target"] += 1
                 worksheet[slot][reg] = rows
@@ -273,7 +275,7 @@ def main():
             curies = list(label_map)
             lab_emb = embed([label_map[c] for c in curies])
 
-            for v, n in vcounter.most_common():
+            for (v, art), n in vcounter.most_common():
                 vn = norm_text(v)
                 vlemmas = lemtoks(v)
                 ptoks = vn.split()
@@ -292,7 +294,7 @@ def main():
                 if slot == "predicate":
                     exact = list(dict.fromkeys(exact + [c for lem in head_lemmas for c in by_vlemma.get(lem, [])]))
                 if exact:
-                    rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                    rows.append({"value": v, "source_article": art, "count": n, "status": "mapped", "lexical_hit": True,
                                  "iri": exact,
                                  "_candidates": [{"iri": c, "label": label_map[c], "method": "exact", "score": 1.0} for c in exact]})
                     counts["mapped"] += 1
@@ -302,7 +304,7 @@ def main():
                     syn = [c for lem in head_lemmas for c in synonyms.get(lem, []) if c in label_map]
                     syn = list(dict.fromkeys(syn))
                     if syn:
-                        rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                        rows.append({"value": v, "source_article": art, "count": n, "status": "mapped", "lexical_hit": True,
                                      "iri": syn,
                                      "_candidates": [{"iri": c, "label": label_map[c], "method": "synonym", "score": 1.0} for c in syn]})
                         counts["mapped"] += 1
@@ -338,7 +340,7 @@ def main():
                     # "the personal data breach" -> [PersonalData], breach is residue.
                     strong = [c for c, sc in lex if sc >= idf_floor]
                     if strong:
-                        rows.append({"value": v, "count": n, "status": "mapped", "lexical_hit": True,
+                        rows.append({"value": v, "source_article": art, "count": n, "status": "mapped", "lexical_hit": True,
                                      "iri": strong, "_candidates": cand})
                         counts["mapped"] += 1
                         continue
@@ -347,7 +349,7 @@ def main():
                     status = "review"      # predicate/condition: genuine concept mention
                 else:
                     status = "literal"     # predicate/condition, no lexical hit -> residue
-                rows.append({"value": v, "count": n, "status": status,
+                rows.append({"value": v, "source_article": art, "count": n, "status": status,
                              "lexical_hit": bool(lex), "iri": [], "_candidates": cand})
                 counts[status] += 1
 
