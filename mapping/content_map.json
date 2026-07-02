@@ -4,7 +4,8 @@
     "gdpr": [
       {
         "value": "process",
-        "count": 21,
+        "source_article": "gdpr:art_9",
+        "count": 16,
         "status": "mapped",
         "lexical_hit": true,
         "iri": [
@@ -21,6 +22,7 @@
       },
       {
         "value": "implement",
+        "source_article": "gdpr:art_32",
         "count": 14,
         "status": "literal",
         "lexical_hit": false,
@@ -47,24 +49,8 @@
         ]
       },
       {
-        "value": "provide",
-        "count": 10,
-        "status": "mapped",
-        "lexical_hit": true,
-        "iri": [
-          "dpv:MakeAvailable"
-        ],
-        "_candidates": [
-          {
-            "iri": "dpv:MakeAvailable",
-            "label": "Make Available",
-            "method": "synonym",
-            "score": 1.0
-          }
-        ]
-      },
-      {
         "value": "further process",
+        "source_article": "gdpr:art_5",
         "count": 8,
         "status": "mapped",
         "lexical_hit": true,
@@ -82,6 +68,7 @@
       },
       {
         "value": "erase",
+        "source_article": "gdpr:art_17",
         "count": 6,
         "status": "mapped",
         "lexical_hit": true,
@@ -99,6 +86,7 @@
       },
       {
         "value": "process lawfully, fairly and in a transparent manner",
+        "source_article": "gdpr:art_5",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -116,6 +104,7 @@
       },
       {
         "value": "collect",
+        "source_article": "gdpr:art_5",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -133,6 +122,7 @@
       },
       {
         "value": "prohibit",
+        "source_article": "gdpr:art_9",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -159,7 +149,44 @@
         ]
       },
       {
+        "value": "process",
+        "source_article": "gdpr:art_6",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
         "value": "take appropriate measures to provide",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "provide",
+        "source_article": "gdpr:art_12",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -177,6 +204,7 @@
       },
       {
         "value": "provide orally",
+        "source_article": "gdpr:art_12",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -194,6 +222,7 @@
       },
       {
         "value": "notify",
+        "source_article": "gdpr:art_33",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -211,6 +240,7 @@
       },
       {
         "value": "accompany by",
+        "source_article": "gdpr:art_33",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -238,6 +268,7 @@
       },
       {
         "value": "carry out",
+        "source_article": "gdpr:art_35",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -265,6 +296,7 @@
       },
       {
         "value": "rectify",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -292,6 +324,7 @@
       },
       {
         "value": "complete",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -319,6 +352,7 @@
       },
       {
         "value": "no longer process",
+        "source_article": "gdpr:art_21",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -336,6 +370,7 @@
       },
       {
         "value": "ensure the ability to restore",
+        "source_article": "gdpr:art_32",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -363,6 +398,7 @@
       },
       {
         "value": "communicate",
+        "source_article": "gdpr:art_34",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -386,7 +422,26 @@
         ]
       },
       {
+        "value": "provide",
+        "source_article": "gdpr:art_13",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
         "value": "use",
+        "source_article": "gdpr:art_28",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -404,6 +459,7 @@
       },
       {
         "value": "maintain",
+        "source_article": "gdpr:art_30",
         "count": 4,
         "status": "literal",
         "lexical_hit": false,
@@ -431,6 +487,7 @@
       },
       {
         "value": "address",
+        "source_article": "gdpr:art_35",
         "count": 4,
         "status": "literal",
         "lexical_hit": false,
@@ -458,6 +515,7 @@
       },
       {
         "value": "subject",
+        "source_article": "gdpr:art_22",
         "count": 3,
         "status": "literal",
         "lexical_hit": false,
@@ -485,6 +543,7 @@
       },
       {
         "value": "ensure",
+        "source_article": "gdpr:art_32",
         "count": 3,
         "status": "literal",
         "lexical_hit": false,
@@ -512,6 +571,7 @@
       },
       {
         "value": "take reasonable steps, including technical measures, to inform",
+        "source_article": "gdpr:art_17",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -529,6 +589,7 @@
       },
       {
         "value": "not be considered to be incompatible with the initial purposes",
+        "source_article": "gdpr:art_5",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -556,6 +617,7 @@
       },
       {
         "value": "erase without undue delay",
+        "source_article": "gdpr:art_17",
         "count": 2,
         "status": "mapped",
         "lexical_hit": true,
@@ -573,6 +635,7 @@
       },
       {
         "value": "comply with",
+        "source_article": "gdpr:art_17",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -600,6 +663,7 @@
       },
       {
         "value": "make",
+        "source_article": "gdpr:art_22",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -627,6 +691,7 @@
       },
       {
         "value": "implement appropriate technical and organisational measures to ensure",
+        "source_article": "gdpr:art_32",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -654,6 +719,7 @@
       },
       {
         "value": "use a single assessment to address",
+        "source_article": "gdpr:art_35",
         "count": 1,
         "status": "review",
         "lexical_hit": true,
@@ -687,6 +753,7 @@
       },
       {
         "value": "exempt from",
+        "source_article": "gdpr:art_30",
         "count": 1,
         "status": "literal",
         "lexical_hit": false,
@@ -714,6 +781,7 @@
       },
       {
         "value": "regularly test",
+        "source_article": "gdpr:art_32",
         "count": 1,
         "status": "literal",
         "lexical_hit": false,
@@ -741,6 +809,7 @@
       },
       {
         "value": "assess",
+        "source_article": "gdpr:art_32",
         "count": 1,
         "status": "mapped",
         "lexical_hit": true,
@@ -758,6 +827,7 @@
       },
       {
         "value": "evaluate",
+        "source_article": "gdpr:art_32",
         "count": 1,
         "status": "mapped",
         "lexical_hit": true,
@@ -777,6 +847,7 @@
     "aiact": [
       {
         "value": "design and develop",
+        "source_article": "aiact:art_14",
         "count": 5,
         "status": "no_target",
         "lexical_hit": false,
@@ -785,6 +856,7 @@
       },
       {
         "value": "establish",
+        "source_article": "aiact:art_9",
         "count": 4,
         "status": "no_target",
         "lexical_hit": false,
@@ -793,6 +865,7 @@
       },
       {
         "value": "implement",
+        "source_article": "aiact:art_9",
         "count": 4,
         "status": "no_target",
         "lexical_hit": false,
@@ -801,6 +874,7 @@
       },
       {
         "value": "document",
+        "source_article": "aiact:art_9",
         "count": 4,
         "status": "no_target",
         "lexical_hit": false,
@@ -809,6 +883,7 @@
       },
       {
         "value": "maintain",
+        "source_article": "aiact:art_9",
         "count": 4,
         "status": "no_target",
         "lexical_hit": false,
@@ -817,6 +892,7 @@
       },
       {
         "value": "establish, implemented, documented and maintained",
+        "source_article": "aiact:art_9",
         "count": 1,
         "status": "no_target",
         "lexical_hit": false,
@@ -829,6 +905,7 @@
     "gdpr": [
       {
         "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
+        "source_article": "gdpr:art_12",
         "count": 12,
         "status": "mapped",
         "lexical_hit": true,
@@ -863,24 +940,8 @@
         ]
       },
       {
-        "value": "personal data",
-        "count": 10,
-        "status": "mapped",
-        "lexical_hit": true,
-        "iri": [
-          "dpv:PersonalData"
-        ],
-        "_candidates": [
-          {
-            "iri": "dpv:PersonalData",
-            "label": "Personal Data",
-            "method": "exact",
-            "score": 1.0
-          }
-        ]
-      },
-      {
         "value": "special categories of personal data",
+        "source_article": "gdpr:art_9",
         "count": 9,
         "status": "mapped",
         "lexical_hit": true,
@@ -909,43 +970,8 @@
         ]
       },
       {
-        "value": "the personal data breach",
-        "count": 9,
-        "status": "mapped",
-        "lexical_hit": true,
-        "iri": [
-          "dpv:PersonalData",
-          "eu-gdpr:DataBreach"
-        ],
-        "_candidates": [
-          {
-            "iri": "dpv:PersonalData",
-            "label": "Personal Data",
-            "method": "lexical",
-            "score": 7.51
-          },
-          {
-            "iri": "eu-gdpr:DataBreach",
-            "label": "Data Breach",
-            "method": "lexical",
-            "score": 6.909
-          },
-          {
-            "iri": "dpv:DataBreachRecord",
-            "label": "Data Breach Record",
-            "method": "embed",
-            "score": 0.829
-          },
-          {
-            "iri": "eu-gdpr:DataBreachReport",
-            "label": "Data Breach Report",
-            "method": "embed",
-            "score": 0.826
-          }
-        ]
-      },
-      {
         "value": "Personal data",
+        "source_article": "gdpr:art_5",
         "count": 8,
         "status": "mapped",
         "lexical_hit": true,
@@ -962,34 +988,26 @@
         ]
       },
       {
-        "value": "the information",
+        "value": "personal data",
+        "source_article": "gdpr:art_5",
         "count": 7,
-        "status": "manually_literal",
-        "lexical_hit": false,
-        "iri": [],
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
         "_candidates": [
           {
-            "iri": "eu-gdpr:DataSubject",
-            "label": "Data Subject",
-            "method": "embed",
-            "score": 0.733
-          },
-          {
-            "iri": "dpv:DataSubject",
-            "label": "Data Subject",
-            "method": "embed",
-            "score": 0.733
-          },
-          {
-            "iri": "dpv:ProvidedData",
-            "label": "Provided Data",
-            "method": "embed",
-            "score": 0.721
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
           }
         ]
       },
       {
         "value": "processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation",
+        "source_article": "gdpr:art_9",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1041,6 +1059,7 @@
       },
       {
         "value": "his or her personal data",
+        "source_article": "gdpr:art_6",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1070,6 +1089,7 @@
       },
       {
         "value": "reasons for the delay",
+        "source_article": "gdpr:art_33",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -1099,6 +1119,7 @@
       },
       {
         "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
+        "source_article": "gdpr:art_35",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1141,6 +1162,7 @@
       },
       {
         "value": "a set of similar processing operations that present similar high risks",
+        "source_article": "gdpr:art_35",
         "count": 5,
         "status": "manually_literal",
         "lexical_hit": false,
@@ -1168,6 +1190,7 @@
       },
       {
         "value": "inaccurate personal data concerning him or her",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1203,6 +1226,7 @@
       },
       {
         "value": "incomplete personal data",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1232,6 +1256,7 @@
       },
       {
         "value": "personal data concerning him or her",
+        "source_article": "gdpr:art_17",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1261,6 +1286,7 @@
       },
       {
         "value": "appropriate technical and organisational measures to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -1296,6 +1322,7 @@
       },
       {
         "value": "the pseudonymisation and encryption of personal data",
+        "source_article": "gdpr:art_32",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1345,6 +1372,7 @@
       },
       {
         "value": "the availability and access to personal data",
+        "source_article": "gdpr:art_32",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1379,7 +1407,73 @@
         ]
       },
       {
+        "value": "the personal data breach",
+        "source_article": "gdpr:art_34",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData",
+          "eu-gdpr:DataBreach"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 7.51
+          },
+          {
+            "iri": "eu-gdpr:DataBreach",
+            "label": "Data Breach",
+            "method": "lexical",
+            "score": 6.909
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.829
+          },
+          {
+            "iri": "eu-gdpr:DataBreachReport",
+            "label": "Data Breach Report",
+            "method": "embed",
+            "score": 0.826
+          }
+        ]
+      },
+      {
+        "value": "the information",
+        "source_article": "gdpr:art_13",
+        "count": 5,
+        "status": "manually_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:ProvidedData",
+            "label": "Provided Data",
+            "method": "embed",
+            "score": 0.721
+          }
+        ]
+      },
+      {
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
+        "source_article": "gdpr:art_28",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -1417,6 +1511,7 @@
       },
       {
         "value": "a record of processing activities",
+        "source_article": "gdpr:art_30",
         "count": 4,
         "status": "mapped",
         "lexical_hit": true,
@@ -1445,7 +1540,45 @@
         ]
       },
       {
+        "value": "the personal data breach",
+        "source_article": "gdpr:art_33",
+        "count": 4,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData",
+          "eu-gdpr:DataBreach"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 7.51
+          },
+          {
+            "iri": "eu-gdpr:DataBreach",
+            "label": "Data Breach",
+            "method": "lexical",
+            "score": 6.909
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.829
+          },
+          {
+            "iri": "eu-gdpr:DataBreachReport",
+            "label": "Data Breach Report",
+            "method": "embed",
+            "score": 0.826
+          }
+        ]
+      },
+      {
         "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "source_article": "gdpr:art_32",
         "count": 4,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -1476,6 +1609,7 @@
       },
       {
         "value": "those personal data",
+        "source_article": "gdpr:art_9",
         "count": 4,
         "status": "mapped",
         "lexical_hit": true,
@@ -1493,6 +1627,7 @@
       },
       {
         "value": "personal data for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -1528,6 +1663,7 @@
       },
       {
         "value": "personal data referred to in paragraph 1",
+        "source_article": "gdpr:art_9",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -1557,6 +1693,7 @@
       },
       {
         "value": "the data subject to a decision based solely on automated processing",
+        "source_article": "gdpr:art_22",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -1599,6 +1736,7 @@
       },
       {
         "value": "the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "source_article": "gdpr:art_32",
         "count": 3,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -1627,7 +1765,26 @@
         ]
       },
       {
+        "value": "personal data",
+        "source_article": "gdpr:art_17",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
         "value": "controllers which are processing the personal data",
+        "source_article": "gdpr:art_17",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -1664,6 +1821,7 @@
       },
       {
         "value": "the personal data",
+        "source_article": "gdpr:art_21",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -1681,6 +1839,7 @@
       },
       {
         "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
+        "source_article": "gdpr:art_5",
         "count": 2,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -1717,6 +1876,7 @@
       },
       {
         "value": "the provisions of paragraphs 1 and 2",
+        "source_article": "gdpr:art_17",
         "count": 2,
         "status": "manually_literal",
         "lexical_hit": false,
@@ -1744,6 +1904,7 @@
       },
       {
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "source_article": "gdpr:art_21",
         "count": 2,
         "status": "mapped",
         "lexical_hit": true,
@@ -1779,6 +1940,7 @@
       },
       {
         "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
+        "source_article": "gdpr:art_22",
         "count": 2,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -1808,6 +1970,7 @@
       },
       {
         "value": "the ability to ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "source_article": "gdpr:art_32",
         "count": 2,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -1836,7 +1999,36 @@
         ]
       },
       {
+        "value": "the information",
+        "source_article": "gdpr:art_12",
+        "count": 2,
+        "status": "manually_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:ProvidedData",
+            "label": "Provided Data",
+            "method": "embed",
+            "score": 0.721
+          }
+        ]
+      },
+      {
         "value": "the supervisory authority competent in accordance with Article 55",
+        "source_article": "gdpr:art_33",
         "count": 2,
         "status": "mapped",
         "lexical_hit": true,
@@ -1872,6 +2064,7 @@
       },
       {
         "value": "for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
         "count": 1,
         "status": "manually_literal",
         "lexical_hit": false,
@@ -1899,6 +2092,7 @@
       },
       {
         "value": "in a manner that is incompatible with those purposes",
+        "source_article": "gdpr:art_5",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -1928,6 +2122,7 @@
       },
       {
         "value": "the personal data breach to the supervisory authority competent in accordance with Article 55",
+        "source_article": "gdpr:art_33",
         "count": 1,
         "status": "mapped",
         "lexical_hit": true,
@@ -1965,6 +2160,7 @@
       },
       {
         "value": "The information",
+        "source_article": "gdpr:art_12",
         "count": 1,
         "status": "manually_literal",
         "lexical_hit": false,
@@ -1992,6 +2188,7 @@
       },
       {
         "value": "the obligations referred to in paragraphs 1 and 2",
+        "source_article": "gdpr:art_30",
         "count": 1,
         "status": "manually_literal",
         "lexical_hit": false,
@@ -2019,6 +2216,7 @@
       },
       {
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "source_article": "gdpr:art_32",
         "count": 1,
         "status": "mapped",
         "lexical_hit": true,
@@ -2050,6 +2248,7 @@
     "aiact": [
       {
         "value": "A risk management system",
+        "source_article": "aiact:art_9",
         "count": 5,
         "status": "mapped",
         "lexical_hit": true,
@@ -2085,6 +2284,7 @@
       },
       {
         "value": "High-risk AI systems",
+        "source_article": "aiact:art_14",
         "count": 3,
         "status": "mapped",
         "lexical_hit": true,
@@ -2114,6 +2314,7 @@
       },
       {
         "value": "high-risk AI systems",
+        "source_article": "aiact:art_14",
         "count": 2,
         "status": "mapped",
         "lexical_hit": true,
@@ -2147,6 +2348,7 @@
     "gdpr": [
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_32",
         "count": 15,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2183,6 +2385,7 @@
       },
       {
         "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
+        "source_article": "gdpr:art_6",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2212,6 +2415,7 @@
       },
       {
         "value": "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child",
+        "source_article": "gdpr:art_12",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -2239,6 +2443,7 @@
       },
       {
         "value": "When requested by the data subject, provided that the identity of the data subject is proven by other means",
+        "source_article": "gdpr:art_12",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -2266,6 +2471,7 @@
       },
       {
         "value": "an enterprise or an organisation employing fewer than 250 persons unless the processing it carries out is likely to result in a risk to the rights and freedoms of data subjects, the processing is not occasional, or the processing includes special categories of data as referred to in Article 9(1) or personal data relating to criminal convictions and offences referred to in Article 10",
+        "source_article": "gdpr:art_30",
         "count": 5,
         "status": "manually_flag",
         "lexical_hit": false,
@@ -2293,6 +2499,7 @@
       },
       {
         "value": "Where the notification to the supervisory authority is not made within 72 hours",
+        "source_article": "gdpr:art_33",
         "count": 5,
         "status": "manually_flag",
         "lexical_hit": false,
@@ -2320,6 +2527,7 @@
       },
       {
         "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
+        "source_article": "gdpr:art_35",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2356,6 +2564,7 @@
       },
       {
         "value": "without undue delay",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -2383,6 +2592,7 @@
       },
       {
         "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
+        "source_article": "gdpr:art_16",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2412,6 +2622,7 @@
       },
       {
         "value": "to the extent that processing is necessary",
+        "source_article": "gdpr:art_17",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2441,6 +2652,7 @@
       },
       {
         "value": "in a timely manner in the event of a physical or technical incident",
+        "source_article": "gdpr:art_32",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -2468,6 +2680,7 @@
       },
       {
         "value": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_34",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2497,6 +2710,7 @@
       },
       {
         "value": "where and insofar as the data subject already has the information",
+        "source_article": "gdpr:art_13",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2526,6 +2740,7 @@
       },
       {
         "value": "Where processing is to be carried out on behalf of a controller",
+        "source_article": "gdpr:art_28",
         "count": 5,
         "status": "literal",
         "lexical_hit": false,
@@ -2553,6 +2768,7 @@
       },
       {
         "value": "in a manner that is incompatible with those purposes",
+        "source_article": "gdpr:art_5",
         "count": 4,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2582,6 +2798,7 @@
       },
       {
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "source_article": "gdpr:art_9",
         "count": 4,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2629,6 +2846,7 @@
       },
       {
         "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "source_article": "gdpr:art_9",
         "count": 4,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2677,6 +2895,7 @@
       },
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "source_article": "gdpr:art_9",
         "count": 3,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2727,6 +2946,7 @@
       },
       {
         "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
+        "source_article": "gdpr:art_5",
         "count": 3,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2763,6 +2983,7 @@
       },
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
         "count": 3,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -2799,6 +3020,7 @@
       },
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_33",
         "count": 3,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2828,6 +3050,7 @@
       },
       {
         "value": "without undue delay where one of the following grounds applies",
+        "source_article": "gdpr:art_17",
         "count": 3,
         "status": "literal",
         "lexical_hit": false,
@@ -2855,6 +3078,7 @@
       },
       {
         "value": "in accordance with Article 89(1)",
+        "source_article": "gdpr:art_5",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -2882,6 +3106,7 @@
       },
       {
         "value": "in writing, or by other means, including, where appropriate, by electronic means",
+        "source_article": "gdpr:art_12",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -2909,6 +3134,7 @@
       },
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_33",
         "count": 2,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -2938,6 +3164,7 @@
       },
       {
         "value": "where one of the following grounds applies",
+        "source_article": "gdpr:art_17",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -2965,6 +3192,7 @@
       },
       {
         "value": "on grounds relating to his or her particular situation, at any time",
+        "source_article": "gdpr:art_21",
         "count": 2,
         "status": "literal",
         "lexical_hit": false,
@@ -2992,6 +3220,7 @@
       },
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
         "count": 2,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3028,6 +3257,7 @@
       },
       {
         "value": "for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -3057,6 +3287,7 @@
       },
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies",
+        "source_article": "gdpr:art_9",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3107,6 +3338,7 @@
       },
       {
         "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "source_article": "gdpr:art_9",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3157,6 +3389,7 @@
       },
       {
         "value": "on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "source_article": "gdpr:art_21",
         "count": 1,
         "status": "literal",
         "lexical_hit": false,
@@ -3184,6 +3417,7 @@
       },
       {
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
+        "source_article": "gdpr:art_9",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3219,6 +3453,7 @@
       },
       {
         "value": "Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "source_article": "gdpr:art_9",
         "count": 1,
         "status": "manually_literal",
         "lexical_hit": true,
@@ -3252,6 +3487,7 @@
       },
       {
         "value": "it is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "source_article": "gdpr:art_9",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3300,6 +3536,7 @@
       },
       {
         "value": "when the data subject has objected, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "source_article": "gdpr:art_21",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -3329,6 +3566,7 @@
       },
       {
         "value": "the data subject objects, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "source_article": "gdpr:art_21",
         "count": 1,
         "status": "manually_mapped",
         "lexical_hit": false,
@@ -3360,6 +3598,7 @@
     "aiact": [
       {
         "value": "in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use",
+        "source_article": "aiact:art_14",
         "count": 5,
         "status": "manually_mapped",
         "lexical_hit": true,
@@ -3396,6 +3635,7 @@
       },
       {
         "value": "in relation to high-risk AI systems",
+        "source_article": "aiact:art_9",
         "count": 5,
         "status": "manually_literal",
         "lexical_hit": true,
