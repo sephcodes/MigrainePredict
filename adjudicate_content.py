@@ -53,10 +53,18 @@ def load_routed_vocab():
     """Mirror build_content_candidates.load_targets: resolve slot x regulation ->
     {iri: (label, scheme_or_root)} over terms.json + slot_routing.json, so the
     adjudicator can choose from (and is validated against) the FULL routed
-    vocabulary for a slot, not just the matcher's top-k candidates."""
+    vocabulary for a slot, not just the matcher's top-k candidates.
+
+    Adjudicator-only exclusions (ADJ_EXCLUDE_SCHEMES): schemes the human never maps
+    to because the fact is already captured elsewhere on the record — e.g. the
+    article-code legal bases (eu-gdpr:legal-basis-special-classes: A9-2-h etc.),
+    whose provenance already lives in the extraction's `references`/`source_article`
+    fields. Excluding them here stops the adjudicator padding maps with citation
+    codes, WITHOUT removing them from the matcher (routing is untouched)."""
     terms = json.load(open(TERMS))
     routing = json.load(open(ROUTING))
     exclude = set(routing.get("_exclude_abstract", []))
+    ADJ_EXCLUDE_SCHEMES = {"eu-gdpr:legal-basis-special-classes"}
     out = {}
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
@@ -73,6 +81,7 @@ def load_routed_vocab():
                     picked.update({c: (r["label"], r.get("root")) for c, r in voc.items() if r.get("root") in want})
             for c in exclude:
                 picked.pop(c, None)
+            picked = {c: v for c, v in picked.items() if v[1] not in ADJ_EXCLUDE_SCHEMES}
             out[(slot, reg)] = picked
     return out
 

@@ -10,7 +10,12 @@
     "dpv:Risk",
     "dpv:Authority",
     "airo:Risk",
-    "dpv:NotAutomated"
+    "dpv:Law",
+    "dpv:Contract",
+    "dpv:Scope",
+    "dpv:RiskLevel",
+    "dpv:Justification",
+    "eu-gdpr:Proportionate"
   ],
   "_idf_floor": 3.0,
   "predicate": {

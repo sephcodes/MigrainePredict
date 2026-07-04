@@ -47,7 +47,7 @@ SYNONYMS = os.path.join(HERE, "mapping", "predicate_synonyms.json")
 OBJECT_ALIASES = os.path.join(HERE, "mapping", "object_aliases.json")
 OUT = os.path.join(HERE, "mapping", "content_map.json")
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
-TOPK = 10   # embedding-hint recall: wider so human-found concepts surface as candidates
+TOPK = 20   # embedding-hint recall: wider so human-found concepts surface as candidates
 
 try:
     from nltk.corpus import stopwords
@@ -326,6 +326,14 @@ def main():
                 # lexical concept mentions (IDF-scored, subsumed); objects also pull
                 # hand-curated surface aliases (treated as lexical hits)
                 lex = lexical_candidates(vlemmas, label_lemmas, idf)
+                # governed-verb guard (predicate): a processing-verb hit whose verb is
+                # governed by a determiner ("use a single assessment" -> "use" governs
+                # "assessment", not data) is not the processing sense. Drop it; if that
+                # leaves no genuine hit the row falls to 'literal' deterministically and
+                # never reaches the adjudicator.
+                if slot == "predicate":
+                    lex = [(c, sc) for c, sc in lex
+                           if {vlem(t) for t in norm_text(label_map[c]).split()} & head_lemmas]
                 alias_set = set()
                 if slot == "object":
                     have = {c for c, _ in lex}
