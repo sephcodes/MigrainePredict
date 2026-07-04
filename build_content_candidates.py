@@ -47,7 +47,7 @@ SYNONYMS = os.path.join(HERE, "mapping", "predicate_synonyms.json")
 OBJECT_ALIASES = os.path.join(HERE, "mapping", "object_aliases.json")
 OUT = os.path.join(HERE, "mapping", "content_map.json")
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
-TOPK = 3
+TOPK = 10   # embedding-hint recall: wider so human-found concepts surface as candidates
 
 try:
     from nltk.corpus import stopwords

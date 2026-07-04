@@ -45,6 +45,49 @@ from tqdm import tqdm
 
 HERE = os.path.dirname(__file__)
 CONTENT_MAP = os.path.join(HERE, "mapping", "content_map.json")
+TERMS = os.path.join(HERE, "mapping", "vocab", "terms.json")
+ROUTING = os.path.join(HERE, "mapping", "slot_routing.json")
+
+
+def load_routed_vocab():
+    """Mirror build_content_candidates.load_targets: resolve slot x regulation ->
+    {iri: (label, scheme_or_root)} over terms.json + slot_routing.json, so the
+    adjudicator can choose from (and is validated against) the FULL routed
+    vocabulary for a slot, not just the matcher's top-k candidates."""
+    terms = json.load(open(TERMS))
+    routing = json.load(open(ROUTING))
+    exclude = set(routing.get("_exclude_abstract", []))
+    out = {}
+    for slot in ("predicate", "object", "condition"):
+        for reg in ("gdpr", "aiact"):
+            picked = {}
+            for sel in routing[slot][reg]:
+                voc = terms[sel["vocab"]]
+                if sel["by"] == "all":
+                    picked.update({c: (r["label"], r.get("scheme") or r.get("root")) for c, r in voc.items()})
+                elif sel["by"] == "scheme":
+                    want = set(sel["values"])
+                    picked.update({c: (r["label"], r["scheme"]) for c, r in voc.items() if r["scheme"] in want})
+                elif sel["by"] == "root":
+                    want = set(sel["values"])
+                    picked.update({c: (r["label"], r.get("root")) for c, r in voc.items() if r.get("root") in want})
+            for c in exclude:
+                picked.pop(c, None)
+            out[(slot, reg)] = picked
+    return out
+
+
+def format_vocab(vocab: dict) -> str:
+    """Group a {iri: (label, scheme)} routed vocab by scheme for the prompt."""
+    from collections import defaultdict
+    by_scheme = defaultdict(list)
+    for iri, (label, scheme) in vocab.items():
+        by_scheme[scheme or "(ungrouped)"].append(f"    {iri} | {label}")
+    lines = []
+    for scheme in sorted(by_scheme):
+        lines.append(f"  [{scheme}]")
+        lines.extend(sorted(by_scheme[scheme]))
+    return "\n".join(lines)
 
 GEMINI_MODEL = "gemini-2.5-flash"
 MISTRAL_MODEL = "mistral-nemo"
@@ -109,11 +152,14 @@ disposition and, if 'mapped', the candidate IRI(s).
 
 HARD RULES — follow them exactly:
 
-1. chosen_iris MUST be drawn ONLY from the candidate list you are given. NEVER
-   output an IRI that is not in that list. If the concept you believe is right is
-   not among the candidates, do not invent it — use 'flag' (if it is a genuine
-   regulatory concept the vocabulary lacks) or 'literal' (if it is not a concept
-   at all).
+1. chosen_iris MUST be drawn ONLY from the ROUTED VOCABULARY given below for this
+   slot (the full list of concepts valid for this slot and regulation). The
+   "matcher hits" are the deterministic matcher's top candidates — a STRONG signal,
+   usually your answer — but the full vocabulary is provided so you can pick the
+   right concept when the matcher missed it (e.g. the fragment's surface form
+   differs from the concept's label). NEVER output an IRI that is not in the routed
+   vocabulary. If no concept in the vocabulary fits, use 'flag' (a genuine
+   regulatory concept the vocabulary lacks) or 'literal' (not a concept at all).
 
 2. Candidate 'method' matters. method=lexical / exact / synonym / alias means the
    fragment's own words matched the concept — trustworthy. method=embed is a mere
@@ -136,11 +182,22 @@ HARD RULES — follow them exactly:
    'flag', not 'literal' — it is a real regulatory parameter the vocabulary cannot
    represent.
 
-5. A fragment may name MORE THAN ONE concept — return every candidate IRI that the
+5. GENERIC RIDE-ALONGS: a broad one-word concept (e.g. Law, Contract, Scope,
+   Standard, Service, Notice) that matches only a single incidental word inside a
+   long, multi-clause fragment is almost always NOT what the fragment is about — do
+   NOT map to it. Map to a concept only when the fragment genuinely names or is
+   centrally about it. If both a specific and a generic concept seem to apply,
+   choose the specific one; if only a generic rides along on a long clause, the
+   disposition is 'literal' (or 'flag'), not a map to the generic. (Some of these
+   words ARE the right concept when the fragment is truly about them — e.g. a clause
+   whose point is a contractual legal basis maps to Contract — so judge by what the
+   fragment is ABOUT, not by mere word presence.)
+
+6. A fragment may name MORE THAN ONE concept — return every candidate IRI that the
    fragment genuinely names (e.g. a clause naming both a data category and a
    measure maps to both).
 
-6. Set confidence honestly. Use it low when the candidates are weak/embed-only, the
+7. Set confidence honestly. Use it low when the candidates are weak/embed-only, the
    fragment is ambiguous, or you are guessing — those rows will be escalated to a
    human.
 """
@@ -151,8 +208,12 @@ Slot: {slot}   Regulation: {regulation}   Source article: {source_article}
 Fragment:
 {value}
 
-Candidate concepts (iri | label | method | score):
+Matcher hits (the deterministic matcher's top candidates — strong signal, iri | label | method | score):
 {candidates}
+
+Routed vocabulary for {slot}.{regulation} — you MUST choose chosen_iris from THIS list
+(grouped by scheme; the matcher hits above are a subset of it):
+{vocabulary}
 {correction}
 Adjudicate this fragment."""
 
@@ -238,47 +299,49 @@ def _retry_invoke(chain, payload: dict, *, label: str):
 # ---------------------------------------------------------------------------
 
 
-def _payload(row: dict, slot: str, reg: str, correction: str = "") -> dict:
+def _payload(row: dict, slot: str, reg: str, vocab_text: str, correction: str = "") -> dict:
     return {
         "slot": slot,
         "regulation": reg,
         "source_article": row.get("source_article", ""),
         "value": row["value"],
         "candidates": _format_candidates(row.get("_candidates", [])),
+        "vocabulary": vocab_text,
         "correction": ("\n" + correction + "\n") if correction else "",
     }
 
 
 def _validate(decision: AdjudicationDecision, allowed: set[str]) -> Optional[str]:
-    """Return None if the decision is well-formed against the candidate set, else a
-    correction string describing exactly what was wrong (for one retry)."""
+    """Return None if the decision is well-formed against the routed vocabulary, else
+    a correction string describing exactly what was wrong (for one retry)."""
     if decision.disposition == "mapped":
         if not decision.chosen_iris:
-            return "You chose 'mapped' but returned no IRIs. Pick candidate IRI(s), or use 'literal'/'flag'."
+            return "You chose 'mapped' but returned no IRIs. Pick vocabulary IRI(s), or use 'literal'/'flag'."
         bad = [i for i in decision.chosen_iris if i not in allowed]
         if bad:
             return (
-                f"You returned IRI(s) not in the candidate list: {bad}. "
-                f"Choose ONLY from the candidates, or use 'flag' if the right concept "
-                f"is not listed."
+                f"You returned IRI(s) not in the routed vocabulary: {bad}. "
+                f"Choose ONLY from the routed vocabulary list, or use 'flag' if no "
+                f"concept fits."
             )
     return None
 
 
-def adjudicate_row(chain, row: dict, slot: str, reg: str, threshold: float) -> dict:
-    """Return the fields to write onto the row (does not mutate in place)."""
-    allowed = {c.get("iri") for c in row.get("_candidates", [])}
+def adjudicate_row(chain, row: dict, slot: str, reg: str, threshold: float,
+                   allowed: set[str], vocab_text: str) -> dict:
+    """Return the fields to write onto the row (does not mutate in place).
+    `allowed` is the full routed-vocabulary IRI set for (slot, reg)."""
     label = f"{slot}.{reg} {row['value'][:40]!r}"
 
-    decision = _retry_invoke(chain, _payload(row, slot, reg), label=label)
+    decision = _retry_invoke(chain, _payload(row, slot, reg, vocab_text), label=label)
     problem = _validate(decision, allowed)
     if problem is not None:  # one corrective retry naming the violation
-        decision = _retry_invoke(chain, _payload(row, slot, reg, correction="CORRECTION: " + problem),
+        decision = _retry_invoke(chain, _payload(row, slot, reg, vocab_text, correction="CORRECTION: " + problem),
                                  label=label + " [retry]")
         if _validate(decision, allowed) is not None:  # still bad -> escalate, don't trust it
             return {"status": "escalated", "iri": [],
                     "llm_confidence": round(float(decision.confidence), 3),
-                    "llm_rationale": "auto-escalated: model returned out-of-candidate IRI twice"}
+                    "llm_rationale": "auto-escalated: model returned out-of-vocabulary IRI twice"}
 
     conf = round(float(decision.confidence), 3)
     if conf < threshold:
@@ -319,11 +382,18 @@ def main(argv=None):
         return
     print(f"adjudicating {len(jobs)} review rows via {args.backend} (escalate < {args.threshold})")
 
+    routed = load_routed_vocab()                                  # {(slot,reg): {iri:(label,scheme)}}
+    # object and condition already share a merged content vocabulary in slot_routing.json
+    # (grammatical slot != concept kind), so read routing directly — no special-casing.
+    allowed_by = {k: set(v.keys()) for k, v in routed.items()}
+    vocab_text_by = {k: format_vocab(v) for k, v in routed.items()}
+
     chain = build_chain(args.backend)
     results: dict[int, dict] = {}
 
     def work(i, slot, reg, row):
-        return i, adjudicate_row(chain, row, slot, reg, args.threshold)
+        return i, adjudicate_row(chain, row, slot, reg, args.threshold,
+                                 allowed_by[(slot, reg)], vocab_text_by[(slot, reg)])
 
     with ThreadPoolExecutor(max_workers=MAX_CONCURRENT) as ex:
         futs = [ex.submit(work, i, s, r, row) for i, (s, r, row) in enumerate(jobs)]

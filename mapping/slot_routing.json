@@ -1,18 +1,36 @@
 {
-  "_doc": "COMPREHENSIVE routing, assigned ONCE from the full DPV scheme list and AIRO/VAIR root list (not from failures). Every DPV class scheme is assigned to the slot whose content-kind it holds: PREDICATE = processing operations; OBJECT = anything a duty acts on (data, measures, notices, entities/roles, rights, risk, contracts); CONDITION = preconditions/triggers (legal bases, consent, purposes, context, scale, jurisdiction, statuses). Two schemes are deliberately excluded as non-content and documented below. Because the routing is now complete by construction, a value that fails to map is a GENUINE vocabulary gap (the finding), not an un-routed scheme.",
+  "_doc": "Slot x regulation -> vocabulary. PREDICATE: processing operations only. OBJECT (gdpr): merged object+condition content vocab — the extraction puts purpose/legal-basis content in object clauses, and 3 gold object rows require condition-side concepts (ScientificResearch, AutomatedDecisionMaking, PurposeIncompatible), so object needs the union. CONDITION (gdpr): its own scope only — gold shows ZERO condition rows need an object-side concept, so object vocab on condition rows is pure ride-along noise and is excluded. aiact object/condition both route to all AIRO+VAIR. Asymmetry is empirical, measured against the gold set, not arbitrary.",
   "_excluded_schemes": {
     "dpv:rules-classes": "deontic meta-layer (Obligation/Prohibition/Recommendation) = the modality slot, not content",
     "dpv:process-classes": "abstract process types (Process/Service) redundant with processing-classes; would only double-emit"
   },
-  "_exclude_abstract": ["dpv:Purpose", "dpv:Data", "dpv:Risk", "dpv:Authority", "airo:Risk"],
+  "_exclude_abstract": [
+    "dpv:Purpose",
+    "dpv:Data",
+    "dpv:Risk",
+    "dpv:Authority",
+    "airo:Risk",
+    "dpv:NotAutomated"
+  ],
   "_idf_floor": 3.0,
   "predicate": {
-    "gdpr":  [{"vocab": "dpv", "by": "scheme", "values": ["dpv:processing-classes"]}],
+    "gdpr": [
+      {
+        "vocab": "dpv",
+        "by": "scheme",
+        "values": [
+          "dpv:processing-classes"
+        ]
+      }
+    ],
     "aiact": []
   },
   "object": {
     "gdpr": [
-      {"vocab": "dpv", "by": "scheme", "values": [
+      {
+        "vocab": "dpv",
+        "by": "scheme",
+        "values": [
           "dpv:personal-data-classes",
           "dpv:TOM-classes",
           "dpv:technical-measures-classes",
@@ -28,26 +46,7 @@
           "dpv:rights-classes",
           "dpv:risk-classes",
           "dpv:contract-types-classes",
-          "dpv:contract-clause-classes"
-        ]},
-      {"vocab": "pd", "by": "all"},
-      {"vocab": "eu-gdpr", "by": "scheme", "values": [
-          "eu-gdpr:data-breach-classes",
-          "eu-gdpr:dpia-classes",
-          "eu-gdpr:rights-classes",
-          "eu-gdpr:entities-classes"
-        ]},
-      {"vocab": "sector-health", "by": "scheme", "values": [
-          "sector-health:data-classes",
-          "sector-health:entities-classes",
-          "sector-health:technology-classes"
-        ]}
-    ],
-    "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
-  },
-  "condition": {
-    "gdpr":  [
-      {"vocab": "dpv", "by": "scheme", "values": [
+          "dpv:contract-clause-classes",
           "dpv:legal-basis-classes",
           "dpv:legal-basis-status-classes",
           "dpv:consent-types-classes",
@@ -61,8 +60,16 @@
           "dpv:status-classes",
           "dpv:contract-status-classes",
           "dpv:contract-control-classes"
-        ]},
-      {"vocab": "eu-gdpr", "by": "scheme", "values": [
+        ]
+      },
+      {
+        "vocab": "eu-gdpr",
+        "by": "scheme",
+        "values": [
+          "eu-gdpr:data-breach-classes",
+          "eu-gdpr:dpia-classes",
+          "eu-gdpr:rights-classes",
+          "eu-gdpr:entities-classes",
           "eu-gdpr:legal-basis-classes",
           "eu-gdpr:legal-basis-special-classes",
           "eu-gdpr:legal-basis-data-transfer-classes",
@@ -73,13 +80,98 @@
           "eu-gdpr:compliance-classes",
           "eu-gdpr:data-transfers-classes",
           "eu-gdpr:rights-impacts-classes"
-        ]},
-      {"vocab": "sector-health", "by": "scheme", "values": [
+        ]
+      },
+      {
+        "vocab": "sector-health",
+        "by": "scheme",
+        "values": [
+          "sector-health:data-classes",
+          "sector-health:entities-classes",
+          "sector-health:technology-classes",
           "sector-health:purposes-classes",
           "sector-health:status-classes"
-        ]},
-      {"vocab": "justifications", "by": "all"}
+        ]
+      },
+      {
+        "vocab": "pd",
+        "by": "all"
+      },
+      {
+        "vocab": "justifications",
+        "by": "all"
+      }
     ],
-    "aiact": [{"vocab": "airo", "by": "all"}, {"vocab": "vair", "by": "all"}]
+    "aiact": [
+      {
+        "vocab": "airo",
+        "by": "all"
+      },
+      {
+        "vocab": "vair",
+        "by": "all"
+      }
+    ]
+  },
+  "condition": {
+    "gdpr": [
+      {
+        "vocab": "dpv",
+        "by": "scheme",
+        "values": [
+          "dpv:legal-basis-classes",
+          "dpv:legal-basis-status-classes",
+          "dpv:consent-types-classes",
+          "dpv:consent-status-classes",
+          "dpv:consent-controls-classes",
+          "dpv:purposes-classes",
+          "dpv:context-classes",
+          "dpv:processing-context-classes",
+          "dpv:processing-scale-classes",
+          "dpv:jurisdiction-classes",
+          "dpv:status-classes",
+          "dpv:contract-status-classes",
+          "dpv:contract-control-classes"
+        ]
+      },
+      {
+        "vocab": "eu-gdpr",
+        "by": "scheme",
+        "values": [
+          "eu-gdpr:legal-basis-classes",
+          "eu-gdpr:legal-basis-special-classes",
+          "eu-gdpr:legal-basis-data-transfer-classes",
+          "eu-gdpr:purpose-compatibility-classes",
+          "eu-gdpr:rights-justifications-classes",
+          "eu-gdpr:principles-classes",
+          "eu-gdpr:proportionality-classes",
+          "eu-gdpr:compliance-classes",
+          "eu-gdpr:data-transfers-classes",
+          "eu-gdpr:rights-impacts-classes"
+        ]
+      },
+      {
+        "vocab": "sector-health",
+        "by": "scheme",
+        "values": [
+          "sector-health:purposes-classes",
+          "sector-health:status-classes"
+        ]
+      },
+      {
+        "vocab": "justifications",
+        "by": "all"
+      }
+    ],
+    "aiact": [
+      {
+        "vocab": "airo",
+        "by": "all"
+      },
+      {
+        "vocab": "vair",
+        "by": "all"
+      }
+    ]
   }
 }

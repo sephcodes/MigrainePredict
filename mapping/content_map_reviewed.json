@@ -1094,7 +1094,7 @@
         "status": "manually_mapped",
         "lexical_hit": false,
         "iri": [
-          "dpv:DelayJustification"
+          "justification:DelayJustification"
         ],
         "_candidates": [
           {
