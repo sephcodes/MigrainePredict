@@ -7,6 +7,7 @@
     "reasons for the delay": ["dpv:DelayJustification"],
     "risk management system": ["dpv:RiskControl", "airo:RiskControl"],
     "scientific or historical research": ["dpv:ScientificResearch", "dpv:PublicInterest"],
-    "incompatible with those purposes": ["eu-gdpr:PurposeIncompatible"]
+    "incompatible with those purposes": ["eu-gdpr:PurposeIncompatible"],
+    "automated processing": ["dpv:AutomatedDecisionMaking"]
   }
 }

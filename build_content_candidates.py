@@ -55,6 +55,9 @@ try:
 except Exception:
     STOP = {"the", "a", "an", "of", "and", "or", "to", "for", "in", "on", "with",
             "by", "his", "her", "its", "their", "which", "that", "such", "as"}
+# Keep negation words: stripping them inverts polarity ("Not Automated" -> {automated}
+# would false-match positive "automated" text and map the opposite concept).
+STOP -= {"not", "no", "nor"}
 
 # A processing verb auto-maps only when it is the predicate HEAD -- i.e. it is not
 # governing a separate noun object. The cheap deterministic test: the token right

@@ -1501,7 +1501,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment 'reasons for the delay' directly refers to the justification for a notification delay under Article 33, which is precisely captured by the specific concept 'Justification A33 - Notification Delay'."
+        "llm_rationale": "The fragment 'reasons for the delay' directly maps to the specific justification for notification delay under Article 33, which is the source article."
       },
       {
         "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
@@ -1600,7 +1600,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment describes processing operations that present 'high risks', which directly corresponds to the concept of a DPIA indicating high risk under GDPR Article 35."
+        "llm_rationale": "The fragment describes processing operations that present high risks, which is the core condition that a Data Protection Impact Assessment (DPIA) would indicate under GDPR Article 35."
       },
       {
         "value": "inaccurate personal data concerning him or her",
@@ -1948,7 +1948,7 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": false,
         "iri": [
-          "dpv:PrivacyNotice"
+          "dpv:Notice"
         ],
         "_candidates": [
           {
@@ -1988,8 +1988,8 @@
             "score": 0.726
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment 'the information' refers to the content of a privacy notice, which is a central concept in GDPR Article 13."
+        "llm_confidence": 0.8,
+        "llm_rationale": "The fragment 'the information' in the context of GDPR Article 13 refers to the information that must be provided to data subjects, which is best represented by the concept of a 'Notice'."
       },
       {
         "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
@@ -2307,11 +2307,17 @@
         "status": "mapped",
         "lexical_hit": true,
         "iri": [
+          "dpv:AutomatedDecisionMaking",
           "dpv:DataSubject",
-          "eu-gdpr:DataSubject",
-          "dpv:NotAutomated"
+          "eu-gdpr:DataSubject"
         ],
         "_candidates": [
+          {
+            "iri": "dpv:AutomatedDecisionMaking",
+            "label": "Automated Decision Making",
+            "method": "alias",
+            "score": 18.792
+          },
           {
             "iri": "dpv:DataSubject",
             "label": "Data Subject",
@@ -2325,18 +2331,6 @@
             "score": 7.938
           },
           {
-            "iri": "dpv:NotAutomated",
-            "label": "Not Automated",
-            "method": "lexical",
-            "score": 6.562
-          },
-          {
-            "iri": "dpv:AutomatedDecisionMaking",
-            "label": "Automated Decision Making",
-            "method": "embed",
-            "score": 0.84
-          },
-          {
             "iri": "eu-gdpr:DataMinimisationPrinciple",
             "label": "Data Minimisation Principle",
             "method": "embed",
@@ -2347,6 +2341,12 @@
             "label": "Automated Scoring of Individuals",
             "method": "embed",
             "score": 0.783
+          },
+          {
+            "iri": "eu-gdpr:A22",
+            "label": "A22 Right to object to automated decision making",
+            "method": "embed",
+            "score": 0.778
           }
         ]
       },
@@ -2398,7 +2398,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment directly names the principles of confidentiality and integrity, which are explicitly captured by the `IntegrityConfidentialityPrinciple` concept from the GDPR principles vocabulary."
+        "llm_rationale": "The fragment explicitly names 'confidentiality' and 'integrity', which directly correspond to the 'Integrity Confidentiality Principle' in the GDPR vocabulary."
       },
       {
         "value": "personal data",
@@ -2581,7 +2581,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment 'the provisions of paragraphs 1 and 2' is a cross-reference within the legal text and does not represent a distinct regulatory concept."
+        "llm_rationale": "The fragment is a cross-reference to other paragraphs within the legal text, which is explicitly defined as a 'literal' in Hard Rule 4."
       },
       {
         "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
@@ -2635,18 +2635,12 @@
         "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
         "source_article": "gdpr:art_22",
         "count": 2,
-        "status": "mapped",
-        "lexical_hit": true,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
         "iri": [
-          "dpv:NotAutomated"
+          "dpv:AutomatedDecisionMaking"
         ],
         "_candidates": [
-          {
-            "iri": "dpv:NotAutomated",
-            "label": "Not Automated",
-            "method": "lexical",
-            "score": 6.562
-          },
           {
             "iri": "eu-gdpr:A22-Impact",
             "label": "Impact on A22 Right to object to automated decision making",
@@ -2676,8 +2670,16 @@
             "label": "Process Malicious",
             "method": "embed",
             "score": 0.633
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.632
           }
-        ]
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment directly describes 'a decision based solely on automated processing, including profiling', which precisely matches the concept of Automated Decision Making."
       },
       {
         "value": "the ability to ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
@@ -2686,7 +2688,7 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": false,
         "iri": [
-          "eu-gdpr:IntegrityConfidentialityPrinciple"
+          "dpv:SecureProcessingEnvironment"
         ],
         "_candidates": [
           {
@@ -2726,16 +2728,18 @@
             "score": 0.744
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly names 'confidentiality' and 'integrity' as qualities to be ensured, which are directly represented by the 'Integrity Confidentiality Principle' concept."
+        "llm_confidence": 0.8,
+        "llm_rationale": "The fragment describes the essential security properties (confidentiality, integrity, availability, resilience) that processing systems and services must possess, which is directly aligned with the concept of a secure processing environment."
       },
       {
         "value": "the information",
         "source_article": "gdpr:art_12",
         "count": 2,
-        "status": "llm_suggested_literal",
+        "status": "llm_suggested_mapped",
         "lexical_hit": false,
-        "iri": [],
+        "iri": [
+          "dpv:Notice"
+        ],
         "_candidates": [
           {
             "iri": "justifications:InformationRequired",
@@ -2775,7 +2779,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment 'the information' is a generic placeholder and does not name a specific, mappable concept from the provided vocabulary without further context."
+        "llm_rationale": "The fragment 'the information' in the context of GDPR Article 12 refers to the information provided to data subjects, which is best represented by the concept of a 'Notice'."
       },
       {
         "value": "the supervisory authority competent in accordance with Article 55",
@@ -2873,7 +2877,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment describes the characteristics of purposes as required by the Purpose Limitation Principle under GDPR Article 5(1)(b)."
+        "llm_rationale": "The fragment directly describes the characteristics of purposes as required by the GDPR's Purpose Limitation Principle."
       },
       {
         "value": "in a manner that is incompatible with those purposes",
@@ -3021,7 +3025,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment 'The information' in the context of GDPR Article 12 refers to the information provided to data subjects, which is best represented by the concept of a 'Notice'."
+        "llm_rationale": "The fragment 'The information' refers to the information that is communicated to data subjects, which is best represented by the general concept of a 'Notice'."
       },
       {
         "value": "the obligations referred to in paragraphs 1 and 2",
@@ -3069,7 +3073,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment is a cross-reference to other paragraphs within the article, which is explicitly defined as 'literal' by the hard rules."
+        "llm_rationale": "The fragment is a cross-reference to other paragraphs within the article, which is considered a literal element according to Rule 4."
       },
       {
         "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
@@ -3277,7 +3281,8 @@
         "lexical_hit": true,
         "iri": [
           "dpv:ProcessingContext",
-          "dpv:ProcessingCondition"
+          "dpv:ProcessingScale",
+          "eu-gdpr:GDPRRightsImpact"
         ],
         "_candidates": [
           {
@@ -3318,7 +3323,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly names 'context and purposes of processing' which maps to dpv:ProcessingContext, and the entire clause describes various factors that serve as conditions for processing, mapping to dpv:ProcessingCondition."
+        "llm_rationale": "The fragment explicitly mentions 'context' and 'scope' of processing, which map to dpv:ProcessingContext and dpv:ProcessingScale, and refers to 'risk for the rights and freedoms of natural persons', which maps to eu-gdpr:GDPRRightsImpact."
       },
       {
         "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
@@ -3327,8 +3332,7 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ConsentGiven",
-          "eu-gdpr:A6-1-a"
+          "dpv:ConsentGiven"
         ],
         "_candidates": [
           {
@@ -3369,7 +3373,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment explicitly states that 'consent' has been 'given', which directly maps to dpv:ConsentGiven, and this is the condition for the legal basis of processing under GDPR Article 6(1)(a)."
+        "llm_rationale": "The fragment explicitly states that 'the data subject has given consent', which directly maps to the 'Consent Given' concept."
       },
       {
         "value": "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child",
@@ -3562,9 +3566,9 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:InnovativeUseOfNewTechnologies",
           "dpv:ProcessingContext",
-          "eu-gdpr:GDPRRightsImpact"
+          "eu-gdpr:GDPRRightsImpact",
+          "dpv:InnovativeUseOfNewTechnologies"
         ],
         "_candidates": [
           {
@@ -3604,8 +3608,8 @@
             "score": 0.631
           }
         ],
-        "llm_confidence": 1.0,
-        "llm_rationale": "The fragment describes conditions for processing, including the use of new technologies, the processing context, and the likelihood of a high impact on GDPR rights."
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment describes the conditions for a Data Protection Impact Assessment, explicitly mentioning the processing context, the use of new technologies, and the high risk to data subject rights and freedoms."
       },
       {
         "value": "without undue delay",
@@ -3977,7 +3981,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment directly states a condition of being 'incompatible with those purposes', which perfectly matches the 'Purpose Incompatible' concept."
+        "llm_rationale": "The fragment directly states 'incompatible with those purposes', which is a direct lexical match to the concept 'Purpose Incompatible'."
       },
       {
         "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
@@ -4027,8 +4031,8 @@
             "score": 0.664
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly states that 'explicit consent' has been 'given', directly mapping to the concepts of ConsentGiven and ExplicitlyExpressedConsent."
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly states the condition that the data subject has given explicit consent, directly mapping to both the status of consent and its type."
       },
       {
         "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
@@ -4037,12 +4041,9 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ScientificResearch",
           "dpv:PublicInterest",
-          "dpv:ProvideOfficialStatistics",
-          "dpv:LegalBasis",
-          "eu-gdpr:ProportionalityAssessment",
-          "eu-gdpr:SuitabilityAssessment"
+          "dpv:ScientificResearch",
+          "eu-gdpr:ProportionalityAssessment"
         ],
         "_candidates": [
           {
@@ -4082,8 +4083,8 @@
             "score": 0.701
           }
         ],
-        "llm_confidence": 1.0,
-        "llm_rationale": "The fragment explicitly names scientific research, public interest, statistical purposes, legal basis, proportionality, and suitability as conditions for processing."
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly names 'public interest' as a legal basis, 'scientific or historical research purposes' as a purpose, and 'proportionate to the aim pursued' as a condition for the underlying law, all of which map to concepts in the routed vocabulary."
       },
       {
         "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
@@ -4093,10 +4094,10 @@
         "lexical_hit": true,
         "iri": [
           "dpv:ProcessingCondition",
-          "sector-health:SocialServicesProvision",
-          "dpv:ServiceManagement",
           "sector-health:PreventativeCareManagement",
-          "sector-health:DiagnosisManagement",
+          "sector-health:MedicalConditionDiagnosis",
+          "sector-health:SocialServicesProvision",
+          "sector-health:HealthcareServiceManagement",
           "dpv:LegalObligation",
           "dpv:ContractPerformance"
         ],
@@ -4138,8 +4139,8 @@
             "score": 0.673
           }
         ],
-        "llm_confidence": 1.0,
-        "llm_rationale": "The fragment explicitly describes several purposes and legal bases that serve as conditions for processing special category data under Art. 9(2)(h)."
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly describes processing conditions, including specific health-related purposes and legal bases, all of which have corresponding concepts in the routed vocabulary."
       },
       {
         "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
@@ -4148,9 +4149,9 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "eu-gdpr:A6-1-e-public-interest",
+          "dpv:PublicInterest",
           "dpv:ScientificResearch",
-          "dpv:ProvideOfficialStatistics"
+          "eu-gdpr:JustificationA17Archiving"
         ],
         "_candidates": [
           {
@@ -4190,8 +4191,8 @@
             "score": 0.681
           }
         ],
-        "llm_confidence": 1.0,
-        "llm_rationale": "The fragment explicitly names public interest, scientific research, and statistical purposes as conditions for processing, all of which have direct corresponding concepts in the routed vocabulary."
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly names public interest, scientific or historical research, and archiving as purposes that serve as conditions for processing, with 'statistical purposes' lacking a direct concept and the Article 89(1) reference being a literal cross-reference."
       },
       {
         "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
@@ -4200,8 +4201,7 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:ProcessingContext",
-          "dpv:ProcessingCondition"
+          "dpv:ProcessingContext"
         ],
         "_candidates": [
           {
@@ -4241,8 +4241,8 @@
             "score": 0.62
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly mentions 'context and purposes of processing', mapping to dpv:ProcessingContext, and the entire clause describes various factors that serve as conditions for processing, mapping to dpv:ProcessingCondition."
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly lists factors such as 'nature, scope, context and purposes of processing' and 'risk' which collectively define the processing context for determining security measures."
       },
       {
         "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
@@ -4613,8 +4613,8 @@
             "score": 0.623
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly mentions 'context of processing' as a condition for determining appropriate security measures, which directly maps to dpv:ProcessingContext."
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly mentions 'context ... of processing' as a condition to consider, which directly maps to the lexical hit dpv:ProcessingContext."
       },
       {
         "value": "for specified, explicit and legitimate purposes",
@@ -4669,12 +4669,11 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:Necessity",
-          "sector-health:MedicalConditionDiagnosis",
           "sector-health:SocialServicesProvision",
           "dpv:ServiceManagement",
-          "eu-gdpr:A6-1-c",
-          "eu-gdpr:A6-1-b"
+          "dpv:LegalObligation",
+          "dpv:ContractPerformance",
+          "sector-health:DiagnosisManagement"
         ],
         "_candidates": [
           {
@@ -4715,7 +4714,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly states processing is 'necessary' and lists several health and social care purposes, along with legal bases of 'Union or Member State law' and 'contract with a health professional'."
+        "llm_rationale": "The fragment describes conditions for processing, including specific purposes related to health and social care (social services provision, service management, diagnosis management) and legal bases (legal obligation, contract performance), all of which have direct matches in the routed vocabulary."
       },
       {
         "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
@@ -4724,13 +4723,14 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "dpv:Necessity",
           "sector-health:PreventativeCareManagement",
           "sector-health:MedicalConditionDiagnosis",
           "sector-health:ServiceProvision",
+          "sector-health:SocialServicesProvision",
           "dpv:ServiceManagement",
-          "eu-gdpr:A6-1-c",
-          "eu-gdpr:A6-1-b-contract-performance"
+          "sector-health:HealthcareServiceManagement",
+          "dpv:LegalObligation",
+          "dpv:ContractPerformance"
         ],
         "_candidates": [
           {
@@ -4770,8 +4770,8 @@
             "score": 0.641
           }
         ],
-        "llm_confidence": 0.9,
-        "llm_rationale": "The fragment explicitly lists several purposes related to health and social care, states the necessity for these purposes, and specifies legal bases (Union/Member State law and contract) as conditions for processing."
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly lists multiple purposes related to health and social care, and two distinct legal bases for processing, all of which are directly represented by concepts in the routed vocabulary."
       },
       {
         "value": "on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
@@ -4826,7 +4826,8 @@
         "status": "llm_suggested_mapped",
         "lexical_hit": true,
         "iri": [
-          "eu-gdpr:A6-1-a-explicit-consent"
+          "dpv:ConsentGiven",
+          "dpv:ExplicitlyExpressedConsent"
         ],
         "_candidates": [
           {
@@ -4867,7 +4868,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment directly describes the condition of explicit consent as a legal basis for processing personal data under GDPR, which is precisely captured by eu-gdpr:A6-1-a-explicit-consent."
+        "llm_rationale": "The fragment explicitly states that consent has been given and specifies that it is explicit consent, both of which are direct matches to concepts in the vocabulary."
       },
       {
         "value": "Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
@@ -4925,8 +4926,7 @@
           "dpv:PublicInterest",
           "dpv:ScientificResearch",
           "dpv:ProvideOfficialStatistics",
-          "dpv:LegalObligation",
-          "eu-gdpr:ProportionalityStatus"
+          "eu-gdpr:ProportionalityAssessment"
         ],
         "_candidates": [
           {
@@ -4967,7 +4967,7 @@
           }
         ],
         "llm_confidence": 0.9,
-        "llm_rationale": "The fragment describes several conditions for processing special categories of data, including public interest, scientific research, statistical purposes, legal obligation, and proportionality."
+        "llm_rationale": "The fragment explicitly lists public interest, scientific research, and statistical purposes as conditions for processing, along with a requirement for proportionality."
       },
       {
         "value": "when the data subject has objected, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
@@ -5163,7 +5163,7 @@
           }
         ],
         "llm_confidence": 1.0,
-        "llm_rationale": "The fragment directly refers to 'AI systems', which is a concept in the vocabulary, with a strong lexical match."
+        "llm_rationale": "The fragment directly refers to 'AI systems', which is a lexical match for airo:AISystem."
       }
     ]
   }

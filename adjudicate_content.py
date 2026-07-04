@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -65,6 +66,11 @@ def load_routed_vocab():
     routing = json.load(open(ROUTING))
     exclude = set(routing.get("_exclude_abstract", []))
     ADJ_EXCLUDE_SCHEMES = {"eu-gdpr:legal-basis-special-classes"}
+    # article-code legal bases (A6-1-c, A9-2-h, A22 ...) — the citation is already on
+    # the record (references/source_article); gold never maps to them, and they seduce
+    # the adjudicator off the clean semantic hit (ConsentGiven). Drop them by pattern,
+    # any scheme.
+    ADJ_EXCLUDE_IRI = re.compile(r":A\d+(?:-\d+)*(?:-|$)")
     out = {}
     for slot in ("predicate", "object", "condition"):
         for reg in ("gdpr", "aiact"):
@@ -81,7 +87,8 @@ def load_routed_vocab():
                     picked.update({c: (r["label"], r.get("root")) for c, r in voc.items() if r.get("root") in want})
             for c in exclude:
                 picked.pop(c, None)
-            picked = {c: v for c, v in picked.items() if v[1] not in ADJ_EXCLUDE_SCHEMES}
+            picked = {c: v for c, v in picked.items()
+                      if v[1] not in ADJ_EXCLUDE_SCHEMES and not ADJ_EXCLUDE_IRI.search(c)}
             out[(slot, reg)] = picked
     return out
 
