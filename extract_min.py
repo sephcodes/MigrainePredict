@@ -1977,6 +1977,16 @@ def _process_paragraph(chains, rec: dict) -> tuple[dict, list[dict], bool]:
     _flag_truncated_spans(rec, results)
     _flag_deontic_operator_predicate(rec, results)
     _flag_redundant_negation(rec, results)
+
+    # Carry the source text on every record so downstream artifacts (mapping
+    # worksheets, verification worksheet, review queues, the graph) can show a
+    # human the text being judged without an IRI lookup.
+    parent_texts = [p["text"] for p in (rec.get("parent") or [])
+                    if isinstance(p, dict) and p.get("text")]
+    for r in results:
+        r["paragraph_text"] = rec.get("text")
+        if parent_texts:
+            r["parent_texts"] = parent_texts
     return rec, results, errored
 
 
