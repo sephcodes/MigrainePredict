@@ -1,0 +1,5499 @@
+{
+  "_doc": "Adjudication worksheet. For each value set 'status' to: 'mapped' (fill 'iri' with one or more vocab IRIs), 'flag' (mappable content but no vocab home -> coverage MISS / HITL), 'literal' (qualifier/residue, excluded from the coverage denominator), 'manually_mapped' / 'manually_literal' / 'manually_flag' (LOCKED human decisions: any status prefixed 'manually_' is PRESERVED verbatim on every re-run -- the matcher never overwrites its status/iri. Use manually_mapped (fill iri) for a mapping you want kept, manually_literal for residue you've decided stays literal, manually_flag for a confirmed gap. Plain mapped/review/literal/flag are matcher output and WILL regenerate). DEFAULTS: status='mapped' = exact lexical hit (spot-check); status='review' = a genuine lexical concept mention was found (pick IRI(s) from _candidates); status='literal' = predicate/condition with no lexical concept mention (residue by default -- promote to 'mapped'/'flag' only if a real concept is present). IMPORTANT: '_candidates' marked method='embed' are WEAK hints only -- BGE returns a 'nearest' term over the closed vocab even when the right answer is none, so an embed score is NOT evidence of mappability; rely on lexical hits. 'lexical_hit' flags whether any concept token matched.",
+  "predicate": {
+    "gdpr": [
+      {
+        "value": "process",
+        "source_article": "gdpr:art_9",
+        "count": 16,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "implement",
+        "source_article": "gdpr:art_32",
+        "count": 14,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.766
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:Derive",
+            "label": "Derive",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:Organise",
+            "label": "Organise",
+            "method": "embed",
+            "score": 0.704
+          },
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.703
+          },
+          {
+            "iri": "dpv:Observe",
+            "label": "Observe",
+            "method": "embed",
+            "score": 0.7
+          }
+        ]
+      },
+      {
+        "value": "further process",
+        "source_article": "gdpr:art_5",
+        "count": 8,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "erase",
+        "source_article": "gdpr:art_17",
+        "count": 6,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Erase"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Erase",
+            "label": "Erase",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "process lawfully, fairly and in a transparent manner",
+        "source_article": "gdpr:art_5",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "collect",
+        "source_article": "gdpr:art_5",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Collect"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Collect",
+            "label": "Collect",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "prohibit",
+        "source_article": "gdpr:art_9",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.869
+          },
+          {
+            "iri": "dpv:Remove",
+            "label": "Remove",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:Filter",
+            "label": "Filter",
+            "method": "embed",
+            "score": 0.691
+          },
+          {
+            "iri": "dpv:Delete",
+            "label": "Delete",
+            "method": "embed",
+            "score": 0.665
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:Modify",
+            "label": "Modify",
+            "method": "embed",
+            "score": 0.637
+          }
+        ]
+      },
+      {
+        "value": "process",
+        "source_article": "gdpr:art_6",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "take appropriate measures to provide",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "provide",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "provide orally",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "notify",
+        "source_article": "gdpr:art_33",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Disclose"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "accompany by",
+        "source_article": "gdpr:art_33",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:Tracking",
+            "label": "Tracking",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:Acquire",
+            "label": "Acquire",
+            "method": "embed",
+            "score": 0.722
+          },
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.714
+          }
+        ]
+      },
+      {
+        "value": "carry out",
+        "source_article": "gdpr:art_35",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:Organise",
+            "label": "Organise",
+            "method": "embed",
+            "score": 0.696
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.68
+          },
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.68
+          },
+          {
+            "iri": "dpv:Store",
+            "label": "Store",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "dpv:Collect",
+            "label": "Collect",
+            "method": "embed",
+            "score": 0.674
+          }
+        ]
+      },
+      {
+        "value": "rectify",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Transform",
+            "label": "Transform",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:Modify",
+            "label": "Modify",
+            "method": "embed",
+            "score": 0.713
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.697
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.686
+          }
+        ]
+      },
+      {
+        "value": "complete",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Combine",
+            "label": "Combine",
+            "method": "embed",
+            "score": 0.77
+          },
+          {
+            "iri": "dpv:Acquire",
+            "label": "Acquire",
+            "method": "embed",
+            "score": 0.719
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "dpv:Match",
+            "label": "Match",
+            "method": "embed",
+            "score": 0.695
+          },
+          {
+            "iri": "dpv:Align",
+            "label": "Align",
+            "method": "embed",
+            "score": 0.693
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.687
+          }
+        ]
+      },
+      {
+        "value": "no longer process",
+        "source_article": "gdpr:art_21",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Processing"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Processing",
+            "label": "Processing",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "ensure the ability to restore",
+        "source_article": "gdpr:art_32",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:Reformat",
+            "label": "Reformat",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.657
+          },
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.656
+          },
+          {
+            "iri": "dpv:Copy",
+            "label": "Copy",
+            "method": "embed",
+            "score": 0.654
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.642
+          }
+        ]
+      },
+      {
+        "value": "communicate",
+        "source_article": "gdpr:art_34",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Disclose",
+          "dpv:Transmit"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "synonym",
+            "score": 1.0
+          },
+          {
+            "iri": "dpv:Transmit",
+            "label": "Transmit",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "provide",
+        "source_article": "gdpr:art_13",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:MakeAvailable"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "use",
+        "source_article": "gdpr:art_28",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Use"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "maintain",
+        "source_article": "gdpr:art_30",
+        "count": 4,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:Filter",
+            "label": "Filter",
+            "method": "embed",
+            "score": 0.662
+          },
+          {
+            "iri": "dpv:Export",
+            "label": "Export",
+            "method": "embed",
+            "score": 0.662
+          }
+        ]
+      },
+      {
+        "value": "address",
+        "source_article": "gdpr:art_35",
+        "count": 4,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.692
+          },
+          {
+            "iri": "dpv:Format",
+            "label": "Format",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "dpv:Store",
+            "label": "Store",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "dpv:Record",
+            "label": "Record",
+            "method": "embed",
+            "score": 0.672
+          },
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:Display",
+            "label": "Display",
+            "method": "embed",
+            "score": 0.651
+          }
+        ]
+      },
+      {
+        "value": "subject",
+        "source_article": "gdpr:art_22",
+        "count": 3,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Record",
+            "label": "Record",
+            "method": "embed",
+            "score": 0.729
+          },
+          {
+            "iri": "dpv:Format",
+            "label": "Format",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "dpv:Query",
+            "label": "Query",
+            "method": "embed",
+            "score": 0.698
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.694
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.69
+          },
+          {
+            "iri": "dpv:Anonymise",
+            "label": "Anonymise",
+            "method": "embed",
+            "score": 0.686
+          }
+        ]
+      },
+      {
+        "value": "ensure",
+        "source_article": "gdpr:art_32",
+        "count": 3,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:Copy",
+            "label": "Copy",
+            "method": "embed",
+            "score": 0.694
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.691
+          },
+          {
+            "iri": "dpv:Infer",
+            "label": "Infer",
+            "method": "embed",
+            "score": 0.685
+          },
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.674
+          }
+        ]
+      },
+      {
+        "value": "take reasonable steps, including technical measures, to inform",
+        "source_article": "gdpr:art_17",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Disclose"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "not be considered to be incompatible with the initial purposes",
+        "source_article": "gdpr:art_5",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.717
+          },
+          {
+            "iri": "dpv:Disseminate",
+            "label": "Disseminate",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.653
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.647
+          },
+          {
+            "iri": "dpv:Modify",
+            "label": "Modify",
+            "method": "embed",
+            "score": 0.633
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.627
+          }
+        ]
+      },
+      {
+        "value": "erase without undue delay",
+        "source_article": "gdpr:art_17",
+        "count": 2,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Erase"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Erase",
+            "label": "Erase",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "comply with",
+        "source_article": "gdpr:art_17",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.738
+          },
+          {
+            "iri": "dpv:Move",
+            "label": "Move",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.697
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.692
+          },
+          {
+            "iri": "dpv:Align",
+            "label": "Align",
+            "method": "embed",
+            "score": 0.688
+          }
+        ]
+      },
+      {
+        "value": "make",
+        "source_article": "gdpr:art_22",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.81
+          },
+          {
+            "iri": "dpv:Generate",
+            "label": "Generate",
+            "method": "embed",
+            "score": 0.736
+          },
+          {
+            "iri": "dpv:Obtain",
+            "label": "Obtain",
+            "method": "embed",
+            "score": 0.713
+          },
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "dpv:Display",
+            "label": "Display",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.701
+          }
+        ]
+      },
+      {
+        "value": "implement appropriate technical and organisational measures to ensure",
+        "source_article": "gdpr:art_32",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Organise",
+            "label": "Organise",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "dpv:Disseminate",
+            "label": "Disseminate",
+            "method": "embed",
+            "score": 0.627
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.622
+          },
+          {
+            "iri": "dpv:CrossBorderTransfer",
+            "label": "Cross-Border Transfer",
+            "method": "embed",
+            "score": 0.622
+          },
+          {
+            "iri": "dpv:Export",
+            "label": "Export",
+            "method": "embed",
+            "score": 0.618
+          },
+          {
+            "iri": "dpv:Tracking",
+            "label": "Tracking",
+            "method": "embed",
+            "score": 0.618
+          }
+        ]
+      },
+      {
+        "value": "use a single assessment to address",
+        "source_article": "gdpr:art_35",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.809
+          },
+          {
+            "iri": "dpv:Adapt",
+            "label": "Adapt",
+            "method": "embed",
+            "score": 0.652
+          },
+          {
+            "iri": "dpv:Analyse",
+            "label": "Analyse",
+            "method": "embed",
+            "score": 0.648
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.645
+          },
+          {
+            "iri": "dpv:Consult",
+            "label": "Consult",
+            "method": "embed",
+            "score": 0.643
+          },
+          {
+            "iri": "dpv:Disseminate",
+            "label": "Disseminate",
+            "method": "embed",
+            "score": 0.634
+          }
+        ]
+      },
+      {
+        "value": "exempt from",
+        "source_article": "gdpr:art_30",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Restrict",
+            "label": "Restrict",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:Remove",
+            "label": "Remove",
+            "method": "embed",
+            "score": 0.624
+          },
+          {
+            "iri": "dpv:Disclose",
+            "label": "Disclose",
+            "method": "embed",
+            "score": 0.611
+          },
+          {
+            "iri": "dpv:Access",
+            "label": "Access",
+            "method": "embed",
+            "score": 0.611
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.609
+          },
+          {
+            "iri": "dpv:Erase",
+            "label": "Erase",
+            "method": "embed",
+            "score": 0.603
+          }
+        ]
+      },
+      {
+        "value": "regularly test",
+        "source_article": "gdpr:art_32",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:Observe",
+            "label": "Observe",
+            "method": "embed",
+            "score": 0.701
+          },
+          {
+            "iri": "dpv:Monitor",
+            "label": "Monitor",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "embed",
+            "score": 0.661
+          },
+          {
+            "iri": "dpv:MakeAvailable",
+            "label": "Make Available",
+            "method": "embed",
+            "score": 0.648
+          },
+          {
+            "iri": "dpv:Match",
+            "label": "Match",
+            "method": "embed",
+            "score": 0.638
+          },
+          {
+            "iri": "dpv:Filter",
+            "label": "Filter",
+            "method": "embed",
+            "score": 0.637
+          }
+        ]
+      },
+      {
+        "value": "assess",
+        "source_article": "gdpr:art_32",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Assess"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "evaluate",
+        "source_article": "gdpr:art_32",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Assess"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Assess",
+            "label": "Assess",
+            "method": "synonym",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "keep",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:Store"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Share",
+            "label": "Share",
+            "method": "embed",
+            "score": 0.76
+          },
+          {
+            "iri": "dpv:Copy",
+            "label": "Copy",
+            "method": "embed",
+            "score": 0.754
+          },
+          {
+            "iri": "dpv:Retrieve",
+            "label": "Retrieve",
+            "method": "embed",
+            "score": 0.741
+          },
+          {
+            "iri": "dpv:Store",
+            "label": "Store",
+            "method": "embed",
+            "score": 0.724
+          },
+          {
+            "iri": "dpv:Use",
+            "label": "Use",
+            "method": "embed",
+            "score": 0.723
+          },
+          {
+            "iri": "dpv:Transfer",
+            "label": "Transfer",
+            "method": "embed",
+            "score": 0.72
+          }
+        ]
+      },
+      {
+        "value": "store for longer periods",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:Store"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:Store",
+            "label": "Store",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      }
+    ],
+    "aiact": [
+      {
+        "value": "design and develop",
+        "source_article": "aiact:art_14",
+        "count": 5,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "establish",
+        "source_article": "aiact:art_9",
+        "count": 4,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "implement",
+        "source_article": "aiact:art_9",
+        "count": 4,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "document",
+        "source_article": "aiact:art_9",
+        "count": 4,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "maintain",
+        "source_article": "aiact:art_9",
+        "count": 4,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "establish, implemented, documented and maintained",
+        "source_article": "aiact:art_9",
+        "count": 1,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      },
+      {
+        "value": "technically allow for",
+        "source_article": "aiact:art_12",
+        "count": 1,
+        "status": "no_target",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": []
+      }
+    ]
+  },
+  "object": {
+    "gdpr": [
+      {
+        "value": "any information referred to in Articles 13 and 14 and any communication under Articles 15 to 22 and 34 relating to processing",
+        "source_article": "gdpr:art_12",
+        "count": 12,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "pd:Communication"
+        ],
+        "_candidates": [
+          {
+            "iri": "pd:Communication",
+            "label": "Communication",
+            "method": "lexical",
+            "score": 6.156
+          },
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "embed",
+            "score": 0.751
+          },
+          {
+            "iri": "justifications:InformationRequired",
+            "label": "Information Required",
+            "method": "embed",
+            "score": 0.713
+          },
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "embed",
+            "score": 0.706
+          },
+          {
+            "iri": "dpv:DataProcessingRecord",
+            "label": "Data Processing Record",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "dpv:RecipientInformed",
+            "label": "Recipient Informed",
+            "method": "embed",
+            "score": 0.703
+          }
+        ]
+      },
+      {
+        "value": "special categories of personal data",
+        "source_article": "gdpr:art_9",
+        "count": 9,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:SpecialCategoryPersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:SpecialCategoryPersonalData",
+            "label": "Special Category Personal Data",
+            "method": "lexical",
+            "score": 23.865
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.818
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.816
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.812
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "embed",
+            "score": 0.797
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.79
+          }
+        ]
+      },
+      {
+        "value": "Personal data",
+        "source_article": "gdpr:art_5",
+        "count": 8,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "personal data",
+        "source_article": "gdpr:art_5",
+        "count": 9,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "processing of personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, and the processing of genetic data, biometric data for the purpose of uniquely identifying a natural person, data concerning health or data concerning a natural person's sex life or sexual orientation",
+        "source_article": "gdpr:art_9",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:IdentifyingPersonalData",
+          "pd:Biometric",
+          "pd:Genetic",
+          "pd:Sexual",
+          "pd:Health"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "lexical",
+            "score": 15.799
+          },
+          {
+            "iri": "pd:Biometric",
+            "label": "Biometric",
+            "method": "lexical",
+            "score": 7.255
+          },
+          {
+            "iri": "pd:Genetic",
+            "label": "Genetic",
+            "method": "lexical",
+            "score": 7.255
+          },
+          {
+            "iri": "pd:Sexual",
+            "label": "Sexual",
+            "method": "lexical",
+            "score": 6.967
+          },
+          {
+            "iri": "pd:Health",
+            "label": "Health",
+            "method": "lexical",
+            "score": 4.328
+          },
+          {
+            "iri": "sector-health:PersonGeneratedHealthData",
+            "label": "Person Generated Health Data",
+            "method": "embed",
+            "score": 0.742
+          }
+        ]
+      },
+      {
+        "value": "his or her personal data",
+        "source_article": "gdpr:art_6",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.851
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.848
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.843
+          },
+          {
+            "iri": "sector-health:PersonGeneratedHealthData",
+            "label": "Person Generated Health Data",
+            "method": "embed",
+            "score": 0.833
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.832
+          }
+        ]
+      },
+      {
+        "value": "reasons for the delay",
+        "source_article": "gdpr:art_33",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:JustificationA33NotificationDelay"
+        ],
+        "_candidates": [
+          {
+            "iri": "justifications:DelayJustification",
+            "label": "Delay Justification",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "eu-gdpr:JustificationA12Delay",
+            "label": "Justification A12 - Delay",
+            "method": "embed",
+            "score": 0.782
+          },
+          {
+            "iri": "eu-gdpr:JustificationA33NotificationDelay",
+            "label": "Justification A33 - Notification Delay",
+            "method": "embed",
+            "score": 0.773
+          },
+          {
+            "iri": "dpv:RequestActionDelayed",
+            "label": "Request Action Delayed",
+            "method": "embed",
+            "score": 0.749
+          },
+          {
+            "iri": "dpv:UntilTimeDuration",
+            "label": "Until Time Duration",
+            "method": "embed",
+            "score": 0.704
+          },
+          {
+            "iri": "dpv:IndeterminateDuration",
+            "label": "Indeterminate Duration",
+            "method": "embed",
+            "score": 0.691
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment 'reasons for the delay' directly maps to the specific justification for notification delay under Article 33, which is the source article."
+      },
+      {
+        "value": "an assessment of the impact of the envisaged processing operations on the protection of personal data",
+        "source_article": "gdpr:art_35",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ImpactAssessment",
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ImpactAssessment",
+            "label": "Impact Assessment",
+            "method": "lexical",
+            "score": 10.095
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "dpv:PIA",
+            "label": "Privacy Impact Assessment (PIA)",
+            "method": "embed",
+            "score": 0.795
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.781
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.779
+          }
+        ]
+      },
+      {
+        "value": "a set of similar processing operations that present similar high risks",
+        "source_article": "gdpr:art_35",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:DPIAIndicatesHighRisk"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:MisusePreventionAndDetection",
+            "label": "Misuse, Prevention and Detection",
+            "method": "embed",
+            "score": 0.77
+          },
+          {
+            "iri": "justifications:ProcessMalicious",
+            "label": "Process Malicious",
+            "method": "embed",
+            "score": 0.768
+          },
+          {
+            "iri": "dpv:LargeScaleProcessing",
+            "label": "Large Scale Processing",
+            "method": "embed",
+            "score": 0.768
+          },
+          {
+            "iri": "justifications:HighVolumeOfProcesses",
+            "label": "High Volume Of Processes",
+            "method": "embed",
+            "score": 0.764
+          },
+          {
+            "iri": "dpv:ProcessingCondition",
+            "label": "Processing Condition",
+            "method": "embed",
+            "score": 0.761
+          },
+          {
+            "iri": "justifications:ProcessExcessive",
+            "label": "Process Excessive",
+            "method": "embed",
+            "score": 0.749
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment describes processing operations that present high risks, which is the core condition that a Data Protection Impact Assessment (DPIA) would indicate under GDPR Article 35."
+      },
+      {
+        "value": "inaccurate personal data concerning him or her",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:AnonymisedData",
+            "label": "Anonymised Data",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.787
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.784
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.782
+          },
+          {
+            "iri": "dpv:IncorrectData",
+            "label": "Incorrect Data",
+            "method": "embed",
+            "score": 0.781
+          }
+        ]
+      },
+      {
+        "value": "incomplete personal data",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.819
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "dpv:NonPersonalData",
+            "label": "Non-Personal Data",
+            "method": "embed",
+            "score": 0.798
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.785
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.783
+          }
+        ]
+      },
+      {
+        "value": "personal data concerning him or her",
+        "source_article": "gdpr:art_17",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.844
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.837
+          },
+          {
+            "iri": "dpv:InferredPersonalData",
+            "label": "Inferred Personal Data",
+            "method": "embed",
+            "score": 0.834
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.831
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.828
+          }
+        ]
+      },
+      {
+        "value": "appropriate technical and organisational measures to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 19.804
+          },
+          {
+            "iri": "dpv:OrganisationRiskManagement",
+            "label": "Organisation Risk Management",
+            "method": "embed",
+            "score": 0.819
+          },
+          {
+            "iri": "sector-health:SecurityManagement",
+            "label": "Security Management",
+            "method": "embed",
+            "score": 0.795
+          },
+          {
+            "iri": "dpv:SecurityAssessment",
+            "label": "Security Assessment",
+            "method": "embed",
+            "score": 0.791
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "dpv:EnforceSecurity",
+            "label": "Enforce Security",
+            "method": "embed",
+            "score": 0.783
+          }
+        ]
+      },
+      {
+        "value": "the pseudonymisation and encryption of personal data",
+        "source_article": "gdpr:art_32",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData",
+          "dpv:Pseudonymisation",
+          "dpv:Encryption"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:Pseudonymisation",
+            "label": "Pseudonymisation",
+            "method": "lexical",
+            "score": 6.408
+          },
+          {
+            "iri": "dpv:Encryption",
+            "label": "Encryption",
+            "method": "lexical",
+            "score": 6.156
+          },
+          {
+            "iri": "dpv:PseudonymisedData",
+            "label": "Pseudonymised Data",
+            "method": "embed",
+            "score": 0.902
+          },
+          {
+            "iri": "dpv:FullyRandomisedPseudonymisation",
+            "label": "Fully Randomised Pseudonymisation",
+            "method": "embed",
+            "score": 0.895
+          },
+          {
+            "iri": "dpv:DeterministicPseudonymisation",
+            "label": "Deterministic Pseudonymisation",
+            "method": "embed",
+            "score": 0.893
+          }
+        ]
+      },
+      {
+        "value": "the availability and access to personal data",
+        "source_article": "gdpr:art_32",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.83
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.819
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.817
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.81
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.805
+          }
+        ]
+      },
+      {
+        "value": "the personal data breach",
+        "source_article": "gdpr:art_34",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData",
+          "eu-gdpr:DataBreach"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "eu-gdpr:DataBreach",
+            "label": "Data Breach",
+            "method": "lexical",
+            "score": 7.879
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.829
+          },
+          {
+            "iri": "eu-gdpr:DataBreachReport",
+            "label": "Data Breach Report",
+            "method": "embed",
+            "score": 0.826
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.821
+          },
+          {
+            "iri": "eu-gdpr:DataBreachPreliminaryReport",
+            "label": "Data Breach Preliminary Report",
+            "method": "embed",
+            "score": 0.81
+          }
+        ]
+      },
+      {
+        "value": "the information",
+        "source_article": "gdpr:art_13",
+        "count": 5,
+        "status": "manually_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:InformationRequired",
+            "label": "Information Required",
+            "method": "embed",
+            "score": 0.769
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:RecipientInformed",
+            "label": "Recipient Informed",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:DataPublishedByDataSubject",
+            "label": "Data published by Data Subject",
+            "method": "embed",
+            "score": 0.726
+          }
+        ],
+        "llm_confidence": 0.8,
+        "llm_rationale": "The fragment 'the information' in the context of GDPR Article 13 refers to the information that must be provided to data subjects, which is best represented by the concept of a 'Notice'."
+      },
+      {
+        "value": "only processors providing sufficient guarantees to implement appropriate technical and organisational measures",
+        "source_article": "gdpr:art_28",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure",
+          "dpv:DataProcessor",
+          "eu-gdpr:Processor"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 19.804
+          },
+          {
+            "iri": "dpv:DataProcessor",
+            "label": "Data Processor",
+            "method": "alias",
+            "score": 9.489
+          },
+          {
+            "iri": "eu-gdpr:Processor",
+            "label": "Processor",
+            "method": "lexical",
+            "score": 6.408
+          },
+          {
+            "iri": "dpv:DataProcessorContract",
+            "label": "Data Processor Contract",
+            "method": "embed",
+            "score": 0.754
+          },
+          {
+            "iri": "dpv:ControllerProcessorAgreement",
+            "label": "Controller-Processor Agreement",
+            "method": "embed",
+            "score": 0.737
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.733
+          }
+        ]
+      },
+      {
+        "value": "a record of processing activities",
+        "source_article": "gdpr:art_30",
+        "count": 4,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ROPA"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ROPA",
+            "label": "Records of Processing Activities",
+            "method": "lexical",
+            "score": 16.171
+          },
+          {
+            "iri": "dpv:DataProcessingRecord",
+            "label": "Data Processing Record",
+            "method": "embed",
+            "score": 0.884
+          },
+          {
+            "iri": "dpv:RecordsOfActivities",
+            "label": "Records of Activities",
+            "method": "embed",
+            "score": 0.861
+          },
+          {
+            "iri": "dpv:SmallScaleProcessing",
+            "label": "Small Scale Processing",
+            "method": "embed",
+            "score": 0.81
+          },
+          {
+            "iri": "dpv:LargeScaleProcessing",
+            "label": "Large Scale Processing",
+            "method": "embed",
+            "score": 0.8
+          },
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "embed",
+            "score": 0.797
+          }
+        ]
+      },
+      {
+        "value": "the personal data breach",
+        "source_article": "gdpr:art_33",
+        "count": 4,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData",
+          "eu-gdpr:DataBreach"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "eu-gdpr:DataBreach",
+            "label": "Data Breach",
+            "method": "lexical",
+            "score": 7.879
+          },
+          {
+            "iri": "dpv:DataBreachRecord",
+            "label": "Data Breach Record",
+            "method": "embed",
+            "score": 0.829
+          },
+          {
+            "iri": "eu-gdpr:DataBreachReport",
+            "label": "Data Breach Report",
+            "method": "embed",
+            "score": 0.826
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.821
+          },
+          {
+            "iri": "eu-gdpr:DataBreachPreliminaryReport",
+            "label": "Data Breach Preliminary Report",
+            "method": "embed",
+            "score": 0.81
+          }
+        ]
+      },
+      {
+        "value": "a process for regularly testing, assessing and evaluating the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "source_article": "gdpr:art_32",
+        "count": 4,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure",
+          "dpv:SecurityAssessment"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 19.804
+          },
+          {
+            "iri": "dpv:SecurityAssessment",
+            "label": "Security Assessment",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "dpv:SystematicMonitoring",
+            "label": "Systematic Monitoring",
+            "method": "embed",
+            "score": 0.759
+          },
+          {
+            "iri": "dpv:OrganisationalMeasure",
+            "label": "Organisational Measure",
+            "method": "embed",
+            "score": 0.745
+          },
+          {
+            "iri": "dpv:SecurityProcedure",
+            "label": "Security Procedure",
+            "method": "embed",
+            "score": 0.744
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.742
+          }
+        ]
+      },
+      {
+        "value": "those personal data",
+        "source_article": "gdpr:art_9",
+        "count": 4,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "personal data for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.875
+          },
+          {
+            "iri": "dpv:DerivedPersonalData",
+            "label": "Derived Personal Data",
+            "method": "embed",
+            "score": 0.846
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.836
+          },
+          {
+            "iri": "dpv:PseudonymisedData",
+            "label": "Pseudonymised Data",
+            "method": "embed",
+            "score": 0.835
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.833
+          }
+        ]
+      },
+      {
+        "value": "personal data referred to in paragraph 1",
+        "source_article": "gdpr:art_9",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.848
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.818
+          },
+          {
+            "iri": "pd:PersonalDocuments",
+            "label": "Personal Documents",
+            "method": "embed",
+            "score": 0.806
+          },
+          {
+            "iri": "dpv:SensitivePersonalData",
+            "label": "Sensitive Personal Data",
+            "method": "embed",
+            "score": 0.798
+          },
+          {
+            "iri": "dpv:NonPersonalData",
+            "label": "Non-Personal Data",
+            "method": "embed",
+            "score": 0.79
+          }
+        ]
+      },
+      {
+        "value": "the data subject to a decision based solely on automated processing",
+        "source_article": "gdpr:art_22",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:AutomatedDecisionMaking",
+          "dpv:DataSubject",
+          "eu-gdpr:DataSubject"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:AutomatedDecisionMaking",
+            "label": "Automated Decision Making",
+            "method": "alias",
+            "score": 18.792
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "lexical",
+            "score": 7.938
+          },
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "lexical",
+            "score": 7.938
+          },
+          {
+            "iri": "eu-gdpr:DataMinimisationPrinciple",
+            "label": "Data Minimisation Principle",
+            "method": "embed",
+            "score": 0.788
+          },
+          {
+            "iri": "dpv:AutomatedScoringOfIndividuals",
+            "label": "Automated Scoring of Individuals",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "eu-gdpr:A22",
+            "label": "A22 Right to object to automated decision making",
+            "method": "embed",
+            "score": 0.778
+          }
+        ]
+      },
+      {
+        "value": "the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "source_article": "gdpr:art_32",
+        "count": 3,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:IntegrityConfidentialityPrinciple"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.86
+          },
+          {
+            "iri": "eu-gdpr:IntegrityConfidentialityPrinciple",
+            "label": "Integrity Confidentiality Principle",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "dpv:DistributedSystemSecurity",
+            "label": "Distributed System Security",
+            "method": "embed",
+            "score": 0.804
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "dpv:FileSystemSecurity",
+            "label": "File System Security",
+            "method": "embed",
+            "score": 0.798
+          },
+          {
+            "iri": "dpv:ConfidentialData",
+            "label": "Confidential Data",
+            "method": "embed",
+            "score": 0.787
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly names 'confidentiality' and 'integrity', which directly correspond to the 'Integrity Confidentiality Principle' in the GDPR vocabulary."
+      },
+      {
+        "value": "personal data",
+        "source_article": "gdpr:art_17",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "controllers which are processing the personal data",
+        "source_article": "gdpr:art_17",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:DataController",
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:DataController",
+            "label": "Data Controller",
+            "method": "lexical",
+            "score": 8.662
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:ControllerDataSubjectAgreement",
+            "label": "Controller-Data Subject Agreement",
+            "method": "embed",
+            "score": 0.785
+          },
+          {
+            "iri": "dpv:OfficialAuthorityOfController",
+            "label": "Official Authority of Controller",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "dpv:JointDataControllers",
+            "label": "Joint Data Controllers",
+            "method": "embed",
+            "score": 0.781
+          },
+          {
+            "iri": "dpv:DataControllerDataSource",
+            "label": "Data Controller as Data Source",
+            "method": "embed",
+            "score": 0.779
+          }
+        ]
+      },
+      {
+        "value": "the personal data",
+        "source_article": "gdpr:art_21",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "exact",
+            "score": 1.0
+          }
+        ]
+      },
+      {
+        "value": "further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes",
+        "source_article": "gdpr:art_5",
+        "count": 2,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ScientificResearch",
+          "dpv:PublicInterest",
+          "pd:Historical"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 12.613
+          },
+          {
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
+            "method": "alias",
+            "score": 9.305
+          },
+          {
+            "iri": "pd:Historical",
+            "label": "Historical",
+            "method": "lexical",
+            "score": 7.255
+          },
+          {
+            "iri": "eu-gdpr:A9-2-j",
+            "label": "Art 9(2-j) public interest, scientific research, statistical purpose",
+            "method": "embed",
+            "score": 0.763
+          },
+          {
+            "iri": "justifications:PublicInterestArchivingImpaired",
+            "label": "Public Interest Archiving Impaired",
+            "method": "embed",
+            "score": 0.761
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17Archiving",
+            "label": "Justification A17 - Archiving",
+            "method": "embed",
+            "score": 0.759
+          }
+        ]
+      },
+      {
+        "value": "the provisions of paragraphs 1 and 2",
+        "source_article": "gdpr:art_17",
+        "count": 2,
+        "status": "llm_suggested_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:A46-3-a",
+            "label": "Art 46(3-a) contractual clauses",
+            "method": "embed",
+            "score": 0.73
+          },
+          {
+            "iri": "eu-gdpr:A6-1-c",
+            "label": "Art 6(1-c) legal obligation",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "eu-gdpr:A9-2-f",
+            "label": "Art 9(2-f) judicial process",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "eu-gdpr:JustificationA12InformationRequired",
+            "label": "Justification A12 - Information Required",
+            "method": "embed",
+            "score": 0.723
+          },
+          {
+            "iri": "eu-gdpr:A49-1-c",
+            "label": "Art 49(1-c) conclusion of contract",
+            "method": "embed",
+            "score": 0.723
+          },
+          {
+            "iri": "eu-gdpr:A9-2-a",
+            "label": "Art 9(2-a) explicit consent",
+            "method": "embed",
+            "score": 0.718
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment is a cross-reference to other paragraphs within the legal text, which is explicitly defined as a 'literal' in Hard Rule 4."
+      },
+      {
+        "value": "processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "source_article": "gdpr:art_21",
+        "count": 2,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PersonalData"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "dpv:IdentifyingPersonalData",
+            "label": "Identifying Personal Data",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:ObservedPersonalData",
+            "label": "Observed Personal Data",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:CollectedPersonalData",
+            "label": "Collected Personal Data",
+            "method": "embed",
+            "score": 0.73
+          },
+          {
+            "iri": "dpv:ProvidedPersonalData",
+            "label": "Provided Personal Data",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "sector-health:PersonGeneratedHealthData",
+            "label": "Person Generated Health Data",
+            "method": "embed",
+            "score": 0.723
+          }
+        ]
+      },
+      {
+        "value": "a decision based solely on automated processing, including profiling, which produces legal effects concerning him or her or similarly significantly affects him or her",
+        "source_article": "gdpr:art_22",
+        "count": 2,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:AutomatedDecisionMaking"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:A22-Impact",
+            "label": "Impact on A22 Right to object to automated decision making",
+            "method": "embed",
+            "score": 0.651
+          },
+          {
+            "iri": "dpv:LegalMeasure",
+            "label": "Legal Measure",
+            "method": "embed",
+            "score": 0.646
+          },
+          {
+            "iri": "dpv:AutomatedDecisionMaking",
+            "label": "Automated Decision Making",
+            "method": "embed",
+            "score": 0.646
+          },
+          {
+            "iri": "dpv:HumanInvolvementForDecision",
+            "label": "Human Involvement for decision",
+            "method": "embed",
+            "score": 0.637
+          },
+          {
+            "iri": "justifications:ProcessMalicious",
+            "label": "Process Malicious",
+            "method": "embed",
+            "score": 0.633
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.632
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment directly describes 'a decision based solely on automated processing, including profiling', which precisely matches the concept of Automated Decision Making."
+      },
+      {
+        "value": "the ability to ensure the ongoing confidentiality, integrity, availability and resilience of processing systems and services",
+        "source_article": "gdpr:art_32",
+        "count": 2,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:SecureProcessingEnvironment"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:IntegrityConfidentialityPrinciple",
+            "label": "Integrity Confidentiality Principle",
+            "method": "embed",
+            "score": 0.806
+          },
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.756
+          },
+          {
+            "iri": "dpv:FileSystemSecurity",
+            "label": "File System Security",
+            "method": "embed",
+            "score": 0.752
+          },
+          {
+            "iri": "dpv:TrustedComputing",
+            "label": "Trusted Computing",
+            "method": "embed",
+            "score": 0.75
+          },
+          {
+            "iri": "dpv:DataAvailabilityAssessment",
+            "label": "Data Availability Assessment",
+            "method": "embed",
+            "score": 0.744
+          }
+        ],
+        "llm_confidence": 0.8,
+        "llm_rationale": "The fragment describes the essential security properties (confidentiality, integrity, availability, resilience) that processing systems and services must possess, which is directly aligned with the concept of a secure processing environment."
+      },
+      {
+        "value": "the information",
+        "source_article": "gdpr:art_12",
+        "count": 2,
+        "status": "manually_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:InformationRequired",
+            "label": "Information Required",
+            "method": "embed",
+            "score": 0.769
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:RecipientInformed",
+            "label": "Recipient Informed",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:DataPublishedByDataSubject",
+            "label": "Data published by Data Subject",
+            "method": "embed",
+            "score": 0.726
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment 'the information' in the context of GDPR Article 12 refers to the information provided to data subjects, which is best represented by the concept of a 'Notice'."
+      },
+      {
+        "value": "the supervisory authority competent in accordance with Article 55",
+        "source_article": "gdpr:art_33",
+        "count": 2,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:DataProtectionAuthority"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "alias",
+            "score": 13.93
+          },
+          {
+            "iri": "eu-gdpr:ConcernedSupervisoryAuthority",
+            "label": "Concerned Supervisory Authority",
+            "method": "embed",
+            "score": 0.789
+          },
+          {
+            "iri": "eu-gdpr:LocalSupervisoryAuthority",
+            "label": "Local Supervisory Authority",
+            "method": "embed",
+            "score": 0.775
+          },
+          {
+            "iri": "eu-gdpr:A78",
+            "label": "A78 Right to an effective judicial remedy against a supervisory authority",
+            "method": "embed",
+            "score": 0.762
+          },
+          {
+            "iri": "eu-gdpr:LeadSupervisoryAuthority",
+            "label": "Lead Supervisory Authority",
+            "method": "embed",
+            "score": 0.757
+          },
+          {
+            "iri": "dpv:OfficialAuthorityExerciseCompleted",
+            "label": "Official Authority Exercise Completed",
+            "method": "embed",
+            "score": 0.741
+          }
+        ]
+      },
+      {
+        "value": "for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:PurposeLimitationPrinciple"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ExplicitlyExpressedConsent",
+            "label": "Explicitly Expressed Consent",
+            "method": "embed",
+            "score": 0.792
+          },
+          {
+            "iri": "eu-gdpr:A6-1-a-explicit-consent",
+            "label": "Art 6(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "eu-gdpr:A9-2-a",
+            "label": "Art 9(2-a) explicit consent",
+            "method": "embed",
+            "score": 0.782
+          },
+          {
+            "iri": "eu-gdpr:A49-1-a",
+            "label": "Art 49(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.778
+          },
+          {
+            "iri": "dpv:AcceptableUsePolicy",
+            "label": "Acceptable Use Policy",
+            "method": "embed",
+            "score": 0.756
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.754
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment directly describes the characteristics of purposes as required by the GDPR's Purpose Limitation Principle."
+      },
+      {
+        "value": "in a manner that is incompatible with those purposes",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "eu-gdpr:PurposeIncompatible"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:PurposeIncompatible",
+            "label": "Purpose Incompatible",
+            "method": "lexical",
+            "score": 13.817
+          },
+          {
+            "iri": "dpv:NotApplicable",
+            "label": "Not Applicable",
+            "method": "embed",
+            "score": 0.742
+          },
+          {
+            "iri": "dpv:PartiallyCompliant",
+            "label": "Partially Compliant",
+            "method": "embed",
+            "score": 0.735
+          },
+          {
+            "iri": "justifications:LegalityLackingObjection",
+            "label": "Legality Lacking Objection",
+            "method": "embed",
+            "score": 0.735
+          },
+          {
+            "iri": "eu-gdpr:Disproportionate",
+            "label": "Disproportionate",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "justifications:DisproportionateEffortRequired",
+            "label": "Disproportionate Effort Required",
+            "method": "embed",
+            "score": 0.728
+          }
+        ]
+      },
+      {
+        "value": "the personal data breach to the supervisory authority competent in accordance with Article 55",
+        "source_article": "gdpr:art_33",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:DataProtectionAuthority",
+          "dpv:PersonalData",
+          "eu-gdpr:DataBreach"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "alias",
+            "score": 13.93
+          },
+          {
+            "iri": "dpv:PersonalData",
+            "label": "Personal Data",
+            "method": "lexical",
+            "score": 8.544
+          },
+          {
+            "iri": "eu-gdpr:DataBreach",
+            "label": "Data Breach",
+            "method": "lexical",
+            "score": 7.879
+          },
+          {
+            "iri": "eu-gdpr:DataProtectionAuthority",
+            "label": "Data Protection Authority",
+            "method": "embed",
+            "score": 0.753
+          },
+          {
+            "iri": "dpv:PersonalDataAudit",
+            "label": "Personal Data Audit",
+            "method": "embed",
+            "score": 0.746
+          },
+          {
+            "iri": "eu-gdpr:DataSubjectBreachNotice",
+            "label": "Data Subject Breach Notice",
+            "method": "embed",
+            "score": 0.744
+          }
+        ]
+      },
+      {
+        "value": "The information",
+        "source_article": "gdpr:art_12",
+        "count": 1,
+        "status": "manually_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:InformationRequired",
+            "label": "Information Required",
+            "method": "embed",
+            "score": 0.769
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "eu-gdpr:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:DataSubject",
+            "label": "Data Subject",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:RecipientInformed",
+            "label": "Recipient Informed",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:DataPublishedByDataSubject",
+            "label": "Data published by Data Subject",
+            "method": "embed",
+            "score": 0.726
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment 'The information' refers to the information that is communicated to data subjects, which is best represented by the general concept of a 'Notice'."
+      },
+      {
+        "value": "the obligations referred to in paragraphs 1 and 2",
+        "source_article": "gdpr:art_30",
+        "count": 1,
+        "status": "llm_suggested_literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalObligationStatus",
+            "label": "Legal ObligationStatus",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "dpv:FulfilmentOfObligation",
+            "label": "Fulfilment of Obligation",
+            "method": "embed",
+            "score": 0.795
+          },
+          {
+            "iri": "justifications:LegalObligationImpaired",
+            "label": "Required for Legal Obligation",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "dpv:LegalObligation",
+            "label": "Legal Obligation",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "justifications:LegalObligation",
+            "label": "Legal Obligation",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "dpv:LegalObligationOngoing",
+            "label": "Legal ObligationOngoing",
+            "method": "embed",
+            "score": 0.778
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment is a cross-reference to other paragraphs within the article, which is considered a literal element according to Rule 4."
+      },
+      {
+        "value": "the effectiveness of technical and organisational measures for ensuring the security of the processing",
+        "source_article": "gdpr:art_32",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:TechnicalOrganisationalMeasure"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:TechnicalOrganisationalMeasure",
+            "label": "Technical and Organisational Measure",
+            "method": "lexical",
+            "score": 19.804
+          },
+          {
+            "iri": "sector-health:SecurityManagement",
+            "label": "Security Management",
+            "method": "embed",
+            "score": 0.798
+          },
+          {
+            "iri": "dpv:SecureProcessingEnvironment",
+            "label": "Secure Processing Environment",
+            "method": "embed",
+            "score": 0.794
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.793
+          },
+          {
+            "iri": "dpv:SecurityAudit",
+            "label": "Security Audit",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:SecurityProcedure",
+            "label": "Security Procedure",
+            "method": "embed",
+            "score": 0.786
+          }
+        ]
+      }
+    ],
+    "aiact": [
+      {
+        "value": "A risk management system",
+        "source_article": "aiact:art_9",
+        "count": 5,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "airo:RiskControl"
+        ],
+        "_candidates": [
+          {
+            "iri": "airo:RiskControl",
+            "label": "Risk Control",
+            "method": "alias",
+            "score": 9.43
+          },
+          {
+            "iri": "airo:RiskConcept",
+            "label": "Risk Concept",
+            "method": "embed",
+            "score": 0.805
+          },
+          {
+            "iri": "vair:SystemRiskSource",
+            "label": "System Risk Source",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "vair:AssessingSecurityRisk",
+            "label": "Assessing Security Risk",
+            "method": "embed",
+            "score": 0.784
+          },
+          {
+            "iri": "vair:ServingSafetyFunctionInManagementOfTheSupplyOfElectricity",
+            "label": "Serving Safety Function In Management Of The Supply Of Electricity",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "vair:ServingSafetyFunctionInManagement",
+            "label": "Serving Safety Function In Management",
+            "method": "embed",
+            "score": 0.782
+          }
+        ]
+      },
+      {
+        "value": "High-risk AI systems",
+        "source_article": "aiact:art_14",
+        "count": 3,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "airo:AISystem"
+        ],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "lexical",
+            "score": 8.964
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "airo:AICapability",
+            "label": "AI Capability",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "vair:AGI",
+            "label": "Artificial General Intelligence",
+            "method": "embed",
+            "score": 0.793
+          },
+          {
+            "iri": "airo:AITechnique",
+            "label": "AI Technique",
+            "method": "embed",
+            "score": 0.782
+          }
+        ]
+      },
+      {
+        "value": "high-risk AI systems",
+        "source_article": "aiact:art_14",
+        "count": 2,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "airo:AISystem"
+        ],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "lexical",
+            "score": 8.964
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "airo:AICapability",
+            "label": "AI Capability",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "vair:AGI",
+            "label": "Artificial General Intelligence",
+            "method": "embed",
+            "score": 0.793
+          },
+          {
+            "iri": "airo:AITechnique",
+            "label": "AI Technique",
+            "method": "embed",
+            "score": 0.782
+          }
+        ]
+      },
+      {
+        "value": "the automatic recording of events (logs)",
+        "source_article": "aiact:art_12",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "vair:LoggingMeasure"
+        ],
+        "_candidates": [
+          {
+            "iri": "vair:SoundEventRecognition",
+            "label": "sound event recognition",
+            "method": "embed",
+            "score": 0.77
+          },
+          {
+            "iri": "vair:Monitoring",
+            "label": "Monitoring",
+            "method": "embed",
+            "score": 0.757
+          },
+          {
+            "iri": "vair:AutomaticSummarisation",
+            "label": "Automatic Summarisation",
+            "method": "embed",
+            "score": 0.749
+          },
+          {
+            "iri": "vair:MonitoringEmployeeBehaviour",
+            "label": "Monitoring Employee Behaviour",
+            "method": "embed",
+            "score": 0.742
+          },
+          {
+            "iri": "vair:LoggingMeasure",
+            "label": "Logging Measure",
+            "method": "embed",
+            "score": 0.734
+          },
+          {
+            "iri": "vair:TestLog",
+            "label": "Test Log",
+            "method": "embed",
+            "score": 0.716
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment 'automatic recording of events (logs)' directly refers to the concept of a logging measure."
+      },
+      {
+        "value": "High-risk AI systems",
+        "source_article": "aiact:art_12",
+        "count": 1,
+        "status": "mapped",
+        "lexical_hit": true,
+        "iri": [
+          "airo:AISystem"
+        ],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "lexical",
+            "score": 8.964
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.811
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "airo:AICapability",
+            "label": "AI Capability",
+            "method": "embed",
+            "score": 0.799
+          },
+          {
+            "iri": "vair:AGI",
+            "label": "Artificial General Intelligence",
+            "method": "embed",
+            "score": 0.793
+          },
+          {
+            "iri": "airo:AITechnique",
+            "label": "AI Technique",
+            "method": "embed",
+            "score": 0.782
+          }
+        ]
+      }
+    ]
+  },
+  "condition": {
+    "gdpr": [
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_32",
+        "count": 15,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ProcessingContext",
+          "dpv:ProcessingScale",
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "lexical",
+            "score": 11.595
+          },
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.658
+          },
+          {
+            "iri": "justifications:RightsFreedomsImpactUnlikely",
+            "label": "Rights Freedoms Impact Unlikely",
+            "method": "embed",
+            "score": 0.639
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.633
+          },
+          {
+            "iri": "eu-gdpr:A14-Impact",
+            "label": "Impact on A14 Right to be Informed",
+            "method": "embed",
+            "score": 0.627
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly mentions 'context' and 'scope' of processing, which map to dpv:ProcessingContext and dpv:ProcessingScale, and refers to 'risk for the rights and freedoms of natural persons', which maps to eu-gdpr:GDPRRightsImpact."
+      },
+      {
+        "value": "the data subject has given consent to the processing of his or her personal data for one or more specific purposes",
+        "source_article": "gdpr:art_6",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ConsentGiven"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ConsentGiven",
+            "label": "Consent Given",
+            "method": "lexical",
+            "score": 10.577
+          },
+          {
+            "iri": "dpv:ConsentStatusValidForProcessing",
+            "label": "Consent Status Valid for Processing",
+            "method": "embed",
+            "score": 0.801
+          },
+          {
+            "iri": "justifications:ConsentProvided",
+            "label": "Consent Provided",
+            "method": "embed",
+            "score": 0.777
+          },
+          {
+            "iri": "dpv:ExpressedConsent",
+            "label": "Expressed Consent",
+            "method": "embed",
+            "score": 0.773
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.756
+          },
+          {
+            "iri": "dpv:ProvideConsent",
+            "label": "Provide Consent",
+            "method": "embed",
+            "score": 0.754
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly states that 'the data subject has given consent', which directly maps to the 'Consent Given' concept."
+      },
+      {
+        "value": "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:JustificationA17ChildData",
+            "label": "Justification A17 - Child Data",
+            "method": "embed",
+            "score": 0.63
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.608
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17FreedomOfExpression",
+            "label": "Justification A17 - Freedom Of Expression",
+            "method": "embed",
+            "score": 0.605
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.604
+          },
+          {
+            "iri": "dpv:Applicability",
+            "label": "Applicability",
+            "method": "embed",
+            "score": 0.6
+          },
+          {
+            "iri": "eu-gdpr:TransparencyPrinciple",
+            "label": "Transparency Principle",
+            "method": "embed",
+            "score": 0.594
+          }
+        ]
+      },
+      {
+        "value": "When requested by the data subject, provided that the identity of the data subject is proven by other means",
+        "source_article": "gdpr:art_12",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:DataSubjectDataSource",
+            "label": "Data Subject as Data Source",
+            "method": "embed",
+            "score": 0.798
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.79
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.779
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.764
+          },
+          {
+            "iri": "dpv:DataPublishedByDataSubject",
+            "label": "Data published by Data Subject",
+            "method": "embed",
+            "score": 0.763
+          },
+          {
+            "iri": "dpv:ThirdPartyDataSource",
+            "label": "Third Party as Data Source",
+            "method": "embed",
+            "score": 0.748
+          }
+        ]
+      },
+      {
+        "value": "an enterprise or an organisation employing fewer than 250 persons unless the processing it carries out is likely to result in a risk to the rights and freedoms of data subjects, the processing is not occasional, or the processing includes special categories of data as referred to in Article 9(1) or personal data relating to criminal convictions and offences referred to in Article 10",
+        "source_article": "gdpr:art_30",
+        "count": 5,
+        "status": "manually_flag",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.687
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17UnlawfulProcessing",
+            "label": "Justification A17 - Unlawful Processing",
+            "method": "embed",
+            "score": 0.65
+          },
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.648
+          },
+          {
+            "iri": "dpv:NonPublicDataSource",
+            "label": "Non-Public Data Source",
+            "method": "embed",
+            "score": 0.644
+          },
+          {
+            "iri": "dpv:HumanInvolvementForOversight",
+            "label": "Human Involvement for Oversight",
+            "method": "embed",
+            "score": 0.641
+          },
+          {
+            "iri": "dpv:SmallScaleOfDataSubjects",
+            "label": "Small Scale Of Data Subjects",
+            "method": "embed",
+            "score": 0.641
+          }
+        ]
+      },
+      {
+        "value": "Where the notification to the supervisory authority is not made within 72 hours",
+        "source_article": "gdpr:art_33",
+        "count": 5,
+        "status": "manually_flag",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:OfficialAuthorityExercisePending",
+            "label": "Official Authority Exercise Pending",
+            "method": "embed",
+            "score": 0.759
+          },
+          {
+            "iri": "dpv:NotificationStatus",
+            "label": "Notification Status",
+            "method": "embed",
+            "score": 0.733
+          },
+          {
+            "iri": "dpv:NotificationOngoing",
+            "label": "Notification Ongoing",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:OfficialAuthorityExerciseStatus",
+            "label": "Official Authority Exercise Status",
+            "method": "embed",
+            "score": 0.729
+          },
+          {
+            "iri": "dpv:NotificationPlanned",
+            "label": "Notification Planned",
+            "method": "embed",
+            "score": 0.707
+          },
+          {
+            "iri": "dpv:NotificationNotNeeded",
+            "label": "Notification Not Needed",
+            "method": "embed",
+            "score": 0.706
+          }
+        ]
+      },
+      {
+        "value": "Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, prior to the processing",
+        "source_article": "gdpr:art_35",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact",
+          "dpv:InnovativeUseOfNewTechnologies"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "lexical",
+            "score": 11.595
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.692
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.669
+          },
+          {
+            "iri": "justifications:RightsFreedomsImpactUnlikely",
+            "label": "Rights Freedoms Impact Unlikely",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "dpv:ProtectionOfIPR",
+            "label": "Protection of Intellectual Property Rights",
+            "method": "embed",
+            "score": 0.635
+          },
+          {
+            "iri": "eu-gdpr:GDPRRightsImpact",
+            "label": "GDPR Rights Impact",
+            "method": "embed",
+            "score": 0.631
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment describes the conditions for a Data Protection Impact Assessment, explicitly mentioning the processing context, the use of new technologies, and the high risk to data subject rights and freedoms."
+      },
+      {
+        "value": "without undue delay",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:DelayJustification",
+            "label": "Delay Justification",
+            "method": "embed",
+            "score": 0.796
+          },
+          {
+            "iri": "eu-gdpr:JustificationA12Delay",
+            "label": "Justification A12 - Delay",
+            "method": "embed",
+            "score": 0.775
+          },
+          {
+            "iri": "dpv:IndeterminateDuration",
+            "label": "Indeterminate Duration",
+            "method": "embed",
+            "score": 0.766
+          },
+          {
+            "iri": "dpv:TemporalDuration",
+            "label": "Temporal Duration",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "dpv:ContinuousFrequency",
+            "label": "Continuous Frequency",
+            "method": "embed",
+            "score": 0.746
+          },
+          {
+            "iri": "dpv:UntilTimeDuration",
+            "label": "Until Time Duration",
+            "method": "embed",
+            "score": 0.73
+          }
+        ]
+      },
+      {
+        "value": "Taking into account the purposes of the processing, including by means of providing a supplementary statement",
+        "source_article": "gdpr:art_16",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:SupplementaryMeasure",
+            "label": "Supplementary Measure",
+            "method": "embed",
+            "score": 0.739
+          },
+          {
+            "iri": "dpv:ProcessingCondition",
+            "label": "Processing Condition",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "embed",
+            "score": 0.682
+          },
+          {
+            "iri": "dpv:ObjectingToProcess",
+            "label": "Objecting to Process",
+            "method": "embed",
+            "score": 0.675
+          },
+          {
+            "iri": "dpv:ProcessingDuration",
+            "label": "Processing Duration",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:ProcessingLocation",
+            "label": "Processing Location",
+            "method": "embed",
+            "score": 0.666
+          }
+        ]
+      },
+      {
+        "value": "to the extent that processing is necessary",
+        "source_article": "gdpr:art_17",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:ProcessingCondition",
+            "label": "Processing Condition",
+            "method": "embed",
+            "score": 0.823
+          },
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "embed",
+            "score": 0.813
+          },
+          {
+            "iri": "dpv:ProcessingScale",
+            "label": "Processing Scale",
+            "method": "embed",
+            "score": 0.791
+          },
+          {
+            "iri": "dpv:ObjectingToProcess",
+            "label": "Objecting to Process",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "dpv:ProcessingDuration",
+            "label": "Processing Duration",
+            "method": "embed",
+            "score": 0.771
+          },
+          {
+            "iri": "dpv:ProcessingLocation",
+            "label": "Processing Location",
+            "method": "embed",
+            "score": 0.762
+          }
+        ]
+      },
+      {
+        "value": "in a timely manner in the event of a physical or technical incident",
+        "source_article": "gdpr:art_32",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:WithinPhysicalEnvironment",
+            "label": "Within Physical Environment",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "dpv:UntilEventDuration",
+            "label": "Until Event Duration",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "sector-health:EmergencyCareCommunication",
+            "label": "Emergency Care Communication",
+            "method": "embed",
+            "score": 0.706
+          },
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.702
+          },
+          {
+            "iri": "sector-health:EmergencyCareDispatch",
+            "label": "Emergency Care Dispatch",
+            "method": "embed",
+            "score": 0.698
+          },
+          {
+            "iri": "dpv:UntilTimeDuration",
+            "label": "Until Time Duration",
+            "method": "embed",
+            "score": 0.694
+          }
+        ]
+      },
+      {
+        "value": "When the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_34",
+        "count": 5,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:GDPRRightsImpact",
+            "label": "GDPR Rights Impact",
+            "method": "embed",
+            "score": 0.743
+          },
+          {
+            "iri": "justifications:DataSubjectProtectionImpaired",
+            "label": "Data Subject Protection Impaired",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "justifications:RightsFreedomsImpactUnlikely",
+            "label": "Rights Freedoms Impact Unlikely",
+            "method": "embed",
+            "score": 0.716
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.698
+          },
+          {
+            "iri": "justifications:EthicsBreachPreventionImpaired",
+            "label": "Ethics Breach Prevention Impaired",
+            "method": "embed",
+            "score": 0.697
+          },
+          {
+            "iri": "justifications:ConfidentialityObligationCompromised",
+            "label": "Confidentiality Obligation Compromised",
+            "method": "embed",
+            "score": 0.695
+          }
+        ]
+      },
+      {
+        "value": "where and insofar as the data subject already has the information",
+        "source_article": "gdpr:art_13",
+        "count": 5,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:DataSubjectInformed"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:DataSubjectDataSource",
+            "label": "Data Subject as Data Source",
+            "method": "embed",
+            "score": 0.844
+          },
+          {
+            "iri": "dpv:DataSubjectInformed",
+            "label": "Data Subject Informed",
+            "method": "embed",
+            "score": 0.842
+          },
+          {
+            "iri": "dpv:DataPublishedByDataSubject",
+            "label": "Data published by Data Subject",
+            "method": "embed",
+            "score": 0.832
+          },
+          {
+            "iri": "dpv:DataSubjectUninformed",
+            "label": "Data Subject Uninformed",
+            "method": "embed",
+            "score": 0.83
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.791
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.789
+          }
+        ]
+      },
+      {
+        "value": "Where processing is to be carried out on behalf of a controller",
+        "source_article": "gdpr:art_28",
+        "count": 5,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:OfficialAuthorityOfController",
+            "label": "Official Authority of Controller",
+            "method": "embed",
+            "score": 0.831
+          },
+          {
+            "iri": "dpv:ProcessingLocation",
+            "label": "Processing Location",
+            "method": "embed",
+            "score": 0.775
+          },
+          {
+            "iri": "dpv:ControllerInformed",
+            "label": "Controller Informed",
+            "method": "embed",
+            "score": 0.77
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfController",
+            "label": "Legitimate Interest of Controller",
+            "method": "embed",
+            "score": 0.748
+          },
+          {
+            "iri": "dpv:ObjectingToProcess",
+            "label": "Objecting to Process",
+            "method": "embed",
+            "score": 0.731
+          },
+          {
+            "iri": "dpv:ProcessingCondition",
+            "label": "Processing Condition",
+            "method": "embed",
+            "score": 0.726
+          }
+        ]
+      },
+      {
+        "value": "in a manner that is incompatible with those purposes",
+        "source_article": "gdpr:art_5",
+        "count": 4,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "eu-gdpr:PurposeIncompatible"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:PurposeIncompatible",
+            "label": "Purpose Incompatible",
+            "method": "lexical",
+            "score": 12.368
+          },
+          {
+            "iri": "dpv:NotApplicable",
+            "label": "Not Applicable",
+            "method": "embed",
+            "score": 0.742
+          },
+          {
+            "iri": "dpv:PartiallyCompliant",
+            "label": "Partially Compliant",
+            "method": "embed",
+            "score": 0.735
+          },
+          {
+            "iri": "justifications:LegalityLackingObjection",
+            "label": "Legality Lacking Objection",
+            "method": "embed",
+            "score": 0.735
+          },
+          {
+            "iri": "eu-gdpr:Disproportionate",
+            "label": "Disproportionate",
+            "method": "embed",
+            "score": 0.732
+          },
+          {
+            "iri": "justifications:DisproportionateEffortRequired",
+            "label": "Disproportionate Effort Required",
+            "method": "embed",
+            "score": 0.728
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment directly states 'incompatible with those purposes', which is a direct lexical match to the concept 'Purpose Incompatible'."
+      },
+      {
+        "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "source_article": "gdpr:art_9",
+        "count": 4,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ConsentGiven",
+          "dpv:ExplicitlyExpressedConsent"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ConsentGiven",
+            "label": "Consent Given",
+            "method": "lexical",
+            "score": 10.577
+          },
+          {
+            "iri": "dpv:ProvideConsent",
+            "label": "Provide Consent",
+            "method": "lexical",
+            "score": 9.729
+          },
+          {
+            "iri": "dpv:ConsentStatusValidForProcessing",
+            "label": "Consent Status Valid for Processing",
+            "method": "embed",
+            "score": 0.682
+          },
+          {
+            "iri": "justifications:DataSubjectProtectionImpaired",
+            "label": "Data Subject Protection Impaired",
+            "method": "embed",
+            "score": 0.677
+          },
+          {
+            "iri": "eu-gdpr:A49-1-a",
+            "label": "Art 49(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:ExplicitlyExpressedConsent",
+            "label": "Explicitly Expressed Consent",
+            "method": "embed",
+            "score": 0.664
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly states the condition that the data subject has given explicit consent, directly mapping to both the status of consent and its type."
+      },
+      {
+        "value": "processing is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "source_article": "gdpr:art_9",
+        "count": 4,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PublicInterest",
+          "dpv:ScientificResearch",
+          "eu-gdpr:ProportionalityAssessment"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 11.452
+          },
+          {
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
+            "method": "lexical",
+            "score": 8.01
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.716
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17Archiving",
+            "label": "Justification A17 - Archiving",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "eu-gdpr:A6-1-d-data-subject",
+            "label": "Art 6(1-d) protect vital interests of data subject",
+            "method": "embed",
+            "score": 0.701
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly names 'public interest' as a legal basis, 'scientific or historical research purposes' as a purpose, and 'proportionate to the aim pursued' as a condition for the underlying law, all of which map to concepts in the routed vocabulary."
+      },
+      {
+        "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "source_article": "gdpr:art_9",
+        "count": 3,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ProcessingCondition",
+          "sector-health:PreventativeCareManagement",
+          "sector-health:MedicalConditionDiagnosis",
+          "sector-health:SocialServicesProvision",
+          "sector-health:HealthcareServiceManagement",
+          "dpv:LegalObligation",
+          "dpv:ContractPerformance"
+        ],
+        "_candidates": [
+          {
+            "iri": "sector-health:SocialServicesProvision",
+            "label": "Social Services Provision",
+            "method": "lexical",
+            "score": 15.841
+          },
+          {
+            "iri": "dpv:ProcessingCondition",
+            "label": "Processing Condition",
+            "method": "lexical",
+            "score": 10.748
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 8.134
+          },
+          {
+            "iri": "sector-health:PreventativeCareManagement",
+            "label": "Preventative Care Management",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "sector-health:EnsureQualitySafetyHealthcare",
+            "label": "Ensure Quality and Safety of Healthcare",
+            "method": "embed",
+            "score": 0.683
+          },
+          {
+            "iri": "sector-health:PatientMonitoring",
+            "label": "Patient Monitoring",
+            "method": "embed",
+            "score": 0.673
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly describes processing conditions, including specific health-related purposes and legal bases, all of which have corresponding concepts in the routed vocabulary."
+      },
+      {
+        "value": "for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes and in accordance with Article 89(1)",
+        "source_article": "gdpr:art_5",
+        "count": 3,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PublicInterest",
+          "dpv:ScientificResearch",
+          "eu-gdpr:JustificationA17Archiving"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 11.452
+          },
+          {
+            "iri": "dpv:PublicInterestStatus",
+            "label": "Public Interest Status",
+            "method": "embed",
+            "score": 0.713
+          },
+          {
+            "iri": "eu-gdpr:A9-2-j",
+            "label": "Art 9(2-j) public interest, scientific research, statistical purpose",
+            "method": "embed",
+            "score": 0.71
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17Archiving",
+            "label": "Justification A17 - Archiving",
+            "method": "embed",
+            "score": 0.708
+          },
+          {
+            "iri": "justifications:PublicInterestArchivingImpaired",
+            "label": "Public Interest Archiving Impaired",
+            "method": "embed",
+            "score": 0.689
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17PublicInterest",
+            "label": "Justification A17 - Public Interest",
+            "method": "embed",
+            "score": 0.681
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly names public interest, scientific or historical research, and archiving as purposes that serve as conditions for processing, with 'statistical purposes' lacking a direct concept and the Article 89(1) reference being a literal cross-reference."
+      },
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, as appropriate, to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
+        "count": 3,
+        "status": "manually_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "lexical",
+            "score": 11.595
+          },
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.642
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.636
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.632
+          },
+          {
+            "iri": "dpv:HumanInvolvementForOversight",
+            "label": "Human Involvement for Oversight",
+            "method": "embed",
+            "score": 0.623
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.62
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly lists factors such as 'nature, scope, context and purposes of processing' and 'risk' which collectively define the processing context for determining security measures."
+      },
+      {
+        "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_33",
+        "count": 3,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "justifications:RightsFreedomsImpactUnlikely",
+            "label": "Rights Freedoms Impact Unlikely",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "eu-gdpr:IntegrityConfidentialityPrinciple",
+            "label": "Integrity Confidentiality Principle",
+            "method": "embed",
+            "score": 0.668
+          },
+          {
+            "iri": "eu-gdpr:A17-Impact",
+            "label": "Impact on A17 Right to Erasure",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "justifications:EthicsBreachPreventionImpaired",
+            "label": "Ethics Breach Prevention Impaired",
+            "method": "embed",
+            "score": 0.665
+          },
+          {
+            "iri": "eu-gdpr:A7-3-Impact",
+            "label": "Impact on A7-3 Right to Withdraw Consent",
+            "method": "embed",
+            "score": 0.662
+          }
+        ]
+      },
+      {
+        "value": "without undue delay where one of the following grounds applies",
+        "source_article": "gdpr:art_17",
+        "count": 3,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:DelayJustification",
+            "label": "Delay Justification",
+            "method": "embed",
+            "score": 0.8
+          },
+          {
+            "iri": "eu-gdpr:JustificationA12Delay",
+            "label": "Justification A12 - Delay",
+            "method": "embed",
+            "score": 0.785
+          },
+          {
+            "iri": "dpv:IndeterminateDuration",
+            "label": "Indeterminate Duration",
+            "method": "embed",
+            "score": 0.78
+          },
+          {
+            "iri": "dpv:UntilTimeDuration",
+            "label": "Until Time Duration",
+            "method": "embed",
+            "score": 0.73
+          },
+          {
+            "iri": "dpv:FixedOccurrencesDuration",
+            "label": "Fixed Occurrences Duration",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "dpv:ComplianceIndeterminate",
+            "label": "Compliance Indeterminate",
+            "method": "embed",
+            "score": 0.72
+          }
+        ]
+      },
+      {
+        "value": "in accordance with Article 89(1)",
+        "source_article": "gdpr:art_5",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:LegalObligationImpaired",
+            "label": "Required for Legal Obligation",
+            "method": "embed",
+            "score": 0.718
+          },
+          {
+            "iri": "justifications:ConsentProvided",
+            "label": "Consent Provided",
+            "method": "embed",
+            "score": 0.701
+          },
+          {
+            "iri": "eu-gdpr:LawfulnessPrinciple",
+            "label": "Lawfulness Principle",
+            "method": "embed",
+            "score": 0.699
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17LegallyRequired",
+            "label": "Justification A17 - Legally Required",
+            "method": "embed",
+            "score": 0.698
+          },
+          {
+            "iri": "dpv:LegalObligationStatus",
+            "label": "Legal ObligationStatus",
+            "method": "embed",
+            "score": 0.696
+          },
+          {
+            "iri": "eu-gdpr:A6-1-a",
+            "label": "Art.6(1-a) consent",
+            "method": "embed",
+            "score": 0.694
+          }
+        ]
+      },
+      {
+        "value": "in writing, or by other means, including, where appropriate, by electronic means",
+        "source_article": "gdpr:art_12",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:A6-1-e",
+            "label": "Art 6(1-e) public interest or official authority",
+            "method": "embed",
+            "score": 0.668
+          },
+          {
+            "iri": "dpv:HumanInvolvementForInput",
+            "label": "Human Involvement for Input",
+            "method": "embed",
+            "score": 0.667
+          },
+          {
+            "iri": "eu-gdpr:A6-1-a-explicit-consent",
+            "label": "Art 6(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.661
+          },
+          {
+            "iri": "dpv:WithinPhysicalEnvironment",
+            "label": "Within Physical Environment",
+            "method": "embed",
+            "score": 0.661
+          },
+          {
+            "iri": "eu-gdpr:A6-1-a-non-explicit-consent",
+            "label": "Art.6(1-a) regular consent",
+            "method": "embed",
+            "score": 0.656
+          },
+          {
+            "iri": "eu-gdpr:A9-2-a",
+            "label": "Art 9(2-a) explicit consent",
+            "method": "embed",
+            "score": 0.656
+          }
+        ]
+      },
+      {
+        "value": "In the case of a personal data breach, without undue delay and, where feasible, not later than 72 hours after having become aware of it, to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+        "source_article": "gdpr:art_33",
+        "count": 2,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.685
+          },
+          {
+            "iri": "dpv:ConsentStatusValidForProcessing",
+            "label": "Consent Status Valid for Processing",
+            "method": "embed",
+            "score": 0.674
+          },
+          {
+            "iri": "eu-gdpr:GDPRComplianceUnknown",
+            "label": "GDPR Compliance Unknown",
+            "method": "embed",
+            "score": 0.655
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.651
+          },
+          {
+            "iri": "eu-gdpr:IntegrityConfidentialityPrinciple",
+            "label": "Integrity Confidentiality Principle",
+            "method": "embed",
+            "score": 0.65
+          },
+          {
+            "iri": "justifications:RightsFreedomsImpactUnlikely",
+            "label": "Rights Freedoms Impact Unlikely",
+            "method": "embed",
+            "score": 0.65
+          }
+        ]
+      },
+      {
+        "value": "where one of the following grounds applies",
+        "source_article": "gdpr:art_17",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:WithinPhysicalEnvironment",
+            "label": "Within Physical Environment",
+            "method": "embed",
+            "score": 0.751
+          },
+          {
+            "iri": "dpv:FixedMultipleLocations",
+            "label": "Fixed Multiple Locations",
+            "method": "embed",
+            "score": 0.726
+          },
+          {
+            "iri": "dpv:FixedLocation",
+            "label": "Fixed Location",
+            "method": "embed",
+            "score": 0.725
+          },
+          {
+            "iri": "dpv:DecentralisedLocations",
+            "label": "Decentralised Locations",
+            "method": "embed",
+            "score": 0.72
+          },
+          {
+            "iri": "dpv:LocationFixture",
+            "label": "Location Fixture",
+            "method": "embed",
+            "score": 0.715
+          },
+          {
+            "iri": "dpv:LocalLocation",
+            "label": "Local Location",
+            "method": "embed",
+            "score": 0.703
+          }
+        ]
+      },
+      {
+        "value": "on grounds relating to his or her particular situation, at any time",
+        "source_article": "gdpr:art_21",
+        "count": 2,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:WithinPhysicalEnvironment",
+            "label": "Within Physical Environment",
+            "method": "embed",
+            "score": 0.704
+          },
+          {
+            "iri": "dpv:EntityInvolved",
+            "label": "Entity Involved",
+            "method": "embed",
+            "score": 0.695
+          },
+          {
+            "iri": "dpv:Context",
+            "label": "Context",
+            "method": "embed",
+            "score": 0.695
+          },
+          {
+            "iri": "dpv:PassivelyInvolved",
+            "label": "Passively Involved",
+            "method": "embed",
+            "score": 0.675
+          },
+          {
+            "iri": "dpv:Lawful",
+            "label": "Lawful",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "dpv:Intended",
+            "label": "Intended",
+            "method": "embed",
+            "score": 0.67
+          }
+        ]
+      },
+      {
+        "value": "Taking into account the state of the art, the costs of implementation and the nature, scope, context and purposes of processing as well as the risk of varying likelihood and severity for the rights and freedoms of natural persons, to ensure a level of security appropriate to the risk",
+        "source_article": "gdpr:art_32",
+        "count": 2,
+        "status": "manually_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ProcessingContext",
+          "eu-gdpr:GDPRRightsImpact"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ProcessingContext",
+            "label": "Processing Context",
+            "method": "lexical",
+            "score": 11.595
+          },
+          {
+            "iri": "dpv:VitalInterestOfNaturalPerson",
+            "label": "Vital Interest of Natural Person",
+            "method": "embed",
+            "score": 0.64
+          },
+          {
+            "iri": "eu-gdpr:A18-Impact",
+            "label": "Impact on A18 Right to Restrict Processing",
+            "method": "embed",
+            "score": 0.637
+          },
+          {
+            "iri": "dpv:ProtectionOfPublicSecurity",
+            "label": "Protection of Public Security",
+            "method": "embed",
+            "score": 0.636
+          },
+          {
+            "iri": "dpv:HumanInvolvementForOversight",
+            "label": "Human Involvement for Oversight",
+            "method": "embed",
+            "score": 0.623
+          },
+          {
+            "iri": "justifications:ProcessSafeguarded",
+            "label": "Process Safeguarded",
+            "method": "embed",
+            "score": 0.623
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly mentions 'context ... of processing' as a condition to consider, which directly maps to the lexical hit dpv:ProcessingContext."
+      },
+      {
+        "value": "for specified, explicit and legitimate purposes",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:PurposeCompatible"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ExplicitlyExpressedConsent",
+            "label": "Explicitly Expressed Consent",
+            "method": "embed",
+            "score": 0.792
+          },
+          {
+            "iri": "eu-gdpr:A6-1-a-explicit-consent",
+            "label": "Art 6(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "eu-gdpr:A9-2-a",
+            "label": "Art 9(2-a) explicit consent",
+            "method": "embed",
+            "score": 0.782
+          },
+          {
+            "iri": "eu-gdpr:A49-1-a",
+            "label": "Art 49(1-a) explicit consent",
+            "method": "embed",
+            "score": 0.778
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.754
+          },
+          {
+            "iri": "dpv:LegitimateInterest",
+            "label": "Legitimate Interest",
+            "method": "embed",
+            "score": 0.752
+          }
+        ]
+      },
+      {
+        "value": "processing is necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies",
+        "source_article": "gdpr:art_9",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "sector-health:SocialServicesProvision",
+          "dpv:ServiceManagement",
+          "dpv:LegalObligation",
+          "dpv:ContractPerformance",
+          "sector-health:DiagnosisManagement"
+        ],
+        "_candidates": [
+          {
+            "iri": "sector-health:SocialServicesProvision",
+            "label": "Social Services Provision",
+            "method": "lexical",
+            "score": 15.841
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 8.134
+          },
+          {
+            "iri": "sector-health:PatientMonitoring",
+            "label": "Patient Monitoring",
+            "method": "embed",
+            "score": 0.696
+          },
+          {
+            "iri": "sector-health:EnsureQualitySafetyHealthcare",
+            "label": "Ensure Quality and Safety of Healthcare",
+            "method": "embed",
+            "score": 0.693
+          },
+          {
+            "iri": "dpv:PersonnelMonitoring",
+            "label": "Personnel Monitoring",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "sector-health:PublicHealthMonitoring",
+            "label": "Public Health Monitoring",
+            "method": "embed",
+            "score": 0.684
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment describes conditions for processing, including specific purposes related to health and social care (social services provision, service management, diagnosis management) and legal bases (legal obligation, contract performance), all of which have direct matches in the routed vocabulary."
+      },
+      {
+        "value": "necessary for the purposes of preventive or occupational medicine, for the assessment of the working capacity of the employee, medical diagnosis, the provision of health or social care or treatment or the management of health or social care systems and services on the basis of Union or Member State law or pursuant to contract with a health professional and subject to the conditions and safeguards referred to in paragraph 3",
+        "source_article": "gdpr:art_9",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "sector-health:PreventativeCareManagement",
+          "sector-health:MedicalConditionDiagnosis",
+          "sector-health:ServiceProvision",
+          "sector-health:SocialServicesProvision",
+          "dpv:ServiceManagement",
+          "sector-health:HealthcareServiceManagement",
+          "dpv:LegalObligation",
+          "dpv:ContractPerformance"
+        ],
+        "_candidates": [
+          {
+            "iri": "sector-health:SocialServicesProvision",
+            "label": "Social Services Provision",
+            "method": "lexical",
+            "score": 15.841
+          },
+          {
+            "iri": "dpv:ServiceManagement",
+            "label": "Service Management",
+            "method": "lexical",
+            "score": 8.134
+          },
+          {
+            "iri": "sector-health:PreventativeCareManagement",
+            "label": "Preventative Care Management",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "sector-health:EnsureQualitySafetyHealthcare",
+            "label": "Ensure Quality and Safety of Healthcare",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "justifications:LegalObligationImpaired",
+            "label": "Required for Legal Obligation",
+            "method": "embed",
+            "score": 0.663
+          },
+          {
+            "iri": "dpv:LegalObligationStatus",
+            "label": "Legal ObligationStatus",
+            "method": "embed",
+            "score": 0.641
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly lists multiple purposes related to health and social care, and two distinct legal bases for processing, all of which are directly represented by concepts in the routed vocabulary."
+      },
+      {
+        "value": "on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions",
+        "source_article": "gdpr:art_21",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.679
+          },
+          {
+            "iri": "dpv:EntityInvolved",
+            "label": "Entity Involved",
+            "method": "embed",
+            "score": 0.648
+          },
+          {
+            "iri": "eu-gdpr:GDPRCompliant",
+            "label": "GDPR Compliant",
+            "method": "embed",
+            "score": 0.647
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.64
+          },
+          {
+            "iri": "dpv:RightsFulfilment",
+            "label": "Rights Fulfilment",
+            "method": "embed",
+            "score": 0.638
+          }
+        ]
+      },
+      {
+        "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
+        "source_article": "gdpr:art_9",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:ConsentGiven",
+          "dpv:ExplicitlyExpressedConsent"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ConsentGiven",
+            "label": "Consent Given",
+            "method": "lexical",
+            "score": 10.577
+          },
+          {
+            "iri": "dpv:ExplicitlyExpressedConsent",
+            "label": "Explicitly Expressed Consent",
+            "method": "embed",
+            "score": 0.786
+          },
+          {
+            "iri": "dpv:ConsentStatusValidForProcessing",
+            "label": "Consent Status Valid for Processing",
+            "method": "embed",
+            "score": 0.783
+          },
+          {
+            "iri": "justifications:ConsentProvided",
+            "label": "Consent Provided",
+            "method": "embed",
+            "score": 0.771
+          },
+          {
+            "iri": "dpv:ExpressedConsent",
+            "label": "Expressed Consent",
+            "method": "embed",
+            "score": 0.767
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.753
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly states that consent has been given and specifies that it is explicit consent, both of which are direct matches to concepts in the vocabulary."
+      },
+      {
+        "value": "Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+        "source_article": "gdpr:art_9",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "justifications:LegalityLackingObjection",
+            "label": "Legality Lacking Objection",
+            "method": "embed",
+            "score": 0.741
+          },
+          {
+            "iri": "eu-gdpr:A21-Impact",
+            "label": "Impact on A21 Right to object",
+            "method": "embed",
+            "score": 0.67
+          },
+          {
+            "iri": "justifications:NonNecessityObjection",
+            "label": "Non Necessity Objection",
+            "method": "embed",
+            "score": 0.665
+          },
+          {
+            "iri": "justifications:NonFulfilmentJustification",
+            "label": "Non-Fulfilment Justification",
+            "method": "embed",
+            "score": 0.665
+          },
+          {
+            "iri": "justifications:OfficialStatisticsImpaired",
+            "label": "Official Statistics Impaired",
+            "method": "embed",
+            "score": 0.661
+          },
+          {
+            "iri": "dpv:SupraNationalUnion",
+            "label": "Supranational Union",
+            "method": "embed",
+            "score": 0.661
+          }
+        ]
+      },
+      {
+        "value": "it is necessary for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) based on Union or Member State law which shall be proportionate to the aim pursued, respect the essence of the right to data protection and provide for suitable and specific measures to safeguard the fundamental rights and the interests of the data subject",
+        "source_article": "gdpr:art_9",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PublicInterest",
+          "dpv:ScientificResearch",
+          "dpv:ProvideOfficialStatistics",
+          "eu-gdpr:ProportionalityAssessment"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 11.452
+          },
+          {
+            "iri": "dpv:PublicInterest",
+            "label": "Public Interest",
+            "method": "lexical",
+            "score": 8.01
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.737
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.727
+          },
+          {
+            "iri": "eu-gdpr:A6-1-d-data-subject",
+            "label": "Art 6(1-d) protect vital interests of data subject",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "eu-gdpr:JustificationA17Archiving",
+            "label": "Justification A17 - Archiving",
+            "method": "embed",
+            "score": 0.707
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly lists public interest, scientific research, and statistical purposes as conditions for processing, along with a requirement for proportionality."
+      },
+      {
+        "value": "when the data subject has objected, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "source_article": "gdpr:art_21",
+        "count": 1,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:ObjectingToProcess"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.717
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.691
+          },
+          {
+            "iri": "eu-gdpr:GDPRNonCompliant",
+            "label": "GDPR Non-compliant",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "justifications:DataSubjectProtectionImpaired",
+            "label": "Data Subject Protection Impaired",
+            "method": "embed",
+            "score": 0.683
+          },
+          {
+            "iri": "justifications:ConfidentialityObligationCompromised",
+            "label": "Confidentiality Obligation Compromised",
+            "method": "embed",
+            "score": 0.674
+          },
+          {
+            "iri": "dpv:DataSubjectUninformed",
+            "label": "Data Subject Uninformed",
+            "method": "embed",
+            "score": 0.668
+          }
+        ]
+      },
+      {
+        "value": "the data subject objects, on grounds relating to his or her particular situation, at any time to processing of personal data concerning him or her which is based on point (e) or (f) of Article 6(1), including profiling based on those provisions, and the controller does not demonstrate compelling legitimate grounds for the processing which override the interests, rights and freedoms of the data subject or for the establishment, exercise or defence of legal claims",
+        "source_article": "gdpr:art_21",
+        "count": 1,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "dpv:ObjectingToProcess"
+        ],
+        "_candidates": [
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.714
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.705
+          },
+          {
+            "iri": "justifications:DataSubjectProtectionImpaired",
+            "label": "Data Subject Protection Impaired",
+            "method": "embed",
+            "score": 0.688
+          },
+          {
+            "iri": "dpv:LegalBasis",
+            "label": "Legal Basis",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "dpv:DataSubjectUninformed",
+            "label": "Data Subject Uninformed",
+            "method": "embed",
+            "score": 0.682
+          },
+          {
+            "iri": "dpv:DataSubjectDataSource",
+            "label": "Data Subject as Data Source",
+            "method": "embed",
+            "score": 0.679
+          }
+        ]
+      },
+      {
+        "value": "in a form which permits identification of data subjects for no longer than is necessary for the purposes for which the personal data are processed",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "manually_mapped",
+        "lexical_hit": false,
+        "iri": [
+          "eu-gdpr:StorageLimitationPrinciple"
+        ],
+        "_candidates": [
+          {
+            "iri": "justifications:IdentityVerificationRequired",
+            "label": "Identity Verification Required",
+            "method": "embed",
+            "score": 0.75
+          },
+          {
+            "iri": "justifications:DataSubjectProtectionImpaired",
+            "label": "Data Subject Protection Impaired",
+            "method": "embed",
+            "score": 0.741
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.737
+          },
+          {
+            "iri": "dpv:ConsentStatusValidForProcessing",
+            "label": "Consent Status Valid for Processing",
+            "method": "embed",
+            "score": 0.728
+          },
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.719
+          },
+          {
+            "iri": "dpv:DataSubjectUninformed",
+            "label": "Data Subject Uninformed",
+            "method": "embed",
+            "score": 0.717
+          }
+        ]
+      },
+      {
+        "value": "insofar as the personal data will be processed solely for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) subject to implementation of the appropriate technical and organisational measures required by this Regulation in order to safeguard the rights and freedoms of the data subject",
+        "source_article": "gdpr:art_5",
+        "count": 1,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "dpv:PublicInterest",
+          "dpv:ScientificResearch"
+        ],
+        "_candidates": [
+          {
+            "iri": "dpv:ScientificResearch",
+            "label": "Scientific Research",
+            "method": "lexical",
+            "score": 11.452
+          },
+          {
+            "iri": "dpv:Required",
+            "label": "Required",
+            "method": "lexical",
+            "score": 4.857
+          },
+          {
+            "iri": "dpv:LegitimateInterestOfDataSubject",
+            "label": "Legitimate Interest of Data Subject",
+            "method": "embed",
+            "score": 0.693
+          },
+          {
+            "iri": "eu-gdpr:GDPRCompliant",
+            "label": "GDPR Compliant",
+            "method": "embed",
+            "score": 0.686
+          },
+          {
+            "iri": "eu-gdpr:GDPRLawfulness",
+            "label": "GDPR Lawfulness",
+            "method": "embed",
+            "score": 0.684
+          },
+          {
+            "iri": "dpv:VitalInterestOfDataSubject",
+            "label": "Vital Interest of Data Subject",
+            "method": "embed",
+            "score": 0.684
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment explicitly names processing for public interest, scientific research, and states a requirement, all of which have direct matches in the routed vocabulary."
+      }
+    ],
+    "aiact": [
+      {
+        "value": "in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use",
+        "source_article": "aiact:art_14",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "vair:NaturalPerson",
+          "vair:HumanOversightMeasure",
+          "airo:HumanInvolvement"
+        ],
+        "_candidates": [
+          {
+            "iri": "vair:NaturalPerson",
+            "label": "Natural Person",
+            "method": "lexical",
+            "score": 11.692
+          },
+          {
+            "iri": "vair:HumanOversightMeasure",
+            "label": "Human Oversight Measure",
+            "method": "embed",
+            "score": 0.678
+          },
+          {
+            "iri": "airo:HumanInvolvement",
+            "label": "Human Involvement",
+            "method": "embed",
+            "score": 0.641
+          },
+          {
+            "iri": "vair:AdministrationOfDemocraticProcesses",
+            "label": "Administration Of Democratic Processes",
+            "method": "embed",
+            "score": 0.632
+          },
+          {
+            "iri": "vair:ManagementAndOperationOfSafety",
+            "label": "Management And Operation Of Safety",
+            "method": "embed",
+            "score": 0.627
+          },
+          {
+            "iri": "vair:Authority",
+            "label": "authority",
+            "method": "embed",
+            "score": 0.619
+          }
+        ],
+        "llm_confidence": 0.9,
+        "llm_rationale": "The fragment explicitly mentions 'natural persons' and describes the condition of being 'effectively overseen' by them, which constitutes a 'Human Oversight Measure' and 'Human Involvement'."
+      },
+      {
+        "value": "in relation to high-risk AI systems",
+        "source_article": "aiact:art_9",
+        "count": 5,
+        "status": "llm_suggested_mapped",
+        "lexical_hit": true,
+        "iri": [
+          "airo:AISystem"
+        ],
+        "_candidates": [
+          {
+            "iri": "airo:AISystem",
+            "label": "AI System",
+            "method": "lexical",
+            "score": 8.964
+          },
+          {
+            "iri": "airo:AIModel",
+            "label": "AI Model",
+            "method": "embed",
+            "score": 0.788
+          },
+          {
+            "iri": "airo:AICapability",
+            "label": "AI Capability",
+            "method": "embed",
+            "score": 0.787
+          },
+          {
+            "iri": "airo:GPAIModel",
+            "label": "General Purpose AI Model",
+            "method": "embed",
+            "score": 0.785
+          },
+          {
+            "iri": "vair:AGI",
+            "label": "Artificial General Intelligence",
+            "method": "embed",
+            "score": 0.775
+          },
+          {
+            "iri": "airo:AITechnique",
+            "label": "AI Technique",
+            "method": "embed",
+            "score": 0.773
+          }
+        ],
+        "llm_confidence": 1.0,
+        "llm_rationale": "The fragment directly refers to 'AI systems', which is a lexical match for airo:AISystem."
+      },
+      {
+        "value": "over the lifetime of the system",
+        "source_article": "aiact:art_12",
+        "count": 1,
+        "status": "literal",
+        "lexical_hit": false,
+        "iri": [],
+        "_candidates": [
+          {
+            "iri": "vair:AutonomousSystem",
+            "label": "autonomous system",
+            "method": "embed",
+            "score": 0.712
+          },
+          {
+            "iri": "vair:SystemArchitecture",
+            "label": "system architecture",
+            "method": "embed",
+            "score": 0.706
+          },
+          {
+            "iri": "airo:AILifecyclePhase",
+            "label": "AI Lifecycle Phase",
+            "method": "embed",
+            "score": 0.703
+          },
+          {
+            "iri": "vair:SystemRiskSource",
+            "label": "System Risk Source",
+            "method": "embed",
+            "score": 0.698
+          },
+          {
+            "iri": "vair:HighAutomation",
+            "label": "High Automation",
+            "method": "embed",
+            "score": 0.697
+          },
+          {
+            "iri": "vair:IoTSystem",
+            "label": "IoT System",
+            "method": "embed",
+            "score": 0.688
+          }
+        ]
+      }
+    ]
+  }
+}
