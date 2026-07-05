@@ -310,6 +310,10 @@ def main():
     ap.add_argument("--no-synthetic", action="store_true",
                     help="remove/skip the synthetic conflict pair")
     ap.add_argument("--out", default=DEFAULT_OUT, help="verdict JSONL path")
+    ap.add_argument("--reviewed",
+                    default="data/verification/verification_reviewed.json",
+                    help="review worksheet; human labels on flag-producing "
+                         "pairs are applied as dispositions")
     args = ap.parse_args()
 
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
@@ -473,6 +477,67 @@ def main():
                 "SET s.verification_status = 'flagged', s.needs_review = true "
                 "REMOVE s:Verified",
                 ids=sorted(flagged))
+
+        # ---- Apply reviewed dispositions (the worksheet IS the sign-off) ----
+        # A flagged statement re-enters the graph only when every pair that
+        # flagged it carries a human label in the review worksheet. A label
+        # matching the detector's verdict confirms the finding (the typed edge
+        # stays, provenance visible); a label of 'none' overrules it (the
+        # detector edge is deleted). Unlabelled rows leave the statement
+        # flagged. This keeps human dispositions reproducible from repo files
+        # alone: a clean load -> verify rebuild converges to the reviewed graph.
+        n_dispositions = 0
+        if flagged and os.path.exists(args.reviewed):
+            wk = {(r.get("check"), r.get("a"), r.get("b")):
+                  (r.get("human_label") or "")
+                  for r in json.load(open(args.reviewed))}
+            edge_for = {"cross_regulation": "CONFLICTS_WITH",
+                        "contradiction": "CANDIDATE_CONTRADICTION",
+                        "redundancy": "REDUNDANT_WITH"}
+
+            def flag_producing(v):
+                if v["verdict"] in ("conflict", "duplicate_candidate",
+                                    "duplicate_definition"):
+                    return True
+                return (v["verdict"] == "candidate_contradiction" and not
+                        (v.get("evidence") or {}).get("resolved_via_exception"))
+
+            flag_pairs = [v for v in verdicts if flag_producing(v)]
+            unreviewed = set()
+            for v in flag_pairs:
+                label = wk.get((v["check"], v["a"], v["b"]),
+                               wk.get((v["check"], v["b"], v["a"]), ""))
+                v["_human_label"] = label
+                if not label:
+                    unreviewed.update([v["a"], v["b"]])
+            for v in flag_pairs:
+                label = v.pop("_human_label")
+                if not label:
+                    continue
+                if label == "none":  # human overruled the detector
+                    sess.run(
+                        f"MATCH (a:Candidate {{statement_id:$a}})"
+                        f"-[e:{edge_for[v['check']]}]-"
+                        f"(b:Candidate {{statement_id:$b}}) DELETE e",
+                        a=v["a"], b=v["b"])
+                    audit("verify_statements", "detector_edge_overruled",
+                          a=v["a"], b=v["b"], check=v["check"],
+                          human_label=label, source=args.reviewed)
+                for sid in (v["a"], v["b"]):
+                    if sid in unreviewed or sid not in flagged:
+                        continue
+                    sess.run(
+                        "MATCH (s:Candidate {statement_id:$id}) "
+                        "SET s:Verified:HumanReviewed, "
+                        "    s.verification_status = 'verified_after_review', "
+                        "    s.needs_review = false", id=sid)
+                    flagged.discard(sid)
+                    n_dispositions += 1
+                    audit("verify_statements", "statement_verified_after_review",
+                          statement_id=sid, check=v["check"],
+                          pattern=v.get("pattern"), human_label=label,
+                          source=args.reviewed)
+
         for v in verdicts:
             audit("verify_statements", "verdict", **v)
         for sid in sorted(flagged):
@@ -496,6 +561,7 @@ def main():
     for (check, verdict), n in sorted(counts.items()):
         print(f"  {check:18s} {verdict:24s} {n}")
     print(f"tensions resolved via exception structures: {resolved}")
+    print(f"reviewed dispositions applied from worksheet: {n_dispositions}")
     real_flagged = [s for s in flagged if not s.startswith("syn:")]
     print(f"flagged statements (held out of auto-ingest): {len(flagged)} "
           f"({len(real_flagged)} real / {n_real} real candidates)")
