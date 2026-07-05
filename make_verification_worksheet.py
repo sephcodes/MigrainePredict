@@ -100,10 +100,14 @@ def main():
         recs = sess.run(
             "MATCH (s:Statement) WHERE s.statement_id IN $ids "
             "RETURN s.statement_id AS id, s.anchor AS anchor, "
-            "       s.modality AS modality, s.condition_text AS cond",
+            "       s.modality AS modality, s.condition_text AS cond, "
+            "       s.paragraph_text AS ptext",
             ids=ids)
+        # anchor = which sentence of the paragraph this statement was extracted
+        # from; source_text = the full paragraph it is judged against
         info = {r["id"]: {"anchor": r["anchor"],
-                          "condition": (r["cond"] or [None])[0]}
+                          "condition": (r["cond"] or [None])[0],
+                          "source_text": r["ptext"]}
                 for r in recs}
     driver.close()
 
@@ -127,6 +131,8 @@ def main():
             "b_anchor": info.get(v["b"], {}).get("anchor"),
             "a_condition": info.get(v["a"], {}).get("condition"),
             "b_condition": info.get(v["b"], {}).get("condition"),
+            "a_source_text": info.get(v["a"], {}).get("source_text"),
+            "b_source_text": info.get(v["b"], {}).get("source_text"),
             "evidence": v.get("evidence"),
             "pattern": v.get("pattern"),
             "synthetic": bool(v.get("synthetic")

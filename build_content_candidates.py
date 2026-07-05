@@ -34,6 +34,7 @@ import glob
 import json
 import math
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 
@@ -96,6 +97,38 @@ def lemtoks(s):
     return {_LEM.lemmatize(t) for t in norm_text(s or "").split() if t not in STOP}
 
 
+# ---- defined-term tag pass ---------------------------------------------
+# The regulations name their own concepts with quoted tags in the provision
+# text itself: "... ('storage limitation');", "... ('accuracy');". A slot value
+# drawn from such a paragraph can express that concept without sharing a single
+# token with the vocab label (the Art 5(1)(e) condition never says "storage
+# limitation"), so neither the lexical matcher nor the embedding top-k sees it
+# and the row silently defaults to 'literal'. The tag is the legislator's own
+# name for the concept: match IT against the routed labels, inject the hit as a
+# high-priority candidate, and promote 'literal' rows to 'review' so the
+# adjudicator/human actually looks.
+TAG_RE = re.compile(r"\(\s*[‘']([^‘’'()]{2,80})[’']\s*\)")
+
+
+def tag_label_matches(tag, label_lemmas):
+    """Concepts whose label the tag names: exact lemma-set equality first;
+    otherwise the tightest label supersets (tag lemmas contained in label
+    lemmas, minimal label length), so 'storage limitation' finds
+    'Storage Limitation Principle' without fanning out to every label that
+    happens to share one token."""
+    tl = lemtoks(tag)
+    if not tl:
+        return []
+    exact = [c for c, lt in label_lemmas.items() if lt == tl]
+    if exact:
+        return exact
+    supers = [(c, len(lt)) for c, lt in label_lemmas.items() if lt and tl < lt]
+    if not supers:
+        return []
+    best = min(n for _, n in supers)
+    return [c for c, n in supers if n == best]
+
+
 def load_targets():
     terms = json.load(open(TERMS))
     routing = json.load(open(ROUTING))
@@ -149,6 +182,8 @@ def collect_values(paths):
     if not files:
         sys.exit("no .extracted.jsonl found")
     vals = defaultdict(Counter)
+    paras = defaultdict(lambda: defaultdict(set))  # (slot,reg) -> (v,art) -> {paragraph_iri}
+    texts = {}  # paragraph_iri -> source text (carried on records)
     for f in files:
         for line in open(f):
             line = line.strip()
@@ -161,18 +196,24 @@ def collect_values(paths):
             src = st.get("source_article") or ""
             reg = src.split(":")[0]
             art = src.split("/")[0]   # article root, e.g. gdpr:art_12 (merge key for load-back)
+            iri = r.get("paragraph_iri")
+            if r.get("paragraph_text"):
+                texts[iri] = r["paragraph_text"]
             mod = st.get("modality")
             for p in (st.get("predicate") or []):
                 v, _ = normalise_predicate(p.get("value") or "", mod)
                 if v:
                     vals[("predicate", reg)][(v, art)] += 1
+                    paras[("predicate", reg)][(v, art)].add(iri)
             for o in (st.get("object") or []):
                 if o.get("value"):
                     vals[("object", reg)][(o["value"], art)] += 1
+                    paras[("object", reg)][(o["value"], art)].add(iri)
             cond = st.get("condition")
             if isinstance(cond, dict) and cond.get("value"):
                 vals[("condition", reg)][(cond["value"], art)] += 1
-    return vals
+                paras[("condition", reg)][(cond["value"], art)].add(iri)
+    return vals, paras, texts
 
 
 def build_idf(label_map):
@@ -254,7 +295,11 @@ def main():
     synonyms = load_synonyms()
     obj_aliases = load_object_aliases()
     idf_floor = json.load(open(ROUTING)).get("_idf_floor", 3.0)
-    values = collect_values(args.paths)
+    values, value_paras, para_texts = collect_values(args.paths)
+    # tags come from the paragraph_text carried on the records themselves
+    # (records predating the text carry-through have no text -> no tags)
+    para_tags = {iri: found for iri, text in para_texts.items()
+                 if (found := TAG_RE.findall(text))}
 
     from sentence_transformers import SentenceTransformer
     import numpy as np
@@ -264,6 +309,7 @@ def main():
         return model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
 
     worksheet = {"_doc": EDIT_DOC}
+    tag_promotions = []
     summary = []
     for slot in ("predicate", "object", "condition"):
         worksheet[slot] = {}
@@ -378,6 +424,36 @@ def main():
                              "lexical_hit": bool(lex), "iri": [], "_candidates": cand})
                 counts[status] += 1
 
+            # Every row gets its contributing source paragraphs (iri + text) so
+            # a reviewer can judge the mapping without an IRI lookup. Then the
+            # defined-term tag pass: rows whose source paragraph names a routed
+            # concept in a quoted tag get that concept as a leading candidate;
+            # 'literal' rows are promoted to 'review' (mapped rows keep their
+            # status - the tag rides along as an extra candidate for audit).
+            for row in rows:
+                row_iris = sorted(value_paras[(slot, reg)].get(
+                    (row["value"], row["source_article"]), ()))
+                if row_iris:
+                    row["source_paragraphs"] = [
+                        {"iri": i, "text": para_texts.get(i)} for i in row_iris]
+                tag_hits = []
+                for iri in row_iris:
+                    for tag in para_tags.get(iri, ()):
+                        for c in tag_label_matches(tag, label_lemmas):
+                            if c not in tag_hits:
+                                tag_hits.append(c)
+                if not tag_hits:
+                    continue
+                have = {c["iri"] for c in row["_candidates"]}
+                row["_candidates"] = (
+                    [{"iri": c, "label": label_map[c], "method": "tag", "score": 1.0}
+                     for c in tag_hits if c not in have] + row["_candidates"])
+                if row["status"] == "literal":
+                    row["status"] = "review"
+                    counts["literal"] -= 1
+                    counts["review"] += 1
+                    tag_promotions.append((slot, reg, row["value"], tag_hits))
+
             worksheet[slot][reg] = rows
             summary.append((slot, reg, len(rows), dict(counts)))
 
@@ -393,6 +469,10 @@ def main():
         for reg in ("gdpr", "aiact"):
             rows = worksheet[slot][reg]
             print(f"{slot:10s} {reg:6s} {len(rows):8d}  {dict(Counter(r['status'] for r in rows))}")
+    if tag_promotions:
+        print(f"\ndefined-term tag pass promoted {len(tag_promotions)} row(s) literal -> review:")
+        for slot, reg, value, hits in tag_promotions:
+            print(f"  {slot}.{reg}  {value[:60]!r}  tag-> {hits}")
 
 
 if __name__ == "__main__":

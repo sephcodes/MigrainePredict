@@ -56,7 +56,7 @@ DEFAULT_INPUTS = [
 CORE_KEYS = {
     "statement", "statement_class", "statement_id", "paragraph_iri",
     "needs_review", "anchor", "classification_rationale",
-    "profile_dimensions_matched",
+    "profile_dimensions_matched", "paragraph_text", "parent_texts",
 }
 
 SLOT_RELS = {
@@ -111,6 +111,8 @@ def build_row(rec, eval_set):
         "needs_review": bool(rec.get("needs_review")),
         "applies_to_healthcare": st.get("applies_to_healthcare"),
         "anchor": rec.get("anchor"),
+        "paragraph_text": rec.get("paragraph_text"),
+        "parent_texts": rec.get("parent_texts"),
         "flags": flags,
     }
 
@@ -203,8 +205,10 @@ def main():
                 sess.run(
                     "MATCH (s:Statement {statement_id: $id}) "
                     "MERGE (p:Provision {iri: $prov}) "
+                    "SET p.text = coalesce($ptext, p.text) "
                     "MERGE (s)-[:SOURCED_FROM]->(p)",
-                    id=props["statement_id"], prov=props["paragraph_iri"])
+                    id=props["statement_id"], prov=props["paragraph_iri"],
+                    ptext=rec.get("paragraph_text"))
                 for rel, iri, eprops in slots:
                     meta = terms.get(iri, {})
                     sess.run(
