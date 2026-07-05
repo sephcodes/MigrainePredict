@@ -26,7 +26,18 @@ Tags:
 
 ## 1. BUILD-FIRST
 
-### 1.1 Defined-term tag pass (mapping) — agreed 2026-07-05
+### 1.1 Defined-term tag pass (mapping) — BUILT + PROVEN 2026-07-05; canonical 50-set application SKIPPED (documented limitation)
+Status: implemented in `build_content_candidates.py` (tags read from the
+records' carried `paragraph_text`), regression-tested (`test_tag_pass.py`),
+and proven full-chain with zero human edits (fresh build → adjudicator →
+`map_content` join maps the pt_e condition to `eu-gdpr:StorageLimitationPrinciple`
+and the Art 12 object to `vair:LoggingMeasure` automatically; the noisy 89(1)
+promotion is correctly rejected to literal). Decision (Yoseph, 2026-07-05): do
+NOT regenerate the canonical 50-set maps — the material delta is enrichment
+only, all superseded at corpus scale-up. **Limitation to report:** the
+published mapping-stage numbers predate the tag pass; the tag pass is reported
+separately as a validated improvement with its measured 3-row delta on the
+eval set. It applies from corpus scale-up onward.
 `build_content_candidates.py` currently defaults no-lexical-hit conditions/predicates
 to `literal`, so they never reach the adjudicator — and the adjudicator is propose-only
 from the top-20 embedding candidates, so it cannot find a concept the candidate list
@@ -50,30 +61,39 @@ Residual (report honestly): the tag pass only covers legislator-named concepts.
 Mapping recall bounds conflict-detection recall — the "human review is structural,
 not optional" finding extended to corpus scale.
 
-### 1.2 Operand-vs-mention detector FP class (verification) — decision needed
+### 1.2 Operand-vs-mention detector FP class (verification) — DECIDED 2026-07-05: not built; documented limitation
 The remaining verification FP class: a concept IRI (e.g. `dpv:PersonalData`) present
 on a statement only because a noun phrase mentions it ("personal data *breach*"),
 not because the act operates on it. 4 worksheet rows; tension precision 0.69.
 `verification_stage_summary.md` records the fix (object head-noun analysis) as
 "deliberately not built — four rows do not justify new machinery."
 
-That justification is count-based on the 51-statement graph and does not survive
-corpus scale: the breach-notification statement family (Art 33/34-shaped) recurs
-throughout both regulations, so the class multiplies. Decide now, with corpus in view:
-(a) build pre-finalisation and re-score against the same 89-pair worksheet gold
-(no LLM cost), or (b) keep as a *reported* schema limitation and freeze the number.
-The mapping stage's abandoned head-noun gate is the cautionary precedent for (a).
+Decision: option (b) — keep as a *reported* schema limitation; the numbers are
+frozen as measured (tension P 0.71 / R 0.91, with the FP class named and its
+mechanism explained: the schema does not encode whether a concept is the act's
+operand or embedded in a noun phrase). The candidate fix (object head-noun
+analysis) is deliberately not built — the mapping stage's abandoned head-noun
+gate is the cautionary precedent, and four eval-set rows do not justify the
+machinery. **Revisit at corpus scale-up:** measure the FP rate on a corpus
+sample first (the breach-notification family multiplies the class); if the
+review queue it generates is unmanageable, build the fix then and re-score
+against the same worksheet gold (no LLM cost).
 
-### 1.3 Real Art 12 AIA / Art 5(1)(e) GDPR conflict pair — in progress 2026-07-05
-Extracted, subject/modality-mapped, content mappings human-reviewed
-(`mapping/content_map_reviewed_2_conflict_pair.json`). Remaining: `map_content` →
-load (`--input CONFLICT:…`) → `verify_statements.py --no-synthetic` → confirm
-`logging_vs_storage_limitation` fires on real statements; retire the `:Synthetic` pair.
+### 1.3 Real Art 12 AIA / Art 5(1)(e) GDPR conflict pair — DONE 2026-07-05
+Extracted, mapped (content mappings human-reviewed), loaded, verified:
+`logging_vs_storage_limitation` fires on real statements
+(`aiact:art_12/par_1#s1` × `gdpr:art_5/par_1/pt_e#s2`, synthetic:false);
+synthetic pair retired; conflict pair `:Verified:HumanReviewed` after legal
+sign-off via the worksheet-driven disposition step in `verify_statements.py`.
 
-### 1.4 5-run verification stability replay — cheap, closes a gap in the story
-Verification was only run and scored on run4. Every other stage has a cross-run
-stability claim; this one doesn't. No LLM cost: load runN → verify → compare verdict
-sets across the 5 runs.
+### 1.4 5-run verification stability replay — DECIDED 2026-07-05: not run; documented limitation
+**Limitation to report:** the verification detector is scored on the canonical
+run (run4) only; unlike extraction (which has cross-run agreement, cycle
+consistency, and 5-run means), the verification stage carries no cross-run
+stability claim. Known consequence of run variance already observed: run4's
+`art_12/par_1#s1` lacks the condition present in run1 (the documented
+condition-wobble class). The replay remains cheap (no LLM: load runN → verify →
+compare verdicts) if a reviewer asks for it.
 
 ## 2. RE-DERIVE at corpus (by design, but must be re-validated)
 
@@ -141,13 +161,14 @@ either way — silence is the failure mode.
 
 ---
 
-## Sequencing
+## Sequencing (updated 2026-07-05 — §1 fully dispositioned)
 
-1. Finish §1.3 (conflict pair — in flight).
-2. Build §1.1 (tag pass); decide §1.2; run §1.4. Re-run frozen gold evals; Yoseph
-   reviews the deltas; regenerated numbers become the reported numbers.
-3. Phase 2 GraphRAG proceeds against the then-current graph (its own metrics are
-   query-time and unaffected by mapping-stage regeneration, but graph rebuilds must
-   precede gold-answer authoring for the query eval set).
-4. At scale-up: §2 re-derivations, §3 budgeted review rounds, §4 expansions —
-   then re-run load → verify → resolve at corpus size, reviewing only unresolved flags.
+1. ~~§1.3 conflict pair~~ DONE. ~~§1.1 tag pass~~ BUILT + PROVEN (applies from
+   scale-up; canonical 50-set left as measured). §1.2 and §1.4 carried as
+   documented limitations (details in their sections).
+2. Phase 2 GraphRAG proceeds against the current 54-statement graph (self-
+   contained: statements, mappings, provenance, provision text; reproducible
+   from repo files alone).
+3. At scale-up: §2 re-derivations, §3 budgeted review rounds (§1.2's FP-rate
+   measurement joins §3.1's sample counts), §4 expansions — then re-run
+   load → verify → resolve at corpus size, reviewing only unresolved flags.
