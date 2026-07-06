@@ -193,10 +193,18 @@ verdict and explanation separately.
 
 ## 8. Next
 
-1. Query-review worksheet structure (proposed, pending Yoseph's go-ahead;
-   mirrors the verification-worksheet HITL pattern), seeded with the §7
-   proposals for his review.
-2. Draft the gold query set (~30 + paraphrases) for review, incorporating
+1. ~~Query-review worksheet~~ BUILT (`make_query_review_worksheet.py` →
+   `data/graphrag/query_review.json`, mirroring the verification-worksheet
+   pattern): one row per queued query; system output read-only; human fields
+   `human_verdict` (same four labels), `human_explanation` (the gold trace),
+   `explanation_assessment` (correct/partly/wrong — verdict and explanation
+   are judged separately, the S3 lesson), `notes`, `label_source`. Rows with
+   judgments survive regeneration (verified). The §7 proposals are seeded as
+   `label_source: claude_proposed` — Yoseph reviews, edits, and flips to
+   `human` on adoption. Reviewed rows double as the first gold answers for
+   the evaluation harness.
+2. Yoseph reviews the four seeded worksheet rows.
+3. Draft the gold query set (~30 + paraphrases) for review, incorporating
    F5–F7.
-3. Evaluation harness + vector-only baseline (same snippet index).
-4. Expert-review worksheet (Echenim's five dimensions) for Skein.
+4. Evaluation harness + vector-only baseline (same snippet index).
+5. Expert-review worksheet (Echenim's five dimensions) for Skein.
