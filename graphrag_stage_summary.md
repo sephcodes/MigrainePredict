@@ -220,7 +220,13 @@ verdict and explanation separately.
    rows are flagged `paraphrase_candidate`; the 2-per-question paraphrase
    variants are generated only after Yoseph adopts the base questions, so
    his edits don't orphan them.
-4. Yoseph reviews/edits the 30 questions and verdicts.
-5. Generate paraphrase variants; run the full set through the pipeline.
-6. Evaluation harness + vector-only baseline (same snippet index).
-7. Expert-review worksheet (Echenim's five dimensions) for Skein.
+4. ~~Base-set review~~ DONE — Yoseph adopted the 30 questions 2026-07-06
+   (edits applied, label_source stripped per convention).
+5. ~~Paraphrases~~ GENERATED — 20 variants (2 each for the 10 flagged
+   questions) in the file's separate `paraphrases` array, wording-only
+   changes, gold stored once on the base row and resolved via
+   `paraphrase_of`. Pending Yoseph's quick read ("does it still ask the
+   same question with the same facts?"). 50 prompts total.
+6. Run the full 50-prompt set through the pipeline.
+7. Evaluation harness + vector-only baseline (same snippet index).
+8. Expert-review worksheet (Echenim's five dimensions) for Skein.
