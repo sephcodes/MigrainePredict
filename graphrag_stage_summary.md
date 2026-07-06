@@ -101,12 +101,55 @@ overkill — the report text will be updated to match).
        correctly so, because the graph contains no pseudonymisation
        exception for it to ask about.
 
-## 5. Next
+## 5. Smoke queries (run 2026-07-06, five in total)
 
-1. Remaining smoke queries (~4: special-category-data consent, right to
-   erasure and its exceptions, high-risk classification / Annex III, plus one
-   deliberately off-topic question to test NOT_APPLICABLE). Review results
-   together before scaling.
-2. Draft the gold query set (~30 + paraphrases) for review.
-3. Evaluation harness + vector-only baseline.
+Inputs in `data/graphrag/smoke_queries.jsonl`; full records in
+`data/graphrag/results.jsonl`.
+
+| id | question topic | verdict | seed path | assessment |
+|----|----------------|---------|-----------|------------|
+| (pre) | retain logs 90 days | INSUFFICIENT | template | matches the report's own worked example; see §4 |
+| S1 | health data + explicit consent | COMPLIANT | template | textbook chain: health-data definition → general ban → consent exception → consent definition; all citations real |
+| S2 | erasure request vs research study | INSUFFICIENT | template | strongest answer: used both erasure statements, the research exceptions and the storage-limitation pair via their edges, and correctly declined to drag in the logging conflict |
+| S3 | is it high-risk under the AI Act | INSUFFICIENT | template | the weak one — see below |
+| S4 | cookies on the marketing website | INSUFFICIENT | template | intended as an off-topic probe, but cookies genuinely involve personal data, so finding GDPR targets was fair; answer reasonable but sprawling (8 citations) |
+| S5 | annual fire-extinguisher inspection | NOT_APPLICABLE | vector fallback | truly off-topic probe: no targets found → LLM query route → vector fallback → correct "nothing governs this" |
+
+**Findings to carry into the gold set and evaluation:**
+
+1. **Retrieved-but-under-used evidence (S3).** The statement carrying the
+   medical-device route to high-risk (aiact:art_6/par_1#s1) was retrieved and
+   its provision text was among the snippets, yet the verdict fixated on
+   Annex III not listing medical devices and asked for information the
+   context already partly contained. The refusal to invent Annex III content
+   is the no-inference-from-silence rule working; the under-use of what WAS
+   retrieved is a named failure mode for the evaluation's error analysis.
+2. **The self-correction loop works and now has real data (S5).** The LLM's
+   first two generated queries failed at execution (it treated list-valued
+   text fields as strings); each error was fed back and attempt 3 was valid
+   (returning zero rows, correctly). Note: the dry-run check catches syntax
+   errors only — these were runtime type errors, which the loop also catches
+   because execution errors feed back the same way.
+3. **INSUFFICIENT-heavy distribution (3 of 5).** Partly by design — the
+   no-inference-from-silence rule pushes borderline cases there — but
+   over-use of INSUFFICIENT is itself a failure mode the evaluation must
+   measure, so the gold set needs questions whose scenarios contain enough
+   facts that COMPLIANT / NON_COMPLIANT is the right answer.
+4. **NOT_APPLICABLE probes must contain no data-processing at all** (the S4
+   lesson): anything touching personal data legitimately activates GDPR
+   provisions. The gold set also needs a crisp written rule for the
+   INSUFFICIENT vs NOT_APPLICABLE boundary.
+5. Classification-style questions ("is this system high-risk?") fit the
+   four compliance labels awkwardly; gold questions should be phrased as
+   activity/obligation questions where possible.
+
+INSUFFICIENT verdicts (90-day, S2, S3, S4) were auto-routed to
+`data/graphrag/review_queue.jsonl` as designed.
+
+## 6. Next
+
+1. Yoseph reviews the smoke results (above) — then sign-off to scale.
+2. Draft the gold query set (~30 + paraphrases) for review, incorporating
+   findings 3–5.
+3. Evaluation harness + vector-only baseline (same snippet index).
 4. Expert-review worksheet (Echenim's five dimensions) for Skein.

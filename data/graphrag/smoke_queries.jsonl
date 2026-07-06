@@ -1,0 +1,4 @@
+{"query_id": "S1_art9_consent", "question": "MigrainePredict processes users' heart-rate and sleep data to predict migraine attacks. Users give explicit consent to this processing when they sign up. Is this processing allowed under the GDPR?"}
+{"query_id": "S2_art17_erasure", "question": "A MigrainePredict user has asked for all their personal data to be deleted, but the company wants to keep the data because it is needed for a scientific research study. Must the company delete the data?"}
+{"query_id": "S3_annexIII_highrisk", "question": "MigrainePredict is a wearable device system that uses AI to predict migraine attacks and is certified as a medical device. Is it classified as a high-risk AI system under the EU AI Act?"}
+{"query_id": "S4_offtopic_cookies", "question": "Can MigrainePredict use cookies on its public marketing website to track visitor numbers?"}
