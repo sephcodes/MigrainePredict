@@ -565,3 +565,61 @@ precision misses remain the known operand-vs-mention class. Final graph:
   human is decided by deterministic structure (unresolved tension, duplicate,
   conflict) or explicit status — never by a model's self-reported confidence.
   The safety mechanism never assumes the model knows when it is wrong.
+
+---
+
+# Phase 1, Stage 4: Integration
+
+## What it does — and the decision that made it small
+
+The original plan treated integration as its own step: promote verified
+candidates from a staging area into the knowledge graph. The settled decision
+collapses that: **the staging graph *is* the knowledge graph.** Because
+verification outcomes already persist as graph state (typed edges +
+`verification_status`) and provenance has been carried on every slot edge
+since mapping, a second ingestion would only copy data and create a
+synchronisation liability. Integration therefore reduces to two things:
+**disposition** (which statements the query layer may use) and
+**auditability** (a replayable record of how every statement got its status).
+
+## Implementation
+
+- **The `:Verified` label is the integration contract.** Every non-flagged
+  candidate gets `:Verified`; flagged statements lose it. Phase 2 queries
+  filter on this one label — flagged statements are held out of query results,
+  not deleted (the flag-never-drop discipline carried through to the end).
+- **Human dispositions live in a tracked repo file, never in ad-hoc database
+  edits.** The reviewed verification worksheet *is* the sign-off: the verifier
+  consumes it directly — a human label agreeing with the detector confirms the
+  flag's resolution; a `none` label overrules the detector and deletes its
+  edge; an unlabelled statement stays flagged. (An earlier ad-hoc terminal
+  `SET` to restore the reviewed conflict pair was rejected as unauditable and
+  replaced by this mechanism — the same lesson as ground-don't-assert: a human
+  decision must be a tracked artifact a script consumes, so the graph state is
+  always derivable from the repo.)
+- **Audit log (the report's NFR1):** every wipe, statement load, verification
+  verdict, human disposition, and detector overrule appends one timestamped
+  JSONL event. The current log for the full build: **265 events — 1 wipe, 54
+  statements loaded, 208 verification verdicts, 2 statements verified after
+  human review** — and every event maps to a repo code path.
+
+## Evaluation
+
+Integration has no accuracy metric of its own — its deliverables are
+properties, each verified:
+
+- **Reproducibility (proven):** a clean rebuild — wipe → load the three
+  statement sets (DEV, HOLDOUT, conflict pair) → verify with reviewed
+  dispositions applied — was run end-to-end and converges to the identical
+  reviewed graph. The knowledge graph is a deterministic function of the
+  tracked repo files.
+- **Provenance completeness:** every slot edge carries its mapping status
+  (auto / LLM-suggested / human), every statement carries
+  `:LLMSuggested`/`:HumanReviewed` labels where applicable, and every
+  statement links to its source provision with the original paragraph text —
+  so any answer Phase 2 produces can be traced to regulation text and to who
+  or what vouched for each mapping.
+- **Final graph state: 54 statements, 54 `:Verified`, 0 flagged, 0
+  synthetic**, with the real cross-regulation `CONFLICTS_WITH` edge and the
+  `EXCEPTION_OF` derogation structure in place — the Phase 2-ready knowledge
+  graph.
