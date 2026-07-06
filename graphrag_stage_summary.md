@@ -204,7 +204,23 @@ verdict and explanation separately.
    `human` on adoption. Reviewed rows double as the first gold answers for
    the evaluation harness.
 2. Yoseph reviews the four seeded worksheet rows.
-3. Draft the gold query set (~30 + paraphrases) for review, incorporating
-   F5–F7.
-4. Evaluation harness + vector-only baseline (same snippet index).
-5. Expert-review worksheet (Echenim's five dimensions) for Skein.
+3. ~~Gold query set~~ DRAFTED (`data/graphrag/gold_queries.json`,
+   `label_source: claude_proposed` throughout, pending review): 30 base
+   questions — 9 COMPLIANT, 10 NON_COMPLIANT (recall-weighted, matching the
+   F2 emphasis), 6 INSUFFICIENT, 5 NOT_APPLICABLE. Every question grounded in
+   the 54 verified statements (all citations mechanically checked against
+   the graph); structure coverage: 7 exception questions (Art 9, Art 17,
+   Art 5(1)(e) both ways), 2 conflict questions (Q3 resolved / Q20
+   unresolved — the flagship pair), 1 deliberate coverage-gap probe (Q25,
+   records exemption — the S3 lesson as a test case), 3 zero-data
+   NOT_APPLICABLE probes + 2 grounded ones decided FROM the definitions
+   (anonymous statistics; non-AI FAQ page). The file carries the written
+   labelling rules (INSUFFICIENT vs NOT_APPLICABLE boundary; NON_COMPLIANT
+   gold must state that exceptions are ruled out; activity phrasing). Ten
+   rows are flagged `paraphrase_candidate`; the 2-per-question paraphrase
+   variants are generated only after Yoseph adopts the base questions, so
+   his edits don't orphan them.
+4. Yoseph reviews/edits the 30 questions and verdicts.
+5. Generate paraphrase variants; run the full set through the pipeline.
+6. Evaluation harness + vector-only baseline (same snippet index).
+7. Expert-review worksheet (Echenim's five dimensions) for Skein.

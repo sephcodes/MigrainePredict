@@ -1,0 +1,342 @@
+{
+  "labelling_rules": {
+    "verdict_labels": "COMPLIANT | NON_COMPLIANT | INSUFFICIENT | NOT_APPLICABLE (same space as the system output).",
+    "insufficient_vs_not_applicable": "NOT_APPLICABLE = no covered provision governs the described activity at all. INSUFFICIENT = at least one covered provision governs the activity, but the scenario is missing a fact needed to decide compliance with it.",
+    "no_inference_from_silence": "A NON_COMPLIANT gold answer requires the scenario to STATE that no exception applies (or state facts that rule the exceptions out). If the scenario merely fails to mention an exception, the gold answer is INSUFFICIENT.",
+    "activity_phrasing": "Questions describe an activity or decision and ask whether it complies / is permitted / meets a duty. No classification-style questions ('is X a high-risk system?') - smoke finding F7.",
+    "grounding": "Every question is answerable (or deliberately not answerable) from the 54 verified statements. gold_cited lists the minimal statements a correct answer must rely on, not everything retrievable.",
+    "review_protocol": "label_source claude_proposed = drafted, pending review. Yoseph edits question/verdict/explanation freely and strips or flips label_source on adoption, as in the other worksheets. Paraphrase variants (2 each for the 10 paraphrase_candidate rows) are generated only AFTER the base questions are adopted, so edits do not orphan them."
+  },
+  "queries": [
+    {
+      "query_id": "Q01",
+      "category": "special_category_consent",
+      "structure": "exception",
+      "question": "MigrainePredict processes users' heart-rate and sleep data to predict migraine attacks. Before any processing starts, each user gives explicit consent on a dedicated opt-in screen that names this exact purpose, is separate from the general terms of service, can be refused without losing unrelated features, and can be withdrawn at any time. Is this processing of health data permitted?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "Heart-rate and sleep data used to predict migraines is data about a person's health [gdpr:art_4/par_15#s1], which may normally not be processed [gdpr:art_9/par_1#s1]. But explicit consent lifts that ban [gdpr:art_9/par_2/pt_a#s1], and the scenario states everything the definition of consent requires - freely given, specific, informed, unambiguous [gdpr:art_4/par_11#s1] - plus that it is explicit. So the processing is permitted.",
+      "gold_cited": ["gdpr:art_4/par_15#s1", "gdpr:art_9/par_1#s1", "gdpr:art_9/par_2/pt_a#s1", "gdpr:art_4/par_11#s1"],
+      "paraphrase_candidate": true,
+      "notes": ""
+    },
+    {
+      "query_id": "Q02",
+      "category": "special_category_healthcare",
+      "structure": "exception",
+      "question": "A hospital neurologist treating a MigrainePredict user accesses the user's migraine-prediction data because it is necessary for the user's medical diagnosis and treatment, and does so under their professional duty of confidentiality. Is this access permitted?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "Migraine-prediction data is health data [gdpr:art_4/par_15#s1] and normally may not be processed [gdpr:art_9/par_1#s1]. However, processing necessary for medical diagnosis and health care is permitted [gdpr:art_9/par_2/pt_h#s1], and the scenario states the access is necessary for diagnosis and treatment and happens under professional confidentiality. So it is permitted.",
+      "gold_cited": ["gdpr:art_4/par_15#s1", "gdpr:art_9/par_1#s1", "gdpr:art_9/par_2/pt_h#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q03",
+      "category": "logging_conflict",
+      "structure": "conflict",
+      "question": "MigrainePredict's operational logs are fully anonymised at the moment they are written, so no log entry can be linked to any person by any means, and the logs are kept for the whole life of the system. Does this logging practice comply with both regulations?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "The AI Act requires the system to allow automatic recording of events over its lifetime [aiact:art_12/par_1#s1], which this practice satisfies. The GDPR's storage limit applies to data kept in a form which permits identification of people [gdpr:art_5/par_1/pt_e#s2]; personal data means information relating to an identifiable person [gdpr:art_4/par_1#s2]. Because the logs cannot be linked to anyone, the storage limit does not bite, and the recorded conflict between the two duties is resolved on these facts.",
+      "gold_cited": ["aiact:art_12/par_1#s1", "gdpr:art_5/par_1/pt_e#s2", "gdpr:art_4/par_1#s2"],
+      "paraphrase_candidate": true,
+      "notes": "Conflict-pair question with facts sufficient to resolve it - the COMPLIANT counterpart of Q20."
+    },
+    {
+      "query_id": "Q04",
+      "category": "rectification",
+      "structure": "plain",
+      "question": "A user reports that the date of birth MigrainePredict stores about them is wrong. The company corrects it two days after the request. Has the company met its duty?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "Users have the right to have inaccurate personal data about them rectified without undue delay [gdpr:art_16/par_1#s2]. Correcting the value within two days meets that duty.",
+      "gold_cited": ["gdpr:art_16/par_1#s2"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q05",
+      "category": "erasure_research",
+      "structure": "exception",
+      "question": "A user requests erasure of their data. MigrainePredict erases everything except one pseudonymised dataset that is genuinely necessary for an ongoing scientific study, which runs under the safeguards EU law requires for research (Article 89(1)). Is the partial refusal permitted?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "The company must normally erase data on request [gdpr:art_17/par_1#s1], but that duty does not apply to the extent processing is necessary - including for scientific research [gdpr:art_17/par_3#s1]. Research use of health data is itself permitted when necessary and safeguarded under Article 89(1) [gdpr:art_9/par_2/pt_j#s1]. The scenario states necessity, pseudonymisation and the required safeguards, and everything else was erased, so the refusal stays inside the exception.",
+      "gold_cited": ["gdpr:art_17/par_1#s1", "gdpr:art_17/par_3#s1", "gdpr:art_9/par_2/pt_j#s1"],
+      "paraphrase_candidate": true,
+      "notes": "The COMPLIANT counterpart of Q21 - same exception structure, facts supplied."
+    },
+    {
+      "query_id": "Q06",
+      "category": "breach_notification",
+      "structure": "plain",
+      "question": "MigrainePredict discovers a personal data breach that is likely to result in a risk to its users, and notifies the supervisory authority 48 hours after becoming aware of it. Does the notification meet the deadline duty?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "The company must notify the supervisory authority of a breach without undue delay [gdpr:art_33/par_1#s2]; only notifications made later than 72 hours must be accompanied by reasons for the delay [gdpr:art_33/par_1#s1]. Notifying at 48 hours is within the window.",
+      "gold_cited": ["gdpr:art_33/par_1#s2", "gdpr:art_33/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q07",
+      "category": "human_oversight",
+      "structure": "plain",
+      "question": "MigrainePredict's prediction system is designed with a clinician dashboard through which trained staff can effectively oversee its outputs, intervene, and stop it while it is in use. Does this satisfy the AI Act's human-oversight design duty?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "High-risk AI systems must be designed and developed so they can be effectively overseen by people while in use [aiact:art_14/par_1#s1]. A built-in dashboard enabling trained staff to oversee, intervene and stop the system is exactly that capability.",
+      "gold_cited": ["aiact:art_14/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q08",
+      "category": "purpose_limitation",
+      "structure": "plain",
+      "question": "MigrainePredict collects sensor data for the specified, explicit purpose of predicting migraine attacks, states this purpose at sign-up, and uses the data only for that purpose. Does this collection-and-use practice comply with the purpose rules?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "Personal data must be collected for specified, explicit and legitimate purposes [gdpr:art_5/par_1/pt_b#s1] and must not be further processed in a way incompatible with them [gdpr:art_5/par_1/pt_b#s3]. The scenario states a specified, explicit purpose and use limited to it, so both rules are met.",
+      "gold_cited": ["gdpr:art_5/par_1/pt_b#s1", "gdpr:art_5/par_1/pt_b#s3"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q09",
+      "category": "storage_archiving",
+      "structure": "exception",
+      "question": "MigrainePredict keeps one historical dataset beyond its normal retention period solely for statistical purposes, with the technical and organisational safeguards the GDPR requires for such storage in place. May it keep this data for the longer period?",
+      "gold_verdict": "COMPLIANT",
+      "gold_explanation": "Personal data may normally be kept in identifiable form no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2], but longer storage is allowed when the data is processed solely for archiving, research or statistical purposes with the required safeguards [gdpr:art_5/par_1/pt_e#s1]. The scenario states sole statistical use and the safeguards, so the longer storage is permitted.",
+      "gold_cited": ["gdpr:art_5/par_1/pt_e#s2", "gdpr:art_5/par_1/pt_e#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q10",
+      "category": "special_category_no_basis",
+      "structure": "exception",
+      "question": "MigrainePredict sells users' migraine-risk scores to an advertising network. Users have not consented to this, and no other exception to the ban on processing health data applies. Is this permitted?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Migraine-risk scores are health data [gdpr:art_4/par_15#s1], and processing health data is prohibited [gdpr:art_9/par_1#s1] unless an exception applies. The scenario states there is no consent [gdpr:art_9/par_2/pt_a#s1] and no other exception, so the sale violates the prohibition.",
+      "gold_cited": ["gdpr:art_4/par_15#s1", "gdpr:art_9/par_1#s1", "gdpr:art_9/par_2/pt_a#s1"],
+      "paraphrase_candidate": true,
+      "notes": "Scenario explicitly rules the exceptions out, per the no-inference-from-silence gold rule."
+    },
+    {
+      "query_id": "Q11",
+      "category": "purpose_limitation_breach",
+      "structure": "plain",
+      "question": "Sensor data that MigrainePredict collected solely for migraine prediction is later reused to build advertising profiles - a purpose incompatible with the original one - with no new consent and no other basis for the change. Does this comply with the purpose rules?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Personal data must not be further processed in a manner incompatible with the purposes it was collected for [gdpr:art_5/par_1/pt_b#s3]. The scenario states the new use is incompatible and nothing legitimises it, so the reuse violates the rule.",
+      "gold_cited": ["gdpr:art_5/par_1/pt_b#s3", "gdpr:art_5/par_1/pt_b#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q12",
+      "category": "rectification_refused",
+      "structure": "plain",
+      "question": "A user asks MigrainePredict to correct an inaccurate weight value it stores about them. The company refuses, saying corrections are too costly. Is the refusal compliant?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Users have the right to obtain rectification of inaccurate personal data without undue delay [gdpr:art_16/par_1#s2]. Cost is not among the grounds for refusing, so the refusal violates the duty.",
+      "gold_cited": ["gdpr:art_16/par_1#s2"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q13",
+      "category": "breach_notification_late",
+      "structure": "plain",
+      "question": "MigrainePredict notifies the supervisory authority of a personal data breach three weeks after discovering it, gives no reasons for the delay, and faced no obstacle to notifying earlier. Does this comply with the notification duty?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Breaches must be notified to the supervisory authority without undue delay [gdpr:art_33/par_1#s2], and a notification made later than 72 hours must be accompanied by reasons for the delay [gdpr:art_33/par_1#s1]. Three weeks with no reasons and no obstacle breaches both requirements.",
+      "gold_cited": ["gdpr:art_33/par_1#s2", "gdpr:art_33/par_1#s1"],
+      "paraphrase_candidate": true,
+      "notes": ""
+    },
+    {
+      "query_id": "Q14",
+      "category": "breach_communication",
+      "structure": "plain",
+      "question": "A breach exposes users' identifiable health records and is likely to result in a high risk to those users, but MigrainePredict decides not to inform the affected users at all. Is that decision compliant?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "When a breach is likely to result in a high risk to people, the company must communicate it to the affected users without undue delay [gdpr:art_34/par_1#s1]. Deciding not to inform them at all violates that duty.",
+      "gold_cited": ["gdpr:art_34/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q15",
+      "category": "automated_decision",
+      "structure": "plain",
+      "question": "MigrainePredict automatically suspends a user's access to an insurance-linked discount based solely on its automated predictions, with no human involvement, and the suspension produces legal effects for the user. Is subjecting the user to this decision permitted?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "People have the right not to be subject to a decision based solely on automated processing that produces legal effects concerning them [gdpr:art_22/par_1#s1]. The scenario states exactly such a decision - solely automated, no human involvement, legal effects - so it is not permitted.",
+      "gold_cited": ["gdpr:art_22/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q16",
+      "category": "logging_capability_missing",
+      "structure": "plain",
+      "question": "MigrainePredict's high-risk prediction system is built with no capability to automatically record events during its operation. Does the system meet the AI Act's logging requirement?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "High-risk AI systems must technically allow automatic recording of events (logs) over the system's lifetime [aiact:art_12/par_1#s1]. A system with no recording capability at all fails that requirement.",
+      "gold_cited": ["aiact:art_12/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q17",
+      "category": "risk_management_missing",
+      "structure": "plain",
+      "question": "The provider of MigrainePredict has never established, implemented or documented any risk management system for it. Is the provider meeting the AI Act's risk-management duty?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "A risk management system must be established, implemented, documented and maintained for high-risk AI systems [aiact:art_9/par_1#s1]. Having none violates the duty outright.",
+      "gold_cited": ["aiact:art_9/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q18",
+      "category": "indefinite_retention",
+      "structure": "exception",
+      "question": "MigrainePredict keeps all users' identifiable sensor data indefinitely after they close their accounts, for no stated purpose, and no archiving, research or statistical use applies. Is this retention compliant?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Personal data may be kept in a form which permits identification no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Indefinite identifiable retention with no purpose fails that limit, and the scenario rules out the only stored exception - archiving/research/statistical storage with safeguards [gdpr:art_5/par_1/pt_e#s1].",
+      "gold_cited": ["gdpr:art_5/par_1/pt_e#s2", "gdpr:art_5/par_1/pt_e#s1"],
+      "paraphrase_candidate": true,
+      "notes": ""
+    },
+    {
+      "query_id": "Q19",
+      "category": "dpia_skipped",
+      "structure": "plain",
+      "question": "MigrainePredict's own assessment concludes that a planned new feature is likely to result in a high risk to users' rights and freedoms, but the company launches the feature without first carrying out a data protection impact assessment. Is the launch compliant?",
+      "gold_verdict": "NON_COMPLIANT",
+      "gold_explanation": "Where processing is likely to result in a high risk to people's rights and freedoms, the company must carry out an impact assessment before the processing starts [gdpr:art_35/par_1#s1]. The scenario states the high-risk likelihood was established and no assessment was done before launch, so the duty was breached.",
+      "gold_cited": ["gdpr:art_35/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q20",
+      "category": "logging_conflict",
+      "structure": "conflict",
+      "question": "Can MigrainePredict retain operational logs for 90 days?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "The AI Act says the system must be able to record events automatically [aiact:art_12/par_1#s1]; the GDPR says personal data must not be kept in identifiable form no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2], and the graph records these duties as conflicting. The only stored route to longer storage is the research/statistics exception with safeguards [gdpr:art_5/par_1/pt_e#s1]. Whether 90 days is acceptable depends on facts the question does not give: whether the logs contain personal data at all, and how long the logs' purpose actually needs them.",
+      "gold_cited": ["aiact:art_12/par_1#s1", "gdpr:art_5/par_1/pt_e#s2", "gdpr:art_5/par_1/pt_e#s1"],
+      "paraphrase_candidate": true,
+      "notes": "The flagship conflict question - identical to the report's section 5.5 worked example and the first live query; gold matches the adopted review-queue disposition."
+    },
+    {
+      "query_id": "Q21",
+      "category": "erasure_research",
+      "structure": "exception",
+      "question": "A MigrainePredict user has asked for all their personal data to be deleted, but the company wants to keep the data because it is needed for a scientific research study. Must the company delete the data?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "The company must normally delete data on request [gdpr:art_17/par_1#s1], but need not to the extent the processing is necessary for purposes including scientific research [gdpr:art_17/par_3#s1]; research use of health data also requires the Article 89(1) conditions and safeguards [gdpr:art_9/par_2/pt_j#s1]. The question says the data is 'needed' but gives none of the facts that decide whether the exception actually applies - real necessity, safeguards in place, legal basis.",
+      "gold_cited": ["gdpr:art_17/par_1#s1", "gdpr:art_17/par_3#s1", "gdpr:art_9/par_2/pt_j#s1"],
+      "paraphrase_candidate": true,
+      "notes": "Same question as smoke S2; gold matches the review-queue disposition."
+    },
+    {
+      "query_id": "Q22",
+      "category": "retention_period",
+      "structure": "plain",
+      "question": "MigrainePredict plans to keep users' raw identifiable sensor data for five years. Is that retention period acceptable?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "Identifiable personal data may be kept no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Whether five years is acceptable depends on what the data is kept for and how long that purpose genuinely needs it - facts the question does not give. Longer storage would also be possible solely for archiving, research or statistics with safeguards [gdpr:art_5/par_1/pt_e#s1], but no such purpose is stated.",
+      "gold_cited": ["gdpr:art_5/par_1/pt_e#s2", "gdpr:art_5/par_1/pt_e#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q23",
+      "category": "consent_quality",
+      "structure": "plain",
+      "question": "MigrainePredict processes users' health data relying on consent that users gave two years ago inside an old app version's general sign-up flow. Is the processing lawfully based on that consent?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "Health data processing needs explicit consent (or another exception) [gdpr:art_9/par_1#s1, gdpr:art_9/par_2/pt_a#s1], and consent only counts if it was freely given, specific, informed and unambiguous [gdpr:art_4/par_11#s1]. Whether a consent bundled into an old general sign-up meets those tests - and covered this specific purpose - cannot be judged from the facts given.",
+      "gold_cited": ["gdpr:art_9/par_1#s1", "gdpr:art_9/par_2/pt_a#s1", "gdpr:art_4/par_11#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q24",
+      "category": "processor_guarantees",
+      "structure": "plain",
+      "question": "MigrainePredict outsources storage of user data to a cloud provider. Nothing is stated about the provider's technical and organisational guarantees. Is using this processor compliant?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "A company may only use processors that provide sufficient guarantees of appropriate technical and organisational measures [gdpr:art_28/par_1#s1]. Whether this provider offers such guarantees is exactly the fact the scenario does not state, so compliance cannot be decided either way.",
+      "gold_cited": ["gdpr:art_28/par_1#s1"],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q25",
+      "category": "records_exemption",
+      "structure": "coverage_gap",
+      "question": "MigrainePredict, a company of 20 employees that regularly processes users' health data, wants to rely on the small-organisation exemption to skip keeping records of its processing activities. Can it?",
+      "gold_verdict": "INSUFFICIENT",
+      "gold_explanation": "The graph holds the exemption: organisations under 250 employees are excused from the record-keeping duties unless, among other things, their processing includes special categories of data [gdpr:art_30/par_5#s1]. MigrainePredict's health data is a special category [gdpr:art_4/par_15#s1], so on the exemption's own terms it does not qualify. But the underlying record-keeping duty itself (Article 30(1)-(2)) is only referenced by the graph, not contained in it, so what the company must actually do cannot be stated from this graph.",
+      "gold_cited": ["gdpr:art_30/par_5#s1", "gdpr:art_4/par_15#s1"],
+      "paraphrase_candidate": false,
+      "notes": "Deliberate coverage-gap probe (the S3 lesson, finding F3): the correct behaviour is to say the exemption does not apply AND name the gap - not to invent the base obligation's content. Gap closes at corpus scale-up."
+    },
+    {
+      "query_id": "Q26",
+      "category": "not_applicable_pure",
+      "structure": "not_applicable",
+      "question": "Does MigrainePredict need planning permission to repaint the interior walls of its office?",
+      "gold_verdict": "NOT_APPLICABLE",
+      "gold_explanation": "Repainting an office involves no processing of personal data and no AI system. Nothing in the covered GDPR or AI Act provisions governs it.",
+      "gold_cited": [],
+      "paraphrase_candidate": false,
+      "notes": "Zero-data-processing probe per gold rule (finding F6)."
+    },
+    {
+      "query_id": "Q27",
+      "category": "not_applicable_pure",
+      "structure": "not_applicable",
+      "question": "Is MigrainePredict allowed to negotiate a lower rent for its office lease?",
+      "gold_verdict": "NOT_APPLICABLE",
+      "gold_explanation": "A rent negotiation involves no processing of personal data and no AI system. Nothing in the covered provisions governs it.",
+      "gold_cited": [],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q28",
+      "category": "not_applicable_pure",
+      "structure": "not_applicable",
+      "question": "Must MigrainePredict register its trademark in every EU member state before selling the app?",
+      "gold_verdict": "NOT_APPLICABLE",
+      "gold_explanation": "Trademark registration is an intellectual-property matter involving no processing of personal data and no AI system. Nothing in the covered provisions governs it.",
+      "gold_cited": [],
+      "paraphrase_candidate": false,
+      "notes": ""
+    },
+    {
+      "query_id": "Q29",
+      "category": "not_applicable_anonymous",
+      "structure": "not_applicable",
+      "question": "MigrainePredict publishes fully anonymised, aggregate monthly statistics about migraine frequency that cannot be linked to any individual by any means. Do the GDPR's data-processing obligations govern this publication?",
+      "gold_verdict": "NOT_APPLICABLE",
+      "gold_explanation": "The GDPR applies to the processing of personal data [gdpr:art_2/par_1#s1], and personal data means information relating to an identified or identifiable person [gdpr:art_4/par_1#s2, gdpr:art_4/par_1#s1]. The scenario states the statistics cannot be linked to anyone, so they are not personal data and the covered GDPR duties do not govern the publication.",
+      "gold_cited": ["gdpr:art_2/par_1#s1", "gdpr:art_4/par_1#s2", "gdpr:art_4/par_1#s1"],
+      "paraphrase_candidate": true,
+      "notes": "Grounded NOT_APPLICABLE - decided FROM the definitions and scope statements, not from absence of coverage. Tests the INSUFFICIENT/NOT_APPLICABLE boundary."
+    },
+    {
+      "query_id": "Q30",
+      "category": "not_applicable_non_ai",
+      "structure": "not_applicable",
+      "question": "MigrainePredict's website includes a static FAQ page built from fixed hand-written rules - it is not a machine-based system operating with any autonomy. Must that FAQ page meet the AI Act's logging duty for high-risk AI systems?",
+      "gold_verdict": "NOT_APPLICABLE",
+      "gold_explanation": "The logging duty applies to high-risk AI systems [aiact:art_12/par_1#s1], and an AI system is a machine-based system designed to operate with varying levels of autonomy [aiact:art_3/par_1#s1]. The scenario states the FAQ page is not such a system, so the duty does not govern it.",
+      "gold_cited": ["aiact:art_12/par_1#s1", "aiact:art_3/par_1#s1"],
+      "paraphrase_candidate": true,
+      "notes": "Grounded NOT_APPLICABLE on the AI Act side, decided from the AI-system definition."
+    }
+  ]
+}
