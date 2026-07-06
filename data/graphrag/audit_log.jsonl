@@ -1,0 +1,5 @@
+{"ts": "2026-07-06T00:19:29.990195+00:00", "component": "graphrag_query", "event": "intent_classified", "query_id": "adhoc", "mode": "advisory", "targets": ["aiact:art_12/par_1", "gdpr:art_5/par_1/pt_e"], "n_facts": 1}
+{"ts": "2026-07-06T00:19:29.999513+00:00", "component": "graphrag_query", "event": "seeds_selected", "query_id": "adhoc", "path": "template", "n_seeds": 3, "cypher_attempts": 0}
+{"ts": "2026-07-06T00:19:32.959607+00:00", "component": "graphrag_query", "event": "retrieved", "query_id": "adhoc", "n_statements": 3, "n_edges": 3, "snippet_iris": ["gdpr:art_33/par_1", "aiact:art_12/par_1", "gdpr:art_5/par_1/pt_b", "gdpr:art_16/par_1", "gdpr:art_17/par_1"]}
+{"ts": "2026-07-06T00:19:53.922038+00:00", "component": "graphrag_query", "event": "verdict", "query_id": "adhoc", "verdict": "INSUFFICIENT", "n_cited": 2}
+{"ts": "2026-07-06T00:19:53.924310+00:00", "component": "graphrag_query", "event": "routed_to_review", "query_id": "adhoc"}
