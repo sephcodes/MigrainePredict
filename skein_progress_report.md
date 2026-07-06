@@ -378,3 +378,190 @@ extraction: deterministic, empirically-justified code beats prompt guidance.
   storage-limitation condition central to the cross-regulation conflict demo),
   with pollution filters shown to hold. Kept out of the frozen evaluation
   numbers above; the measured before/after is reported as its own result.
+
+---
+
+# Phase 1, Stage 3: Verification
+
+## What it does
+
+Checks the mapped statements **against each other** before anything is treated
+as knowledge — per the interim report's Stage 3 design. Three checks:
+**contradiction detection** (opposite deontic forces on the same subject and
+predicate–object), **redundancy detection** (multiple statements expressing
+the same constraint), and **cross-regulation conflict detection** (a curated
+pattern table, flagship: AI Act Art 12 logging vs GDPR Art 5(1)(e) storage
+limitation — the MigrainePredict scenario's central tension). Problematic
+statements are flagged and held out of the auto-ingested graph; everything
+else is marked verified.
+
+**Input:** the canonical extraction run (run 4) of both content-mapped sets —
+**51 statements** (33 deontic, 8 definitional, 10 applicability) loaded into a
+Neo4j staging graph.
+
+## Methodology
+
+- **Staging graph + Cypher, exactly as the report specifies.** All candidates
+  are loaded into Neo4j first and verified in place, with the three checks
+  implemented as parameterised Cypher pattern-matches. Crucially,
+  **verification persists as graph state**, not a side report: outcomes are
+  typed relationships (`EXCEPTION_OF`, `CANDIDATE_CONTRADICTION`,
+  `SPECIALISES`, `REDUNDANT_WITH`, `CONFLICTS_WITH`) plus a
+  `verification_status` property — which is what the Phase 2 query layer
+  consumes as traversable evidence.
+- **Flag, never drop** (same discipline as extraction): no check destroys a
+  statement. Tension/duplicate/conflict members are flagged for review;
+  exception structures and specialisations are recorded as *informational*
+  edges — positive findings about the regulation's architecture, not defects.
+- **Ingest-with-provenance HITL:** LLM-suggested mappings don't block
+  verification; they enter the graph carrying provenance labels
+  (`:LLMSuggested` / `:HumanReviewed`), reviewable at any time — consistent
+  with the mapping stage's uncalibrated-confidence finding.
+- **The labelling standard: pair-local judgment, computed resolution.** The
+  most consequential methodological decision. A human labels whether two
+  statements clash *on the face of their own text*; whether the corpus
+  elsewhere resolves the clash is a **graph traversal** (the resolution pass),
+  not an annotation judgment. The natural alternative — label a contradiction
+  only if "unresolvable" — was abandoned before use: it would require the
+  annotator to hold the entire corpus in their head, and labels would silently
+  rot as the corpus grows.
+- **Expert-adjudicated gold with near-miss negatives:** the evaluation
+  worksheet contains every pair the detectors surfaced *plus* all near-miss
+  negatives (pairs with partial evidence that did not fire), so both precision
+  and the plausible recall boundary are measurable. Human labels are preserved
+  across regeneration (the mapping stage's status-based HITL pattern).
+
+## Implementation highlights
+
+- **Graph model:** `(:Statement:Candidate)` nodes; slot edges
+  (`HAS_SUBJECT/PREDICATE/OBJECT/CONDITION`) to `(:Concept)` nodes carrying
+  `mapping_status` + provenance method **on the edge** (slot-granular
+  provenance); `(:Provision)` nodes with `SOURCED_FROM`/`REFERS_TO` edges from
+  the extraction's references (statement-level references resolve to statement
+  nodes); and a `BROADER` concept hierarchy parsed from the ontology index for
+  subsumption-aware matching. Loader is idempotent; every load/verdict/flag
+  writes a timestamped audit-log event.
+- **Four scripts:** loader → verifier (the three Cypher checks + resolution
+  pass, emitting a replayable verdict JSONL) → worksheet generator (HITL) →
+  scorer (detector P/R vs human labels).
+
+## Evaluation
+
+The detector was evaluated against the human-labelled worksheet in two rounds
+— and the round-1 failure is as reportable as the final result:
+
+| Stage | Agreement | Tension P | Tension R | Exception P/R | Specialisation P/R | Duplicate FPs | Review queue (real) |
+|---|---|---|---|---|---|---|---|
+| Round 1 (naive detector) | 59.8% | 0.00 (0/20) | 0.00 (0/4) | 0.83 / 1.00 | 0.38 / 0.75 | 3 | 14 of 51 |
+| Round 2 (refined, pre-review) | (100% — co-refined, discounted) | — | — | — | — | 0 | 0 of 51 |
+| **Final (expert-reviewed)** | **95.5%** | **0.69 (9/13)** | **1.00 (9/9)** | **1.00 / 1.00** | **1.00 / 1.00** | **0** | **0 of 51** |
+
+**What round 1 taught us (each failure has a named cause):**
+
+- *IRI-overlap contradiction detection scored precision 0/20 AND recall 0/4
+  simultaneously*, from one root cause: mapped IRIs are coarser than the legal
+  norms. Twenty false alarms collapsed into two hubs where every pair reduced
+  to controller × `Processing` × `PersonalData` — concepts so ubiquitous that
+  overlap on them carries no information — while all four genuine tensions
+  (processing norms vs Art 9(1)'s unconditional prohibition) were missed
+  because their predicates had stayed literal text at mapping (no IRI to
+  overlap).
+- *Concept-subsumption specialisation* produced sibling-pair artifacts;
+  *reference-linkage alone* over-classified exceptions (Art 30(5) references
+  Art 9(1) as a condition, not a derogation); *object-IRI-equality duplicates*
+  were 3/3 false alarms — IRI equality is evidence of vocabulary granularity,
+  not redundancy.
+
+**The round-2 fixes, all structure- or data-driven:** a discriminative-overlap
+gate (a measured generic tier — concepts on ≥10% of deontic candidates —
+whose members can't serve as overlap witnesses; killed all 20 false alarms);
+an unconditional-prohibition rule (empty condition slot + object subsumption,
+needing no predicate IRIs; recovered all 4 misses); structural specialisation
+(chapeau → sub-point paragraph hierarchy; 4/4, zero artifacts); same-article
+exception scoping; tightened duplicate criteria (0 firings). **The
+cross-cutting lesson mirrors mapping: structure-driven rules (references,
+paragraph hierarchy, deontic form) consistently beat similarity-driven rules
+(concept overlap).**
+
+**The resolution pass and the scaling argument.** All 13 detected tensions are
+the Art 9(1) "hub" — legally real: every processing norm prima facie collides
+with the corpus's one unconditional prohibition until an Art 9(2) basis covers
+it. All 13 resolved *mechanically* through the Art 9(2) exception edges
+already in the graph. **Real-statement review queue: 0 of 51** (down from 14
+in round 1). This is the scaling answer for HITL verification: prima facie
+tensions are absorbed by the regulation's own derogation structure, so the
+human sees only what the graph cannot answer.
+
+**The honesty layer.** The round-2 "100%" is reported only to be discounted —
+the gold was co-refined with the detector, so it partly measured
+self-agreement. The independent expert pass is what converts it into a
+result: it confirmed the labelling standard *and* overruled four detector
+firings (Art 33/34/35 and Art 32(1)(c) vs Art 9(1)), defining the residual
+failure class: **operand-vs-mention** — `dpv:PersonalData` appears in those
+objects only because the noun phrase mentions it ("the personal data
+*breach*"); the obliged act doesn't operate on the data. The schema records
+which concepts appear in a slot but not their *role* — a concrete granularity
+limit of slot-level ontology grounding, deliberately left unfixed (four rows
+don't justify new machinery).
+
+**Update since the retrospective — the conflict demo is now real data.** The
+flagship cross-regulation conflict was initially demonstrated on an injected
+synthetic pair (neither provision was in the 50-record subset). Since then,
+the real pair — GDPR Art 5(1)(e) + AI Act Art 12(1) — was run through the
+full extract → map → verify pipeline as a mini-extraction: the detector fires
+`CONFLICTS_WITH` on the **real statements** (logging obligation vs storage
+limitation), auto-detects the Art 5(1)(e) archiving dispensation as an
+`EXCEPTION_OF`, and the conflict pair passed human legal review. The current
+scorer output (the reproducible state of the graph today):
+
+```
+rows scored: 105  (skipped unlabelled: 0)
+overall agreement: 100/105 = 95.2%
+
+== contradiction  (86 pairs, agreement 81/86)
+   candidate_contradiction   P = 10/14 = 0.71   R = 10/11 = 0.91
+   exception_structure       P = 6/6 = 1.00   R = 6/6 = 1.00
+   confusion: detector=candidate_contradiction -> human=none  x4
+   confusion: detector=none -> human=candidate_contradiction  x1
+
+== redundancy  (18 pairs, agreement 18/18)
+   specialisation            P = 4/4 = 1.00   R = 4/4 = 1.00
+
+== cross_regulation  (1 pairs, agreement 1/1)
+   conflict                  P = 1/1 = 1.00   R = 1/1 = 1.00
+```
+
+Reconciling with the arc table above: the table's final row is the
+**stage-close** state (89 pairs, before the real conflict pair); this output
+is the **current** state after the conflict-pair rows were added and reviewed.
+Tension precision ticked up (0.69 → 0.71, one more true positive among the new
+pairs); recall moved off 1.00 (0.91) because the human review of the new rows
+confirmed one detector false negative — the Art 17(1) erasure obligation vs
+the Art 5(1)(e) archiving dispensation, a pair-local tension the detector did
+not surface (the `none → candidate_contradiction ×1` confusion line). The four
+precision misses remain the known operand-vs-mention class. Final graph:
+**54 statements, all verified, zero synthetic content**.
+
+## Findings worth presenting
+
+- **Structure beats similarity on legal text** — the graph's explicit
+  reference and hierarchy edges are the signal; concept-overlap inherits every
+  granularity defect of the vocabulary.
+- **Art 9(1) as a "legally real hub":** tension detection + the resolution
+  pass recover the regulation's own architecture (general prohibition +
+  enumerated derogations) as graph structure.
+- **An empty review queue is a result, not an absence** — evidence that
+  human attention scales with genuine unresolved tension, not corpus size.
+- **Co-refined gold is not gold until independently adjudicated** — the
+  round-2 100% → expert-reviewed 95.5% arc is a methodological finding in
+  itself.
+- **One planned tool superseded, not skipped:** OOPS! (ontology pitfall
+  scanner) was in the plan for redundancy checking, but it audits ontology
+  *schemas* — since the final pipeline reuses DPV/AIRO/VAIR wholesale and
+  authors no classes, OOPS! would audit the ADAPT Centre's ontologies, not
+  this project's contribution. The typed-edge redundancy check does what
+  Stage 3 actually required.
+- **The HITL pattern is now uniform across the pipeline:** what reaches a
+  human is decided by deterministic structure (unresolved tension, duplicate,
+  conflict) or explicit status — never by a model's self-reported confidence.
+  The safety mechanism never assumes the model knows when it is wrong.
