@@ -3,9 +3,9 @@
     "verdict_labels": "COMPLIANT | NON_COMPLIANT | INSUFFICIENT | NOT_APPLICABLE (same space as the system output).",
     "insufficient_vs_not_applicable": "NOT_APPLICABLE = no covered provision governs the described activity at all. INSUFFICIENT = at least one covered provision governs the activity, but the scenario is missing a fact needed to decide compliance with it.",
     "no_inference_from_silence": "A NON_COMPLIANT gold answer requires the scenario to STATE that no exception applies (or state facts that rule the exceptions out). If the scenario merely fails to mention an exception, the gold answer is INSUFFICIENT.",
-    "activity_phrasing": "Questions describe an activity or decision and ask whether it complies / is permitted / meets a duty. No classification-style questions ('is X a high-risk system?') - smoke finding F7.",
+    "activity_phrasing": "Questions describe an activity or decision and ask whether it complies / is permitted / meets a duty. No classification-style questions ('is X a high-risk system?'): smoke finding F7.",
     "grounding": "Every question is answerable (or deliberately not answerable) from the 54 verified statements. gold_cited lists the minimal statements a correct answer must rely on, not everything retrievable.",
-    "paraphrase_protocol": "Paraphrases reword a base question WITHOUT adding, removing or changing any fact; they share the base question's gold verdict, explanation and citations (resolved via paraphrase_of at evaluation time - gold is stored once, on the base row). Review check: does the paraphrase still ask the same question with the same facts? Evaluation use: paraphrase sensitivity = how much verdicts/scores vary across the wordings of the same question."
+    "paraphrase_protocol": "Paraphrases reword a base question WITHOUT adding, removing or changing any fact; they share the base question's gold verdict, explanation and citations (resolved via paraphrase_of at evaluation time; gold is stored once, on the base row). Evaluation use: paraphrase sensitivity = how much verdicts/scores vary across the wordings of the same question."
   },
   "queries": [
     {
@@ -14,7 +14,7 @@
       "structure": "exception",
       "question": "MigrainePredict processes users' heart-rate and sleep data to predict migraine attacks. Before any processing starts, each user gives explicit consent on a dedicated opt-in screen that names this exact purpose, is separate from the general terms of service, can be refused without losing unrelated features, and can be withdrawn at any time. Is this processing of health data permitted?",
       "gold_verdict": "COMPLIANT",
-      "gold_explanation": "Heart-rate and sleep data used to predict migraines is data about a person's health [gdpr:art_4/par_15#s1], which may normally not be processed [gdpr:art_9/par_1#s1]. But explicit consent lifts that ban [gdpr:art_9/par_2/pt_a#s1], and the scenario states everything the definition of consent requires - freely given, specific, informed, unambiguous [gdpr:art_4/par_11#s1] - plus that it is explicit. So the processing is permitted.",
+      "gold_explanation": "Heart-rate and sleep data used to predict migraines is data about a person's health [gdpr:art_4/par_15#s1], which may normally not be processed [gdpr:art_9/par_1#s1]. But explicit consent lifts that ban [gdpr:art_9/par_2/pt_a#s1], and the scenario states everything the definition of consent requires: freely given, specific, informed, unambiguous [gdpr:art_4/par_11#s1], plus that it is explicit. So the processing is permitted.",
       "gold_cited": [
         "gdpr:art_4/par_15#s1",
         "gdpr:art_9/par_1#s1",
@@ -52,7 +52,7 @@
         "gdpr:art_4/par_1#s2"
       ],
       "paraphrase_candidate": true,
-      "notes": "Conflict-pair question with facts sufficient to resolve it - the COMPLIANT counterpart of Q20."
+      "notes": "Conflict-pair question with facts sufficient to resolve it; the COMPLIANT counterpart of Q20."
     },
     {
       "query_id": "Q04",
@@ -73,14 +73,14 @@
       "structure": "exception",
       "question": "A user requests erasure of their data. MigrainePredict erases everything except one pseudonymised dataset that is genuinely necessary for an ongoing scientific study, which runs under the safeguards EU law requires for research (Article 89(1)). Is the partial refusal permitted?",
       "gold_verdict": "COMPLIANT",
-      "gold_explanation": "The company must normally erase data on request [gdpr:art_17/par_1#s1], but that duty does not apply to the extent processing is necessary - including for scientific research [gdpr:art_17/par_3#s1]. Research use of health data is itself permitted when necessary and safeguarded under Article 89(1) [gdpr:art_9/par_2/pt_j#s1]. The scenario states necessity, pseudonymisation and the required safeguards, and everything else was erased, so the refusal stays inside the exception.",
+      "gold_explanation": "The company must normally erase data on request [gdpr:art_17/par_1#s1], but that duty does not apply to the extent processing is necessary, including for scientific research [gdpr:art_17/par_3#s1]. Research use of health data is itself permitted when necessary and safeguarded under Article 89(1) [gdpr:art_9/par_2/pt_j#s1]. The scenario states necessity, pseudonymisation and the required safeguards, and everything else was erased, so the refusal stays inside the exception.",
       "gold_cited": [
         "gdpr:art_17/par_1#s1",
         "gdpr:art_17/par_3#s1",
         "gdpr:art_9/par_2/pt_j#s1"
       ],
       "paraphrase_candidate": true,
-      "notes": "The COMPLIANT counterpart of Q21 - same exception structure, facts supplied."
+      "notes": "The COMPLIANT counterpart of Q21: same exception structure, facts supplied."
     },
     {
       "query_id": "Q06",
@@ -156,7 +156,7 @@
       "query_id": "Q11",
       "category": "purpose_limitation_breach",
       "structure": "plain",
-      "question": "Sensor data that MigrainePredict collected solely for migraine prediction is later reused to build advertising profiles - a purpose incompatible with the original one - with no new consent and no other basis for the change. Does this comply with the purpose rules?",
+      "question": "Sensor data that MigrainePredict collected solely for migraine prediction is later reused to build advertising profiles, which is a purpose incompatible with the original one, with no new consent and no other basis for the change. Does this comply with the purpose rules?",
       "gold_verdict": "NON_COMPLIANT",
       "gold_explanation": "Personal data must not be further processed in a manner incompatible with the purposes it was collected for [gdpr:art_5/par_1/pt_b#s3]. The scenario states the new use is incompatible and nothing legitimises it, so the reuse violates the rule.",
       "gold_cited": [
@@ -212,7 +212,7 @@
       "structure": "plain",
       "question": "MigrainePredict automatically suspends a user's access to an insurance-linked discount based solely on its automated predictions, with no human involvement, and the suspension produces legal effects for the user. Is subjecting the user to this decision permitted?",
       "gold_verdict": "NON_COMPLIANT",
-      "gold_explanation": "People have the right not to be subject to a decision based solely on automated processing that produces legal effects concerning them [gdpr:art_22/par_1#s1]. The scenario states exactly such a decision - solely automated, no human involvement, legal effects - so it is not permitted.",
+      "gold_explanation": "People have the right not to be subject to a decision based solely on automated processing that produces legal effects concerning them [gdpr:art_22/par_1#s1]. The scenario states exactly such a decision: solely automated, no human involvement, legal effects; so it is not permitted.",
       "gold_cited": [
         "gdpr:art_22/par_1#s1"
       ],
@@ -251,7 +251,7 @@
       "structure": "exception",
       "question": "MigrainePredict keeps all users' identifiable sensor data indefinitely after they close their accounts, for no stated purpose, and no archiving, research or statistical use applies. Is this retention compliant?",
       "gold_verdict": "NON_COMPLIANT",
-      "gold_explanation": "Personal data may be kept in a form which permits identification no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Indefinite identifiable retention with no purpose fails that limit, and the scenario rules out the only stored exception - archiving/research/statistical storage with safeguards [gdpr:art_5/par_1/pt_e#s1].",
+      "gold_explanation": "Personal data may be kept in a form which permits identification no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Indefinite identifiable retention with no purpose fails that limit, and the scenario rules out the only stored exception: archiving/research/statistical storage with safeguards [gdpr:art_5/par_1/pt_e#s1].",
       "gold_cited": [
         "gdpr:art_5/par_1/pt_e#s2",
         "gdpr:art_5/par_1/pt_e#s1"
@@ -285,7 +285,7 @@
         "gdpr:art_5/par_1/pt_e#s1"
       ],
       "paraphrase_candidate": true,
-      "notes": "The flagship conflict question - identical to the report's section 5.5 worked example and the first live query; gold matches the adopted review-queue disposition."
+      "notes": "The flagship conflict question which is identical to the report's section 5.5 worked example and the first live query; gold matches the adopted review-queue disposition."
     },
     {
       "query_id": "Q21",
@@ -293,7 +293,7 @@
       "structure": "exception",
       "question": "A MigrainePredict user has asked for all their personal data to be deleted, but the company wants to keep the data because it is needed for a scientific research study. Must the company delete the data?",
       "gold_verdict": "INSUFFICIENT",
-      "gold_explanation": "The company must normally delete data on request [gdpr:art_17/par_1#s1], but need not to the extent the processing is necessary for purposes including scientific research [gdpr:art_17/par_3#s1]; research use of health data also requires the Article 89(1) conditions and safeguards [gdpr:art_9/par_2/pt_j#s1]. The question says the data is 'needed' but gives none of the facts that decide whether the exception actually applies - real necessity, safeguards in place, legal basis.",
+      "gold_explanation": "The company must normally delete data on request [gdpr:art_17/par_1#s1], but need not to the extent the processing is necessary for purposes including scientific research [gdpr:art_17/par_3#s1]; research use of health data also requires the Article 89(1) conditions and safeguards [gdpr:art_9/par_2/pt_j#s1]. The question says the data is 'needed' but gives none of the facts that decide whether the exception actually applies; real necessity, safeguards in place, legal basis.",
       "gold_cited": [
         "gdpr:art_17/par_1#s1",
         "gdpr:art_17/par_3#s1",
@@ -308,7 +308,7 @@
       "structure": "plain",
       "question": "MigrainePredict plans to keep users' raw identifiable sensor data for five years. Is that retention period acceptable?",
       "gold_verdict": "INSUFFICIENT",
-      "gold_explanation": "Identifiable personal data may be kept no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Whether five years is acceptable depends on what the data is kept for and how long that purpose genuinely needs it - facts the question does not give. Longer storage would also be possible solely for archiving, research or statistics with safeguards [gdpr:art_5/par_1/pt_e#s1], but no such purpose is stated.",
+      "gold_explanation": "Identifiable personal data may be kept no longer than its purpose needs [gdpr:art_5/par_1/pt_e#s2]. Whether five years is acceptable depends on what the data is kept for and how long that purpose genuinely needs it; facts the question does not give. Longer storage would also be possible solely for archiving, research or statistics with safeguards [gdpr:art_5/par_1/pt_e#s1], but no such purpose is stated.",
       "gold_cited": [
         "gdpr:art_5/par_1/pt_e#s2",
         "gdpr:art_5/par_1/pt_e#s1"
@@ -322,7 +322,7 @@
       "structure": "plain",
       "question": "MigrainePredict processes users' health data relying on consent that users gave two years ago inside an old app version's general sign-up flow. Is the processing lawfully based on that consent?",
       "gold_verdict": "INSUFFICIENT",
-      "gold_explanation": "Health data processing needs explicit consent (or another exception) [gdpr:art_9/par_1#s1, gdpr:art_9/par_2/pt_a#s1], and consent only counts if it was freely given, specific, informed and unambiguous [gdpr:art_4/par_11#s1]. Whether a consent bundled into an old general sign-up meets those tests - and covered this specific purpose - cannot be judged from the facts given.",
+      "gold_explanation": "Health data processing needs explicit consent (or another exception) [gdpr:art_9/par_1#s1, gdpr:art_9/par_2/pt_a#s1], and consent only counts if it was freely given, specific, informed and unambiguous [gdpr:art_4/par_11#s1]. Whether a consent bundled into an old general sign-up meets those tests, and covered this specific purpose, cannot be judged from the facts given.",
       "gold_cited": [
         "gdpr:art_9/par_1#s1",
         "gdpr:art_9/par_2/pt_a#s1",
@@ -356,7 +356,7 @@
         "gdpr:art_4/par_15#s1"
       ],
       "paraphrase_candidate": false,
-      "notes": "Deliberate coverage-gap probe (the S3 lesson, finding F3): the correct behaviour is to say the exemption does not apply AND name the gap - not to invent the base obligation's content. Gap closes at corpus scale-up."
+      "notes": "Deliberate coverage-gap probe (the S3 lesson, finding F3): the correct behaviour is to say the exemption does not apply AND name the gap, not to invent the base obligation's content. Gap closes at corpus scale-up."
     },
     {
       "query_id": "Q26",
@@ -404,13 +404,13 @@
         "gdpr:art_4/par_1#s1"
       ],
       "paraphrase_candidate": true,
-      "notes": "Grounded NOT_APPLICABLE - decided FROM the definitions and scope statements, not from absence of coverage. Tests the INSUFFICIENT/NOT_APPLICABLE boundary."
+      "notes": "Grounded NOT_APPLICABLE, decided FROM the definitions and scope statements, not from absence of coverage. Tests the INSUFFICIENT/NOT_APPLICABLE boundary."
     },
     {
       "query_id": "Q30",
       "category": "not_applicable_non_ai",
       "structure": "not_applicable",
-      "question": "MigrainePredict's website includes a static FAQ page built from fixed hand-written rules - it is not a machine-based system operating with any autonomy. Must that FAQ page meet the AI Act's logging duty for high-risk AI systems?",
+      "question": "MigrainePredict's website includes a static FAQ page built from fixed hand-written rules; it is not a machine-based system operating with any autonomy. Must that FAQ page meet the AI Act's logging duty for high-risk AI systems?",
       "gold_verdict": "NOT_APPLICABLE",
       "gold_explanation": "The logging duty applies to high-risk AI systems [aiact:art_12/par_1#s1], and an AI system is a machine-based system designed to operate with varying levels of autonomy [aiact:art_3/par_1#s1]. The scenario states the FAQ page is not such a system, so the duty does not govern it.",
       "gold_cited": [
@@ -440,7 +440,7 @@
     {
       "query_id": "Q03b",
       "paraphrase_of": "Q03",
-      "question": "If every entry in MigrainePredict's operational logs is anonymised at the point of writing - making it impossible, by any means, to connect an entry to a person - and the logs are retained over the entire life of the system, does the logging practice comply with both regulations?"
+      "question": "If every entry in MigrainePredict's operational logs is anonymised at the point of writing, making it impossible, by any means, to connect an entry to a person, and the logs are retained over the entire life of the system, does the logging practice comply with both regulations?"
     },
     {
       "query_id": "Q05a",
@@ -460,7 +460,7 @@
     {
       "query_id": "Q10b",
       "paraphrase_of": "Q10",
-      "question": "Without any user consent - and with no other exception applying - MigrainePredict monetises its users' migraine-risk scores by selling them to an ad network. Does this comply?"
+      "question": "Without any user consent, and with no other exception applying, MigrainePredict monetises its users' migraine-risk scores by selling them to an ad network. Does this comply?"
     },
     {
       "query_id": "Q13a",
@@ -515,7 +515,7 @@
     {
       "query_id": "Q30a",
       "paraphrase_of": "Q30",
-      "question": "MigrainePredict's site has a plain FAQ page assembled from fixed, hand-written rules - nothing about it is a machine-based system operating with any autonomy. Does the AI Act's logging duty for high-risk AI systems apply to that page?"
+      "question": "MigrainePredict's site has a plain FAQ page assembled from fixed, hand-written rules; nothing about it is a machine-based system operating with any autonomy. Does the AI Act's logging duty for high-risk AI systems apply to that page?"
     },
     {
       "query_id": "Q30b",

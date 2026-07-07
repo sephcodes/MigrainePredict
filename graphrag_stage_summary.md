@@ -227,6 +227,38 @@ verdict and explanation separately.
    changes, gold stored once on the base row and resolved via
    `paraphrase_of`. Pending Yoseph's quick read ("does it still ask the
    same question with the same facts?"). 50 prompts total.
-6. Run the full 50-prompt set through the pipeline.
-7. Evaluation harness + vector-only baseline (same snippet index).
-8. Expert-review worksheet (Echenim's five dimensions) for Skein.
+6. ~~Full 50-prompt run~~ DONE 2026-07-07 (`data/graphrag/gold_run1.results.jsonl`;
+   batch input `gold_run_batch.jsonl`). Headline numbers (informal grading;
+   the harness will formalise):
+   - **Completeness 50/50**, no failed or empty responses.
+   - **Verdict agreement 46/50 (92%)** — base 26/30, paraphrases 20/20.
+   - **Paraphrase stability 10/10 trios internally consistent** (every
+     reworded version got the same verdict as its base — first live
+     paraphrase-sensitivity evidence, and it is clean).
+   - **NON_COMPLIANT recall 16/16, NOT_APPLICABLE 9/9** (including both
+     grounded NA trios — anonymous statistics and the non-AI FAQ page).
+   - Seed paths: 47 template, 2 vector fallback, 1 LLM-Cypher; the
+     self-correction loop ran on 3 queries (8 attempts, 7 errors fed back).
+   - **The four misses form two classes, no polar (C↔NC) errors:**
+     - *Over-caution / question-scope creep (Q08, Q09: gold COMPLIANT →
+       system INSUFFICIENT).* The model agreed the asked-about rules were
+       satisfied, then demanded facts about a DIFFERENT layer (the Article 9
+       legal basis for the underlying health data) that the question did not
+       ask about. Defensible caution for a compliance assistant; wrong
+       against a question-scoped gold. Yoseph to adjudicate: tighten the
+       synthesis prompt to answer the question asked, or accept and name the
+       behaviour.
+     - *Over-decisiveness (Q23, Q25: gold INSUFFICIENT → system
+       NON_COMPLIANT).* Q23 judged two-year-old bundled sign-up consent as
+       failing the consent definition instead of asking for its quality — a
+       genuine boundary case ('general sign-up flow' arguably IS a stated
+       fact against specificity; gold could defensibly flip). Q25 is the
+       coverage-gap probe doing its job: the model correctly found the
+       records exemption unavailable, then asserted the underlying
+       record-keeping duty — whose content is NOT in the graph — from
+       general knowledge. The mirror image of S3: instead of naming the gap
+       it filled the gap. Flagship failure-mode evidence for the
+       no-inference-from-silence limits discussion.
+7. Yoseph adjudicates the four misses (gold revision vs named failure mode).
+8. Evaluation harness + vector-only baseline (same snippet index).
+9. Expert-review worksheet (Echenim's five dimensions) for Skein.
