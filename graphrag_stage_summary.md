@@ -306,6 +306,24 @@ verdict and explanation separately.
    | paraphrase: consistent trios | **10/10** (range 0.000) | 6/10 (range 0.200) |
    | citation recall vs gold statements | **0.946** | 0.000 (structural) |
 
+   Per-label detail (P / R / F1 / F2; full raw numbers in the two
+   `.metrics.json` files):
+
+   | label | GraphRAG | vector-only RAG |
+   |---|---|---|
+   | COMPLIANT | 1.000 / 0.867 / 0.929 / 0.890 | 1.000 / 0.733 / 0.846 / 0.775 |
+   | NON_COMPLIANT | 0.889 / 1.000 / 0.941 / 0.976 | 0.929 / 0.812 / 0.867 / 0.833 |
+   | INSUFFICIENT | 0.800 / 0.800 / 0.800 / 0.800 | 0.643 / 0.900 / 0.750 / 0.833 |
+   | NOT_APPLICABLE | 1.000 / 1.000 / 1.000 / 1.000 | 0.727 / 0.889 / 0.800 / 0.851 |
+
+   **Citation precision caveat (one sentence for the write-up):** the
+   pipeline's citation precision is 0.445 (236 system-cited ids vs 111 gold
+   ids), which is soft BY CONSTRUCTION — gold_cited lists the minimal
+   statements a correct answer must rely on, while the system cites
+   everything it used from a deliberately over-complete retrieval; recall
+   (0.946) is the meaningful number, and precision should be reported with
+   this framing, not as a deficiency.
+
    **The attributable story (write-up material):** the baseline missed the
    set's clearest violation — Q10, selling health-risk scores to advertisers
    with consent explicitly absent — in all three wordings (NOT_APPLICABLE
@@ -322,6 +340,13 @@ verdict and explanation separately.
    answers cannot be traced to verified statements. Baseline also
    reproduced the Q25 gap-filling leap, confirming it is a
    synthesis-level failure mode independent of retrieval route.
+
+   Housekeeping: pipeline eval runs route their INSUFFICIENT verdicts to
+   `review_queue.jsonl` like any other query (designed behaviour firing
+   during evaluation), so the queue now contains gold-run entries beyond
+   the four adopted worksheet rows. Regenerating the worksheet would add
+   rows for them; the adopted rows survive regardless. The baseline mode
+   deliberately does not route.
 9. ~~Live faithfulness/relevance~~ DONE 2026-07-08, both runs 50/50, no
    failures (after two rounds of hardening: three transient-error
    signatures added to the shared retry list; per-query failure isolation
