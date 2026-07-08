@@ -259,6 +259,106 @@ verdict and explanation separately.
        general knowledge. The mirror image of S3: instead of naming the gap
        it filled the gap. Flagship failure-mode evidence for the
        no-inference-from-silence limits discussion.
-7. Yoseph adjudicates the four misses (gold revision vs named failure mode).
-8. Evaluation harness + vector-only baseline (same snippet index).
-9. Expert-review worksheet (Echenim's five dimensions) for Skein.
+7. ~~Adjudication of the four misses~~ DONE (Yoseph, 2026-07-07). Gold stays
+   as authored for all four; each miss is recorded, not patched:
+   - **Q08, Q09 → reported LIMITATION** ("question-scope creep /
+     over-caution"): the system may withhold COMPLIANT by demanding facts
+     about a regulatory layer the question did not ask about.
+   - **Q23 → reported AMBIGUITY**: "consent given inside an old app
+     version's general sign-up flow" can defensibly be read either as a
+     stated fact against consent specificity (→ NON_COMPLIANT) or as
+     leaving consent quality unknown (→ INSUFFICIENT). A genuine
+     INSUFFICIENT/NON_COMPLIANT boundary case, reported as such.
+   - **Q25 → reported LIMITATION** (with a precise characterisation that
+     matters for the write-up): on close reading, the explanation is almost
+     entirely grounded — the exemption's carve-out conditions come from the
+     retrieved provision text and are applied correctly. The failure is
+     exactly ONE inferential step: from "the exemption from the
+     record-keeping duties does not apply" to "therefore the duty applies
+     and skipping it is a violation" — asserting a duty whose content and
+     addressees (Article 30(1)-(2)) are not in the graph. Notably, that
+     pivotal step is the only claim in the answer carrying NO citation, so
+     the citation discipline makes the leap mechanically visible in the
+     trace. Reported as a limitation rather than fixed: the planned
+     faithfulness metric quantifies this class; the advisory-only + review
+     queue design is the operational mitigation; this instance disappears
+     at corpus scale-up (Article 30(1)-(2) enters the graph) though the
+     class remains for whatever stays uncovered; and a runtime
+     faithfulness gate (judge each explanation claim against the retrieved
+     context, route low-support answers to review) is named as future
+     work, not built.
+8. ~~Evaluation harness + vector-only baseline~~ BUILT AND RUN 2026-07-07.
+   `score_query.py` = the harness (offline: adherence, per-label P/R/F1/F2,
+   macro-F1, confusion, citation recall/precision, paraphrase sensitivity,
+   loop stats, miss list; `--live`: RAGAS-style faithfulness + answer
+   relevance, formulas implemented directly with a Gemini judge + bge
+   cosine). Baseline = `graphrag_query.py --baseline`: plain vector RAG over
+   the SAME covered-only snippet index, same verdict rules, no graph/intent.
+   Metrics JSONs: `gold_run1.metrics.json`, `baseline_run1.metrics.json`.
+
+   **System vs baseline (offline, 50 prompts each):**
+
+   | metric | GraphRAG | vector-only RAG |
+   |---|---|---|
+   | adherence rate | **0.920** | 0.820 |
+   | macro-F1 | **0.917** | 0.816 |
+   | NON_COMPLIANT recall / F2 | **1.000 / 0.976** | 0.812 / 0.833 |
+   | paraphrase: consistent trios | **10/10** (range 0.000) | 6/10 (range 0.200) |
+   | citation recall vs gold statements | **0.946** | 0.000 (structural) |
+
+   **The attributable story (write-up material):** the baseline missed the
+   set's clearest violation — Q10, selling health-risk scores to advertisers
+   with consent explicitly absent — in all three wordings (NOT_APPLICABLE
+   x2, INSUFFICIENT x1). Its own explanation NAMES Article 9 as governing,
+   but vector search never surfaced the Article 9 text, and under
+   no-inference-from-silence it therefore correctly refused to find a
+   violation: a retrieval failure, not a reasoning failure. The GraphRAG
+   intent stage maps "health data, no consent" to the Article 9 provisions
+   deterministically, so all three wordings verdict NON_COMPLIANT. Same
+   mechanism explains the paraphrase gap (embedding neighbourhoods shift
+   with wording; grounded intent targets do not). Citation recall 0 for the
+   baseline is structural — it has no statements to cite, only provision
+   text — which is itself the explainability difference (FR8): baseline
+   answers cannot be traced to verified statements. Baseline also
+   reproduced the Q25 gap-filling leap, confirming it is a
+   synthesis-level failure mode independent of retrieval route.
+9. ~~Live faithfulness/relevance~~ DONE 2026-07-08, both runs 50/50, no
+   failures (after two rounds of hardening: three transient-error
+   signatures added to the shared retry list; per-query failure isolation
+   in the live loop; and a judge refinement — the question is supplied to
+   the judge and scenario restatements count as supported, so the metric
+   isolates IMPORTED LEGAL CONTENT rather than penalising the answer for
+   repeating the question. One methodology sentence: "faithfulness per
+   Es et al., with the question supplied to the judge." First judge
+   version without this scored baseline 0.492 on restatement noise.)
+
+   | live metric | GraphRAG | vector-only RAG |
+   |---|---|---|
+   | faithfulness (mean per query) | 0.872 | 0.871 |
+   | faithfulness on NOT_APPLICABLE | **0.944** | 0.760 |
+   | faithfulness on INSUFFICIENT | 0.810 | **0.963** |
+   | answer relevance | 0.817 | 0.808 |
+   | claims per answer | 11.5 | 6.4 |
+
+   Reading: the means are a wash, but the label-level split is the real
+   finding. On NOT_APPLICABLE the baseline reasons about absence using
+   imported knowledge (worst scores: Q29 0.29 — it lacks the personal-data
+   definitions the pipeline retrieves, so its anonymity reasoning is
+   ungrounded); the pipeline's grounded NA answers are faithful. On
+   INSUFFICIENT the relation flips: the baseline says "cannot tell" in a
+   few short, trivially-supported claims, while the pipeline's richer
+   context invites longer reasoning with occasional unsupported steps.
+   Pipeline answers carry ~1.8x more claims at equal claim-level support
+   (~14% unsupported both) — richer explanations, same per-claim
+   grounding.
+
+   **Correction to the Q25 mitigation story (honesty note):** Q25 scored
+   faithfulness 1.00 — the judge ruled "the duty applies" as ENTAILED by
+   the exemption text (an exemption from duties implies the duties exist),
+   so the faithfulness metric does NOT catch this failure class, contrary
+   to what item 7 anticipated. The reliable detector for Q25-class leaps
+   remains the citation trace: the pivotal claim is the only one carrying
+   no citation. The limitations section should say faithfulness measures
+   imported legal content generally, while gap-bridging entailments
+   require the uncited-claim check (a mechanical scan, future work).
+10. Expert-review worksheet (Echenim's five dimensions) for Skein.
