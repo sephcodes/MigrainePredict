@@ -1,0 +1,530 @@
+{
+  "results_file": "data/graphrag/baseline_run1.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 25,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 16,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 1.0,
+      "R": 0.7333333333333333,
+      "F1": 0.846153846153846,
+      "F2": 0.7746478873239436
+    },
+    "NON_COMPLIANT": {
+      "P": 0.9285714285714286,
+      "R": 0.8125,
+      "F1": 0.8666666666666666,
+      "F2": 0.8333333333333334
+    },
+    "INSUFFICIENT": {
+      "P": 0.6428571428571429,
+      "R": 0.9,
+      "F1": 0.75,
+      "F2": 0.8333333333333334
+    },
+    "NOT_APPLICABLE": {
+      "P": 0.7272727272727273,
+      "R": 0.8888888888888888,
+      "F1": 0.7999999999999999,
+      "F2": 0.851063829787234
+    }
+  },
+  "macro_f1": 0.8157051282051282,
+  "citation": {
+    "recall": 0.0,
+    "precision": 0.0
+  },
+  "paraphrase": {
+    "consistent_trios": 6,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 0.8,
+      "variant_a": 0.7,
+      "variant_b": 0.9
+    },
+    "range": 0.20000000000000007
+  },
+  "seed_paths": {
+    "baseline_rag": 50
+  },
+  "misses": [
+    [
+      "Q01a",
+      "COMPLIANT",
+      "NOT_APPLICABLE",
+      "baseline_rag"
+    ],
+    [
+      "Q02",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q05",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q09",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q10",
+      "NON_COMPLIANT",
+      "NOT_APPLICABLE",
+      "baseline_rag"
+    ],
+    [
+      "Q10a",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q10b",
+      "NON_COMPLIANT",
+      "NOT_APPLICABLE",
+      "baseline_rag"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q29a",
+      "NOT_APPLICABLE",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ]
+  ],
+  "live": [
+    {
+      "query_id": "Q01",
+      "faithfulness": 0.42857142857142855,
+      "answer_relevance": 0.7699460387229919,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "According to gdpr:art_4/par_15, this constitutes 'data concerning health', which is a special category of personal data.",
+        "The processing of such data is generally prohibited under GDPR Article 9(1)",
+        "These facts fully satisfy the conditions for explicit consent required by gdpr:art_9/par_2/pt_a, allowing the processing of special categories of personal data.",
+        "No other retrieved provision prohibits this processing or introduces unmet conditions for its permission."
+      ]
+    },
+    {
+      "query_id": "Q01a",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevance": 0.702139675617218,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "To determine the lawfulness of processing special category data like health data, the relevant provisions of GDPR Article 9 (conditions for processing special categories of personal data) and Article 7 (conditions for consent) would be required."
+      ]
+    },
+    {
+      "query_id": "Q01b",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8483107089996338,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "Sleep and heart-rate measurements constitute special categories of personal data (health data).",
+        "GDPR Article 9(1) generally prohibits the processing of such data.",
+        "These conditions align with the requirements for valid explicit consent under GDPR.",
+        "The processing of special category data for the specified purpose of forecasting migraine attacks is allowed under these conditions."
+      ]
+    },
+    {
+      "query_id": "Q02",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.8691146373748779,
+      "n_claims": 12,
+      "unsupported_claims": [
+        "Migraine-prediction data is a special category of personal data.",
+        "Processing of special categories of personal data is generally prohibited unless an exception applies.",
+        "The professional duty of confidentiality implies a basis in Union or Member State law or a contract with a health professional."
+      ]
+    },
+    {
+      "query_id": "Q03",
+      "faithfulness": 0.8125,
+      "answer_relevance": 0.8148191571235657,
+      "n_claims": 16,
+      "unsupported_claims": [
+        "These logs do not constitute personal data.",
+        "Since the logs are anonymised, these GDPR provisions do not apply to them.",
+        "The logging practice is not governed by the provided GDPR requirements."
+      ]
+    },
+    {
+      "query_id": "Q03a",
+      "faithfulness": 0.9,
+      "answer_relevance": 0.8074679374694824,
+      "n_claims": 10,
+      "unsupported_claims": [
+        "The MigrainePredict system is a high-risk AI system."
+      ]
+    },
+    {
+      "query_id": "Q03b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8301693797111511,
+      "n_claims": 11,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q04",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.7414669394493103,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "\"without undue delay\" is a qualitative standard.",
+        "Correcting a date of birth within two days (48 hours) is generally considered to meet this requirement, especially given that the provided snippets do not specify a shorter timeframe for rectification requests."
+      ]
+    },
+    {
+      "query_id": "Q05",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8085470199584961,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05a",
+      "faithfulness": 0.8571428571428571,
+      "answer_relevance": 0.8265526294708252,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The fact that the data is pseudonymised constitutes an appropriate technical measure to safeguard the data subject's rights."
+      ]
+    },
+    {
+      "query_id": "Q05b",
+      "faithfulness": 0.7777777777777778,
+      "answer_relevance": 0.7665128707885742,
+      "n_claims": 9,
+      "unsupported_claims": [
+        "Pseudonymisation is an appropriate technical measure.",
+        "Given these conditions, the continued storage and processing of the pseudonymised data for scientific research is permitted, overriding the general right to erasure."
+      ]
+    },
+    {
+      "query_id": "Q06",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8067176938056946,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q07",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8158921599388123,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q08",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8487760424613953,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q09",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.8121771812438965,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "The scenario involves the retention of health data, which is special category data under GDPR Article 9.",
+        "Without this information, it is not possible to determine if the processing of special category data for statistical purposes is compliant."
+      ]
+    },
+    {
+      "query_id": "Q10",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.8652248978614807,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "This scenario primarily falls under the provisions of GDPR Article 9 concerning the processing of special categories of personal data, which generally prohibits such processing unless specific conditions, such as explicit consent, are met."
+      ]
+    },
+    {
+      "query_id": "Q10a",
+      "faithfulness": 0.9166666666666666,
+      "answer_relevance": 0.7770572304725647,
+      "n_claims": 12,
+      "unsupported_claims": [
+        "Article 9 of the GDPR establishes the general prohibition on processing such data and its specific exceptions (including explicit consent)."
+      ]
+    },
+    {
+      "query_id": "Q10b",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevance": 0.8614916205406189,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "This involves processing special category personal data (health data)."
+      ]
+    },
+    {
+      "query_id": "Q11",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8272665143013,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q12",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7465764880180359,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8082857131958008,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8564982414245605,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8019943237304688,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q14",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8173999190330505,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q15",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7094561457633972,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q16",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8321670889854431,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q17",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.9196815490722656,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The scenario states that MigrainePredict is a high-risk AI system under EU AI Act Annex III",
+        "This directly violates the requirement set out in Article 9(1)."
+      ]
+    },
+    {
+      "query_id": "Q18",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8889555931091309,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8302920460700989,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18b",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.7263913154602051,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The indefinite retention without deletion also implies a violation of the data subject's right to erasure under GDPR Article 17(1)."
+      ]
+    },
+    {
+      "query_id": "Q19",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8853517174720764,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevance": 0.7242428660392761,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "operational logs are likely to contain personal data."
+      ]
+    },
+    {
+      "query_id": "Q20a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6921998858451843,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7731006145477295,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7527535557746887,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.79095458984375,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8047621846199036,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q22",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9096875190734863,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q23",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7660261988639832,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q24",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.872938334941864,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q25",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.8472881317138672,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "Health data is explicitly identified as 'special-category under GDPR Article 9'."
+      ]
+    },
+    {
+      "query_id": "Q26",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7633115649223328,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q27",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7665637135505676,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q28",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8080959916114807,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29",
+      "faithfulness": 0.2857142857142857,
+      "answer_relevance": 0.8667415976524353,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The General Data Protection Regulation (GDPR) applies to the processing of personal data.",
+        "Data that is fully anonymised and cannot be linked to an individual is no longer considered personal data.",
+        "All these provisions inherently apply to personal data.",
+        "Since the data in question is fully anonymised and cannot be linked to any individual, it falls outside the scope of personal data.",
+        "The GDPR's data-processing obligations, as represented by the provided snippets, do not govern its publication."
+      ]
+    },
+    {
+      "query_id": "Q29a",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.7781346440315247,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "GDPR applies to the processing of 'personal data'.",
+        "If data is truly anonymised, meaning it cannot be traced back to any individual, it generally falls outside the scope of GDPR because it is no longer considered personal data."
+      ]
+    },
+    {
+      "query_id": "Q29b",
+      "faithfulness": 0.4,
+      "answer_relevance": 0.7616282105445862,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The General Data Protection Regulation (GDPR) applies to the processing of personal data.",
+        "Data that has been effectively anonymised to this extent no longer constitutes \"personal data\" under the GDPR.",
+        "Since the data in question is no longer personal data, these retrieved requirements do not govern its processing."
+      ]
+    },
+    {
+      "query_id": "Q30",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.822064220905304,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q30a",
+      "faithfulness": 0.4,
+      "answer_relevance": 0.8627183437347412,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "This description indicates that the FAQ page is not an AI system itself, as it lacks any machine-based operation or autonomy.",
+        "Since it is not an AI system, it cannot be classified as a \"high-risk AI system\" under the AI Act.",
+        "Therefore, the logging duty for high-risk AI systems does not apply to this FAQ page."
+      ]
+    },
+    {
+      "query_id": "Q30b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8076322674751282,
+      "n_claims": 10,
+      "unsupported_claims": []
+    }
+  ]
+}

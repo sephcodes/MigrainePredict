@@ -242,6 +242,37 @@ Provision text snippets (vector-retrieved, covered provisions only):
 """
 
 
+BASELINE_SYNTH_SYSTEM = """\
+You are a compliance analyst for MigrainePredict, a wearable healthcare AI
+system for predicting migraine attacks (high-risk under EU AI Act Annex III;
+its health data is special-category under GDPR Article 9). Decide a verdict
+for the question using ONLY the provided regulation text snippets.
+
+Verdict labels:
+- COMPLIANT: the scenario facts satisfy every retrieved requirement that
+  applies to them.
+- NON_COMPLIANT: a scenario fact violates a retrieved requirement, with no
+  retrieved exception that lifts it.
+- INSUFFICIENT: the retrieved requirements apply, but the scenario is missing
+  a fact needed to decide (say which fact in missing_information).
+- NOT_APPLICABLE: no retrieved requirement governs the scenario.
+
+Rules:
+- NO INFERENCE FROM SILENCE: never infer a violation because the scenario or
+  the snippets do not mention something. Missing scenario detail ->
+  INSUFFICIENT; no governing requirement -> NOT_APPLICABLE.
+- cited may only contain provision IRIs present in the snippets.
+- Write the explanation in plain English.
+"""
+
+BASELINE_SYNTH_USER = """\
+Question: {question}
+
+Regulation text snippets (vector-retrieved):
+{snippets}
+"""
+
+
 def build_query_chains(backend: str):
     llm = em._llm(backend)
     intent_chain = ChatPromptTemplate.from_messages(
@@ -494,6 +525,35 @@ def answer(question, query_id, sess, chains, entries, vecs, topk):
     return result
 
 
+def baseline_answer(question, query_id, synth_chain, entries, vecs, topk):
+    """Vector-only RAG comparator (report section 5.5 baseline): question ->
+    top-k snippets from the SAME covered-only index -> same verdict schema.
+    No graph, no intent stage, no review-queue routing (it is an evaluation
+    comparator, not the system)."""
+    snippets = snippet_search(entries, vecs, question, k=topk)
+    snip_txt = "\n\n".join(f"[{iri}] {text}" for iri, text, _ in snippets) \
+        or "(none)"
+    verdict = em._retry_invoke(synth_chain, {
+        "question": question, "snippets": snip_txt,
+    }, label="baseline synthesis")
+    audit("graphrag_baseline", "verdict", query_id=query_id,
+          verdict=verdict.verdict,
+          snippet_iris=[iri for iri, _, _ in snippets])
+    return {
+        "ts": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "query_id": query_id,
+        "question": question,
+        "intent": None,
+        "seed_path": "baseline_rag",
+        "cypher_attempts": [],
+        "retrieved_statement_ids": [],
+        "retrieved_edges": [],
+        "snippets": [{"iri": iri, "score": round(sc, 4)}
+                     for iri, _, sc in snippets],
+        "verdict": verdict.model_dump(),
+    }
+
+
 def print_result(res):
     v = res["verdict"]
     print(f"\n=== {res['query_id']}: {v['verdict']}  "
@@ -546,6 +606,9 @@ def main():
     ap.add_argument("--batch", help="JSONL of {query_id, question}")
     ap.add_argument("--check", action="store_true",
                     help="structural self-check, no LLM calls")
+    ap.add_argument("--baseline", action="store_true",
+                    help="vector-only RAG comparator: same snippet index, "
+                         "no graph, no intent stage")
     ap.add_argument("--backend", default="gemini",
                     choices=["gemini", "mistral"])
     ap.add_argument("--topk", type=int, default=TOPK_SNIPPETS)
@@ -561,9 +624,16 @@ def main():
         if not args.question and not args.batch:
             ap.error("provide a question, --batch, or --check")
 
-        chains = build_query_chains(args.backend)
         provisions = covered_provisions(sess)
         entries, vecs = load_snippet_index(provisions)
+        if args.baseline:
+            llm = em._llm(args.backend)
+            baseline_chain = ChatPromptTemplate.from_messages(
+                [("system", BASELINE_SYNTH_SYSTEM),
+                 ("user", BASELINE_SYNTH_USER)]
+            ) | llm.with_structured_output(ComplianceVerdict)
+        else:
+            chains = build_query_chains(args.backend)
 
         if args.batch:
             queries = [json.loads(l) for l in open(args.batch)]
@@ -572,8 +642,14 @@ def main():
 
         os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
         for q in queries:
-            res = answer(q["question"], q.get("query_id", "adhoc"), sess,
-                         chains, entries, vecs, args.topk)
+            if args.baseline:
+                res = baseline_answer(q["question"],
+                                      q.get("query_id", "adhoc"),
+                                      baseline_chain, entries, vecs,
+                                      args.topk)
+            else:
+                res = answer(q["question"], q.get("query_id", "adhoc"), sess,
+                             chains, entries, vecs, args.topk)
             with open(args.out, "a") as f:
                 f.write(json.dumps(res) + "\n")
             print_result(res)
