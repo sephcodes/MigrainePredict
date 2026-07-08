@@ -942,6 +942,7 @@ _TRANSIENT_ERROR_MARKERS = (
     "503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED",
     "timeout", "Timeout", "TIMEOUT", "deadline", "Deadline", "DEADLINE",
     "Connection reset", "ECONNRESET",
+    "Server disconnected", "RemoteProtocolError", "timed out",
 )
 RETRY_MAX_ATTEMPTS = 3
 RETRY_BASE_DELAY_SECONDS = 2.0
