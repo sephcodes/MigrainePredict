@@ -462,15 +462,31 @@ verdict and explanation separately.
     — that is the natural model-sensitivity locus, matching the report's
     Chung/Mavridis theme.
 
-    **Candidate future-work fix (plausible, NOT yet built or validated).**
-    Because the failure is localised to abstention, it is a good match for
-    the project's deterministic-guard-over-prompt-edit house style rather
-    than a model swap: the pipeline already knows which deontic conditions
-    attach to a matched statement, so a pre-verdict guard could check whether
-    the scenario actually supplies the operands of each governing condition
-    and force INSUFFICIENT when a required fact is absent, instead of leaving
-    abstention to the LLM's discretion. That would move the INSUFFICIENT
-    decision off the model entirely and plausibly closes most of the gap on
-    weak backends — but this is a hypothesis to test, not a measured result;
-    do not report it as solved.
+    **Future-work fix: a deterministic guard was HYPOTHESISED, TESTED against
+    the data, and REJECTED (2026-07-08 side quest).** The idea: since the
+    pipeline knows which deontic conditions attach to a matched statement, a
+    pre-verdict guard could force INSUFFICIENT when the scenario does not
+    supply a governing condition's operands, moving abstention off the LLM in
+    the project's deterministic-guard house style. Checked the obvious
+    structural signal — "retrieved subgraph contains an exception/dispensation
+    attached to the governing obligation" — against the five failures and the
+    correct decisive verdicts. It separates neither way: Q10 (correctly
+    NON_COMPLIANT) carries 3 dispensations + an exception edge, Q01/Q05
+    (correctly COMPLIANT) also do, so the signal OVER-fires on legitimately
+    decisive cases; and Q24 (should abstain) has no exception edge and zero
+    dispensations, so it UNDER-fires on a plain missing-fact case. What
+    actually separates "abstain" from "decide" is whether the SCENARIO TEXT
+    supplies or rules out the condition's operands (Q10 states "no other
+    exception applies"; Q05 states the safeguards) — an irreducibly semantic
+    reading a deterministic rule cannot make. Any working version needs an
+    LLM abstention check, which costs the credits and reintroduces the very
+    model-dependent judgment that caused the failure (a weak model would
+    abstain-check as poorly as it verdicts). CONCLUSION: no cheap
+    deterministic fix exists; the abstention decision is inherently semantic,
+    which is itself WHY abstention is the model-sensitivity locus. This
+    strengthens rather than weakens the model-sensitivity finding. Correction
+    to an earlier note: the guard was described as "genuinely plausible"
+    before testing; the test shows the deterministic form is not viable.
+    Report the gap as a model-capability limitation (use a capable backend),
+    not as a pipeline fix in waiting.
 11. Expert-review worksheet (Echenim's five dimensions) for Skein.
