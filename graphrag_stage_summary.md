@@ -386,4 +386,91 @@ verdict and explanation separately.
    no citation. The limitations section should say faithfulness measures
    imported legal content generally, while gap-bridging entailments
    require the uncited-claim check (a mechanical scan, future work).
-10. Expert-review worksheet (Echenim's five dimensions) for Skein.
+10. ~~Backend model-sensitivity comparison~~ DONE 2026-07-08. Same pipeline,
+    same 50 prompts, same prompts/schema — only the LLM backend swapped
+    (`graphrag_query.py --backend mistral`, local Ollama; Yoseph ran it).
+    Results `data/graphrag/gold_run1_mistral.{results,metrics}.json`. This
+    reproduces the report's own model-sensitivity theme (Chung's Llama-3-8B
+    Micro-F1 drop, Mavridis' GPT-4o-vs-Llama gap) inside our pipeline.
+
+    | metric | Gemini 2.5 Flash | Mistral (local) |
+    |---|---|---|
+    | adherence | **0.920** | 0.820 |
+    | macro-F1 | **0.917** | 0.778 |
+    | INSUFFICIENT F1 / recall | **0.800 / 0.800** | 0.429 / 0.300 |
+    | NON_COMPLIANT F1 | **0.941** | 0.833 |
+    | COMPLIANT F1 | **0.929** | 0.903 |
+    | NOT_APPLICABLE F1 | **1.000** | 0.947 |
+    | paraphrase-consistent trios | **10/10** | 8/10 |
+    | citation recall / precision | 0.946 / 0.445 | 0.441 / 0.653 |
+    | faithfulness (mean) | **0.872** | 0.788 |
+    | answer relevance | 0.817 | **0.839** |
+    | claims per answer | 11.5 | 5.3 |
+
+    **The degradation is uneven and concentrated in one label.** Overall
+    adherence falls only 0.92→0.82, but COMPLIANT / NON_COMPLIANT /
+    NOT_APPLICABLE hold up (F1 >= 0.90/0.83/0.95); INSUFFICIENT recall
+    collapses to 0.300 — 6 of Mistral's 9 misses are INSUFFICIENT cases it
+    decided anyway (5 -> NON_COMPLIANT, 1 -> COMPLIANT). Mechanism from the
+    explanations: Mistral commits exactly the error no-inference-from-
+    silence forbids — Q24 "there is no information about the guarantees,
+    therefore not meeting the obligation -> NON_COMPLIANT"; Q21 explicitly
+    NAMES the research exception then rules NON_COMPLIANT anyway. The
+    instruction is verbatim identical to the Gemini run; the weaker model
+    cannot hold the abstention discipline the hardest label depends on.
+    Paraphrase brittleness clusters on the same cases (Q21 flips
+    NC/NC/COMPLIANT across wordings).
+
+    **Faithfulness does NOT expose this** (same blind spot as Q25): Mistral's
+    faithfulness on the INSUFFICIENT-gold cases is 0.756, comparable to its
+    own average — because when it wrongly rules NON_COMPLIANT its *claims*
+    are still grounded in the retrieved statements; only the silence->
+    violation *inference* is wrong, and faithfulness scores grounding, not
+    the correctness of legal reasoning. So Mistral's overall faithfulness
+    (0.788) drops only modestly and its answer relevance is even marginally
+    higher — wrong-but-confident answers read as fluent and on-topic. The
+    verdict-accuracy metrics (adherence, per-label recall, F2) are what
+    separate the models; the RAGAS pair does not. This is the strongest
+    single argument in the eval for why verdict-level gold grading is
+    necessary and RAG-quality metrics alone are insufficient for a
+    compliance task. Higher Mistral citation *precision* (0.653) with far
+    lower recall (0.441) = it cites fewer statements, and leaned on the
+    vector fallback for 4 queries (its intent stage grounded fewer targets).
+
+    **Framing (the pipeline-not-the-model story, and it survives scrutiny).**
+    The point of this comparison is to show the ARCHITECTURE carries the
+    result, not a strong proprietary model papering over a weak pipeline. The
+    decomposition supports that cleanly: across the two runs the verdicts are
+    near-identical EXCEPT for one failure mode. Miss decomposition —
+    Gemini misses {Q08, Q09, Q23, Q25}; Mistral misses {Q03a, Q16, Q21,
+    Q21a, Q21b, Q22, Q23, Q24, Q25}; the two share exactly {Q23, Q25} (the
+    known INSUFFICIENT/coverage boundary cases that are pipeline-level, not
+    model-level). Mistral's model-specific damage is therefore small and
+    homogeneous: five of its seven extra misses are the SAME abstention
+    failure (INSUFFICIENT decided confidently — Q21/Q21a/Q21b/Q22/Q24). The
+    counterfactual is exact: give Mistral Gemini's abstention behaviour on
+    just those five and it scores 41+5 = 46/50 = 0.920 — identical to
+    Gemini's adherence. So a free, ~7B local model driven by the same
+    pipeline reproduces the strong model's accuracy on COMPLIANT,
+    NON_COMPLIANT and NOT_APPLICABLE, and the whole gap is one nameable,
+    localised behaviour rather than diffuse weakness. (The same five errors
+    also drag NON_COMPLIANT precision to 0.750, since they land as NC false
+    positives — remove them and NC precision recovers too. One failure mode,
+    two visible symptoms.) The dissertation reading: the KG + grounded
+    intent + no-inference-from-silence design does the heavy lifting; the
+    backend LLM contributes a bounded slice — verdict abstention discipline
+    — that is the natural model-sensitivity locus, matching the report's
+    Chung/Mavridis theme.
+
+    **Candidate future-work fix (plausible, NOT yet built or validated).**
+    Because the failure is localised to abstention, it is a good match for
+    the project's deterministic-guard-over-prompt-edit house style rather
+    than a model swap: the pipeline already knows which deontic conditions
+    attach to a matched statement, so a pre-verdict guard could check whether
+    the scenario actually supplies the operands of each governing condition
+    and force INSUFFICIENT when a required fact is absent, instead of leaving
+    abstention to the LLM's discretion. That would move the INSUFFICIENT
+    decision off the model entirely and plausibly closes most of the gap on
+    weak backends — but this is a hypothesis to test, not a measured result;
+    do not report it as solved.
+11. Expert-review worksheet (Echenim's five dimensions) for Skein.
