@@ -124,23 +124,26 @@ flag, not gate), `_ACTION_NOMINALS`, `_DEONTIC_OPERATORS`. Under-coverage at cor
 whitelists from observed cases (with `test_enumeration_gate.py`-style regression
 assertions), not speculation.
 
-### 3.3 Art 32 extras decision (chapeau + measure sub-points)
-Still open: add gold / accept as extras / model measures as object-content of the
-chapeau. The "shall include the following: (a)…(d)" paragraph shape recurs constantly
-at corpus, so whichever convention is chosen affects extraction precision everywhere.
-Decide before corpus extraction, not after.
+### 3.3 Art 32 extras decision (chapeau + measure sub-points) — DECIDED 2026-07-10: keep current behaviour
+"Shall include the following: (a)…(d)" measure sub-points stay independent
+OBLIGATION statements. Adopted as the extraction *convention*, not an error:
+each measure is individually checkable, and the pipeline stays frozen as
+evaluated. The 4 eval-set extras are re-described in the write-up as a
+convention difference between gold and pipeline, not a precision failure.
+No gold added; no code change.
 
-### 3.4 Definition-prefix flakiness (G10/H01/H02 class)
-The `'X' means` prefix intermittently included in `definition.value`. Parked as
-"open next candidate" at eval scale, where it costs ~2 HARD flags. GDPR Art 4 has 26
+### 3.4 Definition-prefix flakiness (G10/H01/H02 class) — DECIDED 2026-07-10: skipped; documented limitation
+The `'X' means` prefix intermittently included in `definition.value`. The
+deterministic prefix-strip post-pass is deliberately NOT built: the pipeline is
+frozen exactly as evaluated, so the frozen gold numbers remain the deliverable's
+numbers with no re-run owed. Consequence to report honestly: GDPR Art 4 has 26
 definitions, AI Act Art 3 has 68 — the class multiplies ~30× at corpus and
 Definitional is already the weakest category (holdout 0.500 [0.000,1.000]).
-A deterministic prefix-strip post-pass is the obvious candidate (working-style:
-post-pass, not prompt edit).
+The limitations section names this class and its scale explicitly.
 
 ## 4. EXPAND (stubs of deliverables)
 
-### 4.1 CONFLICT_PATTERNS table
+### 4.1 CONFLICT_PATTERNS table — grounding requirement added 2026-07-10
 One entry (`logging_vs_storage_limitation`). The report promises a "curated set of
 known conflict patterns", and the MigrainePredict scenario needs at minimum:
 - Art 25 GDPR (data protection by design) ↔ Art 10 AI Act (data governance) —
@@ -152,12 +155,41 @@ Curate the pattern list alongside corpus extraction; each pattern needs its anch
 concepts present in the mapped graph (see §1.1 — anchor mappability is the
 prerequisite).
 
-### 4.2 Temporal / screen_dependent handling (descoped by decision)
+**Grounding rule (decided 2026-07-10):** every pattern table entry carries a
+citation to literature identifying the tension — no pattern is presented as
+independently derived. Where the source supports the general tension but not the
+exact article pair, the pattern is framed as an *operationalisation* of the cited
+tension (the anchor-concept formulation is the engineering contribution). A
+pattern with no source is dropped or explicitly labelled researcher-constructed.
+
+Candidate sources located 2026-07-10 (search-verified titles/venues; READ AND
+CONFIRM content before citing — snippet-level evidence only for the starred ones):
+- Art 9 ↔ Art 10(5) (strongest, peer-reviewed, pair-specific):
+  M. van Bekkum & F. Zuiderveen Borgesius, "Using sensitive data to prevent
+  discrimination by artificial intelligence: Does the GDPR need a new exception?",
+  Computer Law & Security Review (2023); and M. van Bekkum, "Using sensitive data
+  to debias AI systems: Article 10(5) of the EU AI Act", Computer Law & Security
+  Review (2025).
+- Art 12 ↔ Art 5(1)(e) (the flagship pattern — needs grounding most urgently)*:
+  "AI data governance – overlaps between the AI Act and the GDPR", Law, Innovation
+  and Technology (2026), doi:10.1080/17579961.2026.2633677; EPRS study "Interplay
+  between the AI Act and the EU digital legislative framework" (2025); EDPB-EDPS
+  Joint Opinion 5/2021 on the AI Act proposal (authoritative on GDPR-consistency
+  concerns generally).
+- Art 17 ↔ Art 12 (general tension only; AI-Act-specific pair is practitioner-only
+  so far): E. Fosch-Villaronga, P. Kieseberg & T. Li, "Humans forget, machines
+  remember: Artificial intelligence and the Right to Be Forgotten", Computer Law &
+  Security Review (2018).
+- Art 25 ↔ Art 10 (parallel obligations)*: the Law, Innovation and Technology
+  overlaps article (Art 10 AIA focus); "Impact assessment requirements in the GDPR
+  vs the AI Act: Overlaps, divergence, and implications" (2026) for the
+  DPIA-vs-FRIA analogue.
+
+### 4.2 Temporal / screen_dependent handling — DECIDED 2026-07-10: descoping extended to the corpus KG
 H11/H14 removed; `screen_dependent` dormant in the harness. Entry-into-force and
-application-date provisions (Art 99 AIA etc.) are present in the postscreened corpus
-and currently have no handling. Either extend the descoping decision explicitly to
-the corpus KG (documented limitation) or revive the dormant path. Explicit decision
-either way — silence is the failure mode.
+application-date provisions (Art 99 AIA etc.) extract as whatever the frozen
+pipeline emits; the corpus KG does not model applicability-in-time. Documented
+limitation in the write-up; the dormant path is NOT revived.
 
 ---
 
@@ -172,3 +204,27 @@ either way — silence is the failure mode.
 3. At scale-up: §2 re-derivations, §3 budgeted review rounds (§1.2's FP-rate
    measurement joins §3.1's sample counts), §4 expansions — then re-run
    load → verify → resolve at corpus size, reviewing only unresolved flags.
+
+## Scale-up strategy (confirmed 2026-07-10 — all remaining decisions dispositioned)
+
+- **Scope: FULL corpus** (748 GDPR + 1,071 AI Act postscreened paragraphs).
+  A hand-picked "relevant provisions" subset was considered and rejected:
+  scope-selection is itself an ungrounded legal mapping, and a partial corpus
+  makes INSUFFICIENT verdicts ambiguous (law silent vs not ingested), breaking
+  the no-inference-from-silence story.
+- **Pipeline FROZEN as evaluated** — no pre-run changes (§3.3 convention kept,
+  §3.4 skipped, §4.2 descoping extended). The frozen DEV/HOLDOUT gold numbers
+  remain the extraction-quality claim; no corpus gold set is authored.
+- **Corpus extraction QA:** single extraction run (not 5×; cross-run stability
+  claims remain eval-set claims) → gold-free checks over full corpus output
+  (`span_grounding.py`, `schema_validity.py`) + a stratified human spot-check
+  sample (~30–40 paragraphs, acceptance-sampling style worksheet).
+- **Mapping:** dry-run the candidate builder (tag pass active) over corpus
+  extractions and count dispositions per queue BEFORE committing review time;
+  review strategy chosen from real numbers.
+- **Query-time eval:** re-run the EXISTING gold 50 only (no new scenario
+  queries) three-way — pipeline-Gemini, pipeline-Mistral, vector baseline —
+  against the corpus graph. Controlled before/after; the Q25/S3 coverage-gap
+  closures are the predicted headline.
+- **Standing rule unchanged:** any unavoidable mid-scale-up pipeline change
+  re-runs the frozen gold evals before numbers are quoted.
