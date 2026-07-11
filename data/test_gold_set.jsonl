@@ -1,0 +1,2285 @@
+{
+  "gold_id": "T01",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "include",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a description of the appropriateness of the performance metrics for the specific AI system",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [
+      "aiact:art_11/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "aiact:anx_IV/par_4"
+  },
+  "paragraph_iri": "aiact:anx_IV/par_4",
+  "needs_review": null,
+  "classification_rationale": "Technical-documentation content item; the parent chapeau ('shall contain at least the following') makes each listed item a duty on the provider, per the adopted content-list convention.",
+  "anchor": "A description of the appropriateness of the performance metrics for the specific AI system",
+  "paragraph_text": "4. A description of the appropriateness of the performance metrics for the specific AI system;",
+  "parent_texts": [
+    "The technical documentation referred to in Article 11(1) shall contain at least the following information, as applicable to the relevant AI system:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T02",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "examine",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the approved quality management system for the design, development and testing of AI systems",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in accordance with point 3",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_17"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:anx_VII/p_1"
+  },
+  "paragraph_iri": "aiact:anx_VII/p_1",
+  "needs_review": null,
+  "classification_rationale": "Conformity-assessment step; passive voice, the examining actor is the notified body running the Annex VII procedure.",
+  "anchor": "The approved quality management system ... shall be examined in accordance with point 3",
+  "paragraph_text": "The approved quality management system for the design, development and testing of AI systems pursuant to Article 17 shall be examined in accordance with point 3 and shall be subject to surveillance as specified in point 5. The technical documentation of the AI system shall be examined in accordance with point 4.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T03",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "ensure surveillance",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the approved quality management system for the design, development and testing of AI systems pursuant to Article 17",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "as specified in point 5",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_17"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:anx_VII/p_1"
+  },
+  "paragraph_iri": "aiact:anx_VII/p_1",
+  "needs_review": null,
+  "classification_rationale": "Second duty in the same sentence: the approved quality management system also stays under surveillance.",
+  "anchor": "shall be subject to surveillance as specified in point 5",
+  "paragraph_text": "The approved quality management system for the design, development and testing of AI systems pursuant to Article 17 shall be examined in accordance with point 3 and shall be subject to surveillance as specified in point 5. The technical documentation of the AI system shall be examined in accordance with point 4.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T04",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the notified body",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "examine",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the technical documentation of the AI system",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in accordance with point 4",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:anx_VII/p_1"
+  },
+  "paragraph_iri": "aiact:anx_VII/p_1",
+  "needs_review": null,
+  "classification_rationale": "Separate sentence, separate examination duty over the technical documentation.",
+  "anchor": "The technical documentation of the AI system shall be examined in accordance with point 4.",
+  "paragraph_text": "The approved quality management system for the design, development and testing of AI systems pursuant to Article 17 shall be examined in accordance with point 3 and shall be subject to surveillance as specified in point 5. The technical documentation of the AI system shall be examined in accordance with point 4.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T05",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide and keep up to date",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a copy of the EU declaration of conformity referred to in Article 47",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [
+      "aiact:art_47",
+      "aiact:art_49/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "aiact:anx_VIII/p_11"
+  },
+  "paragraph_iri": "aiact:anx_VIII/p_11",
+  "needs_review": null,
+  "classification_rationale": "EU-database registration item; the parent chapeau ('shall be provided and thereafter kept up to date') makes each listed item a provider duty (Article 49(1) registration falls on the provider).",
+  "anchor": "A copy of the EU declaration of conformity referred to in Article 47;",
+  "paragraph_text": "11. A copy of the EU declaration of conformity referred to in Article 47;",
+  "parent_texts": [
+    "The following information shall be provided and thereafter kept up to date with regard to high-risk AI systems to be registered in accordance with Article 49(1):"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T06",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "bring into compliance with this Regulation",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "AI systems which are components of the large-scale IT systems established by the legal acts listed in Annex X that have been placed on the market or put into service before 2 August 2027",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "by 31 December 2030, without prejudice to the application of Article 5 as referred to in Article 113(3), point (a)",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_5",
+      "aiact:art_113/par_3",
+      "aiact:anx_X"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_111/par_1"
+  },
+  "paragraph_iri": "aiact:art_111/par_1",
+  "needs_review": null,
+  "classification_rationale": "Transitional compliance duty with a deadline; passive voice, duty-bearer inferred as the regulation's default (the provider). Temporal handling is descoped by decision, but the obligation itself is extractable.",
+  "anchor": "shall be brought into compliance with this Regulation by 31 December 2030",
+  "paragraph_text": "1. Without prejudice to the application of Article 5 as referred to in Article 113(3), point (a), AI systems which are components of the large-scale IT systems established by the legal acts listed in Annex X that have been placed on the market or put into service before 2 August 2027 shall be brought into compliance with this Regulation by 31 December 2030.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T07",
+  "statement_class": "APPLICABILITY",
+  "statement": {
+    "scope_type": "MATERIAL",
+    "applies_to": {
+      "value": "laws, regulations or administrative provisions, or collective agreements",
+      "method": "STATED"
+    },
+    "condition": {
+      "value": "which are more favourable to workers in terms of protecting their rights in respect of the use of AI systems by employers, or which are more favourable to workers",
+      "method": "STATED"
+    },
+    "polarity": "INCLUDES",
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "source_article": "aiact:art_2/par_11"
+  },
+  "paragraph_iri": "aiact:art_2/par_11",
+  "needs_review": null,
+  "classification_rationale": "Savings clause inside the Scope article: more-favourable worker-protection law remains applicable alongside the Regulation. Alternative reading (PERMISSION addressed to Union/Member States) noted — legislator-addressed deontics are excluded by convention, so the applicability reading is the extractable one.",
+  "anchor": "This Regulation does not preclude the Union or Member States from maintaining or introducing laws ... more favourable to workers",
+  "paragraph_text": "11. This Regulation does not preclude the Union or Member States from maintaining or introducing laws, regulations or administrative provisions which are more favourable to workers in terms of protecting their rights in respect of the use of AI systems by employers, or from encouraging or allowing the application of collective agreements which are more favourable to workers.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T08",
+  "statement_class": "DEFINITIONAL",
+  "statement": {
+    "term": "serious incident",
+    "definition": {
+      "value": "an incident or malfunctioning of an AI system that directly or indirectly leads to the death of a person, or serious harm to a person's health",
+      "method": "STATED"
+    },
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "source_article": "aiact:art_3/par_49/pt_a"
+  },
+  "paragraph_iri": "aiact:art_3/par_49/pt_a",
+  "needs_review": null,
+  "classification_rationale": "Definition limb: the chapeau supplies ''serious incident' means an incident or malfunctioning ... leads to any of the following' and point (a) supplies this limb; composed value, all words from source, ''X' means' prefix excluded per convention.",
+  "anchor": "(a) the death of a person, or serious harm to a person's health;",
+  "paragraph_text": "(a) the death of a person, or serious harm to a person’s health;",
+  "parent_texts": [
+    "For the purposes of this Regulation, the following definitions apply:",
+    "(49) ‘serious incident’ means an incident or malfunctioning of an AI system that directly or indirectly leads to any of the following:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T09",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the conformity assessment body concerned",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "perform",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the activities of a notified body",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "only where no objections are raised by the Commission or the other Member States within two weeks of a notification by a notifying authority where it includes an accreditation certificate referred to in Article 29(2), or within two months of a notification by the notifying authority where it includes documentary evidence referred to in Article 29(3)",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_29/par_2",
+      "aiact:art_29/par_3"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_30/par_4"
+  },
+  "paragraph_iri": "aiact:art_30/par_4",
+  "needs_review": null,
+  "classification_rationale": "Conditioned permission ('may ... only where'): the no-objection window is the condition on acting as a notified body.",
+  "anchor": "The conformity assessment body concerned may perform the activities of a notified body only where no objections are raised",
+  "paragraph_text": "4. The conformity assessment body concerned may perform the activities of a notified body only where no objections are raised by the Commission or the other Member States within two weeks of a notification by a notifying authority where it includes an accreditation certificate referred to in Article 29(2), or within two months of a notification by the notifying authority where it includes documentary evidence referred to in Article 29(3).",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T10",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "notified bodies",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "be independent",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the provider of a high-risk AI system in relation to which they perform conformity assessment activities",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_31/par_4"
+  },
+  "paragraph_iri": "aiact:art_31/par_4",
+  "needs_review": null,
+  "classification_rationale": "First independence duty: independence from the assessed provider.",
+  "anchor": "Notified bodies shall be independent of the provider of a high-risk AI system",
+  "paragraph_text": "4. Notified bodies shall be independent of the provider of a high-risk AI system in relation to which they perform conformity assessment activities. Notified bodies shall also be independent of any other operator having an economic interest in high-risk AI systems assessed, as well as of any competitors of the provider. This shall not preclude the use of assessed high-risk AI systems that are necessary for the operations of the conformity assessment body, or the use of such high-risk AI systems for personal purposes.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T11",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "notified bodies",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "be independent",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "any other operator having an economic interest in high-risk AI systems assessed",
+        "method": "STATED"
+      },
+      {
+        "value": "any competitors of the provider",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_31/par_4"
+  },
+  "paragraph_iri": "aiact:art_31/par_4",
+  "needs_review": null,
+  "classification_rationale": "Second independence duty: economic-interest holders and competitors.",
+  "anchor": "Notified bodies shall also be independent of any other operator having an economic interest",
+  "paragraph_text": "4. Notified bodies shall be independent of the provider of a high-risk AI system in relation to which they perform conformity assessment activities. Notified bodies shall also be independent of any other operator having an economic interest in high-risk AI systems assessed, as well as of any competitors of the provider. This shall not preclude the use of assessed high-risk AI systems that are necessary for the operations of the conformity assessment body, or the use of such high-risk AI systems for personal purposes.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T12",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "DISPENSATION",
+    "subject": [
+      {
+        "value": "the conformity assessment body",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "use",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "assessed high-risk AI systems that are necessary for the operations of the conformity assessment body, or such high-risk AI systems for personal purposes",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "aiact:art_31/par_4"
+  },
+  "paragraph_iri": "aiact:art_31/par_4",
+  "needs_review": null,
+  "classification_rationale": "Carve-out from the independence duties: operational/personal use of assessed systems remains permitted ('shall not preclude') therefore dispensation.",
+  "anchor": "This shall not preclude the use of assessed high-risk AI systems that are necessary for the operations of the conformity assessment body",
+  "paragraph_text": "4. Notified bodies shall be independent of the provider of a high-risk AI system in relation to which they perform conformity assessment activities. Notified bodies shall also be independent of any other operator having an economic interest in high-risk AI systems assessed, as well as of any competitors of the provider. This shall not preclude the use of assessed high-risk AI systems that are necessary for the operations of the conformity assessment body, or the use of such high-risk AI systems for personal purposes.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T13",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "choose",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "any of the notified bodies",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "for the purposes of the conformity assessment procedure referred to in Annex VII",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:anx_VII"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_43/par_1/cont_2"
+  },
+  "paragraph_iri": "aiact:art_43/par_1/cont_2",
+  "needs_review": null,
+  "classification_rationale": "Free choice of notified body for the Annex VII route (this continuation governs Annex III point 1 systems, which MigrainePredict is not — it is high-risk via the medical-device route).",
+  "anchor": "the provider may choose any of the notified bodies",
+  "paragraph_text": "For the purposes of the conformity assessment procedure referred to in Annex VII, the provider may choose any of the notified bodies. However, where the high-risk AI system is intended to be put into service by law enforcement, immigration or asylum authorities or by Union institutions, bodies, offices or agencies, the market surveillance authority referred to in Article 74(8) or (9), as applicable, shall act as a notified body.",
+  "parent_texts": [
+    "1. For high-risk AI systems listed in point 1 of Annex III, where, in demonstrating the compliance of a high-risk AI system with the requirements set out in Section 2, the provider has applied harmonised standards referred to in Article 40, or, where applicable, common specifications referred to in Article 41, the provider shall opt for one of the following conformity assessment procedures based on:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T14",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the market surveillance authority referred to in Article 74(8) or (9)",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "act as",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a notified body",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "where the high-risk AI system is intended to be put into service by law enforcement, immigration or asylum authorities or by Union institutions, bodies, offices or agencies",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_74/par_8",
+      "aiact:art_74/par_9"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_43/par_1/cont_2"
+  },
+  "paragraph_iri": "aiact:art_43/par_1/cont_2",
+  "needs_review": null,
+  "classification_rationale": "Exception to the free choice: for law-enforcement/immigration/asylum/Union-institution deployments the market surveillance authority takes the notified-body role.",
+  "anchor": "the market surveillance authority ... shall act as a notified body",
+  "paragraph_text": "For the purposes of the conformity assessment procedure referred to in Annex VII, the provider may choose any of the notified bodies. However, where the high-risk AI system is intended to be put into service by law enforcement, immigration or asylum authorities or by Union institutions, bodies, offices or agencies, the market surveillance authority referred to in Article 74(8) or (9), as applicable, shall act as a notified body.",
+  "parent_texts": [
+    "1. For high-risk AI systems listed in point 1 of Annex III, where, in demonstrating the compliance of a high-risk AI system with the requirements set out in Section 2, the provider has applied harmonised standards referred to in Article 40, or, where applicable, common specifications referred to in Article 41, the provider shall opt for one of the following conformity assessment procedures based on:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T15",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the deployer",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "take into account",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the nature of the situation giving rise to the possible use, in particular the seriousness, probability and scale of the harm that would be caused if the system were not used",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "when deploying a 'real-time' remote biometric identification system in publicly accessible spaces for the purposes of law enforcement",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_5/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "high",
+    "source_article": "aiact:art_5/par_2/pt_a"
+  },
+  "paragraph_iri": "aiact:art_5/par_2/pt_a",
+  "needs_review": null,
+  "classification_rationale": "Element the parent chapeau requires to be taken into account before real-time remote biometric identification use; law-enforcement deployer duty, outside MigrainePredict's scope.",
+  "anchor": "(a) the nature of the situation giving rise to the possible use",
+  "paragraph_text": "(a) the nature of the situation giving rise to the possible use, in particular the seriousness, probability and scale of the harm that would be caused if the system were not used;",
+  "parent_texts": [
+    "2. The use of ‘real-time’ remote biometric identification systems in publicly accessible spaces for the purposes of law enforcement for any of the objectives referred to in paragraph 1, first subparagraph, point (h), shall be deployed for the purposes set out in that point only to confirm the identity of the specifically targeted individual, and it shall take into account the following elements:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T16",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the competent judicial authority or an independent administrative authority whose decision is binding",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "grant",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the authorisation",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "only where it is satisfied, on the basis of objective evidence or clear indications presented to it, that the use of the 'real-time' remote biometric identification system concerned is necessary for, and proportionate to, achieving one of the objectives specified in paragraph 1, first subparagraph, point (h), as identified in the request and, in particular, remains limited to what is strictly necessary concerning the period of time as well as the geographic and personal scope",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_5/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "high",
+    "source_article": "aiact:art_5/par_3/cont_1"
+  },
+  "paragraph_iri": "aiact:art_5/par_3/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Conditioned authorisation power: 'shall grant ... only where satisfied' reads as an obligation bounded by the necessity/proportionality condition.",
+  "anchor": "shall grant the authorisation only where it is satisfied",
+  "paragraph_text": "The competent judicial authority or an independent administrative authority whose decision is binding shall grant the authorisation only where it is satisfied, on the basis of objective evidence or clear indications presented to it, that the use of the ‘real-time’ remote biometric identification system concerned is necessary for, and proportionate to, achieving one of the objectives specified in paragraph 1, first subparagraph, point (h), as identified in the request and, in particular, remains limited to what is strictly necessary concerning the period of time as well as the geographic and personal scope. In deciding on the request, that authority shall take into account the elements referred to in paragraph 2. No decision that produces an adverse legal effect on a person may be taken based solely on the output of the ‘real-time’ remote biometric identification system.",
+  "parent_texts": [
+    "3. For the purposes of paragraph 1, first subparagraph, point (h) and paragraph 2, each use for the purposes of law enforcement of a ‘real-time’ remote biometric identification system in publicly accessible spaces shall be subject to a prior authorisation granted by a judicial authority or an independent administrative authority whose decision is binding of the Member State in which the use is to take place, issued upon a reasoned request and in accordance with the detailed rules of national law referred to in paragraph 5. However, in a duly justified situation of urgency, the use of such system may be commenced without an authorisation provided that such authorisation is requested without undue delay, at the latest within 24 hours. If such authorisation is rejected, the use shall be stopped with immediate effect and all the data, as well as the results and outputs of that use shall be immediately discarded and deleted."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T17",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the competent judicial authority or an independent administrative authority whose decision is binding",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "take into account",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the elements referred to in paragraph 2",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in deciding on the request",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_5/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "high",
+    "source_article": "aiact:art_5/par_3/cont_1"
+  },
+  "paragraph_iri": "aiact:art_5/par_3/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Separate sentence, separate duty on the authorising authority.",
+  "anchor": "In deciding on the request, that authority shall take into account the elements referred to in paragraph 2.",
+  "paragraph_text": "The competent judicial authority or an independent administrative authority whose decision is binding shall grant the authorisation only where it is satisfied, on the basis of objective evidence or clear indications presented to it, that the use of the ‘real-time’ remote biometric identification system concerned is necessary for, and proportionate to, achieving one of the objectives specified in paragraph 1, first subparagraph, point (h), as identified in the request and, in particular, remains limited to what is strictly necessary concerning the period of time as well as the geographic and personal scope. In deciding on the request, that authority shall take into account the elements referred to in paragraph 2. No decision that produces an adverse legal effect on a person may be taken based solely on the output of the ‘real-time’ remote biometric identification system.",
+  "parent_texts": [
+    "3. For the purposes of paragraph 1, first subparagraph, point (h) and paragraph 2, each use for the purposes of law enforcement of a ‘real-time’ remote biometric identification system in publicly accessible spaces shall be subject to a prior authorisation granted by a judicial authority or an independent administrative authority whose decision is binding of the Member State in which the use is to take place, issued upon a reasoned request and in accordance with the detailed rules of national law referred to in paragraph 5. However, in a duly justified situation of urgency, the use of such system may be commenced without an authorisation provided that such authorisation is requested without undue delay, at the latest within 24 hours. If such authorisation is rejected, the use shall be stopped with immediate effect and all the data, as well as the results and outputs of that use shall be immediately discarded and deleted."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T18",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PROHIBITION",
+    "subject": [
+      {
+        "value": "the deployer",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "take",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a decision that produces an adverse legal effect on a person",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "based solely on the output of the 'real-time' remote biometric identification system",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_5/par_1/pt_h",
+      "aiact:art_5/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "high",
+    "source_article": "aiact:art_5/par_3/cont_1"
+  },
+  "paragraph_iri": "aiact:art_5/par_3/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Standalone prohibition; passive voice ('no decision may be taken'), the acting party is the law-enforcement user of the system — subject attribution is the reviewable judgment here.",
+  "anchor": "No decision that produces an adverse legal effect on a person may be taken based solely on the output",
+  "paragraph_text": "The competent judicial authority or an independent administrative authority whose decision is binding shall grant the authorisation only where it is satisfied, on the basis of objective evidence or clear indications presented to it, that the use of the ‘real-time’ remote biometric identification system concerned is necessary for, and proportionate to, achieving one of the objectives specified in paragraph 1, first subparagraph, point (h), as identified in the request and, in particular, remains limited to what is strictly necessary concerning the period of time as well as the geographic and personal scope. In deciding on the request, that authority shall take into account the elements referred to in paragraph 2. No decision that produces an adverse legal effect on a person may be taken based solely on the output of the ‘real-time’ remote biometric identification system.",
+  "parent_texts": [
+    "3. For the purposes of paragraph 1, first subparagraph, point (h) and paragraph 2, each use for the purposes of law enforcement of a ‘real-time’ remote biometric identification system in publicly accessible spaces shall be subject to a prior authorisation granted by a judicial authority or an independent administrative authority whose decision is binding of the Member State in which the use is to take place, issued upon a reasoned request and in accordance with the detailed rules of national law referred to in paragraph 5. However, in a duly justified situation of urgency, the use of such system may be commenced without an authorisation provided that such authorisation is requested without undue delay, at the latest within 24 hours. If such authorisation is rejected, the use shall be stopped with immediate effect and all the data, as well as the results and outputs of that use shall be immediately discarded and deleted."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T19",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "recipients of information or documentation obtained pursuant to this Article",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "treat",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "any information or documentation obtained pursuant to this Article, including trade secrets",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in accordance with the confidentiality obligations set out in Article 78",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_78"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_53/par_7"
+  },
+  "paragraph_iri": "aiact:art_53/par_7",
+  "needs_review": null,
+  "classification_rationale": "Passive confidentiality duty; the paragraph never names the duty-bearer, so the subject is whoever obtains the material under this Article (general-purpose AI chapter, outside MigrainePredict's scope).",
+  "anchor": "Any information or documentation obtained pursuant to this Article, including trade secrets, shall be treated in accordance with the confidentiality obligations set out in Article 78.",
+  "paragraph_text": "7. Any information or documentation obtained pursuant to this Article, including trade secrets, shall be treated in accordance with the confidentiality obligations set out in Article 78.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T20",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "providers",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "perform",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the obligations set out in the points of this paragraph, in addition to the obligations listed in Articles 53 and 54",
+        "method": "CONTEXT"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [
+      "aiact:art_53",
+      "aiact:art_54"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "aiact:art_55/par_1"
+  },
+  "paragraph_iri": "aiact:art_55/par_1",
+  "needs_review": null,
+  "classification_rationale": "Chapeau-only paragraph: the operative duties live in the sub-points, so the object is supplied from context. Whether a bare chapeau should yield a statement at all is a reviewable judgment.",
+  "anchor": "In addition to the obligations listed in Articles 53 and 54, providers of general-purpose AI models with systemic risk shall:",
+  "paragraph_text": "1. In addition to the obligations listed in Articles 53 and 54, providers of general-purpose AI models with systemic risk shall:",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T21",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the competent authority",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a written proof of the activities successfully carried out in the sandbox",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "upon request of the provider or prospective provider of the AI system",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "aiact:art_57/par_7/cont_1"
+  },
+  "paragraph_iri": "aiact:art_57/par_7/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Request-triggered duty.",
+  "anchor": "Upon request of the provider or prospective provider of the AI system, the competent authority shall provide a written proof",
+  "paragraph_text": "Upon request of the provider or prospective provider of the AI system, the competent authority shall provide a written proof of the activities successfully carried out in the sandbox. The competent authority shall also provide an exit report detailing the activities carried out in the sandbox and the related results and learning outcomes. Providers may use such documentation to demonstrate their compliance with this Regulation through the conformity assessment process or relevant market surveillance activities. In this regard, the exit reports and the written proof provided by the national competent authority shall be taken positively into account by market surveillance authorities and notified bodies, with a view to accelerating conformity assessment procedures to a reasonable extent.",
+  "parent_texts": [
+    "7. Competent authorities shall provide providers and prospective providers participating in the AI regulatory sandbox with guidance on regulatory expectations and how to fulfil the requirements and obligations set out in this Regulation."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T22",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the competent authority",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "an exit report detailing the activities carried out in the sandbox and the related results and learning outcomes",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "aiact:art_57/par_7/cont_1"
+  },
+  "paragraph_iri": "aiact:art_57/par_7/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Unconditional companion duty in the following sentence.",
+  "anchor": "The competent authority shall also provide an exit report",
+  "paragraph_text": "Upon request of the provider or prospective provider of the AI system, the competent authority shall provide a written proof of the activities successfully carried out in the sandbox. The competent authority shall also provide an exit report detailing the activities carried out in the sandbox and the related results and learning outcomes. Providers may use such documentation to demonstrate their compliance with this Regulation through the conformity assessment process or relevant market surveillance activities. In this regard, the exit reports and the written proof provided by the national competent authority shall be taken positively into account by market surveillance authorities and notified bodies, with a view to accelerating conformity assessment procedures to a reasonable extent.",
+  "parent_texts": [
+    "7. Competent authorities shall provide providers and prospective providers participating in the AI regulatory sandbox with guidance on regulatory expectations and how to fulfil the requirements and obligations set out in this Regulation."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T23",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "providers",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "use",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "such documentation to demonstrate their compliance with this Regulation",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "through the conformity assessment process or relevant market surveillance activities",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "aiact:art_57/par_7/cont_1"
+  },
+  "paragraph_iri": "aiact:art_57/par_7/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Express permission; 'such documentation' = the exit report and written proof (anaphora kept as stated).",
+  "anchor": "Providers may use such documentation to demonstrate their compliance with this Regulation",
+  "paragraph_text": "Upon request of the provider or prospective provider of the AI system, the competent authority shall provide a written proof of the activities successfully carried out in the sandbox. The competent authority shall also provide an exit report detailing the activities carried out in the sandbox and the related results and learning outcomes. Providers may use such documentation to demonstrate their compliance with this Regulation through the conformity assessment process or relevant market surveillance activities. In this regard, the exit reports and the written proof provided by the national competent authority shall be taken positively into account by market surveillance authorities and notified bodies, with a view to accelerating conformity assessment procedures to a reasonable extent.",
+  "parent_texts": [
+    "7. Competent authorities shall provide providers and prospective providers participating in the AI regulatory sandbox with guidance on regulatory expectations and how to fulfil the requirements and obligations set out in this Regulation."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T24",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "market surveillance authorities and notified bodies",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "take positively into account",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the exit reports and the written proof provided by the national competent authority",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "with a view to accelerating conformity assessment procedures to a reasonable extent",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "aiact:art_57/par_7/cont_1"
+  },
+  "paragraph_iri": "aiact:art_57/par_7/cont_1",
+  "needs_review": null,
+  "classification_rationale": "Passive duty with the bearers named in the same sentence.",
+  "anchor": "the exit reports and the written proof provided by the national competent authority shall be taken positively into account",
+  "paragraph_text": "Upon request of the provider or prospective provider of the AI system, the competent authority shall provide a written proof of the activities successfully carried out in the sandbox. The competent authority shall also provide an exit report detailing the activities carried out in the sandbox and the related results and learning outcomes. Providers may use such documentation to demonstrate their compliance with this Regulation through the conformity assessment process or relevant market surveillance activities. In this regard, the exit reports and the written proof provided by the national competent authority shall be taken positively into account by market surveillance authorities and notified bodies, with a view to accelerating conformity assessment procedures to a reasonable extent.",
+  "parent_texts": [
+    "7. Competent authorities shall provide providers and prospective providers participating in the AI regulatory sandbox with guidance on regulatory expectations and how to fulfil the requirements and obligations set out in this Regulation."
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T25",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "providers",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "integrate",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the necessary elements described in paragraphs 1, 2 and 3 using the template referred in paragraph 3 into systems and plans already existing under that legislation",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "for high-risk AI systems covered by the Union harmonisation legislation listed in Section A of Annex I, where a post-market monitoring system and plan are already established under that legislation, provided that it achieves an equivalent level of protection",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_72/par_1",
+      "aiact:art_72/par_2",
+      "aiact:art_72/par_3",
+      "aiact:anx_I"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "aiact:art_72/par_4"
+  },
+  "paragraph_iri": "aiact:art_72/par_4",
+  "needs_review": null,
+  "classification_rationale": "'Shall have a choice of' = permission to integrate post-market monitoring into the existing sectoral system. Directly MigrainePredict-relevant: the MDR is Section A Annex I legislation.",
+  "anchor": "providers shall have a choice of integrating, as appropriate, the necessary elements",
+  "paragraph_text": "4. For high-risk AI systems covered by the Union harmonisation legislation listed in Section A of Annex I, where a post-market monitoring system and plan are already established under that legislation, in order to ensure consistency, avoid duplications and minimise additional burdens, providers shall have a choice of integrating, as appropriate, the necessary elements described in paragraphs 1, 2 and 3 using the template referred in paragraph 3 into systems and plans already existing under that legislation, provided that it achieves an equivalent level of protection.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T26",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the provider",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "information required pursuant to Article 13 and, where appropriate, training to deployers",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in identifying the most appropriate risk management measures",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "aiact:art_13"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "aiact:art_9/par_5/cont_1/pt_c"
+  },
+  "paragraph_iri": "aiact:art_9/par_5/cont_1/pt_c",
+  "needs_review": null,
+  "classification_rationale": "Risk-management content item ('the following shall be ensured'); the risk-management duty-holder is the provider. MigrainePredict-core (Article 9).",
+  "anchor": "(c) provision of information required pursuant to Article 13 and, where appropriate, training to deployers.",
+  "paragraph_text": "(c) provision of information required pursuant to Article 13 and, where appropriate, training to deployers.",
+  "parent_texts": [
+    "In identifying the most appropriate risk management measures, the following shall be ensured:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T27",
+  "statement_class": "NOT_APPLICABLE",
+  "statement": {
+    "text": "It is necessary to clarify the responsibilities and competences at Union and national level as regards AI systems that are built on general-purpose AI models."
+  },
+  "paragraph_iri": "aiact:rct_161/p_0",
+  "needs_review": null,
+  "classification_rationale": "Recital allocating supervisory competences between the AI Office and national market surveillance authorities in 'should' language; no operative deontic, definitional, or scope content. Recital deontics are suppressed by convention.",
+  "anchor": "It is necessary to clarify the responsibilities and competences at Union and national level",
+  "paragraph_text": "(161) It is necessary to clarify the responsibilities and competences at Union and national level as regards AI systems that are built on general-purpose AI models. To avoid overlapping competences, where an AI system is based on a general-purpose AI model and the model and system are provided by the same provider, the supervision should take place at Union level through the AI Office, which should have the powers of a market surveillance authority within the meaning of Regulation (EU) 2019/1020 for this purpose. In all other cases, national market surveillance authorities remain responsible for the supervision of AI systems. However, for general-purpose AI systems that can be used directly by deployers for at least one purpose that is classified as high-risk, market surveillance authorities should cooperate with the AI Office to carry out evaluations of compliance and inform the Board and other market surveillance authorities accordingly. Furthermore, market surveillance authorities should be able to request assistance from the AI Office where the market surveillance authority is unable to conclude an investigation on a high-risk AI system because of its inability to access certain information related to the general-purpose AI model on which the high-risk AI system is built. In such cases, the procedure regarding mutual assistance in cross-border cases in Chapter VI of Regulation (EU) 2019/1020 should apply mutatis mutandis .",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T28",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "DISPENSATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide the information",
+        "method": "CITATION"
+      }
+    ],
+    "object": [
+      {
+        "value": "paragraphs 1 to 4",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "where and insofar as the data subject already has the information",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_14/par_1",
+      "gdpr:art_14/par_2",
+      "gdpr:art_14/par_3",
+      "gdpr:art_14/par_4"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_14/par_5/pt_a"
+  },
+  "paragraph_iri": "gdpr:art_14/par_5/pt_a",
+  "needs_review": null,
+  "classification_rationale": "Exemption arm: the parent chapeau ('Paragraphs 1 to 4 shall not apply where and insofar as') disapplies the Article 14 information duties when the data subject already has the information. Modelled like the Article 30(5) dispensation.",
+  "anchor": "(a) the data subject already has the information;",
+  "paragraph_text": "(a) the data subject already has the information;",
+  "parent_texts": [
+    "5. Paragraphs 1 to 4 shall not apply where and insofar as:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T29",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "provide",
+        "method": "CONTEXT"
+      }
+    ],
+    "object": [
+      {
+        "value": "the categories of personal data concerned",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": {
+      "value": "the data subject",
+      "method": "CONTEXT"
+    },
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_15/par_1/pt_b"
+  },
+  "paragraph_iri": "gdpr:art_15/par_1/pt_b",
+  "needs_review": null,
+  "classification_rationale": "Access-right item: the chapeau grants the right to obtain the listed information from the controller; each listed item is one obtainable.",
+  "anchor": "(b) the categories of personal data concerned;",
+  "paragraph_text": "(b) the categories of personal data concerned;",
+  "parent_texts": [
+    "1. The data subject shall have the right to obtain from the controller confirmation as to whether or not personal data concerning him or her are being processed, and, where that is the case, access to the personal data and the following information:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T30",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "DISPENSATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "erase",
+        "method": "CONTEXT"
+      }
+    ],
+    "object": [
+      {
+        "value": "personal data",
+        "method": "CONTEXT"
+      }
+    ],
+    "condition": {
+      "value": "to the extent that processing is necessary for exercising the right of freedom of expression and information",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_17/par_1",
+      "gdpr:art_17/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_17/par_3/pt_a"
+  },
+  "paragraph_iri": "gdpr:art_17/par_3/pt_a",
+  "needs_review": null,
+  "classification_rationale": "Erasure exemption arm: parent chapeau disapplies the erasure duties (paragraphs 1 and 2) to the extent processing is necessary for free expression. Same shape as the adopted H19 record.",
+  "anchor": "(a) for exercising the right of freedom of expression and information;",
+  "paragraph_text": "(a) for exercising the right of freedom of expression and information;",
+  "parent_texts": [
+    "3. Paragraphs 1 and 2 shall not apply to the extent that processing is necessary:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T31",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "DISPENSATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "refrain from decisions based solely on automated processing",
+        "method": "CITATION"
+      }
+    ],
+    "object": [
+      {
+        "value": "paragraph 1",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "the decision is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_22/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "high",
+    "source_article": "gdpr:art_22/par_2/pt_b"
+  },
+  "paragraph_iri": "gdpr:art_22/par_2/pt_b",
+  "needs_review": null,
+  "classification_rationale": "Exception arm to the Article 22(1) automated-decision prohibition: legal authorisation with safeguards lifts it.",
+  "anchor": "(b) is authorised by Union or Member State law to which the controller is subject",
+  "paragraph_text": "(b) is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests; or",
+  "parent_texts": [
+    "2. Paragraph 1 shall not apply if the decision:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T32",
+  "statement_class": "NOT_APPLICABLE",
+  "statement": {
+    "text": "the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security"
+  },
+  "paragraph_iri": "gdpr:art_23/par_1/pt_d",
+  "needs_review": null,
+  "classification_rationale": "Ground on which Union or Member State LAW may legislate restrictions of Articles 12-22 rights: addressed to legislators, not to controllers/processors. Legislator-addressed content carries no extractable duty by the adopted convention; reviewable judgment.",
+  "anchor": "(d) the prevention, investigation, detection or prosecution of criminal offences",
+  "paragraph_text": "(d) the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security;",
+  "parent_texts": [
+    "1. Union or Member State law to which the data controller or processor is subject may restrict by way of a legislative measure the scope of the obligations and rights provided for in Articles 12 to 22 and Article 34, as well as Article 5 in so far as its provisions correspond to the rights and obligations provided for in Articles 12 to 22, when such a restriction respects the essence of the fundamental rights and freedoms and is a necessary and proportionate measure in a democratic society to safeguard:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T33",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "implement",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "high",
+    "source_article": "gdpr:art_24/par_1"
+  },
+  "paragraph_iri": "gdpr:art_24/par_1",
+  "needs_review": null,
+  "classification_rationale": "Core accountability duty.",
+  "anchor": "the controller shall implement appropriate technical and organisational measures",
+  "paragraph_text": "1. Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T34",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "review and update",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "those measures",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "where necessary",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_24/par_1"
+  },
+  "paragraph_iri": "gdpr:art_24/par_1",
+  "needs_review": null,
+  "classification_rationale": "Second sentence, separate continuing duty over the same measures.",
+  "anchor": "Those measures shall be reviewed and updated where necessary.",
+  "paragraph_text": "1. Taking into account the nature, scope, context and purposes of processing as well as the risks of varying likelihood and severity for the rights and freedoms of natural persons, the controller shall implement appropriate technical and organisational measures to ensure and to be able to demonstrate that processing is performed in accordance with this Regulation. Those measures shall be reviewed and updated where necessary.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T35",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the joint controllers",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "duly reflect",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the respective roles and relationships of the joint controllers vis-à-vis the data subjects",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_26/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_26/par_2"
+  },
+  "paragraph_iri": "gdpr:art_26/par_2",
+  "needs_review": null,
+  "classification_rationale": "The paragraph obliges the arrangement's content; the parties to the paragraph-1 arrangement (the joint controllers) bear the duty.",
+  "anchor": "The arrangement referred to in paragraph 1 shall duly reflect the respective roles and relationships",
+  "paragraph_text": "2. The arrangement referred to in paragraph 1 shall duly reflect the respective roles and relationships of the joint controllers vis-à-vis the data subjects. The essence of the arrangement shall be made available to the data subject.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T36",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the joint controllers",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "make available",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the essence of the arrangement to the data subject",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_26/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_26/par_2"
+  },
+  "paragraph_iri": "gdpr:art_26/par_2",
+  "needs_review": null,
+  "classification_rationale": "Second sentence, transparency duty toward the data subject.",
+  "anchor": "The essence of the arrangement shall be made available to the data subject.",
+  "paragraph_text": "2. The arrangement referred to in paragraph 1 shall duly reflect the respective roles and relationships of the joint controllers vis-à-vis the data subjects. The essence of the arrangement shall be made available to the data subject.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T37",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the processor",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "assist",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the controller by appropriate technical and organisational measures, insofar as this is possible, for the fulfilment of the controller's obligation to respond to requests for exercising the data subject's rights laid down in Chapter III",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "taking into account the nature of the processing, by appropriate technical and organisational measures, insofar as this is possible, for the fulfilment of the controller's obligation to respond to requests for exercising the data subject's rights laid down in Chapter III",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_28/par_3/pt_e"
+  },
+  "paragraph_iri": "gdpr:art_28/par_3/pt_e",
+  "needs_review": null,
+  "classification_rationale": "Mandatory processor-contract stipulation; each point of the parent chapeau is a duty the contract must place on the processor.",
+  "anchor": "(e) taking into account the nature of the processing, assists the controller by appropriate technical and organisational measures",
+  "paragraph_text": "(e) taking into account the nature of the processing, assists the controller by appropriate technical and organisational measures, insofar as this is possible, for the fulfilment of the controller's obligation to respond to requests for exercising the data subject's rights laid down in Chapter III;",
+  "parent_texts": [
+    "3. Processing by a processor shall be governed by a contract or other legal act under Union or Member State law, that is binding on the processor with regard to the controller and that sets out the subject-matter and duration of the processing, the nature and purpose of the processing, the type of personal data and categories of data subjects and the obligations and rights of the controller. That contract or other legal act shall stipulate, in particular, that the processor:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T38",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "notify the personal data breach to the supervisory authority without undue delay and, where feasible, not later than 72 hours after having become aware of it",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the personal data breach",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons",
+      "method": "STATED"
+    },
+    "beneficiary": {
+      "value": "the supervisory authority",
+      "method": "STATED"
+    },
+    "references": [
+      "gdpr:art_55"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "high",
+    "source_article": "gdpr:art_33/par_1"
+  },
+  "paragraph_iri": "gdpr:art_33/par_1",
+  "needs_review": null,
+  "classification_rationale": "Breach-notification duty with its no-risk carve-out kept as condition on the primary norm (no mirror sibling), per the exception-split convention.",
+  "anchor": "the controller shall without undue delay ... notify the personal data breach to the supervisory authority",
+  "paragraph_text": "1. In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons. Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T39",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "accompany",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the notification by reasons for the delay",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "where the notification to the supervisory authority is not made within 72 hours",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_33/par_1"
+  },
+  "paragraph_iri": "gdpr:art_33/par_1",
+  "needs_review": null,
+  "classification_rationale": "Second sentence, late-notification duty.",
+  "anchor": "Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+  "paragraph_text": "1. In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after having become aware of it, notify the personal data breach to the supervisory authority competent in accordance with Article 55, unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons. Where the notification to the supervisory authority is not made within 72 hours, it shall be accompanied by reasons for the delay.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T40",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "document",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "any personal data breaches, comprising the facts relating to the personal data breach, its effects and the remedial action taken",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_33/par_5"
+  },
+  "paragraph_iri": "gdpr:art_33/par_5",
+  "needs_review": null,
+  "classification_rationale": "Breach-register duty.",
+  "anchor": "The controller shall document any personal data breaches",
+  "paragraph_text": "5. The controller shall document any personal data breaches, comprising the facts relating to the personal data breach, its effects and the remedial action taken. That documentation shall enable the supervisory authority to verify compliance with this Article.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T41",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "enable",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the supervisory authority to verify compliance with this Article",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "medium",
+    "source_article": "gdpr:art_33/par_5"
+  },
+  "paragraph_iri": "gdpr:art_33/par_5",
+  "needs_review": null,
+  "classification_rationale": "Second sentence: the documentation must be verification-capable; duty rides with the documenting controller.",
+  "anchor": "That documentation shall enable the supervisory authority to verify compliance with this Article.",
+  "paragraph_text": "5. The controller shall document any personal data breaches, comprising the facts relating to the personal data breach, its effects and the remedial action taken. That documentation shall enable the supervisory authority to verify compliance with this Article.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T42",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "controllers or processors that are not subject to this Regulation pursuant to Article 3",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "adhere to",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "codes of conduct approved pursuant to paragraph 5 of this Article and having general validity pursuant to paragraph 9 of this Article",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in order to provide appropriate safeguards within the framework of personal data transfers to third countries or international organisations under the terms referred to in point (e) of Article 46(2)",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_40/par_5",
+      "gdpr:art_40/par_9",
+      "gdpr:art_3",
+      "gdpr:art_46/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "gdpr:art_40/par_3"
+  },
+  "paragraph_iri": "gdpr:art_40/par_3",
+  "needs_review": null,
+  "classification_rationale": "Permission for non-EU controllers/processors to join approved codes as a transfer safeguard.",
+  "anchor": "codes of conduct ... may also be adhered to by controllers or processors that are not subject to this Regulation",
+  "paragraph_text": "3. In addition to adherence by controllers or processors subject to this Regulation, codes of conduct approved pursuant to paragraph 5 of this Article and having general validity pursuant to paragraph 9 of this Article may also be adhered to by controllers or processors that are not subject to this Regulation pursuant to Article 3 in order to provide appropriate safeguards within the framework of personal data transfers to third countries or international organisations under the terms referred to in point (e) of Article 46(2). Such controllers or processors shall make binding and enforceable commitments, via contractual or other legally binding instruments, to apply those appropriate safeguards including with regard to the rights of data subjects.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T43",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "such controllers or processors",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "make",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "binding and enforceable commitments, via contractual or other legally binding instruments, to apply those appropriate safeguards including with regard to the rights of data subjects",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "gdpr:art_40/par_3"
+  },
+  "paragraph_iri": "gdpr:art_40/par_3",
+  "needs_review": null,
+  "classification_rationale": "Companion duty attached to the permission's use.",
+  "anchor": "Such controllers or processors shall make binding and enforceable commitments",
+  "paragraph_text": "3. In addition to adherence by controllers or processors subject to this Regulation, codes of conduct approved pursuant to paragraph 5 of this Article and having general validity pursuant to paragraph 9 of this Article may also be adhered to by controllers or processors that are not subject to this Regulation pursuant to Article 3 in order to provide appropriate safeguards within the framework of personal data transfers to third countries or international organisations under the terms referred to in point (e) of Article 46(2). Such controllers or processors shall make binding and enforceable commitments, via contractual or other legally binding instruments, to apply those appropriate safeguards including with regard to the rights of data subjects.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T44",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "certification bodies which have an appropriate level of expertise in relation to data protection",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "issue and renew",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "certification",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_57",
+      "gdpr:art_58",
+      "gdpr:art_58/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_43/par_1"
+  },
+  "paragraph_iri": "gdpr:art_43/par_1",
+  "needs_review": null,
+  "classification_rationale": "Certification-body duty with the inform-first condition.",
+  "anchor": "certification bodies ... shall, after informing the supervisory authority ... issue and renew certification",
+  "paragraph_text": "1. Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification. Member States shall ensure that those certification bodies are accredited by one or both of the following:",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T45",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "Member States",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "ensure",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "that those certification bodies are accredited by one or both of the following",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_43/par_1"
+  },
+  "paragraph_iri": "gdpr:art_43/par_1",
+  "needs_review": null,
+  "classification_rationale": "Chapeau duty on Member States; the accreditation routes live in points (a)/(b). Member States acting as institutional actors are extractable (unlike duties addressed to 'Union or Member State law').",
+  "anchor": "Member States shall ensure that those certification bodies are accredited by one or both of the following:",
+  "paragraph_text": "1. Without prejudice to the tasks and powers of the competent supervisory authority under Articles 57 and 58, certification bodies which have an appropriate level of expertise in relation to data protection shall, after informing the supervisory authority in order to allow it to exercise its powers pursuant to point (h) of Article 58(2) where necessary, issue and renew certification. Member States shall ensure that those certification bodies are accredited by one or both of the following:",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T46",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the requesting supervisory authority",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "adopt",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a provisional measure on the territory of its Member State",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "where a supervisory authority does not provide the information referred to in paragraph 5 of this Article within one month of receiving the request of another supervisory authority",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_61/par_5",
+      "gdpr:art_55/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_61/par_8"
+  },
+  "paragraph_iri": "gdpr:art_61/par_8",
+  "needs_review": null,
+  "classification_rationale": "Mutual-assistance fallback permission.",
+  "anchor": "the requesting supervisory authority may adopt a provisional measure on the territory of its Member State",
+  "paragraph_text": "8. Where a supervisory authority does not provide the information referred to in paragraph 5 of this Article within one month of receiving the request of another supervisory authority, the requesting supervisory authority may adopt a provisional measure on the territory of its Member State in accordance with Article 55(1). In that case, the urgent need to act under Article 66(1) shall be presumed to be met and require an urgent binding decision from the Board pursuant to Article 66(2).",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T47",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "the Board",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "adopt",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "an urgent binding decision pursuant to Article 66(2)",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in that case, the urgent need to act under Article 66(1) shall be presumed to be met",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_66/par_1",
+      "gdpr:art_66/par_2"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_61/par_8"
+  },
+  "paragraph_iri": "gdpr:art_61/par_8",
+  "needs_review": null,
+  "classification_rationale": "Deeming provision that triggers a Board decision duty; the presumption is carried in the condition. Awkward shape, flagged for review.",
+  "anchor": "the urgent need to act under Article 66(1) shall be presumed to be met and require an urgent binding decision from the Board",
+  "paragraph_text": "8. Where a supervisory authority does not provide the information referred to in paragraph 5 of this Article within one month of receiving the request of another supervisory authority, the requesting supervisory authority may adopt a provisional measure on the territory of its Member State in accordance with Article 55(1). In that case, the urgent need to act under Article 66(1) shall be presumed to be met and require an urgent binding decision from the Board pursuant to Article 66(2).",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T48",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PROHIBITION",
+    "subject": [
+      {
+        "value": "the supervisory authorities concerned",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "adopt",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "a decision on the subject matter submitted to the Board",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "under paragraph 1 during the periods referred to in paragraphs 2 and 3",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_65/par_1",
+      "gdpr:art_65/par_2",
+      "gdpr:art_65/par_3"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "medium",
+    "source_article": "gdpr:art_65/par_4"
+  },
+  "paragraph_iri": "gdpr:art_65/par_4",
+  "needs_review": null,
+  "classification_rationale": "Standstill prohibition during the consistency-mechanism window.",
+  "anchor": "The supervisory authorities concerned shall not adopt a decision on the subject matter submitted to the Board",
+  "paragraph_text": "4. The supervisory authorities concerned shall not adopt a decision on the subject matter submitted to the Board under paragraph 1 during the periods referred to in paragraphs 2 and 3.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T49",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "Member States",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "lay down",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "the rules on other penalties applicable to infringements of this Regulation",
+        "method": "STATED"
+      }
+    ],
+    "condition": {
+      "value": "in particular for infringements which are not subject to administrative fines pursuant to Article 83",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_83"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_84/par_1"
+  },
+  "paragraph_iri": "gdpr:art_84/par_1",
+  "needs_review": null,
+  "classification_rationale": "Member-State duty (institutional actor, extractable by convention).",
+  "anchor": "Member States shall lay down the rules on other penalties",
+  "paragraph_text": "1. Member States shall lay down the rules on other penalties applicable to infringements of this Regulation in particular for infringements which are not subject to administrative fines pursuant to Article 83, and shall take all measures necessary to ensure that they are implemented. Such penalties shall be effective, proportionate and dissuasive.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T50",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "Member States",
+        "method": "STATED"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "take",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "all measures necessary to ensure that they are implemented",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_84/par_1"
+  },
+  "paragraph_iri": "gdpr:art_84/par_1",
+  "needs_review": null,
+  "classification_rationale": "Second duty in the same sentence.",
+  "anchor": "shall take all measures necessary to ensure that they are implemented",
+  "paragraph_text": "1. Member States shall lay down the rules on other penalties applicable to infringements of this Regulation in particular for infringements which are not subject to administrative fines pursuant to Article 83, and shall take all measures necessary to ensure that they are implemented. Such penalties shall be effective, proportionate and dissuasive.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T51",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "OBLIGATION",
+    "subject": [
+      {
+        "value": "Member States",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "ensure",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "that such penalties are effective, proportionate and dissuasive",
+        "method": "STATED"
+      }
+    ],
+    "condition": null,
+    "beneficiary": null,
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "severity": "low",
+    "source_article": "gdpr:art_84/par_1"
+  },
+  "paragraph_iri": "gdpr:art_84/par_1",
+  "needs_review": null,
+  "classification_rationale": "Quality requirement on the penalties; the duty rides with the Member States laying them down.",
+  "anchor": "Such penalties shall be effective, proportionate and dissuasive.",
+  "paragraph_text": "1. Member States shall lay down the rules on other penalties applicable to infringements of this Regulation in particular for infringements which are not subject to administrative fines pursuant to Article 83, and shall take all measures necessary to ensure that they are implemented. Such penalties shall be effective, proportionate and dissuasive.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T52",
+  "statement_class": "NOT_APPLICABLE",
+  "statement": {
+    "text": "Paragraph 1 shall not apply if one of the following applies:"
+  },
+  "paragraph_iri": "gdpr:art_9/par_2",
+  "needs_review": null,
+  "classification_rationale": "Bare condition-introducer chapeau: the operative dispensations live entirely in points (a)-(j), which are separate paragraphs. No self-contained norm here; reviewable judgment.",
+  "anchor": "Paragraph 1 shall not apply if one of the following applies:",
+  "paragraph_text": "2. Paragraph 1 shall not apply if one of the following applies:",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T53",
+  "statement_class": "DEONTIC",
+  "statement": {
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "process",
+        "method": "STATED"
+      }
+    ],
+    "object": [
+      {
+        "value": "special categories of personal data",
+        "method": "CONTEXT"
+      }
+    ],
+    "condition": {
+      "value": "the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_9/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "high",
+    "source_article": "gdpr:art_9/par_2/pt_a"
+  },
+  "paragraph_iri": "gdpr:art_9/par_2/pt_a",
+  "needs_review": null,
+  "classification_rationale": "Explicit-consent exception to the Article 9(1) prohibition, modelled as a conditioned permission — same class and shape as the adopted H04 record. One statement only: the 'except where' rider stays inside the condition.",
+  "anchor": "(a) the data subject has given explicit consent to the processing of those personal data for one or more specified purposes",
+  "paragraph_text": "(a) the data subject has given explicit consent to the processing of those personal data for one or more specified purposes, except where Union or Member State law provide that the prohibition referred to in paragraph 1 may not be lifted by the data subject;",
+  "parent_texts": [
+    "2. Paragraph 1 shall not apply if one of the following applies:"
+  ],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T54",
+  "statement_class": "DEFINITIONAL",
+  "statement": {
+    "term": "main establishment of a controller",
+    "definition": {
+      "value": "the place of its central administration in the Union, unless the decisions on the purposes and means of the processing of personal data are taken in another establishment of the controller in the Union, in which case that other establishment should be considered to be the main establishment",
+      "method": "STATED"
+    },
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "source_article": "gdpr:rct_36/p_0"
+  },
+  "paragraph_iri": "gdpr:rct_36/p_0",
+  "needs_review": null,
+  "classification_rationale": "Recital carrying definitional guidance on the Article 4(16) term for controllers; recitals may yield definitional content by convention.",
+  "anchor": "The main establishment of a controller in the Union should be the place of its central administration in the Union",
+  "paragraph_text": "(36) The main establishment of a controller in the Union should be the place of its central administration in the Union, unless the decisions on the purposes and means of the processing of personal data are taken in another establishment of the controller in the Union, in which case that other establishment should be considered to be the main establishment. The main establishment of a controller in the Union should be determined according to objective criteria and should imply the effective and real exercise of management activities determining the main decisions as to the purposes and means of processing through stable arrangements. That criterion should not depend on whether the processing of personal data is carried out at that location. The presence and use of technical means and technologies for processing personal data or processing activities do not, in themselves, constitute a main establishment and are therefore not determining criteria for a main establishment. The main establishment of the processor should be the place of its central administration in the Union or, if it has no central administration in the Union, the place where the main processing activities take place in the Union. In cases involving both the controller and the processor, the competent lead supervisory authority should remain the supervisory authority of the Member State where the controller has its main establishment, but the supervisory authority of the processor should be considered to be a supervisory authority concerned and that supervisory authority should participate in the cooperation procedure provided for by this Regulation. In any case, the supervisory authorities of the Member State or Member States where the processor has one or more establishments should not be considered to be supervisory authorities concerned where the draft decision concerns only the controller. Where the processing is carried out by a group of undertakings, the main establishment of the controlling undertaking should be considered to be the main establishment of the group of undertakings, except where the purposes and means of processing are determined by another undertaking.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T55",
+  "statement_class": "DEFINITIONAL",
+  "statement": {
+    "term": "main establishment of the processor",
+    "definition": {
+      "value": "the place of its central administration in the Union or, if it has no central administration in the Union, the place where the main processing activities take place",
+      "method": "STATED"
+    },
+    "references": [],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "source_article": "gdpr:rct_36/p_0"
+  },
+  "paragraph_iri": "gdpr:rct_36/p_0",
+  "needs_review": null,
+  "classification_rationale": "Same recital, the processor limb.",
+  "anchor": "The main establishment of the processor should be the place of its central administration in the Union",
+  "paragraph_text": "(36) The main establishment of a controller in the Union should be the place of its central administration in the Union, unless the decisions on the purposes and means of the processing of personal data are taken in another establishment of the controller in the Union, in which case that other establishment should be considered to be the main establishment. The main establishment of a controller in the Union should be determined according to objective criteria and should imply the effective and real exercise of management activities determining the main decisions as to the purposes and means of processing through stable arrangements. That criterion should not depend on whether the processing of personal data is carried out at that location. The presence and use of technical means and technologies for processing personal data or processing activities do not, in themselves, constitute a main establishment and are therefore not determining criteria for a main establishment. The main establishment of the processor should be the place of its central administration in the Union or, if it has no central administration in the Union, the place where the main processing activities take place in the Union. In cases involving both the controller and the processor, the competent lead supervisory authority should remain the supervisory authority of the Member State where the controller has its main establishment, but the supervisory authority of the processor should be considered to be a supervisory authority concerned and that supervisory authority should participate in the cooperation procedure provided for by this Regulation. In any case, the supervisory authorities of the Member State or Member States where the processor has one or more establishments should not be considered to be supervisory authorities concerned where the draft decision concerns only the controller. Where the processing is carried out by a group of undertakings, the main establishment of the controlling undertaking should be considered to be the main establishment of the group of undertakings, except where the purposes and means of processing are determined by another undertaking.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T56",
+  "statement_class": "DEFINITIONAL",
+  "statement": {
+    "term": "freely given consent",
+    "definition": {
+      "value": "consent should not provide a valid legal ground for the processing of personal data in a specific case where there is a clear imbalance between the data subject and the controller, in particular where the controller is a public authority and it is therefore unlikely that consent was freely given in all the circumstances of that specific situation.",
+      "method": "STATED"
+    },
+    "references": [
+      "gdpr:art_4/par_11"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "source_article": "gdpr:rct_43/p_0"
+  },
+  "paragraph_iri": "gdpr:rct_43/p_0",
+  "needs_review": null,
+  "classification_rationale": "Recital guidance narrowing when consent counts as freely given (imbalance limb); definitional content on the Article 4(11) term.",
+  "anchor": "consent should not provide a valid legal ground ... where there is a clear imbalance between the data subject and the controller",
+  "paragraph_text": "(43) In order to ensure that consent is freely given, consent should not provide a valid legal ground for the processing of personal data in a specific case where there is a clear imbalance between the data subject and the controller, in particular where the controller is a public authority and it is therefore unlikely that consent was freely given in all the circumstances of that specific situation. Consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
+{
+  "gold_id": "T57",
+  "statement_class": "DEFINITIONAL",
+  "statement": {
+    "term": "freely given consent",
+    "definition": {
+      "value": "consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance",
+      "method": "STATED"
+    },
+    "references": [
+      "gdpr:art_4/par_11"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "source_article": "gdpr:rct_43/p_0"
+  },
+  "paragraph_iri": "gdpr:rct_43/p_0",
+  "needs_review": null,
+  "classification_rationale": "Second limb: the granularity/conditionality presumptions.",
+  "anchor": "Consent is presumed not to be freely given if it does not allow separate consent",
+  "paragraph_text": "(43) In order to ensure that consent is freely given, consent should not provide a valid legal ground for the processing of personal data in a specific case where there is a clear imbalance between the data subject and the controller, in particular where the controller is a public authority and it is therefore unlikely that consent was freely given in all the circumstances of that specific situation. Consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance.",
+  "parent_texts": [],
+  "label_source": "claude_proposed"
+}
