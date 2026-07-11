@@ -271,7 +271,7 @@
       "method": "STATED"
     },
     "condition": {
-      "value": "which are more favourable to workers in terms of protecting their rights in respect of the use of AI systems by employers, or which are more favourable to workers",
+      "value": "which are more favourable to workers in terms of protecting their rights in respect of the use of AI systems by employers",
       "method": "STATED"
     },
     "polarity": "INCLUDES",
@@ -1176,7 +1176,7 @@
   "gold_id": "T29",
   "statement_class": "DEONTIC",
   "statement": {
-    "modality": "PERMISSION",
+    "modality": "OBLIGATION",
     "subject": [
       {
         "value": "the controller",
@@ -1186,7 +1186,7 @@
     "predicate": [
       {
         "value": "provide",
-        "method": "CONTEXT"
+        "method": "STATED"
       }
     ],
     "object": [
@@ -1195,10 +1195,13 @@
         "method": "STATED"
       }
     ],
-    "condition": null,
+    "condition": {
+      "value": "where personal data concerning him or her are being processed",
+      "method": "STATED"
+    },
     "beneficiary": {
       "value": "the data subject",
-      "method": "CONTEXT"
+      "method": "STATED"
     },
     "references": [],
     "confidence": null,
@@ -1208,7 +1211,7 @@
   },
   "paragraph_iri": "gdpr:art_15/par_1/pt_b",
   "needs_review": null,
-  "classification_rationale": "Access-right item: the chapeau grants the right to obtain the listed information from the controller; each listed item is one obtainable.",
+  "classification_rationale": "Access-right item modelled as a controller duty with the data subject as beneficiary (H09 convention); each listed item of the chapeau is one providable.",
   "anchor": "(b) the categories of personal data concerned;",
   "paragraph_text": "(b) the categories of personal data concerned;",
   "parent_texts": [
@@ -1267,7 +1270,7 @@
   "gold_id": "T31",
   "statement_class": "DEONTIC",
   "statement": {
-    "modality": "DISPENSATION",
+    "modality": "PERMISSION",
     "subject": [
       {
         "value": "the controller",
@@ -1276,13 +1279,13 @@
     ],
     "predicate": [
       {
-        "value": "refrain from decisions based solely on automated processing",
-        "method": "CITATION"
+        "value": "subject",
+        "method": "STATED"
       }
     ],
     "object": [
       {
-        "value": "paragraph 1",
+        "value": "the data subject to a decision based solely on automated processing, including profiling",
         "method": "STATED"
       }
     ],
@@ -1301,7 +1304,7 @@
   },
   "paragraph_iri": "gdpr:art_22/par_2/pt_b",
   "needs_review": null,
-  "classification_rationale": "Exception arm to the Article 22(1) automated-decision prohibition: legal authorisation with safeguards lifts it.",
+  "classification_rationale": "Exception arm read as a conditioned permission for the controller (adopted from the run's reading, 2026-07-10): automated decisions are permitted where authorised by law with safeguards.",
   "anchor": "(b) is authorised by Union or Member State law to which the controller is subject",
   "paragraph_text": "(b) is authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests; or",
   "parent_texts": [
@@ -1311,13 +1314,29 @@
 }
 {
   "gold_id": "T32",
-  "statement_class": "NOT_APPLICABLE",
+  "statement_class": "APPLICABILITY",
   "statement": {
-    "text": "the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security"
+    "scope_type": "MATERIAL",
+    "applies_to": {
+      "value": "the scope of the obligations and rights provided for in Articles 12 to 22 and Article 34, as well as Article 5 in so far as its provisions correspond to the rights and obligations provided for in Articles 12 to 22",
+      "method": "CITATION"
+    },
+    "condition": {
+      "value": "when Union or Member State law restricts them by way of a legislative measure to safeguard the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security",
+      "method": "STATED"
+    },
+    "polarity": "EXCLUDES",
+    "references": [
+      "gdpr:art_5",
+      "gdpr:art_34"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": false,
+    "source_article": "gdpr:art_23/par_1/pt_d"
   },
   "paragraph_iri": "gdpr:art_23/par_1/pt_d",
   "needs_review": null,
-  "classification_rationale": "Ground on which Union or Member State LAW may legislate restrictions of Articles 12-22 rights: addressed to legislators, not to controllers/processors. Legislator-addressed content carries no extractable duty by the adopted convention; reviewable judgment.",
+  "classification_rationale": "Restriction ground: data-subject rights (Arts 12-22, 34, 5) can be narrowed by legislative measure for criminal-enforcement/public-security purposes — a scope carve-out, not an actor duty. Reclassified NA->APPLICABILITY/EXCLUDES per Yoseph 2026-07-10 (run's reading adopted).",
   "anchor": "(d) the prevention, investigation, detection or prosecution of criminal offences",
   "paragraph_text": "(d) the prevention, investigation, detection or prosecution of criminal offences or the execution of criminal penalties, including the safeguarding against and the prevention of threats to public security;",
   "parent_texts": [
@@ -1563,7 +1582,7 @@
       "method": "STATED"
     },
     "beneficiary": {
-      "value": "the supervisory authority",
+      "value": "the supervisory authority competent in accordance with Article 55",
       "method": "STATED"
     },
     "references": [
@@ -2133,13 +2152,43 @@
 }
 {
   "gold_id": "T52",
-  "statement_class": "NOT_APPLICABLE",
+  "statement_class": "DEONTIC",
   "statement": {
-    "text": "Paragraph 1 shall not apply if one of the following applies:"
+    "modality": "PERMISSION",
+    "subject": [
+      {
+        "value": "the controller",
+        "method": "CONTEXT"
+      }
+    ],
+    "predicate": [
+      {
+        "value": "process",
+        "method": "CITATION"
+      }
+    ],
+    "object": [
+      {
+        "value": "special categories of personal data referred to in paragraph 1",
+        "method": "CITATION"
+      }
+    ],
+    "condition": {
+      "value": "one of the following applies",
+      "method": "STATED"
+    },
+    "beneficiary": null,
+    "references": [
+      "gdpr:art_9/par_1"
+    ],
+    "confidence": null,
+    "applies_to_healthcare": true,
+    "severity": "high",
+    "source_article": "gdpr:art_9/par_2"
   },
   "paragraph_iri": "gdpr:art_9/par_2",
   "needs_review": null,
-  "classification_rationale": "Bare condition-introducer chapeau: the operative dispensations live entirely in points (a)-(j), which are separate paragraphs. No self-contained norm here; reviewable judgment.",
+  "classification_rationale": "Lead-in chapeau carries the operative frame: paragraph 1's prohibition is lifted (processing permitted) when one of points (a)-(j) applies. Reclassified from NA per Yoseph 2026-07-10.",
   "anchor": "Paragraph 1 shall not apply if one of the following applies:",
   "paragraph_text": "2. Paragraph 1 shall not apply if one of the following applies:",
   "parent_texts": [],
@@ -2265,7 +2314,7 @@
   "statement": {
     "term": "freely given consent",
     "definition": {
-      "value": "consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance",
+      "value": "consent is presumed not to be freely given if it does not allow separate consent to be given to different personal data processing operations despite it being appropriate in the individual case, or if the performance of a contract, including the provision of a service, is dependent on the consent despite such consent not being necessary for such performance.",
       "method": "STATED"
     },
     "references": [
