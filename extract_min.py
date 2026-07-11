@@ -1138,6 +1138,62 @@ _GDPR_CORE_ROLES = {"the controller", "the processor", "the data subject"}
 _AIACT_CORE_ROLES = {"the provider", "the deployer"}
 _DEFAULT_DUTY_BEARER = {"gdpr": "the controller", "aiact": "the provider"}
 
+# Actor vocabulary for the snap decision (guard v2, corpus scale-up). A subject
+# that names ANY of these actors is NEVER overwritten — the corpus acceptance
+# sample showed the LLM extracts institutional actors (notified bodies,
+# judicial authorities, certification bodies) correctly, and the old 7-keyword
+# check snapped them all to the default duty-bearer (348 records damaged).
+# The cast is closed and derived, not hand-grown: DPV/AIRO actor classes plus
+# the actor terms defined in Art 4 GDPR / Art 3 AI Act. 'authorit'/'bod' are
+# stems covering all authority/body variants. Entity-nouns (enterprise,
+# undertaking, person, organisation) are DELIBERATELY absent: the adopted H08
+# convention snaps those grammatical subjects to the duty-bearer.
+_ACTOR_VOCAB = [
+    "controller", "processor", "data subject", "recipient", "third party",
+    "representative", "provider", "deployer", "importer", "distributor",
+    "operator", "authorit", "bod", "member state", "the commission",
+    "the board", "ai office", "union institution",
+]
+
+# When the snap fires (empty or non-actor subject), the duty-bearer is inferred
+# from the paragraph's own text before falling back to the regulation default —
+# Art 84(1) names Member States, so 'Such penalties shall be effective...'
+# resolves to Member States, not 'the controller'. Earliest mention wins,
+# longer stem breaks ties. Table is stem -> canonical subject phrase.
+_DUTY_BEARER_CANON = [
+    ("market surveillance authorit", "the market surveillance authority"),
+    ("conformity assessment bod", "the conformity assessment body"),
+    ("supervisory authorit", "the supervisory authority"),
+    ("certification bod", "the certification body"),
+    ("notifying authorit", "the notifying authority"),
+    ("notified bod", "the notified body"),
+    ("member state", "Member States"),
+    ("the commission", "the Commission"),
+    ("data subject", "the data subject"),
+    ("ai office", "the AI Office"),
+    ("controller", "the controller"),
+    ("processor", "the processor"),
+    ("the board", "the Board"),
+    ("provider", "the provider"),
+    ("deployer", "the deployer"),
+]
+
+
+def _infer_duty_bearer(rec: dict) -> str | None:
+    """Pick the duty-bearer a paragraph itself names: earliest actor mention in
+    the paragraph text (then the parent chain), longest stem on ties. None when
+    no table actor is named — caller falls back to the regulation default."""
+    texts = [rec.get("text") or ""]
+    texts += [p.get("text") or "" for p in (rec.get("parent") or [])
+              if isinstance(p, dict)]
+    for text in texts:
+        t = text.lower()
+        hits = [(t.find(stem), -len(stem), canon)
+                for stem, canon in _DUTY_BEARER_CANON if stem in t]
+        if hits:
+            return min(hits)[2]
+    return None
+
 
 # Value-type markers for routing a dropped PERMISSION grammatical subject:
 # a data/patient noun is the OBJECT ("special categories ... may be processed"),
@@ -1301,17 +1357,21 @@ def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
                 ev["value"] = canon  # value-only canonicalisation; method left as the LLM's
 
         # Passive obligation-of-being / non-actor subject: when NO subject names
-        # a duty-bearer role at all (empty, or a passive grammatical subject
+        # a duty-bearer actor at all (empty, or a passive grammatical subject
         # such as "personal data" or "enterprise employing fewer than 250
-        # persons"), the implied duty-bearer is the regulation default (CONTEXT).
-        # A subject containing any role word — including multi-role "controllers
-        # and processors" — is left as-is. Flagged for audit.
-        def _has_role_word(ev: dict) -> bool:
+        # persons"), the implied duty-bearer is the actor the paragraph itself
+        # names, falling back to the regulation default (CONTEXT). The actor
+        # check uses the FULL derived vocabulary (_ACTOR_VOCAB), not just the
+        # core roles: a subject naming ANY actor — "notified bodies", "the
+        # competent judicial authority", multi-role "controllers and
+        # processors" — is left as-is. Flagged for audit.
+        def _names_actor(ev: dict) -> bool:
             v = (ev.get("value") or "").lower()
-            return any(kw in v for kw, _ in _ROLE_KEYWORDS)
-        if default and not any(_has_role_word(ev) for ev in subj):
+            return any(kw in v for kw in _ACTOR_VOCAB)
+        if default and not any(_names_actor(ev) for ev in subj):
             dropped = [ev.get("value") for ev in subj if ev.get("value")]
-            st["subject"] = [{"value": default, "method": "CONTEXT"}]
+            bearer = _infer_duty_bearer(rec) or default
+            st["subject"] = [{"value": bearer, "method": "CONTEXT"}]
             r["subject_inferred_duty_bearer"] = True
             _preserve_dropped_subject(st, st.get("modality"), dropped)
 
