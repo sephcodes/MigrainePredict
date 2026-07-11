@@ -20,6 +20,13 @@ Two measures over saved runs (no gold, no LLM):
    DefinitionalStatement / ApplicabilityStatement). This confirms the saved
    output still conforms to the current schema and catches drift since extraction.
 
+3. Content completeness. Pydantic accepts a slot whose value is an empty
+   string or an empty list (found live: gdpr:art_84/par_1 obligation with a
+   present-but-empty predicate after copula stripping — schema-valid,
+   semantically void). A statement counts as incomplete when a REQUIRED slot
+   is an empty list or any {value, method} element carries a blank value.
+   Optional slots (condition, beneficiary) count only when present-but-blank.
+
 Scope = stage-2 TYPED extractions only (DEONTIC / DEFINITIONAL / APPLICABILITY);
 NOT_APPLICABLE stubs and stage-1 classification are not stage-2 statement objects
 and are excluded.
@@ -67,12 +74,49 @@ def _is_transient(msg):
     return any(m in (msg or "") for m in _TRANSIENT_ERROR_MARKERS)
 
 
+# Slots whose emptiness makes the statement semantically void. Lists are
+# required non-empty; dict-or-null slots count only when present-but-blank.
+_REQUIRED_SLOTS = {
+    "DEONTIC": ["subject", "predicate", "object"],
+    "DEFINITIONAL": ["term", "definition"],
+    "APPLICABILITY": ["applies_to"],
+}
+_OPTIONAL_SLOTS = ["condition", "beneficiary"]
+
+
+def _blank(v):
+    return not (v or "").strip() if isinstance(v, (str, type(None))) else False
+
+
+def _empty_content(cls, stmt):
+    """Names of slots that are structurally present but content-empty."""
+    bad = []
+    for slot in _REQUIRED_SLOTS.get(cls, []):
+        v = stmt.get(slot)
+        if isinstance(v, list):
+            if not v or all(_blank(e.get("value")) for e in v if isinstance(e, dict)):
+                bad.append(slot)
+        elif isinstance(v, dict):
+            if _blank(v.get("value")):
+                bad.append(slot)
+        elif _blank(v):          # bare string slot (term)
+            bad.append(slot)
+    for slot in _OPTIONAL_SLOTS:
+        v = stmt.get(slot)
+        if isinstance(v, dict) and _blank(v.get("value")):
+            bad.append(slot)
+        elif isinstance(v, list) and v and all(_blank(e.get("value")) for e in v if isinstance(e, dict)):
+            bad.append(slot)
+    return bad
+
+
 def check_set(name, run_files):
     total = Counter()          # class -> typed extraction attempts
     valid = Counter()          # class -> first-attempt valid
     schema_fail, transient_fail = [], []   # (class, iri, msg)
     revalid_ok = Counter()
     revalid_fail = []          # (class, iri, error)
+    empty_content = []         # (class, statement_id, blank slots)
 
     for rf in run_files:
         for r in load_jsonl(rf):
@@ -93,6 +137,10 @@ def check_set(name, run_files):
             except ValidationError as e:
                 revalid_fail.append((cls, r.get("paragraph_iri"),
                                      str(e).splitlines()[0]))
+            bad = _empty_content(cls, stmt)
+            if bad:
+                empty_content.append((cls, r.get("statement_id") or r.get("paragraph_iri"),
+                                      ", ".join(bad)))
 
     n = len(run_files)
     tot = sum(total.values())
@@ -106,13 +154,16 @@ def check_set(name, run_files):
     print(f"  first-attempt Pydantic pass: {val}/{tot} = {pct(val, tot)}"
           f"   (failures: {len(schema_fail)} schema, {len(transient_fail)} transient)")
     print(f"  re-validation vs current schema: {rev}/{val} = {pct(rev, val)}")
+    print(f"  content completeness: {val - len(empty_content)}/{val} = "
+          f"{pct(val - len(empty_content), val)}   ({len(empty_content)} with a blank slot)")
     for cls in MODELS:
         if total[cls]:
             print(f"      {cls:<13} first-attempt {valid[cls]}/{total[cls]}"
                   f"   re-validate {revalid_ok[cls]}/{valid[cls]}")
     for label, items in [("SCHEMA FAILURE", schema_fail),
                          ("transient failure", transient_fail),
-                         ("RE-VALIDATION FAILURE", revalid_fail)]:
+                         ("RE-VALIDATION FAILURE", revalid_fail),
+                         ("EMPTY CONTENT", empty_content)]:
         for cls, iri, msg in items:
             print(f"    [{label}] {cls} {iri}: {msg}")
     print()
