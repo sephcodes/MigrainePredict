@@ -1,10 +1,21 @@
 # Scale-up readiness checklist
 
-Full-corpus scale-up (748 GDPR + 1,071 AI Act postscreened paragraphs) is the immediate
-next deliverable after the 50-statement evaluation pipeline — the deliverable KG must
-cover the MigrainePredict scenario, which the current 51-statement graph does not.
-This doc lists everything tuned, deferred, or decided on the eval-set-sized graph that
-must be revisited before or during scale-up, so nothing rides along silently.
+**STATUS (2026-07-12): corpus EXTRACTION is done.** The full corpus (748 GDPR +
+1,071 AI Act paragraphs) is extracted under pipeline state `derived_actors`; the
+result and its QA live in `extraction_acceptance_summary.md`. This checklist is
+now a forward list for the MAPPING and VERIFICATION stages only (§1.1, §1.2, §2,
+§3.1, §4.1); the extraction-stage items (§3.2, §3.3, §3.4, §4.2) are settled and
+kept below for the record.
+
+**Pipeline is NOT "frozen as evaluated" (the original plan below was superseded).**
+The freeze plan was broken deliberately: the acceptance samples (test1, test2)
+showed the evaluated subject guard destroying institutional-actor subjects, so
+it was rewritten (`frozen` → `actorkeep` → `derived_actors`). Extraction quality
+is certified on the gold sets (dev/holdout F1 ≈ 0.929; test2 F1 0.935) — see
+`extraction_acceptance_summary.md` for the full pipeline-state and file map.
+
+This doc originally listed everything tuned, deferred, or decided on the
+eval-set-sized graph that must be revisited before or during scale-up.
 
 **Standing rule:** any pipeline change (extraction, mapping, verification) re-runs the
 frozen gold evaluations (`score_extraction.py`, `score_verification.py`, mapping
@@ -121,8 +132,8 @@ counting dispositions before committing to review.
 Enumeration-gate condition-introducer whitelist (unknown conditional enumerations →
 flag, not gate), `_ACTION_NOMINALS`, `_DEONTIC_OPERATORS`. Under-coverage at corpus
 = more `needs_review` flags. Measure flag rates on a corpus sample first; extend the
-whitelists from observed cases (with `test_enumeration_gate.py`-style regression
-assertions), not speculation.
+whitelists from observed cases (with regression assertions in the style of
+`test_subject_guard.py` / `test_predicate_guards.py`), not speculation.
 
 ### 3.3 Art 32 extras decision (chapeau + measure sub-points) — DECIDED 2026-07-10: keep current behaviour
 "Shall include the following: (a)…(d)" measure sub-points stay independent
@@ -205,26 +216,30 @@ limitation in the write-up; the dormant path is NOT revived.
    measurement joins §3.1's sample counts), §4 expansions — then re-run
    load → verify → resolve at corpus size, reviewing only unresolved flags.
 
-## Scale-up strategy (confirmed 2026-07-10 — all remaining decisions dispositioned)
+## Scale-up strategy (confirmed 2026-07-10; extraction executed 2026-07-12)
 
-- **Scope: FULL corpus** (748 GDPR + 1,071 AI Act postscreened paragraphs).
+- **Scope: FULL corpus** (748 GDPR + 1,071 AI Act postscreened paragraphs). DONE.
   A hand-picked "relevant provisions" subset was considered and rejected:
   scope-selection is itself an ungrounded legal mapping, and a partial corpus
   makes INSUFFICIENT verdicts ambiguous (law silent vs not ingested), breaking
   the no-inference-from-silence story.
-- **Pipeline FROZEN as evaluated** — no pre-run changes (§3.3 convention kept,
-  §3.4 skipped, §4.2 descoping extended). The frozen DEV/HOLDOUT gold numbers
-  remain the extraction-quality claim; no corpus gold set is authored.
-- **Corpus extraction QA:** single extraction run (not 5×; cross-run stability
-  claims remain eval-set claims) → gold-free checks over full corpus output
-  (`span_grounding.py`, `schema_validity.py`) + a stratified human spot-check
-  sample (~30–40 paragraphs, acceptance-sampling style worksheet).
-- **Mapping:** dry-run the candidate builder (tag pass active) over corpus
-  extractions and count dispositions per queue BEFORE committing review time;
-  review strategy chosen from real numbers.
+- **Pipeline: `derived_actors` (NOT frozen — plan superseded).** The original
+  "freeze as evaluated" plan was abandoned when test1/test2 exposed the subject
+  guard destroying institutional-actor subjects; the guard was rewritten and
+  re-certified on test2 (F1 0.935). §3.3 convention kept, §3.4 skipped, §4.2
+  descoping extended still hold. Details + file map in
+  `extraction_acceptance_summary.md`.
+- **Corpus extraction QA:** DONE — single extraction run, gold-free checks
+  (`span_grounding.py` ~98.5% grounded, `schema_validity.py` 100% valid /
+  97.7% content-complete) + acceptance sampling (test1 diagnostic, test2
+  reportable). All in `extraction_acceptance_summary.md`.
+- **Mapping (NEXT):** dry-run the candidate builder (tag pass active) over
+  corpus extractions and count dispositions per queue BEFORE committing review
+  time; review strategy chosen from real numbers.
 - **Query-time eval:** re-run the EXISTING gold 50 only (no new scenario
   queries) three-way — pipeline-Gemini, pipeline-Mistral, vector baseline —
   against the corpus graph. Controlled before/after; the Q25/S3 coverage-gap
   closures are the predicted headline.
-- **Standing rule unchanged:** any unavoidable mid-scale-up pipeline change
-  re-runs the frozen gold evals before numbers are quoted.
+- **Standing rule:** any further pipeline change re-runs the gold evals before
+  numbers are quoted (now a LIVE run, not a replay — replays do not exercise the
+  live subject-inference path; see `extraction_acceptance_summary.md`).
