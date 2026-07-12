@@ -1138,22 +1138,95 @@ _GDPR_CORE_ROLES = {"the controller", "the processor", "the data subject"}
 _AIACT_CORE_ROLES = {"the provider", "the deployer"}
 _DEFAULT_DUTY_BEARER = {"gdpr": "the controller", "aiact": "the provider"}
 
-# Actor vocabulary for the snap decision (guard v2, corpus scale-up). A subject
-# that names ANY of these actors is NEVER overwritten — the corpus acceptance
-# sample showed the LLM extracts institutional actors (notified bodies,
-# judicial authorities, certification bodies) correctly, and the old 7-keyword
-# check snapped them all to the default duty-bearer (348 records damaged).
-# The cast is closed and derived, not hand-grown: DPV/AIRO actor classes plus
-# the actor terms defined in Art 4 GDPR / Art 3 AI Act. 'authorit'/'bod' are
-# stems covering all authority/body variants. Entity-nouns (enterprise,
-# undertaking, person, organisation) are DELIBERATELY absent: the adopted H08
-# convention snaps those grammatical subjects to the duty-bearer.
-_ACTOR_VOCAB = [
+# Actor vocabulary for the snap decision (guard v3, corpus scale-up). A subject
+# that names ANY of these actors is NEVER overwritten — round 1 showed the old
+# 7-keyword check destroying institutional actors (notified bodies, judicial
+# authorities); round 2 showed a hand-typed stem list missing the data
+# protection officer (U09/U11). v3 therefore DERIVES the vocabulary in code:
+# the base stems below ('authorit'/'bod' cover every authority/body variant)
+# UNION every ontology concept label in mapping/vocab/terms.json whose head
+# noun names an actor category (_ACTOR_HEAD_NOUNS is a closed list of noun
+# CATEGORIES, not of actors — that's the difference from hand-enumeration).
+# Entity-nouns (enterprise, undertaking, organisation) stay absent: the
+# adopted H08 convention snaps those grammatical subjects to the duty-bearer.
+_ACTOR_BASE_STEMS = [
     "controller", "processor", "data subject", "recipient", "third party",
     "representative", "provider", "deployer", "importer", "distributor",
     "operator", "authorit", "bod", "member state", "the commission",
     "the board", "ai office", "union institution",
 ]
+_ACTOR_HEAD_NOUNS = {
+    "officer", "officers", "controller", "controllers", "processor",
+    "processors", "provider", "providers", "deployer", "deployers",
+    "importer", "importers", "distributor", "distributors", "operator",
+    "operators", "authority", "authorities", "body", "bodies", "subject",
+    "subjects", "recipient", "recipients", "representative",
+    "representatives", "party", "parties",
+}
+
+
+def _derive_actor_vocab() -> list[str]:
+    stems = set(_ACTOR_BASE_STEMS)
+    try:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "mapping", "vocab", "terms.json"), encoding="utf-8") as f:
+            vocab = json.load(f)
+
+        def walk(node):
+            for v in node.values():
+                if isinstance(v, dict):
+                    label = v.get("label")
+                    if isinstance(label, str):
+                        yield label
+                    yield from walk({k: x for k, x in v.items() if isinstance(x, dict)})
+        for label in walk(vocab):
+            words = label.lower().split()
+            if words and words[-1] in _ACTOR_HEAD_NOUNS:
+                stems.add(label.lower())
+    except (OSError, json.JSONDecodeError):
+        pass  # vocabulary file unavailable -> base stems still apply
+    return sorted(stems, key=len, reverse=True)
+
+
+_ACTOR_VOCAB = _derive_actor_vocab()
+
+# Passive-patient detector (v3, round-2 U12/U17 correction by Yoseph): a
+# grounded NON-actor subject that is the grammatical patient of a passive
+# construction ("A member shall be dismissed", "fines shall ... be imposed",
+# "they shall be machine-readable") must NOT be kept as agent-subject — that
+# yields incoherent triples. Such subjects are re-homed exactly as v2 did.
+# Checked only AFTER the actor branch, so "Notified bodies shall be
+# independent" is never touched by this.
+_PASSIVE_AFTER_SUBJ = re.compile(
+    r"^[^.;]{0,90}?\b(shall|may|must|should|cannot|can\s+not|is|are|were)\b"
+    r"[^.;]{0,90}?\b(be|been|being|remains?)\b", re.IGNORECASE)
+
+
+_NON_AGENT_PREPOSITIONS = {"to", "for", "of", "from", "by", "against", "upon"}
+
+
+def _is_passive_patient(value: str, text: str) -> bool:
+    """True when the extracted subject phrase provably does NOT occupy agent
+    position in the source: it is followed by a passive construction ('A
+    member shall be dismissed') OR immediately preceded by a preposition
+    ('shall not apply TO an enterprise ...' — the H08 class, where the phrase
+    is a prepositional argument the LLM absorbed into the subject)."""
+    v = (value or "").strip().rstrip(".;,")
+    t = text or ""
+    if not v:
+        return False
+    # find the subject phrase (or its leading 3 words) in the source sentence
+    for needle in (v, " ".join(v.split()[:3])):
+        i = t.lower().find(needle.lower())
+        if i < 0:
+            continue
+        if _PASSIVE_AFTER_SUBJ.match(t[i + len(needle):]):
+            return True
+        prev = t[:i].rstrip()
+        prev_word = prev.rsplit(None, 1)[-1].lower() if prev else ""
+        if prev_word in _NON_AGENT_PREPOSITIONS:
+            return True
+    return False
 
 # When the snap fires (empty or non-actor subject), the duty-bearer is inferred
 # from the paragraph's own text before falling back to the regulation default —
@@ -1163,7 +1236,9 @@ _ACTOR_VOCAB = [
 _DUTY_BEARER_CANON = [
     ("market surveillance authorit", "the market surveillance authority"),
     ("conformity assessment bod", "the conformity assessment body"),
-    ("supervisory authorit", "the supervisory authority"),
+    # value matches _ROLE_KEYWORDS' canonical form so a later replay of the
+    # canonicalisation loop is a no-op on inferred bearers (idempotence).
+    ("supervisory authorit", "supervisory authorities"),
     ("certification bod", "the certification body"),
     ("notifying authorit", "the notifying authority"),
     ("notified bod", "the notified body"),
@@ -1183,9 +1258,11 @@ def _infer_duty_bearer(rec: dict) -> str | None:
     """Pick the duty-bearer a paragraph itself names: earliest actor mention in
     the paragraph text (then the parent chain), longest stem on ties. None when
     no table actor is named — caller falls back to the regulation default."""
-    texts = [rec.get("text") or ""]
-    texts += [p.get("text") or "" for p in (rec.get("parent") or [])
-              if isinstance(p, dict)]
+    # Parents BEFORE the paragraph (v3): for list-item sub-points the
+    # duty-holder is named in the chapeau, not the item's own text.
+    texts = [p.get("text") or "" for p in (rec.get("parent") or [])
+             if isinstance(p, dict)]
+    texts += [rec.get("text") or ""]
     for text in texts:
         t = text.lower()
         hits = [(t.find(stem), -len(stem), canon)
@@ -1287,22 +1364,36 @@ def _fix_annex_area_applies_to(rec: dict, results: list[dict]) -> None:
     Annex III area paragraph with the area name from its leading text (STATED).
     No-op elsewhere. Must run BEFORE statement-id assignment (the APP canonical
     sort keys on applies_to)."""
-    m = re.match(r"aiact:anx_III/par_(\d+)$", rec.get("iri") or "")
-    if not m or m.group(1) == "0":
+    iri = rec.get("iri") or ""
+    m = re.match(r"aiact:anx_III/par_(\d+)$", iri)
+    m_pt = re.match(r"aiact:anx_III/par_\d+/pt_[a-z]+$", iri)
+    if (not m or m.group(1) == "0") and not m_pt:
         return
     text = rec.get("text") or ""
-    mm = re.match(r"\s*\d+\.\s*(.+)", text, re.S)
-    area = re.split(r",\s*in so far as|:", mm.group(1) if mm else text, 1)[0]
-    area = area.strip().rstrip(",").strip()
+    if m_pt:
+        # v3 (round-2 U45): an Annex III sub-point names a specific system
+        # class in its own text — that text IS the scope. Strip the '(a) '
+        # marker and trailing punctuation; the generic-CONTEXT gate below is
+        # unchanged, so grounded STATED values are never overwritten.
+        mm = re.match(r"\s*\(\w+\)\s*(.+)", text, re.S)
+        area = (mm.group(1) if mm else text).strip().rstrip(";.").strip()
+    else:
+        mm = re.match(r"\s*\d+\.\s*(.+)", text, re.S)
+        area = re.split(r",\s*in so far as|:", mm.group(1) if mm else text, 1)[0]
+        area = area.strip().rstrip(",").strip()
     if not area:
         return
     for r in results:
         if r.get("statement_class") != StatementClass.APPLICABILITY.value:
             continue
         at = (r.get("statement") or {}).get("applies_to")
+        # Gate on the VALUE being generic, not on method (v3, round-2 U45): on
+        # an Annex III listing every entry is about 'AI systems', so a generic
+        # value is non-discriminating by construction even when the model
+        # labels it STATED (the words do appear in the text — as a prefix of
+        # the real scope). Non-generic values keep full STATED protection.
         if (isinstance(at, dict)
-                and (at.get("value") or "").strip().lower() in _ANNEX_GENERIC_SCOPE
-                and at.get("method") == "CONTEXT"):
+                and (at.get("value") or "").strip().lower() in _ANNEX_GENERIC_SCOPE):
             at["value"] = area
             at["method"] = "STATED"
             r["annex_area_applies_to_fixed"] = True
@@ -1356,24 +1447,29 @@ def _canonicalize_subjects(rec: dict, results: list[dict]) -> None:
             if canon:
                 ev["value"] = canon  # value-only canonicalisation; method left as the LLM's
 
-        # Passive obligation-of-being / non-actor subject: when NO subject names
-        # a duty-bearer actor at all (empty, or a passive grammatical subject
-        # such as "personal data" or "enterprise employing fewer than 250
-        # persons"), the implied duty-bearer is the actor the paragraph itself
-        # names, falling back to the regulation default (CONTEXT). The actor
-        # check uses the FULL derived vocabulary (_ACTOR_VOCAB), not just the
-        # core roles: a subject naming ANY actor — "notified bodies", "the
-        # competent judicial authority", multi-role "controllers and
-        # processors" — is left as-is. Flagged for audit.
+        # v3 three-branch snap decision, in this order:
+        #   1. subject names ANY derived-vocabulary actor -> keep (never
+        #      overwrite grounded actors; rounds 1+2 both punished this);
+        #   2. subject empty, OR every value is a provable passive PATIENT
+        #      ("A member shall be dismissed") -> v2 behaviour: substitute the
+        #      inferred duty-bearer, re-home the patient, flag;
+        #   3. grounded, non-actor, not provably passive -> KEEP + flag
+        #      (measured residue: 2 records corpus-wide; overwriting grounded
+        #      text is the failure mode, per Yoseph).
         def _names_actor(ev: dict) -> bool:
             v = (ev.get("value") or "").lower()
             return any(kw in v for kw in _ACTOR_VOCAB)
         if default and not any(_names_actor(ev) for ev in subj):
-            dropped = [ev.get("value") for ev in subj if ev.get("value")]
-            bearer = _infer_duty_bearer(rec) or default
-            st["subject"] = [{"value": bearer, "method": "CONTEXT"}]
-            r["subject_inferred_duty_bearer"] = True
-            _preserve_dropped_subject(st, st.get("modality"), dropped)
+            values = [ev.get("value") for ev in subj if ev.get("value")]
+            if not values or all(_is_passive_patient(v, rec.get("text") or "")
+                                 for v in values):
+                bearer = _infer_duty_bearer(rec) or default
+                st["subject"] = [{"value": bearer, "method": "CONTEXT"}]
+                r["subject_inferred_duty_bearer"] = True
+                _preserve_dropped_subject(st, st.get("modality"), values)
+            else:
+                r["needs_review"] = True
+                r["subject_unrecognized_actor"] = True
 
         # Regulation-vocabulary check (core actors only).
         vals = {ev.get("value") for ev in (st.get("subject") or []) if ev.get("value")}
@@ -1781,7 +1877,7 @@ def _flag_truncated_spans(rec: dict, results: list[dict]) -> None:
 # Guard A — deontic OPERATOR captured as the predicate (e.g. Art 9(1): modality
 # PROHIBITION + predicate "prohibit" reads as "prohibit the processing", i.e.
 # processing is allowed). The lemmatised head is the modality, not an action.
-_DEONTIC_OPERATORS = {"prohibit", "require", "permit", "allow", "oblige"}
+_DEONTIC_OPERATORS = {"prohibit", "require", "permit", "allow", "oblige", "exempt"}
 # Closed action-nominal list (no suffix heuristic): GDPR Art 4(2) processing
 # operations + the recurring deontic action nouns. Membership of the OBJECT head
 # is what separates the broken case ("prohibit" + "processing of …") from a
@@ -1815,6 +1911,14 @@ def _flag_deontic_operator_predicate(rec: dict, results: list[dict]) -> None:
         st = r.get("statement") or {}
         preds = st.get("predicate") or []
         if not preds or _head_word(preds[0].get("value")) not in _DEONTIC_OPERATORS:
+            continue
+        # A DISPENSATION's predicate must carry the RELIEVED DUTY; an operator
+        # head ('exempt from ...') is definitionally the modality restated, so
+        # it flags without the object test (v3, round-2 U26). Other modalities
+        # keep the object-head gate unchanged.
+        if st.get("modality") == "DISPENSATION":
+            r["needs_review"] = True
+            r["predicate_is_deontic_operator"] = True
             continue
         if any(_head_word(o.get("value")) in _ACTION_NOMINALS
                for o in (st.get("object") or [])):

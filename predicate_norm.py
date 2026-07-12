@@ -112,6 +112,17 @@ def normalise_predicate(text: str, modality: str | None = None) -> tuple[str, bo
             break
         if stripped:
             continue
+        # Negation-carrying periphrases ('refrain from requesting'): the wrapper
+        # double-encodes the deontic negation exactly like a leading 'not', so it
+        # is stripped ONLY when the modality already carries the negation
+        # (PROHIBITION/DISPENSATION). Under OBLIGATION/PERMISSION the wrapper is
+        # the norm's actual content — left untouched, no flag (v3, round-2 U15:
+        # PROHIBITION + 'refrain from requesting' read back as 'shall not
+        # refrain from requesting', an inverted meaning).
+        m = re.match(r"(refrain|abstain)\s+from\b\s*", s, re.IGNORECASE)
+        if m and neg_ok:
+            s = s[m.end():]
+            continue
         m = re.match(r"([A-Za-z']+)\b\s*", s)
         if not m:
             break

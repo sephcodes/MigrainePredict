@@ -273,3 +273,4 @@ data/holdout_5run_redundant_neg_subjmap_modmap
 .DS_Store
 data/aiact.html
 data/gdpr.html
+test_subject_guard.py
