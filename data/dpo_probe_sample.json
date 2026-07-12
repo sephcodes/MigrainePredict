@@ -1,0 +1,19 @@
+{
+ "purpose": "mechanism probe for the derived_actors subject guard: does the LLM's 'data protection officer' subject survive live extraction (the U09/U11 fix)? Subject-level check only, no gold.",
+ "selection": "all GDPR Art 37-39 paragraphs mentioning the DPO, excluding test2 members and their IRI families (gdpr:art_38/par_6*, gdpr:art_39/par_1*)",
+ "paragraphs": [
+  "gdpr:art_37/par_1",
+  "gdpr:art_37/par_2",
+  "gdpr:art_37/par_3",
+  "gdpr:art_37/par_4",
+  "gdpr:art_37/par_5",
+  "gdpr:art_37/par_6",
+  "gdpr:art_37/par_7",
+  "gdpr:art_38/par_1",
+  "gdpr:art_38/par_2",
+  "gdpr:art_38/par_3",
+  "gdpr:art_38/par_4",
+  "gdpr:art_38/par_5",
+  "gdpr:art_39/par_2"
+ ]
+}
