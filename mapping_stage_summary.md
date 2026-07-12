@@ -101,11 +101,95 @@ The adjudicator was evaluated against the human gold set, scored **only on the r
 **Next (higher-value than chasing exact-match from 21% upward):**
 - **Stage 3/4 — Verification & Integration:** load the gold-set statements (subject/modality/predicate/object/condition IRIs + `references`) into Neo4j, with provenance labels. This turns the mapping effort into the actual knowledge graph.
 - **Phase 2 — GraphRAG:** the NL-to-Cypher self-correcting query layer (Echenim pattern) over the populated graph — the end-to-end MigrainePredict demonstration.
-- **Full-corpus mapping** (later scale-up): deterministic bulk + adjudicator prefill + human confirm pass. Not a blocker for demonstrating the method.
+- **Full-corpus mapping** — STARTED 2026-07-12; see §9 below.
 
 ---
 
-## 9. Reusable methodological principles that emerged
+## 9. Corpus scale-up (2026-07-12 — in progress)
+
+Sections 1–8 describe the stage as built and evaluated on the 50-record eval
+sets. This section is the running record of the same stage applied to the full
+corpus extraction (`derived_actors` pipeline; 1,627 deontic records: 640 GDPR
++ 987 AI Act).
+
+### 9.1 Step 1 — deterministic dry-run (DONE)
+
+Zero LLM calls; counts only, per the agreed count-before-review-commitment
+plan. Tooling changes to run it: `map_subject.py` / `map_modality.py` accept
+bare `.jsonl` file paths (output written alongside the input);
+`build_content_candidates.py` gained `--out` so the corpus worksheet never
+touches the eval-set `mapping/content_map.json`.
+
+**Subject mapping — FINAL as-is (Yoseph's decision, 2026-07-12).**
+`mapping/subject_lexicon.json` was extended from 3 to 16 roles (every IRI
+verified present in `mapping/vocab/terms.json`; aliases taken only from
+observed corpus forms — the `build_subject_lexicon.py` audit workflow).
+Result: **1,192 / 1,744 subject elements mapped (68%)**; the old 3-role
+lexicon managed 44%. The 551 unmapped occurrences stay flagged
+(`subject_unmapped`) and are not being fixed. Four residual classes:
+
+1. **Real actors with no concept in DPV/AIRO/VAIR** (~200 occurrences):
+   Member States (120), the Commission (37), national competent authorities
+   (~30), the AI Office (12). A genuine vocabulary-gap finding, same family
+   as §7's quantitative-threshold gaps. (`vair:EUOffice` was considered for
+   the AI Office and rejected — its definition is just "EU office".)
+2. **Composite subjects** (~50): "the controller or processor", "providers
+   and deployers" — the resolver maps one value to one IRI.
+3. **Non-actor subjects** ("the EU declaration of conformity", "the technical
+   documentation"): extraction mis-attribution residue; extraction is frozen,
+   so these correctly stay flagged.
+4. **Referential long tail** at 1–7 occurrences each ("certification bodies
+   referred to in paragraph 1").
+
+One regulation-mismatch flag fired: "the controller" on
+`aiact:art_59/par_1/pt_g` (a sandbox provision that genuinely addresses GDPR
+controllers) — the cross-regulation guard working as designed, left flagged.
+
+**Modality mapping — FINAL: 1,627 / 1,627 mapped.**
+
+**Content slots** (candidate builder, tag pass active — its first production
+use, per §5). Worksheet: `mapping/content_map_corpus.json`, seeded from
+`content_map_reviewed_2_conflict_pair.json` (a strict superset of
+`content_map_reviewed_2.json`) so the 40 locked eval-scale decisions —
+human-adjudicated rows and the conflict-pair anchors — carry over via
+`preserve_manual`. Dispositions:
+
+| slot / reg | distinct (occurrences) | auto-mapped | review | literal | no_target |
+|---|---|---|---|---|---|
+| predicate gdpr | 479 (677) | 130 | — | 348 | — |
+| predicate aiact | 788 (1,059) | — | — | — | 788 |
+| object gdpr | 641 (715) | 419 | 211 | — | — |
+| object aiact | 1,102 (1,165) | 671 | 430 | — | — |
+| condition gdpr | 438 (507) | — | 93 | 320 | — |
+| condition aiact | 631 (747) | — | 390 | 239 | — |
+
+Findings from the counts (documented, not fixed):
+
+- **AI Act predicates are 100% `no_target` (788 distinct):** the routing
+  table has no scheme for (predicate, aiact) because AIRO/VAIR contain no
+  action/process concepts. Structural vocabulary gap; those predicates stay
+  literal text in the graph.
+- **§3's "distinct values saturate" claim is falsified at corpus scale** —
+  it held on the eval sets but distinct/occurrence ratios at corpus are
+  0.71–0.95 (most values appear once), so de-duplication saves only ~15–30%
+  and review volume grows roughly linearly with corpus size.
+- Tag pass promoted 6 rows literal → review (all GDPR conditions, incl. the
+  storage-limitation and data-minimisation principles — the §5 design working
+  in production).
+
+**Files:** `data/{gdpr,aiact}.subject_mapped.jsonl`,
+`data/{gdpr,aiact}.modality_mapped.jsonl` (chain outputs, regenerable),
+`mapping/content_map_corpus.json` (the corpus worksheet — carries decisions,
+durable), `mapping/subject_lexicon.json` (extended, durable).
+
+### 9.2 Next gate
+
+**The review budget for the 1,124 content-slot review rows** (Yoseph's
+decision: full review vs scenario-prioritised) → adjudicator over the review
+queue → human confirm pass (status-based HITL, per §6's calibration finding)
+→ `map_content` apply-back → load/verify.
+
+## 10. Reusable methodological principles that emerged
 
 1. **Deterministic post-passes over prompt guidance** — structural problems get code fixes; prompt rules under-perform and don't hold under high model confidence.
 2. **Ground every design choice in the gold data** — every exclusion and routing decision here was justified by measured gold usage, not intuition (and several intuitions were falsified).

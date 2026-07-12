@@ -1,11 +1,14 @@
 # Scale-up readiness checklist
 
-**STATUS (2026-07-12): corpus EXTRACTION is done.** The full corpus (748 GDPR +
-1,071 AI Act paragraphs) is extracted under pipeline state `derived_actors`; the
-result and its QA live in `extraction_acceptance_summary.md`. This checklist is
-now a forward list for the MAPPING and VERIFICATION stages only (§1.1, §1.2, §2,
-§3.1, §4.1); the extraction-stage items (§3.2, §3.3, §3.4, §4.2) are settled and
-kept below for the record.
+**STATUS (2026-07-12): corpus EXTRACTION is done; corpus MAPPING has started.**
+The full corpus (748 GDPR + 1,071 AI Act paragraphs) is extracted under
+pipeline state `derived_actors`; the result and its QA live in
+`extraction_acceptance_summary.md`. Mapping step 1 (the deterministic dry-run)
+is done and the subject/modality mappings are final — full record in
+`mapping_stage_summary.md` §9, status at the end of this doc. This checklist
+is now a forward list for the MAPPING and
+VERIFICATION stages only (§1.1, §1.2, §2, §3.1, §4.1); the extraction-stage
+items (§3.2, §3.3, §3.4, §4.2) are settled and kept below for the record.
 
 **Pipeline is NOT "frozen as evaluated" (the original plan below was superseded).**
 The freeze plan was broken deliberately: the acceptance samples (test1, test2)
@@ -120,13 +123,19 @@ statements. Unknown behaviour at corpus scale; sample-check firings there.
 
 ## 3. REVIEW-LOAD (fails safe, but budget the human time)
 
-### 3.1 Curated mapping tables
+### 3.1 Curated mapping tables — dry-run DONE 2026-07-12
 Subject lexicon, `predicate_synonyms.json`, `object_aliases.json`, IDF floor — all
 built against eval-set values. Every corpus value they don't cover defaults to
 `literal`/`unmatched` (the §1.1 failure mode) or lands in the adjudication/review
 queue. Expect at least one full adjudication + manual-review round at corpus size;
 estimate row counts early by running the builder over the corpus extractions and
 counting dispositions before committing to review.
+
+**Status:** the row-count estimate is done and the subject lexicon is extended
+and final (3 → 16 roles; subject coverage 44% → 68%, residual is genuine
+vocabulary gaps / composites / non-actor subjects). Full numbers in
+`mapping_stage_summary.md` §9. Review queue: 1,124 rows, awaiting the
+review-budget decision.
 
 ### 3.2 Closed lists in extraction guards
 Enumeration-gate condition-introducer whitelist (unknown conditional enumerations →
@@ -233,9 +242,11 @@ limitation in the write-up; the dormant path is NOT revived.
   (`span_grounding.py` ~98.5% grounded, `schema_validity.py` 100% valid /
   97.7% content-complete) + acceptance sampling (test1 diagnostic, test2
   reportable). All in `extraction_acceptance_summary.md`.
-- **Mapping (NEXT):** dry-run the candidate builder (tag pass active) over
-  corpus extractions and count dispositions per queue BEFORE committing review
-  time; review strategy chosen from real numbers.
+- **Mapping (IN PROGRESS):** the dry-run count is DONE (2026-07-12) and the
+  subject/modality mappings are final as-is — full result in
+  `mapping_stage_summary.md` §9. Next gate: the review-budget decision on the
+  1,124 content-slot review rows, then adjudication → human confirm →
+  `map_content`.
 - **Query-time eval:** re-run the EXISTING gold 50 only (no new scenario
   queries) three-way — pipeline-Gemini, pipeline-Mistral, vector baseline —
   against the corpus graph. Controlled before/after; the Q25/S3 coverage-gap
@@ -243,3 +254,18 @@ limitation in the write-up; the dormant path is NOT revived.
 - **Standing rule:** any further pipeline change re-runs the gold evals before
   numbers are quoted (now a LIVE run, not a replay — replays do not exercise the
   live subject-inference path; see `extraction_acceptance_summary.md`).
+
+## Corpus mapping — status (2026-07-12)
+
+Step 1 (the deterministic dry-run) is DONE and the subject/modality mappings
+are FINAL as-is. **The full record — numbers, residual classes, worksheet
+seeding, findings, file names — lives in `mapping_stage_summary.md` §9** (the
+mapping stage's own document); it is not duplicated here.
+
+Headline: subjects 1,192/1,744 mapped (68%; lexicon extended 3 → 16 roles,
+residual is genuine vocabulary gaps / composites / non-actor subjects, all
+flagged); modality 1,627/1,627; content-slot review queue **1,124 rows**.
+
+**Next gate (Yoseph's decision): the review budget for the 1,124 review rows**
+— full review vs scenario-prioritised — then adjudication → human confirm
+pass → `map_content` apply-back.
