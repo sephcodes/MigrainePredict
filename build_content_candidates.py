@@ -288,8 +288,11 @@ def preserve_manual(worksheet, prior_path):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("paths", nargs="+", help="run dirs of *.extracted.jsonl")
+    ap.add_argument("paths", nargs="+", help="run dirs of *.extracted.jsonl (or *.extracted.jsonl files)")
+    ap.add_argument("--out", default=OUT,
+                    help=f"worksheet path to write (and preserve locked rows from); default: {OUT}")
     args = ap.parse_args()
+    out_path = args.out
 
     targets = load_targets()
     synonyms = load_synonyms()
@@ -458,11 +461,11 @@ def main():
             summary.append((slot, reg, len(rows), dict(counts)))
 
     # preserve hand adjudications (status='manually_mapped') from the prior run,
-    # read from OUT BEFORE we overwrite it
-    n_manual = preserve_manual(worksheet, OUT)
+    # read from the output path BEFORE we overwrite it
+    n_manual = preserve_manual(worksheet, out_path)
 
-    json.dump(worksheet, open(OUT, "w"), indent=2, ensure_ascii=False)
-    print(f"wrote {OUT}  (preserved {n_manual} locked/adjudicated row(s))\n")
+    json.dump(worksheet, open(out_path, "w"), indent=2, ensure_ascii=False)
+    print(f"wrote {out_path}  (preserved {n_manual} locked/adjudicated row(s))\n")
     # recompute the summary from the merged worksheet so counts include manually_mapped
     print(f"{'slot':10s} {'reg':6s} {'distinct':8s}  disposition")
     for slot in ("predicate", "object", "condition"):
