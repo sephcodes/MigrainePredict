@@ -78,13 +78,17 @@ def main():
     total_files = 0
 
     for p in args.paths:
-        if not os.path.isdir(p):
-            sys.exit(f"expected a run directory, got: {p}")
-        files = sorted(glob.glob(os.path.join(p, "*.extracted.jsonl")))
-        if not files:
-            print(f"  (skip {p}: no *.extracted.jsonl)")
-            continue
-        out_dir = p.rstrip("/") + args.suffix
+        if os.path.isdir(p):
+            files = sorted(glob.glob(os.path.join(p, "*.extracted.jsonl")))
+            if not files:
+                print(f"  (skip {p}: no *.extracted.jsonl)")
+                continue
+            out_dir = p.rstrip("/") + args.suffix
+        elif p.endswith(".extracted.jsonl") and os.path.isfile(p):
+            files = [p]
+            out_dir = os.path.dirname(p) or "."
+        else:
+            sys.exit(f"expected a run directory or *.extracted.jsonl file, got: {p}")
         os.makedirs(out_dir, exist_ok=True)
         for f in files:
             base = os.path.basename(f).replace(".extracted.jsonl", "")
