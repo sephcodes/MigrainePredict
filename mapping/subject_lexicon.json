@@ -1,7 +1,8 @@
 {
   "prefixes": {
     "dpv": "https://w3id.org/dpv#",
-    "airo": "https://w3id.org/airo#"
+    "airo": "https://w3id.org/airo#",
+    "vair": "https://w3id.org/vair#"
   },
   "roles": [
     {
@@ -17,10 +18,88 @@
       "aliases": ["the processor", "processor", "data processor"]
     },
     {
+      "iri": "dpv:DataProtectionAuthority",
+      "vocab": "DPV",
+      "regulation": "gdpr",
+      "aliases": ["supervisory authority", "supervisory authorities", "each supervisory authority"]
+    },
+    {
+      "iri": "dpv:DataProtectionOfficer",
+      "vocab": "DPV",
+      "regulation": "gdpr",
+      "aliases": ["data protection officer", "data protection officers"]
+    },
+    {
+      "iri": "dpv:DataSubject",
+      "vocab": "DPV",
+      "regulation": "gdpr",
+      "aliases": ["data subject", "data subjects"]
+    },
+    {
       "iri": "airo:AIProvider",
       "vocab": "AIRO",
       "regulation": "aiact",
       "aliases": ["the provider", "provider"]
+    },
+    {
+      "iri": "airo:AIDeployer",
+      "vocab": "AIRO",
+      "regulation": "aiact",
+      "aliases": ["deployer", "deployers"]
+    },
+    {
+      "iri": "vair:NotifiedBody",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["notified body", "notified bodies", "each notified body"]
+    },
+    {
+      "iri": "vair:AuthorisedRepresentative",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["authorised representative", "authorised representatives"]
+    },
+    {
+      "iri": "vair:MarketSurveillanceAuthority",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["market surveillance authority", "market surveillance authorities"]
+    },
+    {
+      "iri": "vair:NotifyingAuthority",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["notifying authority", "notifying authorities"]
+    },
+    {
+      "iri": "vair:Importer",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["importer", "importers"]
+    },
+    {
+      "iri": "vair:Distributor",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["distributor", "distributors"]
+    },
+    {
+      "iri": "vair:LawEnforcementAuthority",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["law enforcement authority", "law enforcement authorities", "law-enforcement authority", "law-enforcement authorities"]
+    },
+    {
+      "iri": "vair:ConformityAssessmentBody",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["conformity assessment body", "conformity assessment bodies"]
+    },
+    {
+      "iri": "vair:JudicialAuthority",
+      "vocab": "VAIR",
+      "regulation": "aiact",
+      "aliases": ["judicial authority", "judicial authorities"]
     }
   ]
 }
