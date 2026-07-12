@@ -39,8 +39,7 @@
   "paragraph_text": "(e) processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller;",
   "parent_texts": [
     "1. Processing shall be lawful only if and to the extent that at least one of the following applies:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U02",
@@ -84,8 +83,7 @@
   "classification_rationale": "Professional-secrecy condition on the health-care processing ground — MigrainePredict-core (clinician processing).",
   "anchor": "Personal data referred to in paragraph 1 may be processed for the purposes referred to in point (h) of paragraph 2",
   "paragraph_text": "3. Personal data referred to in paragraph 1 may be processed for the purposes referred to in point (h) of paragraph 2 when those data are processed by or under the responsibility of a professional subject to the obligation of professional secrecy under Union or Member State law or rules established by national competent bodies or by another person also subject to an obligation of secrecy under Union or Member State law or rules established by national competent bodies.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U03",
@@ -132,8 +130,7 @@
   "classification_rationale": "Icons permission; information duties' bearer is the controller.",
   "anchor": "The information to be provided to data subjects pursuant to Articles 13 and 14 may be provided in combination with standardised icons",
   "paragraph_text": "7. The information to be provided to data subjects pursuant to Articles 13 and 14 may be provided in combination with standardised icons in order to give in an easily visible, intelligible and clearly legible manner a meaningful overview of the intended processing. Where the icons are presented electronically they shall be machine-readable.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U04",
@@ -174,8 +171,7 @@
   "classification_rationale": "Machine-readability requirement on electronically presented icons.",
   "anchor": "Where the icons are presented electronically they shall be machine-readable.",
   "paragraph_text": "7. The information to be provided to data subjects pursuant to Articles 13 and 14 may be provided in combination with standardised icons in order to give in an easily visible, intelligible and clearly legible manner a meaningful overview of the intended processing. Where the icons are presented electronically they shall be machine-readable.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U05",
@@ -216,8 +212,7 @@
   "classification_rationale": "Copy duty under the access right; right-holder in beneficiary per the adopted convention.",
   "anchor": "The controller shall provide a copy of the personal data undergoing processing.",
   "paragraph_text": "3. The controller shall provide a copy of the personal data undergoing processing. For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs. Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U06",
@@ -258,8 +253,7 @@
   "classification_rationale": "Fee permission for further copies.",
   "anchor": "For any further copies requested by the data subject, the controller may charge a reasonable fee",
   "paragraph_text": "3. The controller shall provide a copy of the personal data undergoing processing. For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs. Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U07",
@@ -303,8 +297,7 @@
   "classification_rationale": "Format duty for electronic requests.",
   "anchor": "the information shall be provided in a commonly used electronic form",
   "paragraph_text": "3. The controller shall provide a copy of the personal data undergoing processing. For any further copies requested by the data subject, the controller may charge a reasonable fee based on administrative costs. Where the data subject makes the request by electronic means, and unless otherwise requested by the data subject, the information shall be provided in a commonly used electronic form.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U08",
@@ -350,8 +343,7 @@
   "classification_rationale": "Advance-notice duty; the informed party goes in beneficiary (T29/H09 convention), the implicit content (the lift) in object as CONTEXT.",
   "anchor": "A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
   "paragraph_text": "3. A data subject who has obtained restriction of processing pursuant to paragraph 1 shall be informed by the controller before the restriction of processing is lifted.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U09",
@@ -389,8 +381,7 @@
   "classification_rationale": "Plain permission.",
   "anchor": "The data protection officer may fulfil other tasks and duties.",
   "paragraph_text": "6. The data protection officer may fulfil other tasks and duties. The controller or processor shall ensure that any such tasks and duties do not result in a conflict of interests.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U10",
@@ -428,8 +419,7 @@
   "classification_rationale": "Conflict-of-interest safeguard on the same permission.",
   "anchor": "The controller or processor shall ensure that any such tasks and duties do not result in a conflict of interests.",
   "paragraph_text": "6. The data protection officer may fulfil other tasks and duties. The controller or processor shall ensure that any such tasks and duties do not result in a conflict of interests.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U11",
@@ -471,8 +461,7 @@
   "paragraph_text": "(e) to act as the contact point for the supervisory authority on issues relating to processing, including the prior consultation referred to in Article 36, and to consult, where appropriate, with regard to any other matter.",
   "parent_texts": [
     "1. The data protection officer shall have at least the following tasks:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U12",
@@ -513,8 +502,7 @@
   "classification_rationale": "'Shall be dismissed only in cases X' = dismissal permitted only on those grounds; the dismissing organ is supplied by Member State law — subject attribution reviewable.",
   "anchor": "A member shall be dismissed only in cases of serious misconduct",
   "paragraph_text": "4. A member shall be dismissed only in cases of serious misconduct or if the member no longer fulfils the conditions required for the performance of the duties.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U13",
@@ -557,8 +545,7 @@
   "paragraph_text": "(d) promote the awareness of controllers and processors of their obligations under this Regulation;",
   "parent_texts": [
     "1. Without prejudice to other tasks set out under this Regulation, each supervisory authority shall on its territory:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U14",
@@ -599,8 +586,7 @@
   "classification_rationale": "Member-State duty to equip the supervisory authority.",
   "anchor": "Each Member State shall provide by law that its supervisory authority shall have the power",
   "paragraph_text": "5. Each Member State shall provide by law that its supervisory authority shall have the power to bring infringements of this Regulation to the attention of the judicial authorities and where appropriate, to commence or engage otherwise in legal proceedings, in order to enforce the provisions of this Regulation.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U15",
@@ -645,8 +631,7 @@
   "classification_rationale": "'Shall refrain from' = prohibition; carve-outs stay in the condition.",
   "anchor": "each Member State shall refrain ... from requesting reimbursement from another Member State",
   "paragraph_text": "6. Without prejudice to the exercise of its rights vis-à-vis third parties and with the exception of paragraph 5, each Member State shall refrain, in the case provided for in paragraph 1, from requesting reimbursement from another Member State in relation to damage referred to in paragraph 4.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U16",
@@ -686,8 +671,7 @@
   "classification_rationale": "Venue rule for compensation claims; passive, the claimant (data subject) is the implied actor — subject attribution reviewable.",
   "anchor": "Court proceedings for exercising the right to receive compensation shall be brought before the courts competent under the law of the Member State referred to in Article 79(2).",
   "paragraph_text": "6. Court proceedings for exercising the right to receive compensation shall be brought before the courts competent under the law of the Member State referred to in Article 79(2).",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U17",
@@ -730,8 +714,7 @@
   "classification_rationale": "Fine-imposition frame; the imposing actor is the supervisory authority (Article 58(2)(i) power).",
   "anchor": "Administrative fines shall, depending on the circumstances of each individual case, be imposed in addition to, or instead of, measures",
   "paragraph_text": "2. Administrative fines shall, depending on the circumstances of each individual case, be imposed in addition to, or instead of, measures referred to in points (a) to (h) and (j) of Article 58(2). When deciding whether to impose an administrative fine and deciding on the amount of the administrative fine in each individual case due regard shall be given to the following:",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U18",
@@ -772,8 +755,7 @@
   "classification_rationale": "Chapeau of the criteria list; the operative criteria live in points (a)-(k) (T52-style frame, not NA).",
   "anchor": "due regard shall be given to the following:",
   "paragraph_text": "2. Administrative fines shall, depending on the circumstances of each individual case, be imposed in addition to, or instead of, measures referred to in points (a) to (h) and (j) of Article 58(2). When deciding whether to impose an administrative fine and deciding on the amount of the administrative fine in each individual case due regard shall be given to the following:",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U19",
@@ -818,8 +800,7 @@
   "paragraph_text": "(i) where measures referred to in Article 58(2) have previously been ordered against the controller or processor concerned with regard to the same subject-matter, compliance with those measures;",
   "parent_texts": [
     "2. Administrative fines shall, depending on the circumstances of each individual case, be imposed in addition to, or instead of, measures referred to in points (a) to (h) and (j) of Article 58(2). When deciding whether to impose an administrative fine and deciding on the amount of the administrative fine in each individual case due regard shall be given to the following:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U20",
@@ -842,8 +823,7 @@
   "paragraph_text": "(28) ‘common specification’ means a set of technical specifications as defined in Article 2, point (4) of Regulation (EU) No 1025/2012, providing means to comply with certain requirements established under this Regulation;",
   "parent_texts": [
     "For the purposes of this Regulation, the following definitions apply:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U21",
@@ -866,8 +846,7 @@
   "paragraph_text": "(35) ‘biometric identification’ means the automated recognition of physical, physiological, behavioural, or psychological human features for the purpose of establishing the identity of a natural person by comparing biometric data of that individual to biometric data of individuals stored in a database;",
   "parent_texts": [
     "For the purposes of this Regulation, the following definitions apply:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U22",
@@ -907,8 +886,7 @@
   "classification_rationale": "Registration duty for public-authority deployers. applies_to_healthcare=False on the public-authority framing; a public hospital deploying MigrainePredict would flip this — reviewable.",
   "anchor": "Deployers of high-risk AI systems that are public authorities ... shall comply with the registration obligations referred to in Article 49.",
   "paragraph_text": "8. Deployers of high-risk AI systems that are public authorities, or Union institutions, bodies, offices or agencies shall comply with the registration obligations referred to in Article 49. When such deployers find that the high-risk AI system that they envisage using has not been registered in the EU database referred to in Article 71, they shall not use that system and shall inform the provider or the distributor.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U23",
@@ -951,8 +929,7 @@
   "classification_rationale": "Use ban on unregistered systems; same deployers carried from the first sentence.",
   "anchor": "they shall not use that system",
   "paragraph_text": "8. Deployers of high-risk AI systems that are public authorities, or Union institutions, bodies, offices or agencies shall comply with the registration obligations referred to in Article 49. When such deployers find that the high-risk AI system that they envisage using has not been registered in the EU database referred to in Article 71, they shall not use that system and shall inform the provider or the distributor.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U24",
@@ -995,8 +972,7 @@
   "classification_rationale": "Companion duty in the same sentence as the use ban.",
   "anchor": "and shall inform the provider or the distributor",
   "paragraph_text": "8. Deployers of high-risk AI systems that are public authorities, or Union institutions, bodies, offices or agencies shall comply with the registration obligations referred to in Article 49. When such deployers find that the high-risk AI system that they envisage using has not been registered in the EU database referred to in Article 71, they shall not use that system and shall inform the provider or the distributor.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U25",
@@ -1040,8 +1016,7 @@
   "classification_rationale": "Fundamental-rights-impact-assessment notification duty. hc=False: the Article 27 assessment trigger is deployer-type specific, outside MigrainePredict's operative basis — reviewable.",
   "anchor": "the deployer shall notify the market surveillance authority of its results",
   "paragraph_text": "3. Once the assessment referred to in paragraph 1 of this Article has been performed, the deployer shall notify the market surveillance authority of its results, submitting the filled-out template referred to in paragraph 5 of this Article as part of the notification. In the case referred to in Article 46(1), deployers may be exempt from that obligation to notify.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U26",
@@ -1084,8 +1059,7 @@
   "classification_rationale": "Express exemption from the notification duty for the Article 46(1) emergency-authorisation case.",
   "anchor": "In the case referred to in Article 46(1), deployers may be exempt from that obligation to notify.",
   "paragraph_text": "3. Once the assessment referred to in paragraph 1 of this Article has been performed, the deployer shall notify the market surveillance authority of its results, submitting the filled-out template referred to in paragraph 5 of this Article as part of the notification. In the case referred to in Article 46(1), deployers may be exempt from that obligation to notify.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U27",
@@ -1126,8 +1100,7 @@
   "classification_rationale": "Transparency duty; the obviousness carve-out stays in the condition of the primary norm (no mirror statement, per the adopted exception convention).",
   "anchor": "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed",
   "paragraph_text": "1. Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system, unless this is obvious from the point of view of a natural person who is reasonably well-informed, observant and circumspect, taking into account the circumstances and the context of use. This obligation shall not apply to AI systems authorised by law to detect, prevent, investigate or prosecute criminal offences, subject to appropriate safeguards for the rights and freedoms of third parties, unless those systems are available for the public to report a criminal offence.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U28",
@@ -1168,8 +1141,7 @@
   "classification_rationale": "Separate-sentence disapplication for law-enforcement systems, with its own public-reporting counter-exception kept inside the condition.",
   "anchor": "This obligation shall not apply to AI systems authorised by law to detect, prevent, investigate or prosecute criminal offences",
   "paragraph_text": "1. Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system, unless this is obvious from the point of view of a natural person who is reasonably well-informed, observant and circumspect, taking into account the circumstances and the context of use. This obligation shall not apply to AI systems authorised by law to detect, prevent, investigate or prosecute criminal offences, subject to appropriate safeguards for the rights and freedoms of third parties, unless those systems are available for the public to report a criminal offence.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U29",
@@ -1212,8 +1184,7 @@
   "classification_rationale": "Systemic-risk threshold notification (general-purpose AI chapter, outside MigrainePredict's scope).",
   "anchor": "the relevant provider shall notify the Commission without delay and in any event within two weeks",
   "paragraph_text": "1. Where a general-purpose AI model meets the condition referred to in Article 51(1), point (a), the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met or it becomes known that it will be met. That notification shall include the information necessary to demonstrate that the relevant requirement has been met. If the Commission becomes aware of a general-purpose AI model presenting systemic risks of which it has not been notified, it may decide to designate it as a model with systemic risk.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U30",
@@ -1254,8 +1225,7 @@
   "classification_rationale": "Content requirement on the same notification.",
   "anchor": "That notification shall include the information necessary to demonstrate that the relevant requirement has been met.",
   "paragraph_text": "1. Where a general-purpose AI model meets the condition referred to in Article 51(1), point (a), the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met or it becomes known that it will be met. That notification shall include the information necessary to demonstrate that the relevant requirement has been met. If the Commission becomes aware of a general-purpose AI model presenting systemic risks of which it has not been notified, it may decide to designate it as a model with systemic risk.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U31",
@@ -1296,8 +1266,7 @@
   "classification_rationale": "Commission's own-motion designation power.",
   "anchor": "it may decide to designate it as a model with systemic risk",
   "paragraph_text": "1. Where a general-purpose AI model meets the condition referred to in Article 51(1), point (a), the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met or it becomes known that it will be met. That notification shall include the information necessary to demonstrate that the relevant requirement has been met. If the Commission becomes aware of a general-purpose AI model presenting systemic risks of which it has not been notified, it may decide to designate it as a model with systemic risk.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U32",
@@ -1340,8 +1309,7 @@
   "paragraph_text": "(c) the identification of the type and nature of the systemic risks at Union level, including their sources, where appropriate;",
   "parent_texts": [
     "2. The AI Office and the Board shall aim to ensure that the codes of practice cover at least the obligations provided for in Articles 53 and 55, including the following issues:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U33",
@@ -1384,8 +1352,7 @@
   "paragraph_text": "(e) providers can further share the originally collected data only in accordance with Union data protection law; any personal data created in the sandbox cannot be shared outside the sandbox;",
   "parent_texts": [
     "1. In the AI regulatory sandbox, personal data lawfully collected for other purposes may be processed solely for the purpose of developing, training and testing certain AI systems in the sandbox when all of the following conditions are met:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U34",
@@ -1428,8 +1395,7 @@
   "paragraph_text": "(e) providers can further share the originally collected data only in accordance with Union data protection law; any personal data created in the sandbox cannot be shared outside the sandbox;",
   "parent_texts": [
     "1. In the AI regulatory sandbox, personal data lawfully collected for other purposes may be processed solely for the purpose of developing, training and testing certain AI systems in the sandbox when all of the following conditions are met:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U35",
@@ -1456,8 +1422,7 @@
   "paragraph_text": "This paragraph shall be without prejudice to Union or national law on the testing in real world conditions of high-risk AI systems related to products covered by Union harmonisation legislation listed in Annex I.",
   "parent_texts": [
     "1. Testing of high-risk AI systems in real world conditions outside AI regulatory sandboxes may be conducted by providers or prospective providers of high-risk AI systems listed in Annex III, in accordance with this Article and the real-world testing plan referred to in this Article, without prejudice to the prohibitions under Article 5."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U36",
@@ -1495,8 +1460,7 @@
   "classification_rationale": "Core post-market monitoring duty; directly MigrainePredict-relevant.",
   "anchor": "Providers shall establish and document a post-market monitoring system",
   "paragraph_text": "1. Providers shall establish and document a post-market monitoring system in a manner that is proportionate to the nature of the AI technologies and the risks of the high-risk AI system.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U37",
@@ -1539,8 +1503,7 @@
   "paragraph_text": "The provider shall cooperate with the competent authorities, and where relevant with the notified body concerned, during the investigations referred to in the first subparagraph, and shall not perform any investigation which involves altering the AI system concerned in a way which may affect any subsequent evaluation of the causes of the incident, prior to informing the competent authorities of such action.",
   "parent_texts": [
     "6. Following the reporting of a serious incident pursuant to paragraph 1, the provider shall, without delay, perform the necessary investigations in relation to the serious incident and the AI system concerned. This shall include a risk assessment of the incident, and corrective action."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U38",
@@ -1583,8 +1546,7 @@
   "paragraph_text": "The provider shall cooperate with the competent authorities, and where relevant with the notified body concerned, during the investigations referred to in the first subparagraph, and shall not perform any investigation which involves altering the AI system concerned in a way which may affect any subsequent evaluation of the causes of the incident, prior to informing the competent authorities of such action.",
   "parent_texts": [
     "6. Following the reporting of a serious incident pursuant to paragraph 1, the provider shall, without delay, perform the necessary investigations in relation to the serious incident and the AI system concerned. This shall include a risk assessment of the incident, and corrective action."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U39",
@@ -1630,8 +1592,7 @@
   "paragraph_text": "When the law enforcement, immigration or asylum authorities are providers of high-risk AI systems referred to in point 1, 6 or 7 of Annex III, the technical documentation referred to in Annex IV shall remain within the premises of those authorities. Those authorities shall ensure that the market surveillance authorities referred to in Article 74(8) and (9), as applicable, can, upon request, immediately access the documentation or obtain a copy thereof. Only staff of the market surveillance authority holding the appropriate level of security clearance shall be allowed to access that documentation or any copy thereof.",
   "parent_texts": [
     "3. Without prejudice to paragraphs 1 and 2, information exchanged on a confidential basis between the national competent authorities or between national competent authorities and the Commission shall not be disclosed without prior consultation of the originating national competent authority and the deployer when high-risk AI systems referred to in point 1, 6 or 7 of Annex III are used by law enforcement, border control, immigration or asylum authorities and when such disclosure would jeopardise public and national security interests. This exchange of information shall not cover sensitive operational data in relation to the activities of law enforcement, border control, immigration or asylum authorities."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U40",
@@ -1674,8 +1635,7 @@
   "paragraph_text": "When the law enforcement, immigration or asylum authorities are providers of high-risk AI systems referred to in point 1, 6 or 7 of Annex III, the technical documentation referred to in Annex IV shall remain within the premises of those authorities. Those authorities shall ensure that the market surveillance authorities referred to in Article 74(8) and (9), as applicable, can, upon request, immediately access the documentation or obtain a copy thereof. Only staff of the market surveillance authority holding the appropriate level of security clearance shall be allowed to access that documentation or any copy thereof.",
   "parent_texts": [
     "3. Without prejudice to paragraphs 1 and 2, information exchanged on a confidential basis between the national competent authorities or between national competent authorities and the Commission shall not be disclosed without prior consultation of the originating national competent authority and the deployer when high-risk AI systems referred to in point 1, 6 or 7 of Annex III are used by law enforcement, border control, immigration or asylum authorities and when such disclosure would jeopardise public and national security interests. This exchange of information shall not cover sensitive operational data in relation to the activities of law enforcement, border control, immigration or asylum authorities."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U41",
@@ -1718,8 +1678,7 @@
   "paragraph_text": "When the law enforcement, immigration or asylum authorities are providers of high-risk AI systems referred to in point 1, 6 or 7 of Annex III, the technical documentation referred to in Annex IV shall remain within the premises of those authorities. Those authorities shall ensure that the market surveillance authorities referred to in Article 74(8) and (9), as applicable, can, upon request, immediately access the documentation or obtain a copy thereof. Only staff of the market surveillance authority holding the appropriate level of security clearance shall be allowed to access that documentation or any copy thereof.",
   "parent_texts": [
     "3. Without prejudice to paragraphs 1 and 2, information exchanged on a confidential basis between the national competent authorities or between national competent authorities and the Commission shall not be disclosed without prior consultation of the originating national competent authority and the deployer when high-risk AI systems referred to in point 1, 6 or 7 of Annex III are used by law enforcement, border control, immigration or asylum authorities and when such disclosure would jeopardise public and national security interests. This exchange of information shall not cover sensitive operational data in relation to the activities of law enforcement, border control, immigration or asylum authorities."
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U42",
@@ -1762,8 +1721,7 @@
   "classification_rationale": "Disapplication of the right-to-explanation duty where sectoral law provides exceptions; H08/H19 dispensation shape, relieved duty cited from paragraph 1.",
   "anchor": "Paragraph 1 shall not apply to the use of AI systems for which exceptions ... follow from Union or national law",
   "paragraph_text": "2. Paragraph 1 shall not apply to the use of AI systems for which exceptions from, or restrictions to, the obligation under that paragraph follow from Union or national law in compliance with Union law.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U43",
@@ -1804,8 +1762,7 @@
   "classification_rationale": "Institutional flexibility for fine imposition.",
   "anchor": "the rules on administrative fines may be applied in such a manner that the fines are imposed by competent national courts",
   "paragraph_text": "9. Depending on the legal system of the Member States, the rules on administrative fines may be applied in such a manner that the fines are imposed by competent national courts or by other bodies, as applicable in those Member States. The application of such rules in those Member States shall have an equivalent effect.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U44",
@@ -1843,8 +1800,7 @@
   "classification_rationale": "Equivalence requirement on the same flexibility.",
   "anchor": "The application of such rules in those Member States shall have an equivalent effect.",
   "paragraph_text": "9. Depending on the legal system of the Member States, the rules on administrative fines may be applied in such a manner that the fines are imposed by competent national courts or by other bodies, as applicable in those Member States. The application of such rules in those Member States shall have an equivalent effect.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
 {
   "gold_id": "U45",
@@ -1872,8 +1828,7 @@
   "parent_texts": [
     "High-risk AI systems pursuant to Article 6(2) are the AI systems listed in any of the following areas:",
     "8. Administration of justice and democratic processes:"
-  ],
-  "label_source": "claude_proposed"
+  ]
 }
 {
   "gold_id": "U46",
@@ -1913,6 +1868,5 @@
   "classification_rationale": "Internal-control conformity-assessment step; the annex's indicative 'verifies' states a procedural duty.",
   "anchor": "The provider verifies that the established quality management system is in compliance with the requirements of Article 17.",
   "paragraph_text": "2. The provider verifies that the established quality management system is in compliance with the requirements of Article 17.",
-  "parent_texts": [],
-  "label_source": "claude_proposed"
+  "parent_texts": []
 }
