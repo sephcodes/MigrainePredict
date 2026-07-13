@@ -94,17 +94,69 @@ DEROGATORS = {"PERMISSION", "DISPENSATION"}
 VERIFICATION_EDGES = ("EXCEPTION_OF", "CANDIDATE_CONTRADICTION",
                       "REDUNDANT_WITH", "SPECIALISES", "CONFLICTS_WITH")
 
+# Curated cross-regulation conflict patterns. Each carries a `citation` to the
+# literature identifying the tension (citation-integrity rule: no pattern is
+# presented as independently derived). The citations here are the CANDIDATE
+# sources located during scale-up planning and STILL REQUIRE Yoseph's read/confirm
+# before the write-up cites them; where a source supports the general tension but
+# not the exact article pair, the pattern is an *operationalisation* of the cited
+# tension (the anchor-concept formulation is the engineering contribution).
+# Anchor concept lists were verified present on the real corpus statements
+# (2026-07-13) so each pattern fires on its intended provisions.
 CONFLICT_PATTERNS = [
     {
         "name": "logging_vs_storage_limitation",
         "description": "AI Act record-keeping/logging obligation vs GDPR "
                        "storage limitation (Art 12 AIA vs Art 5(1)(e) GDPR)",
+        "citation": "AI data governance – overlaps between the AI Act and the "
+                    "GDPR, Law Innovation & Technology (2026); EPRS 'Interplay "
+                    "between the AI Act and the EU digital legislative "
+                    "framework' (2025); EDPB-EDPS Joint Opinion 5/2021 "
+                    "[candidate — confirm before citing]",
         "a_reg": "aiact:", "a_modalities": ["OBLIGATION"],
         "a_concepts": ["vair:LoggingMeasure", "dpv:LoggingPolicy",
                        "dpv:RecordsOfActivities", "dpv:Record"],
         "b_reg": "gdpr:", "b_modalities": ["OBLIGATION", "PROHIBITION"],
         "b_concepts": ["eu-gdpr:StorageLimitationPrinciple",
                        "dpv:StorageDuration", "dpv:StorageDeletion"],
+    },
+    {
+        "name": "special_category_prohibition_vs_bias_detection",
+        "description": "GDPR general prohibition on processing special-category "
+                       "data vs AI Act permission to process it for bias "
+                       "detection/correction (Art 9(1) GDPR vs Art 10(5) AIA)",
+        "citation": "M. van Bekkum & F. Zuiderveen Borgesius, 'Using sensitive "
+                    "data to prevent discrimination by AI: Does the GDPR need a "
+                    "new exception?', CLSR (2023); M. van Bekkum, 'Using "
+                    "sensitive data to debias AI systems: Article 10(5) of the "
+                    "EU AI Act', CLSR (2025) [peer-reviewed, pair-specific — "
+                    "confirm before citing]",
+        # a-side: the AI Act PERMISSION to process special-category data for
+        # bias detection (art_10/par_5#s2), anchored on vair:BiasDetection.
+        "a_reg": "aiact:", "a_modalities": ["PERMISSION"],
+        "a_concepts": ["vair:BiasDetection"],
+        # b-side: the GDPR PROHIBITION on special-category processing (art_9(1)),
+        # anchored on the special-category data concepts it carries.
+        "b_reg": "gdpr:", "b_modalities": ["PROHIBITION"],
+        "b_concepts": ["pd:Health", "pd:Biometric", "pd:Genetic", "pd:Sexual"],
+    },
+    {
+        "name": "erasure_vs_log_retention",
+        "description": "GDPR right-to-erasure obligation vs AI Act obligation to "
+                       "retain automatically generated logs (Art 17 GDPR vs "
+                       "Art 12 AIA)",
+        "citation": "E. Fosch-Villaronga, P. Kieseberg & T. Li, 'Humans forget, "
+                    "machines remember: AI and the Right to Be Forgotten', CLSR "
+                    "(2018) [general tension; AI-Act-specific pair is "
+                    "practitioner-only — frame as operationalisation, confirm "
+                    "before citing]",
+        # a-side: the AI Act logging-retention obligation (art_12/par_1).
+        "a_reg": "aiact:", "a_modalities": ["OBLIGATION"],
+        "a_concepts": ["vair:LoggingMeasure", "dpv:LoggingPolicy",
+                       "dpv:RecordsOfActivities", "dpv:Record"],
+        # b-side: the GDPR erasure obligation (art_17), anchored on dpv:Erase.
+        "b_reg": "gdpr:", "b_modalities": ["OBLIGATION"],
+        "b_concepts": ["dpv:Erase"],
     },
 ]
 
@@ -315,6 +367,12 @@ def main():
                     default="data/verification/verification_reviewed.json",
                     help="review worksheet; human labels on flag-producing "
                          "pairs are applied as dispositions")
+    ap.add_argument("--no-holdout", action="store_true",
+                    help="keep every statement :Verified (queryable) even when a "
+                         "detector flags it; the typed edges are still written, "
+                         "but flagging does not gate graph visibility. Used to "
+                         "measure whether unresolved-tension noise actually hurts "
+                         "Phase-2 answers instead of hiding a fifth of the graph.")
     args = ap.parse_args()
 
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
@@ -472,7 +530,18 @@ def main():
         # ---- Disposition: :Verified label = what Phase 2 queries filter on --
         sess.run("MATCH (s:Candidate) "
                  "SET s.verification_status = 'verified', s:Verified")
-        if flagged:
+        would_flag = set(flagged)   # what detectors flagged, kept for reporting
+        if args.no_holdout:
+            # keep everything :Verified; record the detector outcome on the node
+            # but do not gate visibility on it. The typed edges (CONFLICTS_WITH,
+            # CANDIDATE_CONTRADICTION, EXCEPTION_OF, ...) are already written.
+            if flagged:
+                sess.run(
+                    "MATCH (s:Candidate) WHERE s.statement_id IN $ids "
+                    "SET s.detector_flagged = true",
+                    ids=sorted(flagged))
+            flagged = set()   # nothing held out downstream (disposition/audit)
+        elif flagged:
             sess.run(
                 "MATCH (s:Candidate) WHERE s.statement_id IN $ids "
                 "SET s.verification_status = 'flagged', s.needs_review = true "
@@ -563,11 +632,17 @@ def main():
         print(f"  {check:18s} {verdict:24s} {n}")
     print(f"tensions resolved via exception structures: {resolved}")
     print(f"reviewed dispositions applied from worksheet: {n_dispositions}")
-    real_flagged = [s for s in flagged if not s.startswith("syn:")]
-    print(f"flagged statements (held out of auto-ingest): {len(flagged)} "
-          f"({len(real_flagged)} real / {n_real} real candidates)")
-    for sid in sorted(flagged):
-        print(f"  {sid}")
+    if args.no_holdout:
+        real_wf = [s for s in would_flag if not s.startswith("syn:")]
+        print(f"--no-holdout: {len(real_wf)} statements were detector-flagged "
+              f"but KEPT :Verified (marked detector_flagged=true); "
+              f"0 held out of {n_real} real candidates")
+    else:
+        real_flagged = [s for s in flagged if not s.startswith("syn:")]
+        print(f"flagged statements (held out of auto-ingest): {len(flagged)} "
+              f"({len(real_flagged)} real / {n_real} real candidates)")
+        for sid in sorted(flagged):
+            print(f"  {sid}")
 
 
 if __name__ == "__main__":

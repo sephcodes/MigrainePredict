@@ -75,6 +75,14 @@ EMBED_MODEL = "BAAI/bge-small-en-v1.5"  # same model as build_content_candidates
 TOPK_SNIPPETS = 5
 MAX_CYPHER_ATTEMPTS = 3   # self-correction bound (Echenim & Joshi loop)
 MAX_SEEDS = 100
+# Cap on how many covered provisions the intent stage is shown. At eval scale
+# (~43 covered) this is a no-op — the whole list passes unchanged, so eval
+# behaviour is identical by construction. At corpus scale (~1,600 covered) the
+# list is narrowed to the NARROW_COVERED most question-similar provisions (via
+# the existing snippet index) so the intent LLM can actually ground against it
+# instead of picking from the whole corpus. Only the intent-stage candidate
+# list changes; seeding, expansion and synthesis are untouched.
+NARROW_COVERED = 50
 
 NEO4J_URI = os.environ.get("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
@@ -476,9 +484,17 @@ def build_context(stmts, edges, snippets):
 # ---------------------------------------------------------------------------
 def answer(question, query_id, sess, chains, entries, vecs, topk):
     intent_chain, cypher_chain, synth_chain = chains
+    # Vector-narrow the covered list shown to intent (no-op when <= NARROW_COVERED,
+    # so eval scale is unchanged; at corpus scale intent grounds against the
+    # question-nearest provisions instead of the whole corpus).
+    if len(entries) > NARROW_COVERED:
+        covered_iris = [iri for iri, _, _ in
+                        snippet_search(entries, vecs, question, k=NARROW_COVERED)]
+    else:
+        covered_iris = [iri for iri, _ in entries]
     intent = em._retry_invoke(intent_chain, {
         "question": question,
-        "covered": "\n".join(f"- {iri}" for iri, _ in entries),
+        "covered": "\n".join(f"- {iri}" for iri in covered_iris),
     }, label="intent classification")
     audit("graphrag_query", "intent_classified", query_id=query_id,
           mode=intent.mode, targets=intent.target_provisions,
