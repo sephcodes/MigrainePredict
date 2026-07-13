@@ -689,10 +689,11 @@ NOT used for the headline. It is a documented option, not the default story.
   flip). Exact-match agreement with one expert on ambiguous boundary items is
   inherently capped below 100%.
 - The pipeline does what it was built to do: grounds to the right articles
-  (47/50 template, ~0 recitals), retrieves verified statements, cites them,
-  abstains on missing facts, and closed the predicted coverage gap (Q25). The
-  reportable claim is **comparative** (GraphRAG vs vector-only baseline +
-  explainability/FR8), not an absolute accuracy target.
+  (47/50 template, ~0 recitals), retrieves verified statements, abstains on
+  missing facts, and closed the predicted coverage gap (Q25). NOTE: an earlier
+  version claimed the reportable win was "comparative accuracy + FR8" — the
+  three-way result (§12.8) shows accuracy is a WASH vs the baseline at scale and
+  citation recall is a weak differentiator. See §12.8 for the corrected framing.
 
 Rejected drastic options (recorded so they are not re-litigated): scrapping the
 architecture (no better one identified; matches the report spec; works);
@@ -702,9 +703,68 @@ problem); the object-head-noun fix (verification-stage FP class, orthogonal to
 query verdicts). K-tuning and head-noun go to the limitations section, not more
 engineering.
 
-### 12.8 Next
+### 12.8 Three-way corpus comparison (offline)
 
-- Corpus **vector-only baseline** (`graphrag_query.py --baseline`, Gemini) — the
-  comparative arm that turns "0.780 in isolation" into "beats the vector
-  baseline with traceability." Then the three-way write-up
-  (pipeline-Gemini / pipeline-Mistral / vector baseline) at corpus scale.
+`baseline_corpus.*` = the vector-only RAG baseline (same covered-only snippet
+index, snippets→synthesis, no intent/graph/statements), Gemini backend.
+
+| metric | pipeline-Gemini | vector baseline | pipeline-Mistral |
+|---|---|---|---|
+| adherence | 0.780 | 0.760 | 0.580 |
+| macro-F1 | 0.778 | 0.763 | 0.522 |
+| **citation recall** | **0.811** | **0.000** | 0.072 |
+| NON_COMPLIANT recall | 0.938 | 0.938 | 0.562 |
+| INSUFFICIENT recall | 0.500 | 0.600 | 0.100 |
+
+**The honest finding — verdict accuracy converges at corpus scale.** At eval
+scale the pipeline led the baseline on accuracy (0.92 vs 0.82). At corpus scale
+that edge nearly vanishes (0.780 vs 0.760): the baseline *improves* at scale
+(more indexed provision text → similarity search finds relevant snippets more
+often) while the pipeline gets slightly cautious (the richer-retrieval synthesis
+effect, §12.4). On the 4-label verdict metric the two systems are effectively
+equivalent at corpus scale. This is the central, uncomfortable result and it is
+reported as-is.
+
+**CORRECTION (Yoseph, 2026-07-13) — citation recall was over-weighted and is NOT
+a strong differentiator.** An earlier version of this section framed the 0.811
+vs 0.000 citation-recall gap as "the point." That is wrong: the baseline still
+surfaces the *provision text* of the relevant articles, which is a comparable
+explanation to a human reader. A statement-ID citation vs the article's text are
+not a meaningful explainability difference. Do not rest the contribution on
+citation recall.
+
+**What the KG genuinely does that flat retrieval cannot — and its honest scope.**
+The one demonstrated capability difference is **cross-regulation conflict
+reasoning**: on Q20 (the flagship logging-vs-storage tension) the pipeline
+retrieves the `CONFLICTS_WITH` edges and cites *both* GDPR and AI Act provisions;
+the baseline retrieves only one regulation (and the wrong provision). A
+similarity retriever cannot systematically surface that a duty in one regulation
+conflicts with a duty in another, because the two are not text-similar. **But the
+honest scope is narrow:** the corpus has only a handful of curated
+cross-regulation conflict patterns, and even on Q20 both systems produced the
+*wrong* verdict label — so the KG surfaces better/correct evidence (both
+regulations + the conflict) without necessarily producing a better label. On the
+large majority of queries, KG-backed and flat-retrieval answers are comparable.
+
+**Consequence for the dissertation framing (unresolved — needs a decision).**
+The project's contribution cannot rest on the GraphRAG-vs-RAG QA accuracy
+comparison, which is a wash at scale. Candidate framings that survive this
+result: (i) the **KG-construction methodology itself** (Phase 1 — extraction,
+mapping, verification) evaluated on its own terms, with the QA layer as one
+demonstration; (ii) the KG as a **structured, queryable compliance asset**
+supporting queries flat RAG cannot express (enumerate conflicts, exceptions,
+obligations by actor) — beyond the 50 QA prompts; (iii) an as-yet-unmeasured
+**groundedness/faithfulness** advantage (the pipeline synthesises only from
+verified statements; the baseline can import parametric knowledge — at eval scale
+the live faithfulness metric separated them on NOT_APPLICABLE). (iii) is the one
+that, if it holds at corpus scale, would be a *broad* (all-query) differentiator
+rather than the narrow conflict one; it requires the deferred live run to settle.
+
+### 12.9 Next (open, not blocking)
+
+- Optional: live faithfulness/answer-relevance (RAGAS pair) on the corpus runs —
+  deferred until the offline numbers are settled (Yoseph). At eval scale the live
+  metrics further separated pipeline from baseline on NOT_APPLICABLE (baseline
+  reasons about absence from imported knowledge); may re-separate them here.
+- Corpus query eval is otherwise complete; the three-way offline result above is
+  the reportable corpus-scale outcome.
