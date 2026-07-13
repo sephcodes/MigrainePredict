@@ -490,3 +490,73 @@ verdict and explanation separately.
     Report the gap as a model-capability limitation (use a capable backend),
     not as a pipeline fix in waiting.
 11. Expert-review worksheet (Echenim's five dimensions) for Skein.
+
+---
+
+## 12. Corpus scale-up query eval (2026-07-13, in progress)
+
+Sections 1–11 describe the query layer built and evaluated against the
+54-statement eval graph. This section records running the same layer against
+the full corpus graph (2,271 :Verified statements, all pushed through with
+`verify_statements.py --no-holdout`; see `verification_stage_summary.md` §9).
+
+### 12.1 Mistral corpus run — garbage, and the (initially wrong) diagnosis
+
+Yoseph ran the gold-50 on the corpus graph with the **Mistral** backend
+(`data/graphrag/gold_corpus_mistral.results.jsonl`). It was clearly bad:
+wrong verdicts, poor citations, retrieval dominated by **recitals** instead of
+operative articles. Q01 (textbook consent, gold COMPLIANT) retrieved only
+recitals and the intent stage grounded to a bare `"gdpr"` target; Q02 grounded
+to a malformed `"gdpr_art_93_p_1"` and fell to vector fallback.
+
+**Root-cause measurement:** the query layer grounds a question by showing the
+LLM the list of "covered provisions" (provisions that verified statements are
+sourced from) and asking it to pick targets. That list was **43** at eval
+scale; at corpus scale it is **1,620** (137 of them recitals). The
+covered-only retrieval design (Phase-2 plan: "~50 covered provisions") assumed
+a small list.
+
+**Claude's initial diagnosis was that this is structural and would hit Gemini
+too — that was WRONG (see 12.2).** Recorded here because the correction is the
+finding.
+
+### 12.2 Gemini probe — refutes the structural claim; the failure is backend-specific
+
+Three queries (Q01 consent, Q02 medical-access, Q10 health-data-sale) re-run on
+**Gemini** against the same corpus graph (`data/graphrag/probe3_gemini.results.jsonl`):
+
+| query | gold | Gemini corpus | intent grounding | recitals retrieved |
+|---|---|---|---|---|
+| Q01 | COMPLIANT | INSUFFICIENT | art_9/par_1, art_9/par_2/pt_a, art_7 (correct) | 0 |
+| Q02 | COMPLIANT | COMPLIANT ✓ | art_9/par_2/pt_h, art_9/par_3 (correct) | 0 |
+| Q10 | NON_COMPLIANT | NON_COMPLIANT ✓ | art_9 + aiact art_10/par_5 (correct) | 0 |
+
+Gemini grounds to the **right articles**, retrieves **zero recitals**, and
+answers sensibly — same prompt, same 1,620-provision list, opposite outcome
+from Mistral. So the large covered list makes intent-grounding *harder* but
+does not break it; **the weak model cannot ground against it (collapses to a
+bare `"gdpr"` target → recital retrieval → bad synthesis), the capable model
+can.** The failure is the backend, not the pipeline.
+
+**One real Gemini regression, explained:** Q01 was COMPLIANT at eval scale,
+INSUFFICIENT at corpus scale. Cause: the corpus retrieved the Art 7
+consent-condition statements (absent at eval scale), and that extra material
+triggered the documented over-caution class (wants the consent-validity layer
+verified). More coverage → more caution on that one question — minor and
+explainable, not garbage.
+
+**Reading:** this is the model-sensitivity finding (Chung/Mavridis) reproducing
+and *amplifying* at corpus scale. At eval scale Mistral's gap was concentrated
+in abstention; at corpus scale the harder grounding task widens it because the
+weak model now also fails at grounding. A stronger version of the existing
+finding, not a defect.
+
+### 12.3 Next
+
+1. Full **Gemini gold-50** on the corpus graph — the real corpus-scale number
+   (and the predicted Q25/S3 coverage-gap closures).
+2. Then a **vector-narrowing** experiment: narrow the covered list by embedding
+   similarity before the intent stage, so even a weak backend can ground. It is
+   now *optional* (Gemini does not need it) and must be validated for **no
+   regression** against the eval-scale gold-50 before any corpus number using
+   it is quoted.

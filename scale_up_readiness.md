@@ -269,6 +269,27 @@ graph carrying provenance status (Yoseph's decision). Apply-back done:
 `data/{gdpr,aiact}.content_mapped.jsonl` (2,536 records), both flagship
 conflict anchors confirmed mappable.
 
-**Next stage: load → verify at corpus scale** — §2 re-derivations
-(generic-concept tier, duplicate thresholds), §1.2 operand-vs-mention FP-rate
-sample, §4.1 CONFLICT_PATTERNS expansion.
+## Corpus load + verify — DONE (2026-07-13), pushed through unfiltered
+
+Full record in `verification_stage_summary.md` §9. Summary:
+
+- Loaded 2,271 statements (`load_candidates.py --wipe`; corpus replaced the
+  eval graph in Neo4j — rebuildable from repo, eval audit log saved as
+  `data/verification/audit_log_evalgraph54.jsonl`). Provenance auto-applied
+  (825 `:LLMSuggested`, 17 `:HumanReviewed`).
+- Verified with the flagship conflict pattern only. First run held out 471/2271
+  (20.7%) — unmanageable. §2.1 generic-tier fix (per-regulation) applied and
+  eval-replay-validated but did not reduce the queue; a witness-gate fix (§9.5)
+  was tried, failed the digit-identical eval replay, and was reverted.
+- **Decision (Yoseph): stop gating visibility on the detectors.**
+  `verify_statements.py --no-holdout` keeps every statement `:Verified`
+  (queryable); the 471 detector-flagged ones are marked `detector_flagged=true`
+  as data; all typed edges (incl. the flagship `CONFLICTS_WITH`) still written.
+  Holding a fifth of the graph out for a review nobody will do is not an
+  outcome; whether the operand-vs-mention noise actually hurts is a
+  measurement, not an assumption.
+
+**Next stage: Phase-2 gold-50 rerun against this graph** (pipeline-Gemini +
+pipeline-Mistral + vector baseline). Still open before/alongside it: §4.1
+CONFLICT_PATTERNS expansion (3 more patterns); the object-head-noun
+operand-vs-mention fix stays deferred unless the rerun measures a real cost.

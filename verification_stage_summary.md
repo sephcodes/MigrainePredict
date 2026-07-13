@@ -103,7 +103,214 @@ The round-2 100% is reported only to be discounted: the gold was co-refined with
 
 ---
 
-## 9. Reusable methodological principles that emerged
+## 9. Corpus scale-up (2026-07-12/13 — in progress)
+
+Sections 1–8 describe the stage as built and evaluated on the 51/54-statement
+eval graph. This section is the running record of the same stage applied to
+the full content-mapped corpus (2,271 non-NA statements: `derived_actors`
+extraction → corpus mapping, see `mapping_stage_summary.md` §9).
+
+### 9.1 Procedure and decisions (Yoseph, 2026-07-13)
+
+- **The corpus replaces the eval graph in Neo4j** (`load_candidates.py
+  --wipe`). Loading alongside would duplicate the same provisions with
+  differently-worded statements. The 54-statement eval graph remains
+  reproducible from tracked repo files with the documented one-command
+  rebuild; its audit log is preserved as
+  `data/verification/audit_log_evalgraph54.jsonl`.
+- **Conflict-pattern table: flagship only for the first run** (logging vs
+  storage limitation). The three additional patterns are designed against the
+  measured graph afterwards, not guessed up front.
+- **Corpus-named outputs:** verdicts `data/verification/corpus.verification.jsonl`;
+  review worksheet path `data/verification/verification_reviewed_corpus.json`
+  (deliberately fresh — the eval worksheet's dispositions are keyed by
+  statement-id pairs, and corpus ids share the same scheme, so reusing it
+  could apply old human labels to different statements).
+
+### 9.2 Load result
+
+2,271 statements (987-record GDPR file + 1,549 AI Act, NA stubs skipped),
+5,347 slot edges, 551 concepts, 1,718 provisions, 486 BROADER edges.
+Provenance verified in the graph: 825 statements carry `:LLMSuggested`
+(≥1 LLM-proposed slot), 17 `:HumanReviewed` (≥1 human-mapped slot) — the
+mapping stage's ingest-with-provenance decision needs no extra machinery.
+
+### 9.3 First verification run — results and the two problems it measured
+
+Verdict tally (~25,000 pairs evaluated): 1,024 candidate contradictions (215
+auto-resolved via exception structures → 809 unresolved), 119 exception
+structures, 351 specialisations, 26 duplicate candidates, 230 duplicate
+definitions (dominated by recitals re-defining Art 4 / Art 3 terms — the
+known recital-fragmentation extraction class), 2 cross-regulation conflicts.
+**471 statements (20.7%) flagged and held out of `:Verified`** — composed of
+299 statements from unresolved tensions, 180 from duplicates, 3 from
+conflicts.
+
+**The flagship conflict fired on real corpus statements**
+(`aiact:art_12/par_1#s1` × `gdpr:art_5/par_1/pt_e#s1`). A second firing —
+× `gdpr:art_47/par_2/pt_d#s1` — is a measured instance of the
+operand-vs-mention class (§8, deferred fix): the BCR provision requires a
+*document to list* "limited storage periods", which maps the
+storage-limitation anchor without imposing the duty.
+
+**Problem 1 — the generic-tier assumption failed (checklist §2.1 predicted
+this needed re-validation).** The ≥10% tier computed over the pooled corpus
+collapsed to `{airo:AISystem}`: the denominator mixes both regulations whose
+vocabularies are disjoint, so `dpv:PersonalData` (7.9% pooled, but 20% of
+GDPR's own deontic statements) fell under the cliff. The eval-scale claim
+"the relative threshold transfers to corpus scale" is falsified.
+
+**Problem 2 — the tension review queue is unmanageable (809 pairs), and the
+tier is not the main cause.** Measured decomposition of the 809: **692 fire
+with a discriminative witness that is frequency-rare but semantically
+empty** — e.g. Annex IV *documentation* obligations ("the technical
+documentation shall describe the system's capabilities") vs Art 5 *prohibited
+practices*, witnessed by `airo:AICapability ~ vair:ImageRecognition`
+subsumption; documentation about a capability is not exercise of it
+(operand-vs-mention at scale). **117 fire only through rule_b** (unconditional
+prohibition + raw object overlap), which was deliberately not gated by the
+generic tier at eval scale — so `airo:AISystem = airo:AISystem` identity
+matches pass. Top tension hubs: the four Art 21 (right-to-object) statements
+(~346 pair-slots) and the AI Act Art 5 prohibited-practices statements.
+
+### 9.4 Fix 1 — per-regulation generic tier (approved, validated, kept;
+did NOT reduce the queue)
+
+`GENERIC_QUERY` now derives the tier per regulation (a concept is generic if
+on ≥10% of *its own regulation's* deontic candidates): corpus tier =
+`{dpv:PersonalData, dpv:MakeAvailable, airo:AISystem, airo:Regulation}`.
+**Validation per the standing rule: the eval graph was rebuilt and re-verified
+under the changed query — all 208 verdict pairs digit-identical to the
+documented eval verdicts, 0 flagged, reviewed dispositions re-applied.** On
+the corpus the tally was unchanged (1,024 / 215 / 471): both measured noise
+classes bypass the gate the tier feeds (§9.3 problem 2). The fix is kept as
+correct in its own right; the honest record is that it addressed the tier
+artifact, not the queue.
+
+### 9.5 Fix 2 — witness informativeness gate (TRIED, FAILED VALIDATION, REVERTED)
+
+Decision (Yoseph, 2026-07-13): the §8 deferred-fix trigger ("build it if the
+corpus review queue is unmanageable") has been met, so we tried gating rule_b's
+object overlap through the discriminative (non-generic) check — the same gate
+rule_a already uses — to kill the generic-identity-witness tensions
+(`airo:AISystem = airo:AISystem`).
+
+**Scope measured before building (honest ceiling):** of the 809 unresolved
+tensions, only **117** fire *without* a discriminative witness (the rule_b
+generic-identity class); the other **692** already carry a discriminative
+witness and would survive this gate. So the best case was 809 → 692 tensions
+and ~112 statements freed — a partial fix, never the whole queue.
+
+**It failed the standing digit-identical eval-replay check and was reverted.**
+Rebuilding the 54-statement eval graph and re-verifying under the gate flipped
+**14 verdicts** — every Art 9(1)-hub tension (Art 16/17/32/33/34/35 vs
+Art 9(1)) went `candidate_contradiction` → `none`. Cause: the GDPR Art 9(1)
+hub — the eval stage's flagship "legally real hub" finding (§5, §7) — fires
+through rule_b on a **generic** witness (`dpv:PersonalData` /
+`dpv:Processing`), because the colliding obligations operate on personal data
+generally while only Art 9(1) carries the special-category concept. The gate
+that removes the corpus garbage also erases the legitimate GDPR hub. (Flagged
+count stayed 0 at eval scale — those tensions were all resolved-via-exception
+anyway — but the verdicts changed, so it is not digit-identical and the
+documented hub finding would evaporate.)
+
+**The real lesson (why a frequency gate cannot fix this):** the *same*
+mechanism — rule_b's raw object overlap on an unconditional prohibition —
+produces the legitimate GDPR Art 9(1) hub at eval scale and the AI Act Art 5
+garbage at corpus scale, and *both fire on a generic identity witness*. What
+distinguishes them is not concept frequency but **operand-vs-mention**: in
+Art 9(1) both statements' acts genuinely operate on the data; in
+Art 5-vs-Annex-IV the documentation obligation merely *mentions* the AI system
+it must document, it does not *perform* the prohibited practice. Frequency
+cannot see that difference — only the deferred object-head-noun analysis
+(§8, §1.2 of `scale_up_readiness.md`) can. Code reverted to known-good
+(eval replay digit-identical, corpus back to 471 flagged); the gate is not
+kept.
+
+### 9.6 Decision — push everything into the graph and measure (Yoseph, 2026-07-13)
+
+Holding 471 statements out for "review" is not a real outcome — nobody reviews
+471 statements, and hiding a fifth of the graph from Phase 2 is a cost with no
+established benefit. We do not actually know that the tension/duplicate noise
+degrades query answers. So the decision is to **stop gating visibility on the
+detectors and test the question empirically.**
+
+`verify_statements.py --no-holdout`: every statement keeps `:Verified` (all
+2,271 queryable by Phase 2); the detector still runs and still writes every
+typed edge — `CONFLICTS_WITH` (the flagship conflict edge is intact,
+`aiact:art_12/par_1#s1` × `gdpr:art_5/par_1/pt_e#s1`), `CANDIDATE_CONTRADICTION`,
+`EXCEPTION_OF`, `SPECIALISES`, `REDUNDANT_WITH` — and the 471 detector-flagged
+statements are marked `detector_flagged = true` as a queryable property, but
+flagging no longer removes `:Verified`. Graph state: 2,271 / 2,271 verified,
+471 carry `detector_flagged`.
+
+The operand-vs-mention noise (§9.3–9.5) is therefore *in* the graph, labelled,
+not fixed and not hidden. **What the Phase-2 gold-50 rerun actually measures
+(corrected framing):** not "do the tension edges hurt" — Phase-2 retrieval
+follows `REFERS_TO | EXCEPTION_OF | CONFLICTS_WITH` only, never
+`CANDIDATE_CONTRADICTION`, so the 809 tension edges are inert for queries. The
+reason `--no-holdout` matters is *coverage*: the 471–473 detector-flagged
+**statements** (Art 21, the AI Act Art 5 prohibitions, etc.) are real content
+queries need, and holding them out would create answer gaps. The rerun
+therefore measures corpus-scale retrieval precision, the unvetted
+`llm_suggested` mapping concepts, and coverage gains (the predicted Q25/S3
+closures) — the tensions are a verification-stage artifact, largely orthogonal
+to query answers.
+
+### 9.7 Conflict-pattern expansion (2026-07-13) — 2 genuine tensions added, 1 deferred as not-a-conflict
+
+The `CONFLICT_PATTERNS` table (§4.1 of `scale_up_readiness.md`) held only the
+flagship. Anchor mappability — the prerequisite — was confirmed at mapping
+close, so two more **genuine cross-regulation tensions** were added, with
+anchor concept lists verified present on the real corpus statements:
+
+- **`special_category_prohibition_vs_bias_detection`** (Art 9(1) GDPR ↔
+  Art 10(5) AIA): GDPR prohibits special-category processing; the AI Act
+  permits it for bias detection. a-side = AIA PERMISSION anchored on
+  `vair:BiasDetection`; b-side = GDPR PROHIBITION anchored on the
+  special-category concepts (`pd:Health/Biometric/Genetic/Sexual`). **Fires
+  exactly 1 pair — `aiact:art_10/par_5#s2 × gdpr:art_9/par_1#s1` — the
+  intended pair, no noise.** Citation: van Bekkum & Zuiderveen Borgesius CLSR
+  2023 + van Bekkum CLSR 2025 (peer-reviewed, pair-specific).
+- **`erasure_vs_log_retention`** (Art 17 GDPR ↔ Art 12 AIA): erasure duty vs
+  log-retention duty. a-side = AIA logging OBLIGATION (`vair:LoggingMeasure`);
+  b-side = GDPR erasure OBLIGATION (`dpv:Erase`). **Fires 9 pairs**, all
+  against the single logging statement `aiact:art_12/par_1#s1`: 8 are Art 17
+  erasure (its main statement + 7 sub-point grounds — granular but each is a
+  genuine erasure ground vs retention), 1 is Art 5(1)(d) accuracy-erasure
+  (defensible). **One firing is an operand-vs-mention FP:**
+  `gdpr:art_15/par_1/pt_e#s2` — the right-of-access provision *mentions* the
+  erasure right (so it carries `dpv:Erase`) but is not itself an erasure duty.
+  Same documented class as the Art 47 BCR flagship FP. Citation:
+  Fosch-Villaronga, Kieseberg & Li CLSR 2018 (general tension; the AI-Act pair
+  is an operationalisation).
+
+Total conflict firings now 12 (flagship 2, special-category 1, erasure 9).
+
+**The 4th planned pattern — Art 25 GDPR ↔ Art 10 AIA — was NOT added, on
+purpose.** §4.1 itself classes it as *"parallel-obligation composition, not
+conflict"*: both regulations impose compatible design/governance duties, they
+do not pull in opposite directions. The current `CHECK3` mechanism only emits
+`conflict` verdicts / `CONFLICTS_WITH` edges, so forcing this pair through it
+would assert a conflict that the law (and the cited literature) does not.
+**Open decision for Yoseph:** model parallel obligations with a separate
+relation (e.g. `COMPOSES_WITH`, informational like `SPECIALISES`), or leave
+Art 25↔10 out of the conflict layer entirely.
+
+**Citation integrity (unchanged rule):** every pattern now carries a
+`citation` field, but these are the CANDIDATE sources located during planning
+— they require Yoseph's read-and-confirm before the write-up cites them, and
+where a source supports the general tension but not the exact article pair the
+pattern is framed as an operationalisation, not an independently-derived
+mapping.
+
+### 9.8 Next step
+
+The Phase-2 gold-50 rerun against this graph (per §9.6's corrected framing:
+it measures corpus retrieval + mapping noise + coverage, not the tension
+edges). Pipeline-Gemini + pipeline-Mistral + vector baseline.
+
+## 10. Reusable methodological principles that emerged
 
 1. **Structure beats similarity.** References, paragraph hierarchy, and deontic form (unconditional prohibition) are near-perfect signals; concept-overlap similarity inherits every granularity defect of the vocabulary.
 2. **Make the annotator's judgment pair-local; compute the rest.** A labelling standard must be decidable from what the annotator can see. "Unresolvable corpus-wide" is not; "prima facie, from these two statements" is — and resolvability becomes a graph query.
