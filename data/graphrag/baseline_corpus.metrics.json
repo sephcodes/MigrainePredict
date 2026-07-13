@@ -1,0 +1,131 @@
+{
+  "results_file": "data/graphrag/baseline_corpus.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 24,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 14,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 1.0,
+      "R": 0.5333333333333333,
+      "F1": 0.6956521739130436,
+      "F2": 0.5882352941176471
+    },
+    "NON_COMPLIANT": {
+      "P": 0.75,
+      "R": 0.9375,
+      "F1": 0.8333333333333334,
+      "F2": 0.8928571428571429
+    },
+    "INSUFFICIENT": {
+      "P": 0.46153846153846156,
+      "R": 0.6,
+      "F1": 0.5217391304347826,
+      "F2": 0.5660377358490566
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "F2": 1.0
+    }
+  },
+  "macro_f1": 0.7626811594202899,
+  "citation": {
+    "recall": 0.0,
+    "precision": 0.0
+  },
+  "paraphrase": {
+    "consistent_trios": 7,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 0.7,
+      "variant_a": 0.8,
+      "variant_b": 0.6
+    },
+    "range": 0.20000000000000007
+  },
+  "seed_paths": {
+    "baseline_rag": 50
+  },
+  "misses": [
+    [
+      "Q01",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q01b",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q02",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q03b",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q05",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q05a",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q05b",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q12",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q20",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ]
+  ]
+}
