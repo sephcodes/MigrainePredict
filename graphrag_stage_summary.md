@@ -551,12 +551,160 @@ in abstention; at corpus scale the harder grounding task widens it because the
 weak model now also fails at grounding. A stronger version of the existing
 finding, not a defect.
 
-### 12.3 Next
+### 12.3 Full corpus gold-50 — results (offline metrics)
 
-1. Full **Gemini gold-50** on the corpus graph — the real corpus-scale number
-   (and the predicted Q25/S3 coverage-gap closures).
-2. Then a **vector-narrowing** experiment: narrow the covered list by embedding
-   similarity before the intent stage, so even a weak backend can ground. It is
-   now *optional* (Gemini does not need it) and must be validated for **no
-   regression** against the eval-scale gold-50 before any corpus number using
-   it is quoted.
+Both backends on the same canonical batch (`data/graphrag/gold_run_batch.jsonl`)
+against the full corpus graph, scored offline with `score_query.py`.
+
+| metric | eval Gemini | corpus Gemini | corpus Mistral |
+|---|---|---|---|
+| adherence | 0.920 | **0.780** (39/50) | 0.580 (29/50) |
+| macro-F1 | 0.917 | 0.778 | 0.522 |
+| grounded (template seed) | — | 47/50 | 24/50 |
+| vector_fallback seed | — | 2/50 | 26/50 |
+| citation recall | 0.946 | 0.811 | 0.072 |
+
+Files: `data/graphrag/gold_corpus_{gemini,mistral}.{results,metrics}.json(l)`.
+
+**Reading.** Gemini drops 0.920 → 0.780 but this is **not** a retrieval failure
+(47/50 grounded via template, near-zero recitals) — it is a *synthesis*
+regression from richer corpus retrieval (see 12.4). Mistral collapses to 0.580
+because its intent grounding fails on the large covered list: 26/50 fall to
+vector fallback, which retrieves recitals, so citation recall craters to 0.072
+and verdicts default to NOT_APPLICABLE. Same pipeline, same graph — the gap is
+the backend. This reproduces and *amplifies* the eval-scale model-sensitivity
+finding (Chung/Mavridis): at eval scale Mistral's gap was concentrated in
+abstention; at corpus scale the harder grounding task widens it.
+
+### 12.4 Why Gemini regressed — Q20 and Q25
+
+- **Q20 (90-day logs flagship, INSUFFICIENT → NON_COMPLIANT).** At eval scale
+  intent grounded tightly to `art_12/par_1` + `art_5/par_1/pt_e` and ruled
+  INSUFFICIENT (correct). At corpus scale intent grounded broader (all of
+  Art 12, Annex III, Art 9) AND expansion pulled in the **new
+  `erasure_vs_log_retention` conflict edge** (`art_12 CONFLICTS_WITH art_17`,
+  added in verification §9.7). Logging now visibly conflicts with *both*
+  storage-limitation and erasure, and that extra conflict material pushed the
+  model from "depends on facts" to "violation." The conflict pattern added this
+  session is directly implicated in the flagship flip — it is a real tension,
+  but it changes this verdict.
+- **Q25 (small-org exemption, still NON_COMPLIANT — but the coverage gap
+  CLOSED).** At eval scale the model asserted the base record-keeping duty whose
+  text was *not in the graph* (gap-filling from general knowledge — the
+  documented failure). At corpus scale `art_30/par_1`–`par_2` are now retrieved
+  and **cited** (`gdpr:art_30/par_1#s2`) — the gap-filling is gone, the pivotal
+  claim is grounded. The verdict stays NON_COMPLIANT only because Q25 is a
+  genuine INSUFFICIENT/NON_COMPLIANT boundary case (like Q23), not a coverage
+  failure. **So the predicted coverage closure happened mechanistically** (the
+  Q25/S3 prediction was correct at the grounding level), even though the
+  adherence number did not move.
+
+General mechanism: more corpus content → richer retrieval → the capable model
+becomes both more over-cautious on some questions (C→INS: Q01a, Q04, Q07, Q08)
+and more over-decisive on the INSUFFICIENT boundary (INS→NC: Q20, Q23, Q25).
+Retrieval is correct; the synthesis behaviour shifts with the richer context.
+
+### 12.5 Verdict–explanation coherence — a Mistral limitation (one example)
+
+Yoseph spotted that corpus-Mistral Q21b returns verdict **COMPLIANT** while its
+explanation concludes "MigrainePredict must comply with the user's deletion
+request" — i.e. the label contradicts its own reasoning. This exposed that the
+metrics score verdict-label-vs-gold (adherence) and explanation-vs-context
+(faithfulness) but **not** verdict-vs-explanation coherence. Yoseph manually
+read eval-Gemini, corpus-Gemini, and corpus-Mistral-narrowed and found **no
+such contradictions in Gemini** — the incoherence is a **Mistral** weak-model
+limitation, observed on this one example (Q21a/Q21b family). Decision (Yoseph):
+document it as a Mistral verdict limitation; **do not add a coherence check**.
+Related: Q21's yes/no phrasing ("does the company have to comply with the
+deletion request?") strains the four-label schema (smoke-stage finding F7),
+which compounds the weak model's incoherence.
+
+### 12.6 Vector-narrowing fix (built 2026-07-13)
+
+Root cause of the Mistral collapse: the intent stage is shown the covered-
+provision list and asked to pick targets, and that list is 43 at eval scale but
+**1,620** at corpus scale — too large for a weak model to ground against.
+
+Fix (`graphrag_query.py`, `NARROW_COVERED = 50`): before the intent call, narrow
+the covered list to the 50 most question-similar provisions via the existing
+snippet index; only the intent-stage candidate list changes (seeding, expansion,
+synthesis untouched). **No-op at eval scale by construction** — eval covered =
+43 ≤ 50, so the narrowing branch is never entered and the intent prompt is
+byte-identical to the pre-fix code (proven without an LLM run: a 50-query eval
+re-run would only measure LLM noise, so it was not spent).
+
+**Result — corpus Mistral, narrowed** (`gold_corpus_mistral_narrowed.*`, Yoseph
+ran it): grounding fixed — template seeds **24 → 48**, vector_fallback 26 → 2;
+adherence **29 → 35 / 50**, macro-F1 **0.522 → 0.644**. The fix does what it was
+designed to for the weak backend. (It is not expected to recover Q20, whose flip
+is an expansion-edge effect, not a grounding one.)
+
+**Result — corpus Gemini, narrowed** (`gold_corpus_gemini_narrowed.*`): a
+**mixed** result, not a clean pass.
+
+| metric | corpus Gemini | corpus Gemini narrowed |
+|---|---|---|
+| adherence | 0.780 | **0.800** (no regression) |
+| macro-F1 | 0.778 | 0.806 |
+| citation recall | 0.811 | **0.577 (REGRESSION)** |
+
+Verdict adherence does not regress (slightly better), but **citation recall
+drops 0.811 → 0.577** on Gemini — 15/50 queries cite fewer gold statements.
+Cause, from per-query analysis: narrowing the intent candidate list to the top-50
+question-similar provisions squeezes out (a) **foundational definitions**
+(`art_4/par_1`, `art_4/par_11`, `art_4/par_15`, `art_3/par_1`, `art_2/par_1`) —
+they carry no scenario vocabulary so they rank low — and (b) on some paraphrases,
+**core operative provisions** (Q01b lost Art 9, Q20 lost the flagship
+logging/storage pair). So narrowing also makes *which* provisions get grounded
+wording-sensitive. Net: the fix trades citation completeness / traceability
+(FR8) for grounding robustness. It is a clear win for the weak backend and a
+citation-recall cost for the capable one.
+
+**Open decision (the K=50 tradeoff):** (a) raise `NARROW_COVERED` (e.g. 100–150)
+— cheapest lever, likely recovers most citation recall while still cutting
+1,620 → ~150 enough to help Mistral; needs a re-run on both backends to confirm;
+(b) reserve the definitional provisions (Art 2/3/4 definitions are a small fixed
+set) as always-included, plus top-K similar operative provisions; (c) apply
+narrowing only for weak backends; (d) accept and document the tradeoff. Not yet
+decided.
+
+### 12.7 Decision and interpretation (Yoseph, 2026-07-13)
+
+**Headline backend = Gemini, non-narrowed.** Corpus Gemini 0.780 adherence /
+0.811 citation recall is the reported corpus-scale result. Narrowing is kept in
+the code (`NARROW_COVERED`, no-op at eval) and reported as a **robustness lever
+with a measured tradeoff** — it rescues weak backends (Mistral 0.58 → 0.64,
+grounding fixed) at a citation-recall cost on the capable backend — but it is
+NOT used for the headline. It is a documented option, not the default story.
+
+**Reading the 0.780 honestly (not a broken pipeline):**
+- The eval-scale 0.920 was measured over a 54-statement hand-curated graph that
+  covered exactly the gold queries — a tiny, perfectly-matched retrieval space.
+  0.780 over 2,271 realistic statements is the *honest* corpus number; the drop
+  is the realistic setting showing up, not a regression of a working thing.
+- The misses are characterized, not random, and several are contestable gold:
+  over-caution (C→INS — defensible caution for a compliance assistant) and
+  over-decisiveness on the INSUFFICIENT/NON_COMPLIANT boundary (Q23, Q25 —
+  adjudicated at eval scale as genuine ambiguity where gold could defensibly
+  flip). Exact-match agreement with one expert on ambiguous boundary items is
+  inherently capped below 100%.
+- The pipeline does what it was built to do: grounds to the right articles
+  (47/50 template, ~0 recitals), retrieves verified statements, cites them,
+  abstains on missing facts, and closed the predicted coverage gap (Q25). The
+  reportable claim is **comparative** (GraphRAG vs vector-only baseline +
+  explainability/FR8), not an absolute accuracy target.
+
+Rejected drastic options (recorded so they are not re-litigated): scrapping the
+architecture (no better one identified; matches the report spec; works);
+restricting to `applies_to_healthcare` statements (already rejected — a curated
+subset makes INSUFFICIENT ambiguous, and retrieval is not the capable backend's
+problem); the object-head-noun fix (verification-stage FP class, orthogonal to
+query verdicts). K-tuning and head-noun go to the limitations section, not more
+engineering.
+
+### 12.8 Next
+
+- Corpus **vector-only baseline** (`graphrag_query.py --baseline`, Gemini) — the
+  comparative arm that turns "0.780 in isolation" into "beats the vector
+  baseline with traceability." Then the three-way write-up
+  (pipeline-Gemini / pipeline-Mistral / vector baseline) at corpus scale.
