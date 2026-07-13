@@ -1,0 +1,150 @@
+{
+  "results_file": "data/graphrag/gold_corpus_mistral_narrowed.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 20,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 15,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 0.8,
+      "R": 0.8,
+      "F1": 0.8000000000000002,
+      "F2": 0.8
+    },
+    "NON_COMPLIANT": {
+      "P": 0.6842105263157895,
+      "R": 0.8125,
+      "F1": 0.742857142857143,
+      "F2": 0.7831325301204819
+    },
+    "INSUFFICIENT": {
+      "P": 0.6666666666666666,
+      "R": 0.2,
+      "F1": 0.30769230769230765,
+      "F2": 0.23255813953488372
+    },
+    "NOT_APPLICABLE": {
+      "P": 0.6153846153846154,
+      "R": 0.8888888888888888,
+      "F1": 0.7272727272727274,
+      "F2": 0.8163265306122449
+    }
+  },
+  "macro_f1": 0.6444555444555445,
+  "citation": {
+    "recall": 0.24324324324324326,
+    "precision": 0.3176470588235294
+  },
+  "paraphrase": {
+    "consistent_trios": 5,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 0.4,
+      "variant_a": 0.8,
+      "variant_b": 0.7
+    },
+    "range": 0.4
+  },
+  "seed_paths": {
+    "template": 48,
+    "vector_fallback": 2
+  },
+  "misses": [
+    [
+      "Q03",
+      "COMPLIANT",
+      "NOT_APPLICABLE",
+      "template"
+    ],
+    [
+      "Q03a",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q08",
+      "COMPLIANT",
+      "NOT_APPLICABLE",
+      "template"
+    ],
+    [
+      "Q10",
+      "NON_COMPLIANT",
+      "NOT_APPLICABLE",
+      "template"
+    ],
+    [
+      "Q10b",
+      "NON_COMPLIANT",
+      "NOT_APPLICABLE",
+      "template"
+    ],
+    [
+      "Q18",
+      "NON_COMPLIANT",
+      "NOT_APPLICABLE",
+      "template"
+    ],
+    [
+      "Q20",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21b",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q22",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q24",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q29",
+      "NOT_APPLICABLE",
+      "COMPLIANT",
+      "template"
+    ]
+  ]
+}
