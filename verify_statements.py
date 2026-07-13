@@ -110,12 +110,13 @@ CONFLICT_PATTERNS = [
 
 GENERIC_QUERY = """
 MATCH (st:Candidate {statement_class:'DEONTIC'}) WHERE NOT st:Synthetic
-WITH count(st) AS total
-MATCH (st:Candidate)-[:HAS_PREDICATE|HAS_OBJECT|HAS_CONDITION]->(c:Concept)
-WHERE NOT st:Synthetic
-WITH total, c.iri AS iri, count(DISTINCT st) AS n
+WITH split(st.statement_id, ':')[0] AS reg, count(st) AS total
+MATCH (st2:Candidate {statement_class:'DEONTIC'})
+      -[:HAS_PREDICATE|HAS_OBJECT|HAS_CONDITION]->(c:Concept)
+WHERE NOT st2:Synthetic AND split(st2.statement_id, ':')[0] = reg
+WITH reg, total, c.iri AS iri, count(DISTINCT st2) AS n
 WHERE n >= total * $fraction
-RETURN collect(iri) AS generic
+RETURN collect(DISTINCT iri) AS generic
 """
 
 CHECK1_QUERY = """
