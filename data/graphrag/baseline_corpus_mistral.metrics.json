@@ -1,0 +1,524 @@
+{
+  "results_file": "data/graphrag/baseline_corpus_mistral.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 27,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 18,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 1.0,
+      "R": 0.8666666666666667,
+      "F1": 0.9285714285714286,
+      "F2": 0.8904109589041096
+    },
+    "NON_COMPLIANT": {
+      "P": 0.8,
+      "R": 1.0,
+      "F1": 0.888888888888889,
+      "F2": 0.9523809523809523
+    },
+    "INSUFFICIENT": {
+      "P": 0.875,
+      "R": 0.7,
+      "F1": 0.7777777777777777,
+      "F2": 0.7291666666666666
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "F2": 1.0
+    }
+  },
+  "macro_f1": 0.8988095238095238,
+  "citation": {
+    "recall": 0.0,
+    "precision": 0.0
+  },
+  "paraphrase": {
+    "consistent_trios": 8,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 1.0,
+      "variant_a": 0.9,
+      "variant_b": 0.9
+    },
+    "range": 0.09999999999999998
+  },
+  "seed_paths": {
+    "baseline_rag": 50
+  },
+  "misses": [
+    [
+      "Q03a",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "baseline_rag"
+    ],
+    [
+      "Q06",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q21b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q23",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ],
+    [
+      "Q24",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "baseline_rag"
+    ]
+  ],
+  "live": [
+    {
+      "query_id": "Q01",
+      "faithfulness": 0.3333333333333333,
+      "answer_relevance": 0.8778019547462463,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "The retrieved regulations confirm that MigrainePredict's processing of users' heart-rate and sleep data for predicting migraine attacks is permitted under the given conditions.",
+        "Explicit consent is a requirement for processing special categories of personal data like health data (aiact:art_10/par_5).",
+        "The processing is necessary for entering or performance of a contract between the user and MigrainePredict, as it's a core feature of their service (gdpr:rct_71/p_0).",
+        "This processing complies with all relevant regulations."
+      ]
+    },
+    {
+      "query_id": "Q01a",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.6536638736724854,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The user can decline without giving up unrelated features and revoke their consent at any time, ensuring fair processing as per GDPR Article 24.",
+        "Additionally, since MigrainePredict is processing special categories of personal data (health data), they are allowed to do so under the exception provided in AI Act Article 10(5) for bias detection and correction, subject to appropriate safeguards."
+      ]
+    },
+    {
+      "query_id": "Q01b",
+      "faithfulness": 0.8571428571428571,
+      "answer_relevance": 0.7336285710334778,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The fact that consent can be withdrawn at any time complies with the principle of data minimization."
+      ]
+    },
+    {
+      "query_id": "Q02",
+      "faithfulness": 0.0,
+      "answer_relevance": 0.8763833045959473,
+      "n_claims": 2,
+      "unsupported_claims": [
+        "The hospital neurologist accessing the user's migraine-prediction data is permitted under GDPR Article 9(2)(h), as it is necessary for the medical diagnosis and treatment of the user.",
+        "The professional duty of confidentiality is also respected, as per GDPR Article 54(2)."
+      ]
+    },
+    {
+      "query_id": "Q03",
+      "faithfulness": 0.2857142857142857,
+      "answer_relevance": 0.8495691418647766,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The practice of anonymising logs aligns with EU AI Act Article 19(1).",
+        "The practice of anonymising logs aligns with GDPR Article 30(1).",
+        "GDPR Article 30(1) requires providers of high-risk AI systems to keep logs for an appropriate period (at least six months).",
+        "Since the logs are anonymised, they do not contain personal data.",
+        "Logs that do not contain personal data are exempt from GDPR's record-keeping requirements."
+      ]
+    },
+    {
+      "query_id": "Q03a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7978644967079163,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q03b",
+      "faithfulness": 0.7142857142857143,
+      "answer_relevance": 0.7529287338256836,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The anonymisation of logs aligns with GDPR Article 89(1).",
+        "Keeping the logs over the entire life of the system complies with AI Act Article 19(1)."
+      ]
+    },
+    {
+      "query_id": "Q04",
+      "faithfulness": 0.3333333333333333,
+      "answer_relevance": 0.7609025835990906,
+      "n_claims": 3,
+      "unsupported_claims": [
+        "which is within the one-month timeframe specified in GDPR Article 12(3).",
+        "Therefore, they have met their duty."
+      ]
+    },
+    {
+      "query_id": "Q05",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.7713289260864258,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "Therefore, MigrainePredict's partial refusal to erase this specific dataset is permitted under the conditions outlined in Article 89(1)."
+      ]
+    },
+    {
+      "query_id": "Q05a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8004733920097351,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The company may hold back the pseudonymised dataset for the ongoing scientific study, as it falls under the exception for processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes (gdpr:art_89/par_1).",
+        "This means they should have an easy way to request deletion of their data even from this dataset (gdpr:art_7/par_3)."
+      ]
+    },
+    {
+      "query_id": "Q05b",
+      "faithfulness": 0.4,
+      "answer_relevance": 0.8454743027687073,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "This falls under the exception for processing 'for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes' as per Article 89(1).",
+        "The data subject's rights are protected by making the information publicly available.",
+        "Keeping that dataset is permitted under these circumstances."
+      ]
+    },
+    {
+      "query_id": "Q06",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9005444645881653,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q07",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8984405398368835,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q08",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.8482030034065247,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "This rule is stated in GDPR Article 50(1)."
+      ]
+    },
+    {
+      "query_id": "Q09",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9120797514915466,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q10",
+      "faithfulness": 0.4,
+      "answer_relevance": 0.816251277923584,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The scenario violates Article 9 of GDPR.",
+        "Article 9 of GDPR prohibits processing special categories of personal data without explicit consent or another exception.",
+        "The processing is not permitted."
+      ]
+    },
+    {
+      "query_id": "Q10a",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.8580639958381653,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The scenario violates Article 9(1) of GDPR, which prohibits processing special categories of personal data without explicit consent or another exception."
+      ]
+    },
+    {
+      "query_id": "Q10b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8045883178710938,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q11",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8088805079460144,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "The scenario violates Article 6(4) of GDPR.",
+        "personal data must be collected for specified, explicit and legitimate purposes and not further processed in a manner incompatible with those purposes.",
+        "Article 6(4) requires new consent or other basis for this change."
+      ]
+    },
+    {
+      "query_id": "Q12",
+      "faithfulness": 0.3333333333333333,
+      "answer_relevance": 0.8424341082572937,
+      "n_claims": 3,
+      "unsupported_claims": [
+        "The user's request is not manifestly unfounded or excessive.",
+        "Therefore, MigrainePredict cannot refuse the request based on cost grounds without violating Article 12(5)(b) of GDPR."
+      ]
+    },
+    {
+      "query_id": "Q13",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8730669021606445,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9067443013191223,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8349164128303528,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q14",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7322635650634766,
+      "n_claims": 2,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q15",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.7066677212715149,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The scenario (automated suspension of an insurance-linked discount with legal effects) falls under the prohibition described in [aiact:rct_29/p_0].",
+        "The fact that the distortion is facilitated by an insurance-linked discount does not change this assessment."
+      ]
+    },
+    {
+      "query_id": "Q16",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7819897532463074,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q17",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.8799278140068054,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "MigrainePredict is a high-risk AI system under EU AI Act Annex III.",
+        "Not having a risk management system is a violation of the requirement in [aiact:rct_65/p_0] (65)."
+      ]
+    },
+    {
+      "query_id": "Q18",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8437706828117371,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18a",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.8795214295387268,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "This violates the GDPR's principle of storage limitation (Article 5(1)(c))."
+      ]
+    },
+    {
+      "query_id": "Q18b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.872783362865448,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q19",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8850467801094055,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20",
+      "faithfulness": 0.3333333333333333,
+      "answer_relevance": 0.7079587578773499,
+      "n_claims": 3,
+      "unsupported_claims": [
+        "The provided context does not specify whether 90 days is a sufficient retention period for operational logs.",
+        "More information about the intended purpose of the high-risk AI system and applicable laws is needed to make a decision on the sufficiency of a 90-day retention period."
+      ]
+    },
+    {
+      "query_id": "Q20a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6899600028991699,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20b",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.8711953163146973,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "Therefore, it is insufficient to decide based on the given information."
+      ]
+    },
+    {
+      "query_id": "Q21",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7937504649162292,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.7914120554924011,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The GDPR provides users with the right to request erasure of their personal data ('right to be forgotten') under Article 17(1)(e).",
+        "The company's desire to keep the data for scientific research does not constitute such an obligation."
+      ]
+    },
+    {
+      "query_id": "Q21b",
+      "faithfulness": 0.5714285714285714,
+      "answer_relevance": 0.8189728260040283,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The user's action falls under GDPR Article 17(1)(e).",
+        "Retaining data for scientific research purposes does not override the user's right to have their data erased.",
+        "MigrainePredict must comply with the deletion request."
+      ]
+    },
+    {
+      "query_id": "Q22",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9111643433570862,
+      "n_claims": 2,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q23",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.85536789894104,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q24",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8170661926269531,
+      "n_claims": 3,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q25",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.8082643151283264,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "Without knowing whether MigrainePredict's processing is likely to result in a risk to the rights and freedoms of data subjects or if it is occasional, we cannot determine if they can rely on this exemption."
+      ]
+    },
+    {
+      "query_id": "Q26",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8082630634307861,
+      "n_claims": 1,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q27",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7996892929077148,
+      "n_claims": 2,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q28",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8267571330070496,
+      "n_claims": 1,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29",
+      "faithfulness": 0.3333333333333333,
+      "answer_relevance": 0.8361579775810242,
+      "n_claims": 3,
+      "unsupported_claims": [
+        "The GDPR's data-processing obligations (Articles 13-22) do not apply to anonymous or aggregated data that cannot be linked to any individual.",
+        "these obligations do not govern this publication."
+      ]
+    },
+    {
+      "query_id": "Q29a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8270978927612305,
+      "n_claims": 2,
+      "unsupported_claims": [
+        "The retrieved GDPR provisions do not apply to the scenario of releasing fully anonymised aggregate migraine-frequency statistics that cannot be traced back to any individual."
+      ]
+    },
+    {
+      "query_id": "Q29b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9024195075035095,
+      "n_claims": 2,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q30",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6912805438041687,
+      "n_claims": 2,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q30a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8167802691459656,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The FAQ page does not fall under the definition of a high-risk AI system as per Article 12(1) of the EU AI Act.",
+        "The logging duties outlined in Articles 19 and 26 do not apply to this scenario."
+      ]
+    },
+    {
+      "query_id": "Q30b",
+      "faithfulness": 0.25,
+      "answer_relevance": 0.9104477763175964,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "The retrieved requirements all pertain to high-risk AI systems and their logs.",
+        "making it not a high-risk AI system under the EU AI Act.",
+        "Therefore, the logging requirement does not apply."
+      ]
+    }
+  ]
+}

@@ -123,5 +123,415 @@
       "NON_COMPLIANT",
       "template"
     ]
+  ],
+  "live": [
+    {
+      "query_id": "Q01",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8656470775604248,
+      "n_claims": 14,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q01a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7017307281494141,
+      "n_claims": 22,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q01b",
+      "faithfulness": 0.9090909090909091,
+      "answer_relevance": 0.8211092352867126,
+      "n_claims": 22,
+      "unsupported_claims": [
+        "The EU AI Act classifies MigrainePredict as a high-risk AI system.",
+        "These are important obligations for MigrainePredict."
+      ]
+    },
+    {
+      "query_id": "Q02",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8153934478759766,
+      "n_claims": 8,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q03",
+      "faithfulness": 0.5555555555555556,
+      "answer_relevance": 0.8206049799919128,
+      "n_claims": 18,
+      "unsupported_claims": [
+        "Under the EU AI Act, MigrainePredict is identified as a high-risk AI system (Annex III).",
+        "The scenario states that the logs are kept for the whole life of the system, which directly satisfies the requirement of Article 12(1) for high-risk AI systems.",
+        "The AI Act does not prohibit anonymised logs.",
+        "Logs that record events relevant for identifying risks, facilitating post-market monitoring, and monitoring operation (as required by Article 12(2) [aiact:art_12/par_2#s1], [aiact:art_12/par_2/pt_a#s1], [aiact:art_12/par_2/pt_b#s1], [aiact:art_12/par_2/pt_c#s1]) can still serve these purposes even if they are anonymised.",
+        "MigrainePredict (a wearable healthcare AI system for predicting migraine attacks) is not a remote biometric identification system.",
+        "Therefore, the logging practice is compliant with the EU AI Act.",
+        "Under the GDPR, the key consideration is whether the logs constitute 'personal data'.",
+        "In conclusion, the practice of keeping fully anonymised logs for the whole life of the system is compliant with both the EU AI Act and the GDPR."
+      ]
+    },
+    {
+      "query_id": "Q03a",
+      "faithfulness": 0.88,
+      "answer_relevance": 0.724169909954071,
+      "n_claims": 25,
+      "unsupported_claims": [
+        "The scenario describes MigrainePredict, a high-risk AI system under the EU AI Act Annex III.",
+        "MigrainePredict is a high-risk AI system.",
+        "Based on the provided facts, the practice of stripping identifying information and retaining anonymized logs for the system's lifetime is compliant with both regulations."
+      ]
+    },
+    {
+      "query_id": "Q03b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8599908947944641,
+      "n_claims": 20,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q04",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8311321139335632,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.811974048614502,
+      "n_claims": 14,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7842413783073425,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8460381627082825,
+      "n_claims": 18,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q06",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9234287142753601,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q07",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8749408721923828,
+      "n_claims": 22,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q08",
+      "faithfulness": 0.9,
+      "answer_relevance": 0.7931477427482605,
+      "n_claims": 20,
+      "unsupported_claims": [
+        "GDPR Article 9(1) & (2) - Special Categories of Personal Data: The scenario explicitly states that MigrainePredict's health data is special-category under GDPR Article 9.",
+        "AI Act Article 10(2)(b) - Data Governance: For high-risk AI systems like MigrainePredict, this provision requires that data governance and management practices concern 'the original purpose of the data collection where the data is personal data'."
+      ]
+    },
+    {
+      "query_id": "Q09",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7786867618560791,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q10",
+      "faithfulness": 0.7857142857142857,
+      "answer_relevance": 0.7168511748313904,
+      "n_claims": 14,
+      "unsupported_claims": [
+        "MigrainePredict is a high-risk AI system.",
+        "Since the purpose of selling data to an advertising network is not bias detection and correction, and such transmission to other parties is prohibited, the action is not permitted under the AI Act either.",
+        "Both GDPR and the AI Act prohibit the described activity."
+      ]
+    },
+    {
+      "query_id": "Q10a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8962649703025818,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q10b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8395110964775085,
+      "n_claims": 14,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q11",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7843276858329773,
+      "n_claims": 18,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q12",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.705634593963623,
+      "n_claims": 13,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.864253580570221,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8284724354743958,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8417125344276428,
+      "n_claims": 8,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q14",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8570342659950256,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q15",
+      "faithfulness": 0.8235294117647058,
+      "answer_relevance": 0.6417511701583862,
+      "n_claims": 17,
+      "unsupported_claims": [
+        "It is highly plausible that suspending an insurance-linked discount would fall under either the necessity for contract performance or explicit consent.",
+        "In either of these common and plausible scenarios, the explicit lack of human involvement renders the decision non-compliant with GDPR Article 22(3).",
+        "Subjecting the user to this decision is not permitted due to the absence of human intervention, which is a mandatory safeguard for automated decisions with legal effects based on contract necessity or explicit consent."
+      ]
+    },
+    {
+      "query_id": "Q16",
+      "faithfulness": 0.8,
+      "answer_relevance": 0.8909942507743835,
+      "n_claims": 10,
+      "unsupported_claims": [
+        "They do not negate the primary obligation to have the technical capability for automatic logging in the first place.",
+        "Since the system lacks this foundational capability, the conflicts regarding how to manage the logs are not relevant to this specific verdict."
+      ]
+    },
+    {
+      "query_id": "Q17",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8795220255851746,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18",
+      "faithfulness": 0.8181818181818182,
+      "answer_relevance": 0.8339293003082275,
+      "n_claims": 11,
+      "unsupported_claims": [
+        "The AI Act's requirement for logging is for accountability and traceability, which typically involves retaining logs for a defined period necessary for those purposes, not indefinitely without any purpose, especially for identifiable personal data.",
+        "The conflict between the two provisions would typically be resolved by ensuring that any personal data within logs is retained only as long as necessary for the AI Act's purposes and then appropriately anonymized, pseudonymized, or deleted."
+      ]
+    },
+    {
+      "query_id": "Q18a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8835240006446838,
+      "n_claims": 19,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7523939609527588,
+      "n_claims": 30,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q19",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8289211392402649,
+      "n_claims": 8,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20",
+      "faithfulness": 0.6875,
+      "answer_relevance": 0.7201337814331055,
+      "n_claims": 16,
+      "unsupported_claims": [
+        "MigrainePredict is a wearable healthcare AI system, which is classified as a high-risk AI system under the EU AI Act Annex III.",
+        "these are general principles.",
+        "The AI Act, as a specific regulation for high-risk AI systems,",
+        "This minimum period can be considered to define what is 'necessary' for these specific regulatory purposes.",
+        "Therefore, the AI Act's specific minimum requirement for high-risk AI systems takes precedence in this context."
+      ]
+    },
+    {
+      "query_id": "Q20a",
+      "faithfulness": 0.9444444444444444,
+      "answer_relevance": 0.6988474726676941,
+      "n_claims": 18,
+      "unsupported_claims": [
+        "The AI Act is a lex specialis for high-risk AI systems."
+      ]
+    },
+    {
+      "query_id": "Q20b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6848843097686768,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.772360622882843,
+      "n_claims": 17,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21a",
+      "faithfulness": 0.9473684210526315,
+      "answer_relevance": 0.8138032555580139,
+      "n_claims": 19,
+      "unsupported_claims": [
+        "A demand for erasure typically triggers this obligation (e.g., withdrawal of consent under Article 17(1)(b) [gdpr:art_17/par_1/pt_b#s1] or objection under Article 17(1)(c) [gdpr:art_17/par_1/pt_c#s1])."
+      ]
+    },
+    {
+      "query_id": "Q21b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8817421793937683,
+      "n_claims": 20,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q22",
+      "faithfulness": 0.6666666666666666,
+      "answer_relevance": 0.7735831141471863,
+      "n_claims": 12,
+      "unsupported_claims": [
+        "The primary obligation governing the retention of identifiable sensor data, which constitutes personal data, is found in GDPR Article 5(1)(e) [gdpr:art_5/par_1/pt_e#s1].",
+        "Without knowing the specific purposes, it is impossible to determine if a five-year retention period is 'no longer than is necessary' as required by GDPR.",
+        "Therefore, even if the raw sensor data is considered logs, the GDPR requirement to retain data only as long as necessary for its purpose still applies.",
+        "To determine if the five-year retention period is acceptable, the specific purposes for retaining the raw identifiable sensor data must be known and justified against the 'no longer than is necessary' principle."
+      ]
+    },
+    {
+      "query_id": "Q23",
+      "faithfulness": 0.6153846153846154,
+      "answer_relevance": 0.8296187520027161,
+      "n_claims": 13,
+      "unsupported_claims": [
+        "A 'general sign-up flow' strongly suggests that the consent for processing health data was likely bundled with other terms and conditions or consents for various purposes.",
+        "This bundling makes it highly improbable that the consent was 'specific' or 'clearly distinguishable' from other matters, as required by GDPR.",
+        "For special categories of data, the requirement for *explicit* consent (gdpr:art_9/par_2/pt_a#s1) further emphasizes the need for a clear, unambiguous, and specific indication of the data subject's wishes",
+        "which is typically not met by a general sign-up flow.",
+        "Therefore, relying on consent given in a 'general sign-up flow' for processing special category health data is non-compliant with the GDPR requirements for valid and explicit consent."
+      ]
+    },
+    {
+      "query_id": "Q24",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7102982401847839,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q25",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8609230518341064,
+      "n_claims": 12,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q26",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7489314079284668,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q27",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6954412460327148,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q28",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9516870379447937,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8059660792350769,
+      "n_claims": 8,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7864680290222168,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8130089640617371,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q30",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8679795861244202,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q30a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.9081302285194397,
+      "n_claims": 6,
+      "unsupported_claims": [
+        "Since the FAQ page does not constitute a machine-based system operating with autonomy, it does not fall under the definition of an AI system.",
+        "Therefore, the FAQ page cannot be a high-risk AI system.",
+        "Consequently, the logging duties for high-risk AI systems under the AI Act do not apply to this FAQ page."
+      ]
+    },
+    {
+      "query_id": "Q30b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.928513765335083,
+      "n_claims": 10,
+      "unsupported_claims": []
+    }
   ]
 }
