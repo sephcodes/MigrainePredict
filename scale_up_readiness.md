@@ -255,17 +255,20 @@ limitation in the write-up; the dormant path is NOT revived.
   numbers are quoted (now a LIVE run, not a replay — replays do not exercise the
   live subject-inference path; see `extraction_acceptance_summary.md`).
 
-## Corpus mapping — status (2026-07-12)
+## Corpus mapping — CLOSED (2026-07-12)
 
-Step 1 (the deterministic dry-run) is DONE and the subject/modality mappings
-are FINAL as-is. **The full record — numbers, residual classes, worksheet
-seeding, findings, file names — lives in `mapping_stage_summary.md` §9** (the
-mapping stage's own document); it is not duplicated here.
+The corpus mapping stage is complete. **The full record lives in
+`mapping_stage_summary.md` §9** (the mapping stage's own document); it is not
+duplicated here.
 
-Headline: subjects 1,192/1,744 mapped (68%; lexicon extended 3 → 16 roles,
-residual is genuine vocabulary gaps / composites / non-actor subjects, all
-flagged); modality 1,627/1,627; content-slot review queue **1,124 rows**.
+Headline: subjects 1,192/1,744 mapped (68%, lexicon final); modality
+1,627/1,627; all 1,124 content review rows adjudicated (proposals only);
+human review at corpus scale = a 9-row confirmed sample + the 40 carried
+eval-scale decisions; all remaining `llm_suggested_*` proposals enter the
+graph carrying provenance status (Yoseph's decision). Apply-back done:
+`data/{gdpr,aiact}.content_mapped.jsonl` (2,536 records), both flagship
+conflict anchors confirmed mappable.
 
-**Next gate (Yoseph's decision): the review budget for the 1,124 review rows**
-— full review vs scenario-prioritised — then adjudication → human confirm
-pass → `map_content` apply-back.
+**Next stage: load → verify at corpus scale** — §2 re-derivations
+(generic-concept tier, duplicate thresholds), §1.2 operand-vs-mention FP-rate
+sample, §4.1 CONFLICT_PATTERNS expansion.

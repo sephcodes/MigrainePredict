@@ -182,12 +182,90 @@ Findings from the counts (documented, not fixed):
 `mapping/content_map_corpus.json` (the corpus worksheet — carries decisions,
 durable), `mapping/subject_lexicon.json` (extended, durable).
 
-### 9.2 Next gate
+### 9.2 Step 2 — adjudication of the full review queue (DONE 2026-07-12)
 
-**The review budget for the 1,124 content-slot review rows** (Yoseph's
-decision: full review vs scenario-prioritised) → adjudicator over the review
-queue → human confirm pass (status-based HITL, per §6's calibration finding)
-→ `map_content` apply-back → load/verify.
+Review-budget decision (Yoseph, 2026-07-12): adjudicate ALL 1,124 review rows,
+then human-confirm only a scenario-prioritised slice; findings documented.
+
+**Run:** `adjudicate_content.py --path mapping/content_map_corpus.json`
+(Gemini 2.5 Flash, propose-only, candidate/vocabulary-constrained). All 1,124
+rows adjudicated, 0 left in review; transient 503/429 spikes absorbed by the
+retry logic; the 40 seed-locked rows verified untouched. Proposals:
+
+| proposed status | rows |
+|---|---|
+| `llm_suggested_mapped` | 859 |
+| `llm_suggested_flag` (no vocabulary home) | 140 |
+| `llm_suggested_literal` | 124 |
+| `escalated` | 1 |
+
+The single escalation is the out-of-vocabulary guard working: an object value
+("a template") the model could not ground in the routed vocabulary. NOTE these
+are PROPOSALS — nothing here is accepted; acceptance is the human confirm pass
+(edit `llm_suggested_*` → `manually_*`), per §6's calibration finding.
+
+**Confidence is still uncalibrated, now at corpus scale:** 95% of proposals
+carry confidence ≥ 0.9 (519 rows at exactly 1.0); only 1 row fell below the
+0.7 escalation threshold. Same behaviour as the eval-scale measurement — the
+model almost never says "unsure", so confidence cannot gate acceptance and the
+HITL trigger stays status-based.
+
+**The confirm slice: 99 rows.** Definition (grounded in what the evaluation
+actually exercises, not chosen ad hoc): rows whose article root is cited by
+the adopted gold-50 queries OR is a planned CONFLICT_PATTERNS anchor — 18
+article roots (gdpr: art_2, 4, 5, 9, 16, 17, 22, 25, 28, 30, 33, 34, 35;
+aiact: art_3, 9, 10, 12, 14). Slice composition: 84 proposed-mapped, 14
+proposed-literal, 1 proposed-flag.
+
+**Finding — the healthcare-relevance gate cannot define the slice:** 1,523 of
+the ~2,536 corpus records (60%) are `applies_to_healthcare=true`, spanning 259
+article roots, because MigrainePredict genuinely triggers most provisions of
+both regulations. "Healthcare-relevant" therefore does not discriminate;
+gold-cited + conflict-anchor articles is the criterion that does.
+
+### 9.3 Step 3 — human confirm sample + apply-back (DONE 2026-07-12)
+
+**Confirm pass (Yoseph): a 9-row random sample from the slice articles, and
+that is the entirety of human review at corpus scale** (his decision — not a
+full 99-row pass). All 9 are `manually_mapped`, all inside slice articles.
+Composition worth naming: 7 of the 9 were rows the deterministic matcher had
+left as `literal` (so they were never adjudicated — the §1.1/anchor-B
+under-mapping class in the literal tail), 1 corrected/confirmed an auto-map,
+and 1 adopted an adjudicator proposal (the Art 17(3) archiving condition →
+`dpv:PublicInterest` + `dpv:ScientificResearch`). His sample includes the
+flagship b-side anchor: `gdpr:art_5/par_1/pt_e`'s condition →
+`eu-gdpr:StorageLimitationPrinciple`.
+
+**Disposition of everything else (Yoseph's decision): all remaining
+`llm_suggested_*` proposals — the rest of the 99-row slice and the 1,025
+non-slice rows — enter the graph AS PROPOSALS, carrying their status.**
+`mapping_status` rides on every slot element into the records (and
+`load_candidates.py` turns any `llm_suggested_*` slot into an `:LLMSuggested`
+statement label), so unvetted content is queryable, filterable, and honest —
+never silently trusted. Consequence to report: at corpus scale the
+human-verified layer is the 9-row sample plus the 40 carried eval-scale
+decisions; everything else is deterministic-match or labelled LLM proposal.
+
+**Apply-back:** `map_content.py` (extended to accept bare file paths, like
+the rest of the chain) with `--reviewed mapping/content_map_corpus.json` over
+the modality-mapped corpus → `data/{gdpr,aiact}.content_mapped.jsonl`, all
+2,536 records. Slot-element outcomes: predicate 250 mapped / 426 literal /
+1,059 no_target (the §9.1 AI Act predicate gap) / 11 unmatched; object 1,177
+mapped + 416 llm-proposed + 147 llm-flag; condition 638 literal + 571
+llm-proposed + 15 manually mapped. **The 11 unmatched are all empty-string
+predicates — the extraction stage's documented blank-slot class
+(`gdpr:art_84/par_1` among them) surfacing exactly where it should; each is
+flagged `content_unmatched` + `needs_review`, not guessed.** Spot-checked:
+both flagship conflict anchors are live in the output (`vair:LoggingMeasure`
+on aiact:art_12/par_1; `eu-gdpr:StorageLimitationPrinciple` on
+gdpr:art_5/par_1/pt_e).
+
+### 9.4 Next
+
+The corpus mapping stage is CLOSED. Next stage is load → verify at corpus
+scale (`scale_up_readiness.md` §2: re-derive the generic-concept tier,
+sample-check duplicate thresholds; §4.1: CONFLICT_PATTERNS expansion — both
+flagship anchors confirmed mappable above).
 
 ## 10. Reusable methodological principles that emerged
 
