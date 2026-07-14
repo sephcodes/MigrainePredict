@@ -71,7 +71,13 @@ RESULTS_LOG = f"{GRAPHRAG_DIR}/results.jsonl"
 INDEX_META = f"{GRAPHRAG_DIR}/snippet_index.json"
 INDEX_VECS = f"{GRAPHRAG_DIR}/snippet_index.npy"
 
-EMBED_MODEL = "BAAI/bge-small-en-v1.5"  # same model as build_content_candidates
+EMBED_MODEL = "BAAI/bge-m3"  # 1024-dim, 8192 ctx; instruction-free; dense+sparse
+# bge-*-en-v1.5 is asymmetric and needs a query-side instruction prefix; bge-m3
+# is instruction-free (model card). So the prefix is applied ONLY for the
+# en-v1.5 family and is empty for m3.
+BGE_QUERY_INSTRUCTION = (
+    "Represent this sentence for searching relevant passages: "
+    if "en-v1.5" in EMBED_MODEL else "")
 TOPK_SNIPPETS = 5
 MAX_CYPHER_ATTEMPTS = 3   # self-correction bound (Echenim & Joshi loop)
 MAX_SEEDS = 100
@@ -83,6 +89,13 @@ MAX_SEEDS = 100
 # instead of picking from the whole corpus. Only the intent-stage candidate
 # list changes; seeding, expansion and synthesis are untouched.
 NARROW_COVERED = 50
+# Dense-retrieval seeding (the "provision fix"): number of question-nearest
+# covered provisions to seed statements from. When --dense-seed is set, seed
+# selection is genuine RAG (embed question -> retrieve provisions by text
+# similarity -> seed their statements -> graph-expand), instead of the LLM
+# picking provision IRIs from a bare list by recall. This is what makes the
+# system a real RAG-over-KG.
+DENSE_SEED_K = 8
 
 NEO4J_URI = os.environ.get("NEO4J_URI", "neo4j://127.0.0.1:7687")
 NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
@@ -281,6 +294,40 @@ Regulation text snippets (vector-retrieved):
 """
 
 
+LLMONLY_SYNTH_SYSTEM = """\
+You are a compliance analyst for MigrainePredict, a wearable healthcare AI
+system for predicting migraine attacks (high-risk under EU AI Act Annex III;
+its health data is special-category under GDPR Article 9). Decide a verdict
+for the question using ONLY your own knowledge of the GDPR and the EU AI Act.
+No regulatory text is retrieved or provided; rely on what you already know.
+
+Verdict labels:
+- COMPLIANT: the scenario facts satisfy every requirement that applies to them.
+- NON_COMPLIANT: a scenario fact violates a requirement, with no exception that
+  lifts it.
+- INSUFFICIENT: requirements apply, but the scenario is missing a fact needed
+  to decide (say which fact in missing_information).
+- NOT_APPLICABLE: no requirement governs the scenario.
+
+Rules:
+- NO INFERENCE FROM SILENCE: never infer a violation because the scenario does
+  not mention something. Missing scenario detail -> INSUFFICIENT; no governing
+  requirement -> NOT_APPLICABLE.
+- cited: list the provisions your verdict relies on, from your own knowledge,
+  using EXACTLY this IRI format:
+    * paragraph:      '<reg>:art_<n>/par_<m>'      e.g. gdpr:art_9/par_1, aiact:art_12/par_1
+    * lettered point: '<reg>:art_<n>/par_<m>/pt_<x>' e.g. gdpr:art_9/par_2/pt_a, gdpr:art_5/par_1/pt_e
+    * annex:          'aiact:anx_<roman>/par_<m>'   e.g. aiact:anx_III/par_1
+  <reg> is 'gdpr' or 'aiact'; <x> is a lowercase letter. Do NOT use any other
+  form (not 'Article 9(2)(a)', not 'sub_a', not '9(2)(a)').
+- Write the explanation in plain English.
+"""
+
+LLMONLY_SYNTH_USER = """\
+Question: {question}
+"""
+
+
 def build_query_chains(backend: str):
     llm = em._llm(backend)
     intent_chain = ChatPromptTemplate.from_messages(
@@ -321,7 +368,10 @@ def load_snippet_index(provisions):
     """Embed covered provision texts once; rebuild only when they change."""
     import numpy as np
     entries = [(iri, text) for iri, text in provisions if text]
-    digest = hashlib.sha256(json.dumps(entries).encode()).hexdigest()
+    # key the cache on the model too, so changing EMBED_MODEL forces a rebuild
+    # (otherwise stale vectors of a different dimension are reused).
+    digest = hashlib.sha256(
+        json.dumps([EMBED_MODEL, entries]).encode()).hexdigest()
     if os.path.exists(INDEX_META) and os.path.exists(INDEX_VECS):
         meta = json.load(open(INDEX_META))
         if meta.get("digest") == digest:
@@ -336,7 +386,8 @@ def load_snippet_index(provisions):
 
 
 def snippet_search(entries, vecs, query, k=TOPK_SNIPPETS):
-    q = _embedder().encode([query], normalize_embeddings=True)[0]
+    q = _embedder().encode([BGE_QUERY_INSTRUCTION + query],
+                           normalize_embeddings=True)[0]
     sims = vecs @ q
     order = sims.argsort()[::-1][:k]
     return [(entries[i][0], entries[i][1], float(sims[i])) for i in order]
@@ -396,9 +447,25 @@ def seed_by_llm_cypher(sess, cypher_chain, question, intent, attempts_log):
     return [], None
 
 
-def select_seeds(sess, cypher_chain, question, intent, entries, vecs):
-    """Hybrid seed selection; returns (seeds, path, cypher_attempts)."""
+def select_seeds(sess, cypher_chain, question, intent, entries, vecs,
+                 dense_seed=False):
+    """Hybrid seed selection; returns (seeds, path, cypher_attempts).
+
+    dense_seed=True (the "provision fix"): genuine RAG seeding — retrieve the
+    DENSE_SEED_K question-nearest covered provisions by text-embedding
+    similarity and seed their statements, instead of the LLM picking provision
+    IRIs by recall. Graph expansion still runs on top, so this is RAG-over-KG.
+    """
     attempts = []
+    if dense_seed:
+        query = " ".join([question] + intent.scenario_facts)
+        # retrieve extra, drop recitals (rct_* = non-binding preamble, not
+        # operative law — their natural-language text out-ranks formal article
+        # text on embedding similarity), keep the DENSE_SEED_K nearest articles.
+        near = snippet_search(entries, vecs, query, k=DENSE_SEED_K * 3)
+        prov = [iri for iri, _, _ in near if "rct_" not in iri][:DENSE_SEED_K]
+        seeds = seed_by_template(sess, prov)
+        return seeds, "dense_retrieval", attempts
     if intent.target_provisions:
         seeds = seed_by_template(sess, intent.target_provisions)
         if seeds:
@@ -444,21 +511,20 @@ def expand(sess, seeds):
 
 
 def render_statement(props):
-    """One context block per statement. The anchor is the reliable pointer to
-    the source sentence; the slot rendering (cycle_consistency's deterministic
-    template) is a structured gloss, never a substitute for it."""
+    """One context block per statement: the deontic modality/class label plus the
+    AUTHORITATIVE SOURCE TEXT (the anchor sentence, full paragraph as fallback).
+
+    The `cc.serialize` structured gloss was removed from the synthesis context:
+    it re-rendered the extracted slots into a sentence, and where the extraction's
+    duty-bearer inference had rewritten the subject (e.g. 'That record shall
+    contain ...' -> subject 'the controller'), the gloss produced garbled text
+    ('the controller shall contain the name and contact details ...') that misled
+    the synthesis LLM. The source text the KG is grounded in is authoritative;
+    the derived gloss is not, so synthesis now reasons over the source text."""
     sid, cls = props["statement_id"], props["statement_class"]
     lines = [f"[{sid}] {cls}", f"  source: {props.get('source_article')}"]
     if cls == "DEONTIC":
-        pseudo = {
-            "modality": props.get("modality"),
-            "subject": [{"value": v} for v in props.get("subject_text") or []],
-            "predicate": [{"value": v} for v in props.get("predicate_text") or []],
-            "object": [{"value": v} for v in props.get("object_text") or []],
-            "condition": {"value": "; ".join(props.get("condition_text") or [])},
-        }
-        lines += [f"  modality: {props.get('modality')}",
-                  f"  structured: {cc.serialize(pseudo)}"]
+        lines.append(f"  modality: {props.get('modality')}")
     elif cls == "DEFINITIONAL":
         lines.append(f"  defines '{props.get('term')}' as: "
                      f"{props.get('definition_value')}")
@@ -466,8 +532,15 @@ def render_statement(props):
         lines.append(f"  scope: {props.get('scope_type')} "
                      f"polarity={props.get('polarity')} "
                      f"applies_to: {props.get('applies_to_value')}")
-    if props.get("anchor"):
-        lines.append(f"  source sentence: \"{props['anchor']}\"")
+    # parent chapeau/context so a sub-point is not a floating fragment
+    # (e.g. "(a) the name and contact details ..." framed by its parent
+    # "That record shall contain all of the following information:").
+    parents = [t for t in (props.get("parent_texts") or []) if t]
+    if parents:
+        lines.append(f"  context: \"{' '.join(parents)}\"")
+    text = props.get("anchor") or props.get("paragraph_text")
+    if text:
+        lines.append(f"  text: \"{text}\"")
     return "\n".join(lines)
 
 
@@ -482,7 +555,8 @@ def build_context(stmts, edges, snippets):
 # ---------------------------------------------------------------------------
 # Orchestration
 # ---------------------------------------------------------------------------
-def answer(question, query_id, sess, chains, entries, vecs, topk):
+def answer(question, query_id, sess, chains, entries, vecs, topk,
+           dense_seed=False):
     intent_chain, cypher_chain, synth_chain = chains
     # Vector-narrow the covered list shown to intent (no-op when <= NARROW_COVERED,
     # so eval scale is unchanged; at corpus scale intent grounds against the
@@ -501,7 +575,7 @@ def answer(question, query_id, sess, chains, entries, vecs, topk):
           n_facts=len(intent.scenario_facts))
 
     seeds, path, attempts = select_seeds(sess, cypher_chain, question, intent,
-                                         entries, vecs)
+                                         entries, vecs, dense_seed=dense_seed)
     audit("graphrag_query", "seeds_selected", query_id=query_id, path=path,
           n_seeds=len(seeds), cypher_attempts=len(attempts))
 
@@ -570,6 +644,25 @@ def baseline_answer(question, query_id, synth_chain, entries, vecs, topk):
     }
 
 
+def llm_only_answer(question, query_id, synth_chain):
+    """Bare-LLM comparator: question -> verdict from the model's own knowledge
+    of the GDPR / EU AI Act, with NO retrieval and NO KG. Isolates the value of
+    the whole RAG + ontology/KG system over a plain LLM (the brief's baseline:
+    a compliance answer an LLM can guess from training vs one grounded in
+    extracted, verified, updatable regulatory knowledge)."""
+    verdict = em._retry_invoke(synth_chain, {"question": question},
+                               label="llm-only synthesis")
+    audit("graphrag_llm_only", "verdict", query_id=query_id,
+          verdict=verdict.verdict)
+    return {
+        "ts": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "query_id": query_id, "question": question, "intent": None,
+        "seed_path": "llm_only", "cypher_attempts": [],
+        "retrieved_statement_ids": [], "retrieved_edges": [], "snippets": [],
+        "verdict": verdict.model_dump(),
+    }
+
+
 def print_result(res):
     v = res["verdict"]
     print(f"\n=== {res['query_id']}: {v['verdict']}  "
@@ -625,6 +718,13 @@ def main():
     ap.add_argument("--baseline", action="store_true",
                     help="vector-only RAG comparator: same snippet index, "
                          "no graph, no intent stage")
+    ap.add_argument("--llm-only", dest="llm_only", action="store_true",
+                    help="bare-LLM comparator: no retrieval, no KG; the model "
+                         "answers from its own knowledge of GDPR / EU AI Act")
+    ap.add_argument("--dense-seed", dest="dense_seed", action="store_true",
+                    help="the 'provision fix': seed by dense text-embedding "
+                         "retrieval (genuine RAG-over-KG) instead of the LLM "
+                         "picking provision IRIs by recall")
     ap.add_argument("--backend", default="gemini",
                     choices=["gemini", "mistral"])
     ap.add_argument("--topk", type=int, default=TOPK_SNIPPETS)
@@ -640,16 +740,23 @@ def main():
         if not args.question and not args.batch:
             ap.error("provide a question, --batch, or --check")
 
-        provisions = covered_provisions(sess)
-        entries, vecs = load_snippet_index(provisions)
-        if args.baseline:
+        if args.llm_only:
             llm = em._llm(args.backend)
-            baseline_chain = ChatPromptTemplate.from_messages(
-                [("system", BASELINE_SYNTH_SYSTEM),
-                 ("user", BASELINE_SYNTH_USER)]
+            llmonly_chain = ChatPromptTemplate.from_messages(
+                [("system", LLMONLY_SYNTH_SYSTEM),
+                 ("user", LLMONLY_SYNTH_USER)]
             ) | llm.with_structured_output(ComplianceVerdict)
         else:
-            chains = build_query_chains(args.backend)
+            provisions = covered_provisions(sess)
+            entries, vecs = load_snippet_index(provisions)
+            if args.baseline:
+                llm = em._llm(args.backend)
+                baseline_chain = ChatPromptTemplate.from_messages(
+                    [("system", BASELINE_SYNTH_SYSTEM),
+                     ("user", BASELINE_SYNTH_USER)]
+                ) | llm.with_structured_output(ComplianceVerdict)
+            else:
+                chains = build_query_chains(args.backend)
 
         if args.batch:
             queries = [json.loads(l) for l in open(args.batch)]
@@ -658,14 +765,18 @@ def main():
 
         os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
         for q in queries:
-            if args.baseline:
+            if args.llm_only:
+                res = llm_only_answer(q["question"],
+                                      q.get("query_id", "adhoc"), llmonly_chain)
+            elif args.baseline:
                 res = baseline_answer(q["question"],
                                       q.get("query_id", "adhoc"),
                                       baseline_chain, entries, vecs,
                                       args.topk)
             else:
                 res = answer(q["question"], q.get("query_id", "adhoc"), sess,
-                             chains, entries, vecs, args.topk)
+                             chains, entries, vecs, args.topk,
+                             dense_seed=args.dense_seed)
             with open(args.out, "a") as f:
                 f.write(json.dumps(res) + "\n")
             print_result(res)

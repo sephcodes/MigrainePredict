@@ -760,11 +760,313 @@ the live faithfulness metric separated them on NOT_APPLICABLE). (iii) is the one
 that, if it holds at corpus scale, would be a *broad* (all-query) differentiator
 rather than the narrow conflict one; it requires the deferred live run to settle.
 
-### 12.9 Next (open, not blocking)
+### 12.9 Live faithfulness/relevance — the broad differentiator (corpus)
 
-- Optional: live faithfulness/answer-relevance (RAGAS pair) on the corpus runs —
-  deferred until the offline numbers are settled (Yoseph). At eval scale the live
-  metrics further separated pipeline from baseline on NOT_APPLICABLE (baseline
-  reasons about absence from imported knowledge); may re-separate them here.
-- Corpus query eval is otherwise complete; the three-way offline result above is
-  the reportable corpus-scale outcome.
+Run 2026-07-13 (Gemini judge, ~2 calls/query) on the pipeline and baseline
+corpus runs. Metrics merged into `gold_corpus_gemini.metrics.json` /
+`baseline_corpus.metrics.json` (RAG only). Faithfulness = fraction of the explanation's
+claims supported by the retrieved context (imported/parametric-knowledge claims
+count as unsupported).
+
+| faithfulness by gold label | n | pipeline | baseline |
+|---|---|---|---|
+| COMPLIANT | 15 | 0.950 | 0.863 |
+| NON_COMPLIANT | 16 | 0.952 | 0.916 |
+| INSUFFICIENT | 10 | 0.887 | 0.892 |
+| **NOT_APPLICABLE** | 9 | **0.944** | **0.697** |
+| **OVERALL** | 50 | **0.937** | **0.856** |
+
+Answer relevance is a wash (0.811 vs 0.802). Unsupported claims: pipeline 44,
+baseline 56.
+
+**This is the real, broad differentiator (unlike citation recall).** The
+pipeline is more grounded across all 50 queries (0.937 vs 0.856), and the gap is
+**concentrated on NOT_APPLICABLE (0.944 vs 0.697, +0.25)** — the "is this even
+governed?" questions. Biggest per-query deficits are all scope questions: Q29
+(anonymous statistics) and Q30 (non-AI FAQ) at baseline 0.40 vs pipeline 1.00.
+Mechanism (reproduces the eval-scale finding): the baseline lacks the retrieved
+*definitions*, so it reasons about out-of-scope from parametric knowledge
+(ungrounded); the pipeline retrieves the definitions of "personal data" / "AI
+system" and grounds its scope determination in them — the no-inference-from-
+silence / bounded-knowledge property the architecture was built for.
+
+**Honest limits:** average gap is modest (+0.08); on INSUFFICIENT it is a tie
+(baseline 0.892 vs pipeline 0.887); on NON_COMPLIANT the gap is small (+0.036);
+the pipeline is not perfect (44 unsupported claims, min faithfulness 0.50). So
+this is a *modest-average, decisive-on-scope* advantage, not a blowout.
+
+### 12.10 The corpus-scale contribution (honest, calibrated)
+
+The GraphRAG-vs-RAG comparison does NOT show a verdict-accuracy win (wash at
+scale) and must not be framed as one. The defensible contribution is:
+1. **Groundedness:** at comparable accuracy the pipeline's compliance reasoning
+   is more faithful to verified law (0.937 vs 0.856), decisively so on scope
+   determination (NA 0.944 vs 0.697) — a broad, measured property, not 3 items.
+2. **Cross-regulation conflict reasoning** the baseline structurally cannot do
+   (§12.8; narrow but real — the KG surfaces both regulations' duties + the
+   conflict edge).
+3. **The KG-construction methodology** (Phase 1), evaluated on its own terms,
+   independent of the QA comparison.
+
+Headline: *at comparable verdict accuracy, GraphRAG produces more faithful,
+grounded, conflict-aware compliance answers — most strongly on scope — while the
+vector baseline reasons from unretrieved knowledge.* In a domain where
+groundedness and auditability are regulatory requirements, that is the
+contribution. Corpus query eval is complete.
+
+---
+
+## 12.11 Bare-LLM comparator — the decisive comparison (2026-07-13)
+
+After the three-way (KG / vector-RAG / no-KG-Mistral) offline result, the
+evaluation design was corrected on Yoseph's reasoning: comparing the KG+RAG
+system against a *vector-RAG baseline* is weak, because the brief already
+requires a RAG system — comparing one RAG against another does not isolate the
+value of the KG. **The right baseline is a bare LLM (no retrieval, no KG),
+which isolates what the whole retrieval+ontology+KG pipeline adds over a plain
+model.** A `--llm-only` mode was added to `graphrag_query.py` (same 4-label
+`ComplianceVerdict` schema, no context; the model answers from its own
+knowledge of GDPR / the AI Act). The citation format was pinned to the project
+IRI convention so citations are comparable.
+
+**Result — bare LLM (Gemini): adherence 0.900, macro-F1 0.904.** It **beats**
+the KG+RAG pipeline (0.78–0.84) on verdict accuracy.
+
+**Why (the central finding):** GDPR and the EU AI Act are extensively in the
+LLM's training data — the model has effectively *memorized* them. On a task of
+deciding compliance labels for well-known regulations, an LLM answers from
+parametric knowledge and does it better than a retrieval-augmented system,
+because retrieval adds noise/over-commitment a confident memory does not have.
+Retrieval augmentation (RAG *or* KG) only helps when the knowledge is *outside*
+the model's training — private policies, niche rules, or newly-changed law.
+This is not a defect of this pipeline; it is a property of the task, and it
+maps onto the brief's own motivation (keeping pace with *legislative change*),
+which an evaluation built on stable, famous regulations cannot exercise.
+
+## 12.12 Clean-render fix — removing garbled data from the synthesis context
+
+Diagnostic (Yoseph's hypothesis: "same LLM, different answers with vs without
+the KG → we must be presenting it bad data"). Reconstructing the exact synthesis
+context for Q25 showed the pipeline was feeding the LLM **garbled statement
+renderings** from the `cc.serialize` structured gloss — e.g. `gdpr:art_30/par_1#s1`
+rendered as *"The controller shall contain all of the following information"*
+(the extraction's duty-bearer inference had rewritten the subject "That record"
+→ "the controller"; the gloss then produced nonsense). Fix (`render_statement`):
+drop the lossy `cc.serialize` gloss; present the **authoritative source text**
+(anchor sentence) plus the **parent chapeau** (`parent_texts`) so a sub-point
+is framed by its parent instead of floating.
+
+**Result — KG pipeline (Gemini) clean-render: adherence 0.780 → 0.840**
+(macro-F1 0.778 → 0.828). Fixed the flagship Q20 (NON_COMPLIANT → INSUFFICIENT,
+correct) *without* removing the erasure conflict pattern. Change breakdown: +7
+fixed (Q04/Q08/Q01a over-caution; Q20/Q23 over-decisiveness; Q03b/Q13b), −4
+broken (Q15/Q01b/Q21a/Q21b). Cost: citation recall dropped 0.811 → 0.628
+(the cleaner context makes the LLM cite fewer). This is a principled fix (it
+removes genuinely garbled data, defensible in a viva), not results-driven.
+NOTE: single-run, +3 net; report as ≈0.80–0.84 with run-to-run variance, not a
+robust 0.84 (no 5-run mean was taken — a documented gap).
+
+## 12.13 "It is not actually RAG" — the retrieval mechanism, and the provision fix
+
+Key correction (Yoseph): the system had been called "KG+RAG" throughout, but its
+**primary retrieval is not RAG.** The intent stage shows the LLM a list of
+~1,620 **bare provision IRIs** and asks it to pick the relevant ones *from its
+own knowledge of what each article number contains* (47/50 queries used this
+"template" path; dense vector retrieval was only a rarely-used fallback, 2/50).
+So retrieval was **LLM recall of article numbers**, not dense text retrieval.
+This explains the paraphrase sensitivity (§12.14) and the wrong-provision
+citations: it is the same parametric-knowledge crutch as the bare LLM.
+
+**The "provision fix" (`--dense-seed`):** seed selection now retrieves the
+`DENSE_SEED_K` question-nearest provisions by **text-embedding similarity** and
+seeds their statements (then graph-expands) — genuine dense RAG-over-KG.
+Recitals (`rct_*`, non-binding preamble whose plain language out-ranks formal
+article text) are excluded from seeding. **But it exposed that dense retrieval
+over this corpus is weak** (below), so it did not rescue the numbers — on
+Mistral it produced NOT_APPLICABLE verdicts citing recitals.
+
+## 12.14 Retrieval is the bottleneck — the recall@k curve and six methods tested
+
+Paraphrase sensitivity at corpus scale is **7–8/10 consistent trios** (down from
+10/10 at eval scale). Root cause, confirmed by inspecting intent targets: the
+same scenario, reworded, grounds to *different* provisions (Q20/Q20a/Q20b each
+grounded to different, often irrelevant, provisions; none hit the correct
+flagship pair). The retrieval — whether LLM-recall or dense — does not reliably
+find the correct operative provisions.
+
+**Recall@k curve (BGE-M3), over the 47 gold queries with gold-cited provisions:**
+
+| k | dense recall@k | hybrid recall@k |
+|---|---|---|
+| 1 | 0.202 | 0.202 |
+| 3 | 0.252 | **0.365** |
+| 5 | 0.355 | **0.479** |
+| 10 | 0.436 | 0.539 |
+| 20 | 0.555 | 0.633 |
+| 30 | 0.638 | 0.665 |
+| 50 | 0.700 | 0.715 |
+| 100 | 0.764 | 0.750 |
+
+The curve separates two problems: (1) a **ranking problem** — recall@3 is only
+0.25–0.37, so the right provisions are rarely in the top few the LLM reads; and
+(2) a **hard ceiling** — recall plateaus at **~0.75 even at k=100**, i.e. **~25%
+of gold provisions are unretrievable at any depth** with these embeddings.
+
+**Every standard retrieval fix was tested (free, on probe/gold queries); none
+fixes it, because each is a general-purpose tool and the problem is domain
+mismatch:**
+
+- **(0) Query instruction prefix** (bge-en-v1.5 asymmetric-retrieval prefix on
+  the query side). Correct to add, but changed scores marginally and did **not**
+  change rankings — logging still → `art_19` not `art_12`; consent still no
+  `art_9`. Only the keyword-obvious case (erasure → `art_17`) worked.
+- **(1) Stronger embeddings — BGE-M3** (1024-dim, 8192 ctx; instruction-free;
+  the prefix is disabled for it). Barely moved it — `art_12` rose to #4 on the
+  logging probe; consent still surfaced recitals + `art_49`, no `art_9`.
+- **(2) Hybrid dense+sparse (BGE-M3 sparse, BM25-like)** — the one genuine
+  signal: the **sparse component surfaces `art_9/par_2/pt_a` for the consent
+  query (#1 sparse, #2 hybrid) that dense missed entirely.** Improves low-k
+  recall (recall@3 0.25→0.37, @5 0.36→0.48). But partial: "sell health data →
+  Art 9" still fails (zero keyword *or* semantic overlap), and the ceiling is
+  unchanged.
+- **(3) Cross-encoder reranking (`bge-reranker-base`)** — **mixed.** Helped
+  consent (`art_9` → top-3 from a wide candidate set) but *hurt* logging
+  (`art_16` #1) and erasure (Art 15/19 displaced Art 17 sub-points), because a
+  general-domain reranker carries the same domain mismatch.
+- **(4) Wide-k + rerank (hybrid-20 → rerank → top-N)** — simulated for free:
+  recall caps at ~0.59–0.63 (≈ the current pipeline), i.e. it does **not** raise
+  recall above the ceiling.
+- **(5) Citation tightening** (post-filter citations to those named in the
+  explanation) — recall 0.628 → 0.564, precision 0.247 → 0.282. Trades recall
+  for a sliver of precision; not a fix.
+
+**The established fix is domain-adapted retrieval/reranking**, which is not
+available off the shelf: **RegGuard's ReLACE** (arXiv 2601.17826, Jan 2026) is a
+`bge-reranker-base` **fine-tuned on in-domain regulatory reranking data** — it is
+*not* publicly released, so it cannot be imported; replicating it is a
+fine-tuning project (needs a regulatory query→provision training set) out of the
+project timeframe. **LegalBERT** (Chalkidis et al. 2020) is a masked LM, not a
+retriever, and would likewise need retrieval fine-tuning. Both are legitimate
+future-work citations; neither is a drop-in.
+
+## 12.15 Citation quality — provision-level numbers and the single root cause
+
+Statement-level citation recall reads 0.000 for the bare LLM and the baseline
+because they cite provision-level IRIs (`gdpr:art_9/par_1`) while the gold is
+statement-level (`gdpr:art_9/par_1#s1`) — a **granularity artifact, not "no
+citations."** Measured at **provision level** (the honest comparison):
+
+| system | citation recall | citation precision |
+|---|---|---|
+| bare LLM (Gemini) | 0.606 | 0.467 |
+| KG pipeline, pre-fix (over-citing) | 0.851 | 0.276 |
+| KG pipeline, clean-render | 0.628 | 0.247 |
+| vector-RAG baseline | 0.160 | 0.149 |
+
+The KG pipeline's high pre-fix recall (0.851) was an artifact of carpet-bombing
+citations (fp=210); the clean-render pipeline (0.628 / 0.247) is the honest
+figure. **Both bad numbers have one root cause: retrieval surfaces the wrong
+provisions.** Recall is low because the right provisions are missed (the
+ceiling); precision is low because the wrong provisions are retrieved and then
+faithfully cited. Post-processing cannot fix it (the citations correctly reflect
+what was retrieved). Only a better (domain-adapted) retriever moves both.
+
+**Important distinction for the write-up (this is what "grounded" honestly
+means here):** the KG pipeline's citations are **not invented** — it only cites
+statements present in its retrieved context, and each is **traceable to a
+verified, extracted provision** with source text and provenance; a bare LLM's
+from-memory citations are not verifiable in this way. What is limited is
+retrieval *accuracy* (which provisions get surfaced), quantified by the
+recall@k curve — not citation *integrity*.
+
+## 12.16 Faithfulness (live) — the one axis where the KG helps a capable model
+
+RAGAS-style faithfulness (fraction of explanation claims supported by the
+retrieved context; parametric-knowledge claims count as unsupported), Gemini
+judge, corpus runs:
+
+| faithfulness (overall) | value |
+|---|---|
+| Gemini KG pipeline | **0.937** |
+| Gemini vector-RAG baseline | 0.856 |
+| Mistral vector-RAG baseline | 0.740 |
+| Mistral KG pipeline (narrowed) | 0.687 |
+
+The KG pipeline is the most faithful **with a capable backend** (0.937 vs 0.856,
+concentrated on NOT_APPLICABLE / scope questions where the baseline reasons from
+imported knowledge). But **the KG *hurts* a weak backend's faithfulness**
+(Mistral KG 0.687 < Mistral baseline 0.740) — the richer structured context
+overwhelms the weak model, which generates more unsupported claims. So: the KG
+amplifies a capable model's grounding and overwhelms a weak one — it is not a
+substitute for model capability. Caveat: a bare-LLM faithfulness is ~undefined
+(no context), so faithfulness is a pipeline-vs-RAG axis, not a pipeline-vs-bare-
+LLM one.
+
+## 12.17 Full corpus results table (consolidated)
+
+| system | what it is | verdict adherence | citation recall / prec (prov.) | faithfulness |
+|---|---|---|---|---|
+| bare LLM (Gemini) | no retrieval, no KG | **0.900** | 0.606 / 0.467 | — (no context) |
+| KG pipeline clean-render (Gemini) | KG + LLM-provision-select + expansion | 0.840 | 0.628 / 0.247 | 0.937 |
+| KG pipeline pre-fix (Gemini) | as above, garbled render | 0.780 | 0.851 / 0.276 | 0.937 |
+| vector-RAG baseline (Gemini) | dense RAG, no KG | 0.760 | 0.160 / 0.149 | 0.856 |
+| KG pipeline Mistral (narrowed) | as above, weak backend | 0.700 | — | 0.687 |
+| Mistral vector-RAG baseline | dense RAG, weak backend | 0.900* | — | 0.740 |
+| KG pipeline Mistral (non-narrow) | grounding collapsed | 0.580 | — | — |
+
+*Mistral baseline's high adherence is the memorization artifact (high accuracy,
+weak faithfulness 0.740) — evidence that verdict accuracy is contaminated by
+parametric knowledge and cannot alone certify a compliance system.
+
+## 12.18 Honest contribution, limitations, and requirements mapping (write-up)
+
+**The honest thesis (verbatim, for the evaluation chapter):**
+
+> A bare LLM can *guess* compliance labels accurately from memorized law (0.90)
+> — but it cannot ground, cite, verify, or update those judgments. The KG+RAG
+> system trades a few points of raw label accuracy for answers that are
+> **grounded in extracted, verified, source-linked, and maintainable**
+> regulatory knowledge — which is the actual requirement for a safety-critical
+> compliance system. Verdict accuracy from an unverifiable memory is the wrong
+> metric; groundedness and auditability are the right ones.
+
+> This **localizes where a compliance KG adds value**: coverage, verifiability,
+> and maintainability for evolving / out-of-training regulation — not raw
+> accuracy on static, famous law. On GDPR and the AI Act, which the model has
+> memorized, retrieval augmentation shows its benefit in faithfulness and
+> traceability, not in verdict accuracy.
+
+**The retrieval limitation (verbatim):**
+
+> Off-the-shelf general-purpose retrievers and rerankers (BGE-M3 dense, dense+
+> sparse hybrid, `bge-reranker-base`) do not reliably retrieve the correct
+> operative provisions over dense EU-regulatory text — demonstrated empirically
+> by a recall@k curve (ceiling ~0.75; recall@3 ≈ 0.25–0.37) and by six tested
+> methods. The established fix is domain-adapted reranking (RegGuard's ReLACE, a
+> regulatory fine-tune of `bge-reranker-base`), identified as future work but
+> not feasible within the project timeframe.
+
+**Requirements mapping (against the project brief):**
+1. *"LLM-based extraction pipeline … compliance requirements as ontology
+   components"* — **satisfied** (extraction F1 ≈ 0.93 on gold; DPV/AIRO/VAIR
+   grounding; full-corpus KG; verification stage). This is the core contribution
+   and is unaffected by the QA result.
+2. *"compliance-aware RAG system … NL queries validated against ontology
+   constraints"* — **satisfied** (the system is built and answers grounded
+   verdicts). NOTE: the brief asks to *build* a RAG system, **not** to beat a
+   baseline — the baseline comparisons are added rigor, and a wash/negative
+   comparison still satisfies "evaluate your system."
+3. *"evaluate … web-based evaluation interface for decision makers + automated
+   metrics"* — **automated metrics: over-satisfied** (adherence, per-label
+   P/R/F1/F2, faithfulness, answer relevance, paraphrase sensitivity, citation
+   metrics, recall@k, model×architecture ablation). **Web-based evaluation
+   interface: NOT built — the one genuine outstanding deliverable.**
+
+**Bottom line for the dissertation:** the KG construction is the contribution;
+the QA evaluation is a rigorous, honestly-characterized result showing (a) LLMs
+already know famous regulations, so retrieval does not raise verdict accuracy,
+(b) the KG's value is grounded/faithful/traceable/maintainable answers with a
+capable backend, and (c) retrieval over dense legal text with general-purpose
+models is a hard, quantified limitation with a cited domain-adaptation fix as
+future work. This is a defensible negative/nuanced result backed by extensive
+evidence, not an unexplained set of bad numbers.

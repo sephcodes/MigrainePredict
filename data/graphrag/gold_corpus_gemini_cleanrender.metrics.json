@@ -1,0 +1,109 @@
+{
+  "results_file": "data/graphrag/gold_corpus_gemini_cleanrender.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 27,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 15,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 0.8666666666666667,
+      "R": 0.8666666666666667,
+      "F1": 0.8666666666666667,
+      "F2": 0.8666666666666667
+    },
+    "NON_COMPLIANT": {
+      "P": 0.7894736842105263,
+      "R": 0.9375,
+      "F1": 0.8571428571428572,
+      "F2": 0.9036144578313254
+    },
+    "INSUFFICIENT": {
+      "P": 0.7142857142857143,
+      "R": 0.5,
+      "F1": 0.588235294117647,
+      "F2": 0.5319148936170213
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "F2": 1.0
+    }
+  },
+  "macro_f1": 0.8280112044817927,
+  "citation": {
+    "recall": 0.5945945945945946,
+    "precision": 0.2462686567164179
+  },
+  "paraphrase": {
+    "consistent_trios": 7,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 1.0,
+      "variant_a": 0.8,
+      "variant_b": 0.7
+    },
+    "range": 0.30000000000000004
+  },
+  "seed_paths": {
+    "template": 45,
+    "vector_fallback": 4,
+    "llm_cypher": 1
+  },
+  "misses": [
+    [
+      "Q01b",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q07",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q15",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21a",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21b",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ]
+  ]
+}
