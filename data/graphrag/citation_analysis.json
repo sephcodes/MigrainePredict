@@ -1,0 +1,50 @@
+{
+  "note": "provision-level (statement #sN suffix stripped both sides)",
+  "runs": {
+    "bare_llm_gemini": {
+      "recall": 0.606,
+      "precision": 0.467,
+      "tp": 57,
+      "fp": 65,
+      "fn": 37
+    },
+    "kg_pipeline_prefix_gemini": {
+      "recall": 0.851,
+      "precision": 0.276,
+      "tp": 80,
+      "fp": 210,
+      "fn": 14
+    },
+    "kg_pipeline_cleanrender_gemini": {
+      "recall": 0.628,
+      "precision": 0.247,
+      "tp": 59,
+      "fp": 180,
+      "fn": 35
+    },
+    "vector_rag_baseline_gemini": {
+      "recall": 0.16,
+      "precision": 0.149,
+      "tp": 15,
+      "fp": 86,
+      "fn": 79
+    }
+  },
+  "cleanrender_tightening": {
+    "all_cited": {
+      "recall": 0.628,
+      "precision": 0.247,
+      "tp": 59,
+      "fp": 180,
+      "fn": 35
+    },
+    "named_in_explanation_only": {
+      "recall": 0.564,
+      "precision": 0.282,
+      "tp": 53,
+      "fp": 135,
+      "fn": 41
+    }
+  },
+  "WARNING": "PROVISION-level (coarser) \u2014 reads higher than the statement-level headline. KG headline = score_query.py statement-level: clean-render 0.595/0.246, pre-fix 0.811/0.265. Use this only for the bare-LLM/baseline row."
+}

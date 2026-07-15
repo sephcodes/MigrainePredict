@@ -1,0 +1,125 @@
+{
+  "n_queries": 47,
+  "ks": [
+    1,
+    3,
+    5,
+    10,
+    20,
+    30,
+    50,
+    100
+  ],
+  "recall_at_k": {
+    "dense": {
+      "1": 0.181,
+      "3": 0.28,
+      "5": 0.362,
+      "10": 0.434,
+      "20": 0.619,
+      "30": 0.677,
+      "50": 0.697,
+      "100": 0.746
+    },
+    "hybrid": {
+      "1": 0.202,
+      "3": 0.365,
+      "5": 0.479,
+      "10": 0.539,
+      "20": 0.633,
+      "30": 0.665,
+      "50": 0.715,
+      "100": 0.75
+    }
+  },
+  "probes": {
+    "retain operational logs for 90 days": {
+      "dense_top3": [
+        "aiact:art_19/par_1",
+        "aiact:art_26/par_6",
+        "aiact:art_59/par_1/pt_h"
+      ],
+      "sparse_top3": [
+        "aiact:art_19/par_1",
+        "aiact:art_26/par_6",
+        "aiact:art_3/par_38"
+      ],
+      "hybrid_top3": [
+        "aiact:art_19/par_1",
+        "aiact:art_26/par_6",
+        "aiact:art_59/par_1/pt_h"
+      ],
+      "hybrid_rerank_top3": [
+        "aiact:art_16/par_1/pt_e",
+        "aiact:art_19/par_1",
+        "aiact:art_59/par_1/pt_h"
+      ]
+    },
+    "explicit consent to process health data for migraine prediction": {
+      "dense_top3": [
+        "gdpr:art_22/par_2/pt_c",
+        "gdpr:art_6/par_1/pt_a",
+        "gdpr:art_49/par_1/pt_a"
+      ],
+      "sparse_top3": [
+        "gdpr:art_9/par_2/pt_a",
+        "gdpr:rct_54/p_0",
+        "gdpr:art_22/par_2/pt_c"
+      ],
+      "hybrid_top3": [
+        "gdpr:art_22/par_2/pt_c",
+        "gdpr:art_6/par_1/pt_a",
+        "gdpr:rct_32/p_0"
+      ],
+      "hybrid_rerank_top3": [
+        "gdpr:art_22/par_2/pt_c",
+        "gdpr:art_6/par_1/pt_a",
+        "gdpr:rct_71/p_0"
+      ]
+    },
+    "erase personal data on request": {
+      "dense_top3": [
+        "gdpr:art_18/par_1/pt_b",
+        "gdpr:art_17/par_1/pt_d",
+        "gdpr:art_17/par_2"
+      ],
+      "sparse_top3": [
+        "gdpr:art_17/par_2",
+        "gdpr:art_17/par_1",
+        "gdpr:art_19/par_1"
+      ],
+      "hybrid_top3": [
+        "gdpr:art_17/par_2",
+        "gdpr:art_18/par_1/pt_b",
+        "gdpr:art_17/par_1"
+      ],
+      "hybrid_rerank_top3": [
+        "gdpr:art_17/par_2",
+        "gdpr:art_15/par_1/pt_e",
+        "gdpr:art_19/par_1"
+      ]
+    },
+    "sell health data to advertisers without consent": {
+      "dense_top3": [
+        "gdpr:art_17/par_1/pt_d",
+        "aiact:anx_II/par_1/cont_7",
+        "gdpr:rct_54/p_0"
+      ],
+      "sparse_top3": [
+        "gdpr:rct_54/p_0",
+        "gdpr:rct_35/p_0",
+        "gdpr:art_6/par_1/pt_a"
+      ],
+      "hybrid_top3": [
+        "gdpr:art_17/par_1/pt_d",
+        "gdpr:rct_54/p_0",
+        "gdpr:art_22/par_2/pt_c"
+      ],
+      "hybrid_rerank_top3": [
+        "gdpr:rct_54/p_0",
+        "gdpr:art_22/par_2/pt_c",
+        "gdpr:art_17/par_1/pt_d"
+      ]
+    }
+  }
+}

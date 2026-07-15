@@ -816,34 +816,12 @@ contribution. Corpus query eval is complete.
 
 ---
 
-## 12.11 Bare-LLM comparator — the decisive comparison (2026-07-13)
+*(Chronology note: the fixes below run in the order they happened — clean-render
+(§12.11, 19:37) → bare-LLM comparison (§12.12, 21:39) → the "not actually RAG"
+realisation + dense-seed (§12.13, 22:39). Timestamps from the `*.results.jsonl`
+files.)*
 
-After the three-way (KG / vector-RAG / no-KG-Mistral) offline result, the
-evaluation design was corrected on Yoseph's reasoning: comparing the KG+RAG
-system against a *vector-RAG baseline* is weak, because the brief already
-requires a RAG system — comparing one RAG against another does not isolate the
-value of the KG. **The right baseline is a bare LLM (no retrieval, no KG),
-which isolates what the whole retrieval+ontology+KG pipeline adds over a plain
-model.** A `--llm-only` mode was added to `graphrag_query.py` (same 4-label
-`ComplianceVerdict` schema, no context; the model answers from its own
-knowledge of GDPR / the AI Act). The citation format was pinned to the project
-IRI convention so citations are comparable.
-
-**Result — bare LLM (Gemini): adherence 0.900, macro-F1 0.904.** It **beats**
-the KG+RAG pipeline (0.78–0.84) on verdict accuracy.
-
-**Why (the central finding):** GDPR and the EU AI Act are extensively in the
-LLM's training data — the model has effectively *memorized* them. On a task of
-deciding compliance labels for well-known regulations, an LLM answers from
-parametric knowledge and does it better than a retrieval-augmented system,
-because retrieval adds noise/over-commitment a confident memory does not have.
-Retrieval augmentation (RAG *or* KG) only helps when the knowledge is *outside*
-the model's training — private policies, niche rules, or newly-changed law.
-This is not a defect of this pipeline; it is a property of the task, and it
-maps onto the brief's own motivation (keeping pace with *legislative change*),
-which an evaluation built on stable, famous regulations cannot exercise.
-
-## 12.12 Clean-render fix — removing garbled data from the synthesis context
+## 12.11 Clean-render fix — removing garbled data from the synthesis context
 
 Diagnostic (Yoseph's hypothesis: "same LLM, different answers with vs without
 the KG → we must be presenting it bad data"). Reconstructing the exact synthesis
@@ -860,11 +838,42 @@ is framed by its parent instead of floating.
 (macro-F1 0.778 → 0.828). Fixed the flagship Q20 (NON_COMPLIANT → INSUFFICIENT,
 correct) *without* removing the erasure conflict pattern. Change breakdown: +7
 fixed (Q04/Q08/Q01a over-caution; Q20/Q23 over-decisiveness; Q03b/Q13b), −4
-broken (Q15/Q01b/Q21a/Q21b). Cost: citation recall dropped 0.811 → 0.628
-(the cleaner context makes the LLM cite fewer). This is a principled fix (it
+broken (Q15/Q01b/Q21a/Q21b). Cost: citation recall dropped **0.811 → 0.595**
+(statement-level, `score_query.py`; the cleaner context makes the LLM cite
+fewer). This is a principled fix (it
 removes genuinely garbled data, defensible in a viva), not results-driven.
-NOTE: single-run, +3 net; report as ≈0.80–0.84 with run-to-run variance, not a
-robust 0.84 (no 5-run mean was taken — a documented gap).
+**This is the best KG configuration (highest adherence) and the one to report.**
+OPEN ITEMS on it (not yet done): (a) single-run, +3 net — report as ≈0.80–0.84
+with run-to-run variance, no 5-run mean taken; (b) its **faithfulness was not
+measured** — the 0.937 figure (§12.16) belongs to the *pre-fix* run
+`gold_corpus_gemini`, so if clean-render is the headline its live
+faithfulness/relevance should be re-run. Both are live-LLM runs (API cost).
+
+## 12.12 Bare-LLM comparator — the decisive comparison (2026-07-13)
+
+After the clean-render fix, the evaluation design was corrected on Yoseph's
+reasoning: comparing the KG pipeline against a *vector-RAG baseline* is weak,
+because the brief already requires a RAG system — comparing one RAG against
+another does not isolate the value of the KG. **The right baseline is a bare
+LLM with NO retrieval and NO KG** (it does not "ignore" retrieval — it has none;
+it answers purely from its own parametric knowledge of GDPR / the AI Act). A
+`--llm-only` mode was added to `graphrag_query.py` (same 4-label
+`ComplianceVerdict` schema, no context); the citation format was pinned to the
+project IRI convention so citations are comparable.
+
+**Result — bare LLM (Gemini): adherence 0.900, macro-F1 0.904.** It **beats**
+the KG pipeline (0.78–0.84) on verdict accuracy.
+
+**Why (the central finding):** GDPR and the EU AI Act are extensively in the
+LLM's training data — the model has effectively *memorized* them. On a task of
+deciding compliance labels for well-known regulations, an LLM answers from
+parametric knowledge and does it better than a retrieval-augmented system,
+because retrieval adds noise/over-commitment a confident memory does not have.
+Retrieval augmentation (RAG *or* KG) only helps when the knowledge is *outside*
+the model's training — private policies, niche rules, or newly-changed law.
+This is not a defect of this pipeline; it is a property of the task, and it
+maps onto the brief's own motivation (keeping pace with *legislative change*),
+which an evaluation built on stable, famous regulations cannot exercise.
 
 ## 12.13 "It is not actually RAG" — the retrieval mechanism, and the provision fix
 
@@ -881,9 +890,21 @@ citations: it is the same parametric-knowledge crutch as the bare LLM.
 `DENSE_SEED_K` question-nearest provisions by **text-embedding similarity** and
 seeds their statements (then graph-expands) — genuine dense RAG-over-KG.
 Recitals (`rct_*`, non-binding preamble whose plain language out-ranks formal
-article text) are excluded from seeding. **But it exposed that dense retrieval
-over this corpus is weak** (below), so it did not rescue the numbers — on
-Mistral it produced NOT_APPLICABLE verdicts citing recitals.
+article text) are excluded from seeding.
+
+**STATUS — built and probe-tested, NOT fully evaluated (honest gap).** The
+`--dense-seed` mode is in `graphrag_query.py` and was smoke/probe-tested. Only a
+**Mistral** dense-seed batch was run (`gold_corpus_mistral_denseseed.results.jsonl`,
+by Yoseph) and it was poor — NOT_APPLICABLE verdicts citing recitals. **No full
+Gemini dense-seed gold-50 run was done.** It was not pursued further because the
+recall@k analysis (§12.14) showed dense retrieval is *ceiling-limited* on this
+corpus (recall caps ~0.75; a hybrid-20→rerank→top-N simulation showed recall
+~0.6, no gain over the current pipeline), so a paid Gemini dense-seed run was
+judged unlikely to improve the citation numbers. **If a measured RAG-over-KG
+result is wanted for the write-up, the outstanding action is one Gemini
+`--dense-seed` gold-50 run** — but the honest expectation (from §12.14) is
+citation numbers near the current pipeline, bounded by the same retrieval
+ceiling, not an improvement.
 
 ## 12.14 Retrieval is the bottleneck — the recall@k curve and six methods tested
 
@@ -894,23 +915,25 @@ grounded to different, often irrelevant, provisions; none hit the correct
 flagship pair). The retrieval — whether LLM-recall or dense — does not reliably
 find the correct operative provisions.
 
-**Recall@k curve (BGE-M3), over the 47 gold queries with gold-cited provisions:**
+**Recall@k curve (BGE-M3), over the 47 gold queries with gold-cited provisions.
+Reproducible: `python retrieval_analysis.py` → `data/graphrag/retrieval_analysis.json`.**
 
 | k | dense recall@k | hybrid recall@k |
 |---|---|---|
-| 1 | 0.202 | 0.202 |
-| 3 | 0.252 | **0.365** |
-| 5 | 0.355 | **0.479** |
-| 10 | 0.436 | 0.539 |
-| 20 | 0.555 | 0.633 |
-| 30 | 0.638 | 0.665 |
-| 50 | 0.700 | 0.715 |
-| 100 | 0.764 | 0.750 |
+| 1 | 0.181 | 0.202 |
+| 3 | 0.280 | **0.365** |
+| 5 | 0.362 | **0.479** |
+| 10 | 0.434 | 0.539 |
+| 20 | 0.619 | 0.633 |
+| 30 | 0.677 | 0.665 |
+| 50 | 0.697 | 0.715 |
+| 100 | 0.746 | 0.750 |
 
 The curve separates two problems: (1) a **ranking problem** — recall@3 is only
-0.25–0.37, so the right provisions are rarely in the top few the LLM reads; and
+0.28–0.37, so the right provisions are rarely in the top few the LLM reads; and
 (2) a **hard ceiling** — recall plateaus at **~0.75 even at k=100**, i.e. **~25%
-of gold provisions are unretrievable at any depth** with these embeddings.
+of gold provisions are unretrievable at any depth** with these embeddings. (The
+probe rankings below are also in `retrieval_analysis.json`.)
 
 **Every standard retrieval fix was tested (free, on probe/gold queries); none
 fixes it, because each is a general-purpose tool and the problem is domain
@@ -937,8 +960,8 @@ mismatch:**
   recall caps at ~0.59–0.63 (≈ the current pipeline), i.e. it does **not** raise
   recall above the ceiling.
 - **(5) Citation tightening** (post-filter citations to those named in the
-  explanation) — recall 0.628 → 0.564, precision 0.247 → 0.282. Trades recall
-  for a sliver of precision; not a fix.
+  explanation; provision-level) — recall 0.628 → 0.564, precision 0.247 → 0.282.
+  Trades recall for a sliver of precision; not a fix. (See §12.15 on levels.)
 
 **The established fix is domain-adapted retrieval/reranking**, which is not
 available off the shelf: **RegGuard's ReLACE** (arXiv 2601.17826, Jan 2026) is a
@@ -949,23 +972,45 @@ project timeframe. **LegalBERT** (Chalkidis et al. 2020) is a masked LM, not a
 retriever, and would likewise need retrieval fine-tuning. Both are legitimate
 future-work citations; neither is a drop-in.
 
-## 12.15 Citation quality — provision-level numbers and the single root cause
+## 12.15 Citation quality — the metric, and the single root cause
 
-Statement-level citation recall reads 0.000 for the bare LLM and the baseline
-because they cite provision-level IRIs (`gdpr:art_9/par_1`) while the gold is
-statement-level (`gdpr:art_9/par_1#s1`) — a **granularity artifact, not "no
-citations."** Measured at **provision level** (the honest comparison):
+**Headline citation numbers (KG pipeline) are the statement-level figures from
+`score_query.py` — the trusted scorer, already in the `*.metrics.json` files;
+NOT recomputed here:**
 
-| system | citation recall | citation precision |
+| KG pipeline (statement-level, `score_query.py`) | recall | precision |
+|---|---|---|
+| pre-fix (Gemini) | 0.811 | 0.265 |
+| **clean-render (Gemini)** | **0.595** | **0.246** |
+
+These match citations exactly (`gdpr:art_9/par_1#s1`). For the **bare LLM** and
+the **vector-RAG baseline**, this same statement-level metric reads **0.000** —
+but that is a **granularity artifact, not "no citations":** they cite
+provision-level IRIs (`gdpr:art_9/par_1`, no `#sN`), which never string-match
+the statement-level gold.
+
+**To compare those systems on citations at all, a coarser PROVISION-level
+metric is used** — strip the `#sN` suffix on both sides (reproducible:
+`python citation_analysis.py` → `data/graphrag/citation_analysis.json`).
+**IMPORTANT: provision-level matching is coarser — any statement of the right
+article counts as a hit — so it systematically reads HIGHER than the
+statement-level headline.** It exists only to give the bare LLM and baseline a
+non-artifact number; it is **not** the KG's headline metric.
+
+| system (provision-level — coarser, reads higher) | recall | precision |
 |---|---|---|
 | bare LLM (Gemini) | 0.606 | 0.467 |
-| KG pipeline, pre-fix (over-citing) | 0.851 | 0.276 |
-| KG pipeline, clean-render | 0.628 | 0.247 |
 | vector-RAG baseline | 0.160 | 0.149 |
+| KG clean-render (shown here only for like-for-like) | 0.628 | 0.247 |
+| KG pre-fix (over-citing, fp=210) | 0.851 | 0.276 |
 
-The KG pipeline's high pre-fix recall (0.851) was an artifact of carpet-bombing
-citations (fp=210); the clean-render pipeline (0.628 / 0.247) is the honest
-figure. **Both bad numbers have one root cause: retrieval surfaces the wrong
+The KG clean-render reads **0.628 provision-level vs its 0.595 statement-level
+headline** — the coarser metric inflating it, exactly as expected; the two must
+not be mixed. **Citation tightening** (post-filter to provisions named in the
+explanation, provision-level, clean-render) moved recall 0.628 → 0.564 and
+precision 0.247 → 0.282 — trades recall for a sliver of precision; not a fix.
+
+**Both bad numbers have one root cause: retrieval surfaces the wrong
 provisions.** Recall is low because the right provisions are missed (the
 ceiling); precision is low because the wrong provisions are retrieved and then
 faithfully cited. Post-processing cannot fix it (the citations correctly reflect
@@ -1018,6 +1063,13 @@ LLM one.
 weak faithfulness 0.740) — evidence that verdict accuracy is contaminated by
 parametric knowledge and cannot alone certify a compliance system.
 
+**The citation column is PROVISION-level** (coarser — strips `#sN`) purely so
+the bare LLM and vector baseline get a comparable number rather than the 0.000
+statement-level artifact (they cite provisions, not statement IDs). Because it
+is coarser it reads higher than the headline. **The KG pipeline's official
+citation metric is the statement-level `score_query.py` figure — clean-render
+0.595 / 0.246, pre-fix 0.811 / 0.265 — reported in §12.15, not this column.**
+
 ## 12.18 Honest contribution, limitations, and requirements mapping (write-up)
 
 **The honest thesis (verbatim, for the evaluation chapter):**
@@ -1046,6 +1098,22 @@ parametric knowledge and cannot alone certify a compliance system.
 > regulatory fine-tune of `bge-reranker-base`), identified as future work but
 > not feasible within the project timeframe.
 
+**Cross-regulation conflict reasoning (a KG-only capability, contribution):**
+The KG encodes verified `CONFLICTS_WITH` edges between provisions of *different*
+regulations — the flagship AI Act Art 12 logging ↔ GDPR Art 5(1)(e) storage
+limitation, plus (added this stage, literature-grounded) Art 9(1) GDPR ↔
+Art 10(5) AI Act (special-category vs bias-detection) and Art 17 GDPR ↔ Art 12
+AI Act (erasure vs log retention). On the flagship query the pipeline retrieves
+these edges and cites **both** regulations' operative duties, whereas the vector
+baseline retrieves only one regulation. **This is a capability a flat retriever
+structurally cannot provide** (two conflicting provisions from different
+regulations are neither text-similar to each other nor to the query, so
+similarity retrieval will not surface both) and a bare LLM does not do reliably.
+Honest scope: narrow (a handful of curated patterns) and it surfaces
+better/correct *evidence* without necessarily changing the 4-label verdict —
+but it is a genuine, dual-regulation compliance capability that maps directly
+onto the MigrainePredict scenario's central GDPR↔AI-Act tension.
+
 **Requirements mapping (against the project brief):**
 1. *"LLM-based extraction pipeline … compliance requirements as ontology
    components"* — **satisfied** (extraction F1 ≈ 0.93 on gold; DPV/AIRO/VAIR
@@ -1066,7 +1134,9 @@ parametric knowledge and cannot alone certify a compliance system.
 the QA evaluation is a rigorous, honestly-characterized result showing (a) LLMs
 already know famous regulations, so retrieval does not raise verdict accuracy,
 (b) the KG's value is grounded/faithful/traceable/maintainable answers with a
-capable backend, and (c) retrieval over dense legal text with general-purpose
-models is a hard, quantified limitation with a cited domain-adaptation fix as
-future work. This is a defensible negative/nuanced result backed by extensive
-evidence, not an unexplained set of bad numbers.
+capable backend, (c) the KG uniquely enables **cross-regulation conflict
+reasoning** over the GDPR↔AI-Act tension (above), which flat retrieval and a
+bare LLM cannot provide, and (d) retrieval over dense legal text with
+general-purpose models is a hard, quantified limitation with a cited
+domain-adaptation fix as future work. This is a defensible negative/nuanced
+result backed by extensive evidence, not an unexplained set of bad numbers.
