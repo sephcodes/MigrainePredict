@@ -71,13 +71,13 @@ RESULTS_LOG = f"{GRAPHRAG_DIR}/results.jsonl"
 INDEX_META = f"{GRAPHRAG_DIR}/snippet_index.json"
 INDEX_VECS = f"{GRAPHRAG_DIR}/snippet_index.npy"
 
-EMBED_MODEL = "BAAI/bge-m3"  # 1024-dim, 8192 ctx; instruction-free; dense+sparse
-# bge-*-en-v1.5 is asymmetric and needs a query-side instruction prefix; bge-m3
-# is instruction-free (model card). So the prefix is applied ONLY for the
-# en-v1.5 family and is empty for m3.
-BGE_QUERY_INSTRUCTION = (
-    "Represent this sentence for searching relevant passages: "
-    if "en-v1.5" in EMBED_MODEL else "")
+EMBED_MODEL = "BAAI/bge-small-en-v1.5"  # the clean-render config's embedder
+# NOTE: the retrieval investigation (graphrag_stage_summary.md sec 12.14) swapped
+# this to BAAI/bge-m3 and added a query prefix; both were REVERTED to reproduce
+# the reported clean-render config (bge-small, no prefix) for the 5-run mean.
+# bge-m3 is instruction-free; bge-en-v1.5 does use a prefix, but the clean-render
+# run predated the prefix, so it is left OFF here to match that run exactly.
+BGE_QUERY_INSTRUCTION = ""
 TOPK_SNIPPETS = 5
 MAX_CYPHER_ATTEMPTS = 3   # self-correction bound (Echenim & Joshi loop)
 MAX_SEEDS = 100

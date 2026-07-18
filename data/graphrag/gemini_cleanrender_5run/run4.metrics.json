@@ -1,0 +1,133 @@
+{
+  "results_file": "data/graphrag/gemini_cleanrender_5run/run4.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 23,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 15,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 0.8571428571428571,
+      "R": 0.8,
+      "F1": 0.8275862068965518,
+      "F2": 0.8108108108108109
+    },
+    "NON_COMPLIANT": {
+      "P": 0.7,
+      "R": 0.875,
+      "F1": 0.7777777777777777,
+      "F2": 0.8333333333333334
+    },
+    "INSUFFICIENT": {
+      "P": 0.42857142857142855,
+      "R": 0.3,
+      "F1": 0.3529411764705882,
+      "F2": 0.3191489361702127
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "F2": 1.0
+    }
+  },
+  "macro_f1": 0.7395762902862294,
+  "citation": {
+    "recall": 0.5855855855855856,
+    "precision": 0.2480916030534351
+  },
+  "paraphrase": {
+    "consistent_trios": 7,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 0.8,
+      "variant_a": 0.8,
+      "variant_b": 0.7
+    },
+    "range": 0.10000000000000009
+  },
+  "seed_paths": {
+    "template": 46,
+    "vector_fallback": 3,
+    "llm_cypher": 1
+  },
+  "misses": [
+    [
+      "Q01b",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q03",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q07",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q15",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q19",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q20",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21a",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21b",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q23",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ]
+  ]
+}

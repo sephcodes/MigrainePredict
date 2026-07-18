@@ -1,0 +1,114 @@
+{
+  "results_file": "data/graphrag/gemini_cleanrender_5run/run1.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 26,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 15,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 0.9285714285714286,
+      "R": 0.8666666666666667,
+      "F1": 0.896551724137931,
+      "F2": 0.8783783783783786
+    },
+    "NON_COMPLIANT": {
+      "P": 0.7894736842105263,
+      "R": 0.9375,
+      "F1": 0.8571428571428572,
+      "F2": 0.9036144578313254
+    },
+    "INSUFFICIENT": {
+      "P": 0.5555555555555556,
+      "R": 0.5,
+      "F1": 0.5263157894736842,
+      "F2": 0.5102040816326531
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 0.8888888888888888,
+      "F1": 0.9411764705882353,
+      "F2": 0.9090909090909091
+    }
+  },
+  "macro_f1": 0.805296710335677,
+  "citation": {
+    "recall": 0.5765765765765766,
+    "precision": 0.23272727272727273
+  },
+  "paraphrase": {
+    "consistent_trios": 6,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 1.0,
+      "variant_a": 0.7,
+      "variant_b": 0.8
+    },
+    "range": 0.30000000000000004
+  },
+  "seed_paths": {
+    "template": 46,
+    "vector_fallback": 4
+  },
+  "misses": [
+    [
+      "Q01b",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q07",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q15",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21a",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q23",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q29a",
+      "NOT_APPLICABLE",
+      "INSUFFICIENT",
+      "template"
+    ]
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "results_file": "data/graphrag/gemini_cleanrender_5run/run2.results.jsonl",
+  "adherence": {
+    "base": {
+      "agree": 25,
+      "n": 30
+    },
+    "paraphrase": {
+      "agree": 16,
+      "n": 20
+    }
+  },
+  "per_label": {
+    "COMPLIANT": {
+      "P": 0.9230769230769231,
+      "R": 0.8,
+      "F1": 0.8571428571428571,
+      "F2": 0.8219178082191783
+    },
+    "NON_COMPLIANT": {
+      "P": 0.7368421052631579,
+      "R": 0.875,
+      "F1": 0.7999999999999999,
+      "F2": 0.8433734939759037
+    },
+    "INSUFFICIENT": {
+      "P": 0.6666666666666666,
+      "R": 0.6,
+      "F1": 0.631578947368421,
+      "F2": 0.6122448979591836
+    },
+    "NOT_APPLICABLE": {
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "F2": 1.0
+    }
+  },
+  "macro_f1": 0.8221804511278195,
+  "citation": {
+    "recall": 0.6126126126126126,
+    "precision": 0.22895622895622897
+  },
+  "paraphrase": {
+    "consistent_trios": 6,
+    "n_trios": 10,
+    "subset_adherence": {
+      "base10": 0.9,
+      "variant_a": 0.8,
+      "variant_b": 0.8
+    },
+    "range": 0.09999999999999998
+  },
+  "seed_paths": {
+    "template": 46,
+    "vector_fallback": 4
+  },
+  "misses": [
+    [
+      "Q01b",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q03",
+      "COMPLIANT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q07",
+      "COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q15",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q19",
+      "NON_COMPLIANT",
+      "INSUFFICIENT",
+      "template"
+    ],
+    [
+      "Q20a",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q20b",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ],
+    [
+      "Q21a",
+      "INSUFFICIENT",
+      "COMPLIANT",
+      "template"
+    ],
+    [
+      "Q25",
+      "INSUFFICIENT",
+      "NON_COMPLIANT",
+      "template"
+    ]
+  ]
+}
