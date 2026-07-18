@@ -105,5 +105,462 @@
       "NON_COMPLIANT",
       "template"
     ]
+  ],
+  "live": [
+    {
+      "query_id": "Q01",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8492050170898438,
+      "n_claims": 18,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q01a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8195510506629944,
+      "n_claims": 20,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q01b",
+      "faithfulness": 0.8666666666666667,
+      "answer_relevance": 0.755932629108429,
+      "n_claims": 15,
+      "unsupported_claims": [
+        "The scenario states that explicit consent is obtained, which is a valid legal basis for processing special categories of data under GDPR Article 9(2)(a).",
+        "Therefore, despite meeting GDPR's consent requirements, the processing is non-compliant with the EU AI Act's specific conditions for processing special categories of personal data by high-risk AI systems."
+      ]
+    },
+    {
+      "query_id": "Q02",
+      "faithfulness": 0.375,
+      "answer_relevance": 0.8326837420463562,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "[migraine-prediction data] is classified as special-category health data under GDPR Article 9.",
+        "The general rule, as indicated by `gdpr:art_9/par_1#s1`, prohibits the processing of such special categories of personal data.",
+        "It permits the processing of special category data (referred to in paragraph 1) for purposes such as medical diagnosis and treatment (which falls under point (h) of paragraph 2, though not explicitly provided in the snippet, it is a standard interpretation for medical purposes) when processed by a professional subject to an obligation of professional secrecy.",
+        "This aligns perfectly with the conditions for the exception in `gdpr:art_9/par_3#s1`.",
+        "Therefore, the neurologist's access to the data is permitted."
+      ]
+    },
+    {
+      "query_id": "Q03",
+      "faithfulness": 0.8888888888888888,
+      "answer_relevance": 0.6945884227752686,
+      "n_claims": 18,
+      "unsupported_claims": [
+        "Since the logs are fully anonymised, the privacy concerns typically associated with long retention periods for personal data are mitigated.",
+        "Keeping logs for the system's entire life could be considered appropriate for long-term trend analysis, identifying latent risks, or ensuring comprehensive post-market monitoring for a high-risk system."
+      ]
+    },
+    {
+      "query_id": "Q03a",
+      "faithfulness": 0.47619047619047616,
+      "answer_relevance": 0.7112331390380859,
+      "n_claims": 21,
+      "unsupported_claims": [
+        "The logs therefore do not fall under the scope of 'personal data' as defined by GDPR.",
+        "The obligation to keep personal data in a form which permits identification for no longer than is necessary (gdpr:art_5/par_1/pt_e#s1) is not applicable to these logs.",
+        "The data subject's right to erasure of personal data (gdpr:art_17/par_1#s1, gdpr:art_17/par_1/pt_a#s1, gdpr:art_17/par_1/pt_b#s1, gdpr:art_17/par_1/pt_c#s1, gdpr:art_17/par_1/pt_d#s1, gdpr:art_17/par_1/pt_e#s1, gdpr:art_17/par_1/pt_f#s1) does not apply to these logs.",
+        "The data subject's right to information regarding rectification or erasure of personal data (gdpr:art_15/par_1/pt_e#s2) is not applicable to these logs.",
+        "The obligation to erase or rectify inaccurate personal data (gdpr:art_5/par_1/pt_d#s2) does not apply to these logs.",
+        "These conflicts are resolved by the fact that the logs are anonymized.",
+        "Since the logs do not contain personal data, the GDPR provisions that would otherwise conflict with the AI Act's logging requirements do not apply to these specific logs.",
+        "MigrainePredict processes special category health data.",
+        "The operational logs themselves, being anonymized, do not contain special categories of personal data.",
+        "Therefore, this specific obligation (aiact:art_10/par_5/pt_f#s1) does not apply to the logs as described.",
+        "By effectively anonymizing its operational logs, MigrainePredict complies with the AI Act's logging requirements without violating GDPR's provisions concerning personal data."
+      ]
+    },
+    {
+      "query_id": "Q03b",
+      "faithfulness": 0.6666666666666666,
+      "answer_relevance": 0.7982692718505859,
+      "n_claims": 18,
+      "unsupported_claims": [
+        "Data that has been truly anonymized, meaning it can no longer be used to identify an individual, is no longer considered 'personal data' under GDPR.",
+        "Therefore, the GDPR provisions concerning the processing, retention, and data subject rights related to personal data do not apply to these anonymized logs.",
+        "The listed conflicts between aiact:art_12/par_1#s1 (AI Act logging over lifetime) and various GDPR provisions (e.g., gdpr:art_17/par_1#s1 on erasure, gdpr:art_5/par_1/pt_e#s1 on retention limits for identifiable data) are resolved because the logs do not contain personal data.",
+        "Since the data is anonymized, the GDPR provisions are not applicable to these logs, and thus no conflict arises in practice.",
+        "The AI Act's requirements for logging are met, and the GDPR's requirements for personal data are not triggered due to the anonymization.",
+        "Therefore, the logging practice is compliant with both regulations."
+      ]
+    },
+    {
+      "query_id": "Q04",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.7847380042076111,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The action of correcting the data within two days of the request is considered to be \"without undue delay,\"",
+        "Therefore, the company has met its duty."
+      ]
+    },
+    {
+      "query_id": "Q05",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7949469685554504,
+      "n_claims": 11,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8027255535125732,
+      "n_claims": 13,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q05b",
+      "faithfulness": 0.9444444444444444,
+      "answer_relevance": 0.7655598521232605,
+      "n_claims": 18,
+      "unsupported_claims": [
+        "The processing of special categories of personal data, such as health data, is generally prohibited."
+      ]
+    },
+    {
+      "query_id": "Q06",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.815220296382904,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q07",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9098839163780212,
+      "n_claims": 12,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q08",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevance": 0.8579118251800537,
+      "n_claims": 12,
+      "unsupported_claims": [
+        "Predicting migraine attacks for a healthcare AI system is considered a legitimate purpose.",
+        "The collection-and-use practice described in the scenario aligns with the obligation under [gdpr:art_5/par_1/pt_b#s1]."
+      ]
+    },
+    {
+      "query_id": "Q09",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8147806525230408,
+      "n_claims": 11,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q10",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8261645436286926,
+      "n_claims": 10,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q10a",
+      "faithfulness": 0.5714285714285714,
+      "answer_relevance": 0.8776242136955261,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "Migraine-risk scores constitute health data, which is a special category of personal data under GDPR.",
+        "Article 9(1) of the GDPR (gdpr:art_9/par_1#s1) generally prohibits the processing of such data.",
+        "Consequently, since the processing of special category data is prohibited and no exception applies, MigrainePredict's action of passing migraine-risk scores to an advertising network is not allowed and is therefore non-compliant with GDPR."
+      ]
+    },
+    {
+      "query_id": "Q10b",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.849712073802948,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "Migraine-risk scores constitute health data, which is a special category of personal data under GDPR Article 9.",
+        "According to gdpr:art_9/par_1#s1, the processing of special categories of personal data, including health data, is prohibited.",
+        "Since consent is absent and no other exception applies, the processing of migraine-risk scores by MigrainePredict is in violation of GDPR Article 9, Paragraph 1.",
+        "Therefore, the practice is NON_COMPLIANT."
+      ]
+    },
+    {
+      "query_id": "Q11",
+      "faithfulness": 0.9333333333333333,
+      "answer_relevance": 0.8148587346076965,
+      "n_claims": 15,
+      "unsupported_claims": [
+        "Given the lack of new consent or other basis, it is highly unlikely this information obligation was met for an incompatible purpose."
+      ]
+    },
+    {
+      "query_id": "Q12",
+      "faithfulness": 0.8888888888888888,
+      "answer_relevance": 0.7297530770301819,
+      "n_claims": 9,
+      "unsupported_claims": [
+        "This request falls under a data subject's right to rectification (a right covered by GDPR Article 16, which is part of Articles 15 to 22)."
+      ]
+    },
+    {
+      "query_id": "Q13",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8796517848968506,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13a",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.87565678358078,
+      "n_claims": 11,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q13b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8701007962226868,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q14",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7777106165885925,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q15",
+      "faithfulness": 0.9,
+      "answer_relevance": 0.7766239643096924,
+      "n_claims": 10,
+      "unsupported_claims": [
+        "Authorised by Union or Member State law to which the controller is subject and which also lays down suitable measures to safeguard the data subject's rights and freedoms and legitimate interests (gdpr:art_22/par_2/pt_b#s1)."
+      ]
+    },
+    {
+      "query_id": "Q16",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8584439754486084,
+      "n_claims": 6,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q17",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9333930015563965,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q18",
+      "faithfulness": 0.9166666666666666,
+      "answer_relevance": 0.8801551461219788,
+      "n_claims": 24,
+      "unsupported_claims": [
+        "The AI Act's requirement for logging system events does not override the GDPR's fundamental principles of purpose limitation and storage limitation for identifiable personal data.",
+        "The GDPR violations are paramount."
+      ]
+    },
+    {
+      "query_id": "Q18a",
+      "faithfulness": 0.95,
+      "answer_relevance": 0.8627656102180481,
+      "n_claims": 20,
+      "unsupported_claims": [
+        "The AI Act's logging provision (aiact:art_12/par_1#s1) does not override the GDPR's fundamental principles regarding the processing of identifiable personal data."
+      ]
+    },
+    {
+      "query_id": "Q18b",
+      "faithfulness": 0.8333333333333334,
+      "answer_relevance": 0.8330743908882141,
+      "n_claims": 12,
+      "unsupported_claims": [
+        "The AI Act requirement pertains to system logs, not necessarily all user sensor data.",
+        "Crucially, even if user sensor data were considered part of these logs, the AI Act does not override the GDPR's fundamental principle that personal data should not be kept identifiable without a legitimate purpose."
+      ]
+    },
+    {
+      "query_id": "Q19",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.90549635887146,
+      "n_claims": 7,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8166215419769287,
+      "n_claims": 11,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q20a",
+      "faithfulness": 0.625,
+      "answer_relevance": 0.7065111994743347,
+      "n_claims": 8,
+      "unsupported_claims": [
+        "MigrainePredict is a provider of a high-risk AI system.",
+        "The AI Act's specific requirement for a minimum of six months for high-risk AI system logs takes precedence in this context, as it defines what is considered an appropriate period for these systems.",
+        "Therefore, holding logs for only 90 days would be non-compliant with the AI Act."
+      ]
+    },
+    {
+      "query_id": "Q20b",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7939332127571106,
+      "n_claims": 8,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7757887840270996,
+      "n_claims": 17,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q21a",
+      "faithfulness": 0.8888888888888888,
+      "answer_relevance": 0.8507950305938721,
+      "n_claims": 9,
+      "unsupported_claims": [
+        "These are conditions for the lawful processing for scientific purposes, not conditions that re-establish the obligation to delete if the Article 17(3)(d) exception applies."
+      ]
+    },
+    {
+      "query_id": "Q21b",
+      "faithfulness": 0.8235294117647058,
+      "answer_relevance": 0.7962881922721863,
+      "n_claims": 17,
+      "unsupported_claims": [
+        "This specific scenario is resolved by the GDPR's own exception for scientific research.",
+        "The AI Act's logging requirement does not override the specific dispensation provided by GDPR Article 17(3)(d) for data necessary for scientific purposes.",
+        "Therefore, MigrainePredict's intention to retain the data for a scientific research study, provided the necessary safeguards are in place, is compliant with the regulations."
+      ]
+    },
+    {
+      "query_id": "Q22",
+      "faithfulness": 0.8888888888888888,
+      "answer_relevance": 0.9098350405693054,
+      "n_claims": 9,
+      "unsupported_claims": [
+        "It also allows for longer storage periods if the data is processed solely for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes (gdpr:art_5/par_1/pt_e#s2)."
+      ]
+    },
+    {
+      "query_id": "Q23",
+      "faithfulness": 0.75,
+      "answer_relevance": 0.895921528339386,
+      "n_claims": 16,
+      "unsupported_claims": [
+        "health data falls under special categories of personal data according to GDPR Article 9",
+        "Processing of such data is generally prohibited by gdpr:art_9/par_1#s1",
+        "A 'general sign-up flow' might not adequately ensure that consent is specific",
+        "which is a common issue with general sign-up flows"
+      ]
+    },
+    {
+      "query_id": "Q24",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8577801585197449,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q25",
+      "faithfulness": 0.8571428571428571,
+      "answer_relevance": 0.8596119284629822,
+      "n_claims": 14,
+      "unsupported_claims": [
+        "Health data is a special category of data under GDPR Article 9, which triggers the third exception to the small-organisation exemption.",
+        "Given that it's a 'wearable healthcare AI system for predicting migraine attacks (high-risk under EU AI Act Annex III)', the processing is also likely to result in a risk to the rights and freedoms of data subjects, triggering the first exception."
+      ]
+    },
+    {
+      "query_id": "Q26",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7216401696205139,
+      "n_claims": 5,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q27",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7152206301689148,
+      "n_claims": 4,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q28",
+      "faithfulness": 1.0,
+      "answer_relevance": 0.9052884578704834,
+      "n_claims": 9,
+      "unsupported_claims": []
+    },
+    {
+      "query_id": "Q29",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.8303261399269104,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The GDPR's data-processing obligations only apply to 'personal data'.",
+        "Therefore, the GDPR's data-processing obligations do not govern this publication."
+      ]
+    },
+    {
+      "query_id": "Q29a",
+      "faithfulness": 0.5,
+      "answer_relevance": 0.8603541254997253,
+      "n_claims": 4,
+      "unsupported_claims": [
+        "Information that is truly anonymised and cannot be linked to an identified or identifiable natural person does not constitute personal data under the GDPR.",
+        "Therefore, since the released statistics are not personal data, the GDPR's data-processing obligations do not apply to their release."
+      ]
+    },
+    {
+      "query_id": "Q29b",
+      "faithfulness": 0.6,
+      "answer_relevance": 0.7738103270530701,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "When data is rendered anonymous to this extent, it no longer constitutes 'personal data' as defined by the GDPR.",
+        "Since the data in question is no longer personal data, the GDPR's obligations on processing do not apply."
+      ]
+    },
+    {
+      "query_id": "Q30",
+      "faithfulness": 0.42857142857142855,
+      "answer_relevance": 0.8920100331306458,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "The AI Act defines an 'AI system' as a machine-based system that operates with varying levels of autonomy.",
+        "Since the FAQ page explicitly states it is not a machine-based system operating with any autonomy, it does not meet the definition of an 'AI system' under the AI Act.",
+        "Therefore, the logging duty for high-risk AI systems, including the specific logging capabilities detailed in aiact:art_12/par_3#s1 and its sub-points, does not apply to this static FAQ page.",
+        "The retrieved GDPR provisions and their conflicts with the AI Act logging duty are not relevant, as the primary condition for the logging duty (being an AI system) is not met by the FAQ page."
+      ]
+    },
+    {
+      "query_id": "Q30a",
+      "faithfulness": 0.4,
+      "answer_relevance": 0.9121273159980774,
+      "n_claims": 5,
+      "unsupported_claims": [
+        "The FAQ page itself does not qualify as an AI system, and therefore, it cannot be a high-risk AI system.",
+        "The logging duty for high-risk AI systems does not apply to this FAQ page.",
+        "The retrieved GDPR provisions and their conflicts with AI Act logging duties are not relevant as the fundamental condition for the AI Act's logging duty (being an AI system) is not met for the FAQ page."
+      ]
+    },
+    {
+      "query_id": "Q30b",
+      "faithfulness": 0.42857142857142855,
+      "answer_relevance": 0.9189276099205017,
+      "n_claims": 7,
+      "unsupported_claims": [
+        "A core characteristic of an 'AI system' under the AI Act is that it is a machine-based system designed to operate with varying levels of autonomy.",
+        "Since the FAQ lacks this fundamental characteristic, it does not qualify as an 'AI system' under the AI Act.",
+        "Consequently, it (the FAQ) cannot be classified as a 'high-risk AI system.'",
+        "Therefore, the logging requirements for high-risk AI systems do not apply to this static website FAQ."
+      ]
+    }
   ]
 }
